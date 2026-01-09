@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:sirsak_pop_nasabah/app/app.bottomsheets.dart';
-import 'package:sirsak_pop_nasabah/app/app.dialogs.dart';
-import 'package:sirsak_pop_nasabah/app/app.locator.dart';
-import 'package:sirsak_pop_nasabah/app/app.router.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sirsak_pop_nasabah/core/constants/app_strings.dart';
+import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
+import 'package:sirsak_pop_nasabah/core/theme/app_theme.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await setupLocator();
-  setupDialogUi();
-  setupBottomSheetUi();
-  runApp(const MainApp());
+void main() {
+  runApp(const ProviderScope(child: MainApp()));
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: Routes.startupView,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
-      navigatorKey: StackedService.navigatorKey,
-      navigatorObservers: [StackedService.routeObserver],
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+
+    return MaterialApp.router(
+      title: appName,
+      theme: AppTheme.lightTheme,
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
