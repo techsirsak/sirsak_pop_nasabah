@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_provider.dart';
-import 'package:sirsak_pop_nasabah/shared/ui_helpers.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/custom_button.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/custom_text_field.dart';
 
@@ -23,7 +22,6 @@ class LoginView extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              verticalSpaceMassive,
 
               // Logo/Branding
               Center(
@@ -41,12 +39,10 @@ class LoginView extends ConsumerWidget {
                         color: colorScheme.primary,
                       ),
                     ),
-                    verticalSpaceMedium,
                     Text(
                       'appName',
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
-                    verticalSpaceSmall,
                     Text(
                       'loginTitle',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -57,8 +53,6 @@ class LoginView extends ConsumerWidget {
                 ),
               ),
 
-              verticalSpaceLarge,
-              verticalSpaceMedium,
 
               // Email Field
               CustomTextField(
@@ -70,7 +64,6 @@ class LoginView extends ConsumerWidget {
                 onChanged: viewModel.setEmail,
               ),
 
-              verticalSpaceMedium,
 
               // Password Field
               CustomTextField(
@@ -82,7 +75,6 @@ class LoginView extends ConsumerWidget {
                 onChanged: viewModel.setPassword,
               ),
 
-              verticalSpaceMedium,
 
               // Error Message
               if (state.errorMessage != null) ...[
@@ -106,7 +98,6 @@ class LoginView extends ConsumerWidget {
                     ],
                   ),
                 ),
-                verticalSpaceMedium,
               ],
 
               // Login Button
@@ -117,7 +108,6 @@ class LoginView extends ConsumerWidget {
                 onPressed: () => viewModel.login(router),
               ),
 
-              verticalSpaceMedium,
 
               // Additional info (optional)
               Center(

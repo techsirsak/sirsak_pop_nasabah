@@ -104,79 +104,79 @@ abstract class AppLocalizations {
   /// **'Sirsak Pop Nasabah'**
   String get appName;
 
-  /// Loading indicator text
+  /// No description provided for @loading.
   ///
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
 
-  /// Generic error label
+  /// No description provided for @error.
   ///
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
 
-  /// Cancel button text
+  /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
 
-  /// OK button text
+  /// No description provided for @ok.
   ///
   /// In en, this message translates to:
   /// **'OK'**
   String get ok;
 
-  /// Splash screen title
+  /// No description provided for @splashTitle.
   ///
   /// In en, this message translates to:
   /// **'Welcome'**
   String get splashTitle;
 
-  /// Login screen title
+  /// No description provided for @loginTitle.
   ///
   /// In en, this message translates to:
   /// **'Login'**
   String get loginTitle;
 
-  /// Email input field label
+  /// No description provided for @emailLabel.
   ///
   /// In en, this message translates to:
   /// **'Email'**
   String get emailLabel;
 
-  /// Password input field label
+  /// No description provided for @passwordLabel.
   ///
   /// In en, this message translates to:
   /// **'Password'**
   String get passwordLabel;
 
-  /// Login button text
+  /// No description provided for @loginButton.
   ///
   /// In en, this message translates to:
   /// **'Login'**
   String get loginButton;
 
-  /// Error when email field is empty
+  /// No description provided for @emailRequired.
   ///
   /// In en, this message translates to:
   /// **'Email is required'**
   String get emailRequired;
 
-  /// Error when email format is incorrect
+  /// No description provided for @emailInvalid.
   ///
   /// In en, this message translates to:
   /// **'Invalid email format'**
   String get emailInvalid;
 
-  /// Error when password field is empty
+  /// No description provided for @passwordRequired.
   ///
   /// In en, this message translates to:
   /// **'Password is required'**
   String get passwordRequired;
 
-  /// Error when password is too short
+  /// No description provided for @passwordMinLength.
   ///
   /// In en, this message translates to:
   /// **'Password must be at least 6 characters'**
