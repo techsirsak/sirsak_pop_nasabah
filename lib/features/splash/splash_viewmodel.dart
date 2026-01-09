@@ -8,7 +8,7 @@ class SplashViewModel extends StateNotifier<bool> {
     state = true; // Set loading state
 
     // Simulate initialization delay (2 seconds)
-    await Future.delayed(const Duration(seconds: 2));
+    await Future<void>.delayed(const Duration(seconds: 2));
 
     // Navigate to login screen
     router.go('/login');

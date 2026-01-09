@@ -31,7 +31,7 @@ lib/
 │   │   └── app_router.dart           # GoRouter configuration
 │   ├── constants/
 │   │   ├── app_constants.dart        # App-wide constants
-│   │   └── app_strings.dart          # String constants
+│   │   └── route_path.dart           # Route path constants
 │   └── theme/
 │       ├── app_colors.dart           # Color constants
 │       └── app_theme.dart            # Theme configuration
@@ -216,19 +216,62 @@ final loginViewModelProvider =
 ### Navigation
 - Use **GoRouter** for declarative routing
 - Define routes in `lib/core/router/app_router.dart`
+- **IMPORTANT**: Define route paths as constants in `lib/core/constants/route_path.dart`
 - Access router through `context.go()` or `context.push()`
 - For navigation in ViewModels, access router via ref
 
+#### Route Path Constants
+All route paths must be defined in `route_path.dart` for maintainability and type safety:
+
 ```dart
+// lib/core/constants/route_path.dart
+/// SApp Route path name
+class SAppRoutePath {
+  static const login = '/login';
+  static const home = '/home';
+  static const profile = '/profile';
+  static const settings = '/settings';
+}
+```
+
+**Naming Convention**:
+- Use `static const` for route path variables
+- Use camelCase for variable names (e.g., `login`, `home`, `userProfile`)
+- Use descriptive names that match the feature (e.g., `productDetail`, not `detail`)
+- Always start paths with `/` (e.g., `'/login'`, not `'login'`)
+
+#### Navigation Usage
+
+```dart
+// In View
+context.go(SAppRoutePath.home);
+context.push(SAppRoutePath.profile);
+
 // In ViewModel
 final router = ref.read(routerProvider);
-router.go('/home');
+router.go(SAppRoutePath.home);
 
-// Or use GoRouter extension
-void login() async {
-  // After successful login
-  ref.read(routerProvider).go('/home');
-}
+// With parameters
+context.push('${SAppRoutePath.productDetail}/$productId');
+```
+
+#### Router Configuration
+Always use route path constants when defining routes:
+
+```dart
+// lib/core/router/app_router.dart
+final router = GoRouter(
+  routes: [
+    GoRoute(
+      path: SAppRoutePath.login,
+      builder: (context, state) => const LoginView(),
+    ),
+    GoRoute(
+      path: SAppRoutePath.home,
+      builder: (context, state) => const HomeView(),
+    ),
+  ],
+);
 ```
 
 ---
@@ -499,6 +542,7 @@ final loginViewModelProvider =
 - [ ] No logic in View files
 - [ ] Consistent naming conventions
 - [ ] No hardcoded strings (use constants)
+- [ ] Route paths defined in `route_path.dart` (not hardcoded in router/views)
 
 ---
 

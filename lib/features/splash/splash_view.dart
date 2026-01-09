@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sirsak_pop_nasabah/core/constants/app_strings.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_provider.dart';
 
@@ -18,7 +19,9 @@ class _SplashViewState extends ConsumerState<SplashView> {
     // Initialize splash after first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final router = ref.read(routerProvider);
-      ref.read(splashViewModelProvider.notifier).initializeSplash(router);
+      unawaited(
+        ref.read(splashViewModelProvider.notifier).initializeSplash(router),
+      );
     });
   }
 
@@ -40,7 +43,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
             ),
             const SizedBox(height: 24),
             Text(
-              appName,
+              'appName',
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -48,9 +51,9 @@ class _SplashViewState extends ConsumerState<SplashView> {
             ),
             const SizedBox(height: 8),
             Text(
-              splashTitle,
+              'splashTitle',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha: .9),
               ),
             ),
             const SizedBox(height: 48),

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sirsak_pop_nasabah/core/constants/app_strings.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_state.dart';
 
 class LoginViewModel extends StateNotifier<LoginState> {
@@ -19,12 +18,12 @@ class LoginViewModel extends StateNotifier<LoginState> {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if (email.isEmpty) {
-      state = state.copyWith(emailError: emailRequired);
+      state = state.copyWith(emailError: 'emailRequired');
       return false;
     }
 
     if (!emailRegex.hasMatch(email)) {
-      state = state.copyWith(emailError: emailInvalid);
+      state = state.copyWith(emailError: 'emailInvalid');
       return false;
     }
 
@@ -35,12 +34,12 @@ class LoginViewModel extends StateNotifier<LoginState> {
     final password = state.password;
 
     if (password.isEmpty) {
-      state = state.copyWith(passwordError: passwordRequired);
+      state = state.copyWith(passwordError: 'passwordRequired');
       return false;
     }
 
     if (password.length < 6) {
-      state = state.copyWith(passwordError: passwordMinLength);
+      state = state.copyWith(passwordError: 'passwordMinLength');
       return false;
     }
 
@@ -71,7 +70,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
 
     try {
       // Simulate API call delay
-      await Future.delayed(const Duration(seconds: 1));
+      await Future<void>.delayed(const Duration(seconds: 1));
 
       // Mock successful login - navigate to home
       router.go('/home');

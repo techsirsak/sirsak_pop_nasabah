@@ -1,0 +1,40 @@
+{
+  "@@locale": "id",
+  "appName": "Sirsak Pop Nasabah",
+  "@appName": {
+    "description": "Nama aplikasi"
+  },
+  "loading": "Memuat...",
+  "error": "Kesalahan",
+  "cancel": "Batal",
+  "ok": "OK",
+  "splashTitle": "Selamat Datang",
+  "loginTitle": "Masuk",
+  "emailLabel": "Email",
+  "passwordLabel": "Kata Sandi",
+  "loginButton": "Masuk",
+  "emailRequired": "Email wajib diisi",
+  "emailInvalid": "Format email tidak valid",
+  "passwordRequired": "Kata sandi wajib diisi",
+  "passwordMinLength": "Kata sandi minimal 6 karakter",
+  "welcomeUser": "Selamat datang, {userName}!",
+  "@welcomeUser": {
+    "description": "Pesan selamat datang dengan nama pengguna",
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "itemCount": "{count, plural, =0{Tidak ada item} =1{1 item} other{{count} item}}",
+  "@itemCount": {
+    "description": "Jumlah item dengan bentuk jamak",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  }
+}

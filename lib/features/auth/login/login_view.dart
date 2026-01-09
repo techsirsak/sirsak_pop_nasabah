@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sirsak_pop_nasabah/core/constants/app_strings.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_provider.dart';
 import 'package:sirsak_pop_nasabah/shared/ui_helpers.dart';
@@ -33,7 +32,7 @@ class LoginView extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: colorScheme.primary.withOpacity(0.1),
+                        color: colorScheme.primary.withValues(alpha: .1),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -44,12 +43,12 @@ class LoginView extends ConsumerWidget {
                     ),
                     verticalSpaceMedium,
                     Text(
-                      appName,
+                      'appName',
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                     verticalSpaceSmall,
                     Text(
-                      loginTitle,
+                      'loginTitle',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -63,7 +62,7 @@ class LoginView extends ConsumerWidget {
 
               // Email Field
               CustomTextField(
-                label: emailLabel,
+                label: 'emailLabel',
                 hintText: 'Enter your email',
                 keyboardType: TextInputType.emailAddress,
                 errorText: state.emailError,
@@ -75,7 +74,7 @@ class LoginView extends ConsumerWidget {
 
               // Password Field
               CustomTextField(
-                label: passwordLabel,
+                label: 'passwordLabel',
                 hintText: 'Enter your password',
                 obscureText: true,
                 errorText: state.passwordError,
@@ -112,7 +111,7 @@ class LoginView extends ConsumerWidget {
 
               // Login Button
               CustomButton(
-                text: loginButton,
+                text: 'loginButton',
                 isLoading: state.isLoading,
                 icon: Icons.login,
                 onPressed: () => viewModel.login(router),
