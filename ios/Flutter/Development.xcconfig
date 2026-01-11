@@ -1,0 +1,6 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug-development.xcconfig"
+#include "Generated.xcconfig"
+
+// Development flavor configuration
+PRODUCT_BUNDLE_IDENTIFIER = com.sirsak.app.dev
+APP_DISPLAY_NAME = Sirsak DEV

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 /// Material Design 3 color system for Sirsak Pop Nasabah
 ///
-/// This class defines the app's color palette following Material Design 3 guidelines.
+/// This class defines the app's color palette following Material Design 3 
+/// guidelines.
 /// All designer colors are preserved and mapped to semantic ColorScheme roles.
 ///
 /// Usage:
