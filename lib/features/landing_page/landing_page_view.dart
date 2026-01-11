@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../core/router/app_router.dart';
-import '../../gen/assets.gen.dart';
-import 'landing_page_provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
+import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_provider.dart';
+import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
+import 'package:sirsak_pop_nasabah/gen/fonts.gen.dart';
 
 class LandingPageView extends ConsumerWidget {
   const LandingPageView({super.key});
@@ -25,26 +26,12 @@ class LandingPageView extends ConsumerWidget {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             child: Column(
               children: [
                 // Sirsak Logo
                 Image.asset(
-                  Assets.vectors.sirsakLogoWhite,
+                  Assets.images.sirsakLogoWhite.path,
                   height: 120,
-                  color: Colors.white,
-                ),
-                const SizedBox(height: 8),
-
-                // Tagline
-                Text(
-                  'Sirkular Sampah Kemasan',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.5,
-                  ),
-                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
 
@@ -54,13 +41,12 @@ class LandingPageView extends ConsumerWidget {
                   text: TextSpan(
                     style: textTheme.headlineSmall?.copyWith(
                       color: Colors.white,
-                      fontWeight: FontWeight.bold,
                       height: 1.3,
                     ),
                     children: const [
                       TextSpan(text: "Building Indonesia's "),
                       TextSpan(
-                        text: 'largest, traceable',
+                        text: 'largest,\ntraceable',
                         style: TextStyle(fontWeight: FontWeight.w900),
                       ),
                       TextSpan(text: ' waste value chain network'),
@@ -97,7 +83,7 @@ class LandingPageView extends ConsumerWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
-                    Assets.vectors.landingpage2,
+                    Assets.images.trashCans.path,
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -190,15 +176,15 @@ class LandingPageView extends ConsumerWidget {
 
 /// Feature item widget with icon, title, and description
 class _FeatureItem extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String description;
-
   const _FeatureItem({
     required this.icon,
     required this.title,
     required this.description,
   });
+
+  final IconData icon;
+  final String title;
+  final String description;
 
   @override
   Widget build(BuildContext context) {

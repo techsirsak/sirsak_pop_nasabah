@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_colors.dart';
+import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/gen/fonts.gen.dart';
 
 class AppTheme {
@@ -69,38 +70,76 @@ class AppTheme {
       ),
       textTheme: TextTheme(
         displayLarge: TextStyle(
-          fontFamily: FontFamily.montserrat,
+          fontFamily: FontFamily.leagueSpartan,
           fontSize: 32,
-          fontWeight: FontWeight.bold,
           color: colorScheme.onSurface,
+          fontVariations: AppFonts.bold,
         ),
         displayMedium: TextStyle(
-          fontFamily: FontFamily.montserrat,
+          fontFamily: FontFamily.leagueSpartan,
           fontSize: 28,
-          fontWeight: FontWeight.bold,
           color: colorScheme.onSurface,
+          fontVariations: AppFonts.bold,
         ),
         displaySmall: TextStyle(
-          fontFamily: FontFamily.montserrat,
+          fontFamily: FontFamily.leagueSpartan,
           fontSize: 24,
-          fontWeight: FontWeight.bold,
           color: colorScheme.onSurface,
+          fontVariations: AppFonts.bold,
+        ),
+        headlineLarge: TextStyle(
+          fontFamily: FontFamily.montserrat,
+          fontSize: 22,
+          color: colorScheme.onSurface,
+          fontVariations: AppFonts.bold,
         ),
         headlineMedium: TextStyle(
           fontFamily: FontFamily.montserrat,
           fontSize: 20,
-          fontWeight: FontWeight.w600,
           color: colorScheme.onSurface,
+          fontVariations: AppFonts.semiBold,
+        ),
+        headlineSmall: TextStyle(
+          fontFamily: FontFamily.nunitoSans,
+          fontSize: 18,
+          color: colorScheme.onSurface,
+          fontVariations: AppFonts.semiBold,
         ),
         bodyLarge: TextStyle(
           fontFamily: FontFamily.montserrat,
           fontSize: 16,
           color: colorScheme.onSurface,
+          fontVariations: AppFonts.regular,
         ),
         bodyMedium: TextStyle(
           fontFamily: FontFamily.montserrat,
           fontSize: 14,
           color: colorScheme.onSurfaceVariant,
+          fontVariations: AppFonts.regular,
+        ),
+        bodySmall: TextStyle(
+          fontFamily: FontFamily.montserrat,
+          fontSize: 12,
+          color: colorScheme.onSurfaceVariant,
+          fontVariations: AppFonts.regular,
+        ),
+        labelLarge: TextStyle(
+          fontFamily: FontFamily.montserrat,
+          fontSize: 14,
+          color: colorScheme.onSurface,
+          fontVariations: AppFonts.semiBold,
+        ),
+        labelMedium: TextStyle(
+          fontFamily: FontFamily.montserrat,
+          fontSize: 12,
+          color: colorScheme.onSurfaceVariant,
+          fontVariations: AppFonts.medium,
+        ),
+        labelSmall: TextStyle(
+          fontFamily: FontFamily.montserrat,
+          fontSize: 10,
+          color: colorScheme.onSurfaceVariant,
+          fontVariations: AppFonts.medium,
         ),
       ),
     );
