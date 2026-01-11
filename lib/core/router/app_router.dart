@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_view.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_view.dart';
+import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_view.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_view.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -11,11 +12,19 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/',
     routes: [
       GoRoute(
-        path: '/',
+        path: '/splash',
         name: 'splash',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const SplashView(),
+        ),
+      ),
+      GoRoute(
+        path: '/',
+        // path: SAppRoutePath.landingPage,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const LandingPageView(),
         ),
       ),
       GoRoute(
