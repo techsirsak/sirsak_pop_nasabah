@@ -274,6 +274,131 @@ final router = GoRouter(
 );
 ```
 
+### Localization
+- Use **Flutter Intl** system with `.arb` files
+- Define translations in `lib/l10n/app_en.arb` (English) and `lib/l10n/app_id.arb` (Indonesian)
+- **IMPORTANT**: All user-facing text MUST be localized - NO hardcoded strings in UI code
+- Access translations via `context.l10n.keyName`
+- Use `LocaleNotifier` for runtime language switching
+
+#### ARB File Structure
+Translations are defined in JSON format in `.arb` files:
+
+```dart
+// lib/l10n/app_en.arb (Template)
+{
+  "@@locale": "en",
+  "keyName": "English text",
+  "@keyName": {
+    "description": "Description of what this text is used for"
+  }
+}
+
+// lib/l10n/app_id.arb (Indonesian)
+{
+  "@@locale": "id",
+  "keyName": "Teks dalam bahasa Indonesia",
+  "@keyName": {
+    "description": "Deskripsi penggunaan teks ini"
+  }
+}
+```
+
+**Naming Convention**:
+- Use camelCase for translation keys
+- Prefix keys with feature/screen name for organization (e.g., `landingPageTitle`, `loginButton`)
+- Use descriptive names that indicate purpose (e.g., `emailRequired`, not `error1`)
+- For multi-part text, use numbered suffixes (e.g., `titlePart1`, `titlePart2`)
+
+#### Usage in Views
+
+```dart
+// Import the extension
+import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+
+// In Widget build method
+class MyView extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Text(context.l10n.welcomeMessage);
+  }
+}
+```
+
+#### Parameterized Strings
+
+For strings with placeholders:
+
+```dart
+// ARB file:
+"welcomeUser": "Welcome, {userName}!",
+"@welcomeUser": {
+  "description": "Welcome message with user name",
+  "placeholders": {
+    "userName": {
+      "type": "String",
+      "example": "John"
+    }
+  }
+}
+
+// Usage:
+Text(context.l10n.welcomeUser('Alice'))
+```
+
+#### Plural Forms
+
+For strings with pluralization:
+
+```dart
+// ARB file:
+"itemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
+"@itemCount": {
+  "description": "Item count with plural forms",
+  "placeholders": {
+    "count": {
+      "type": "int",
+      "example": "5"
+    }
+  }
+}
+
+// Usage:
+Text(context.l10n.itemCount(5))
+```
+
+#### Switching Language at Runtime
+
+Users can switch languages using the `LocaleNotifier`:
+
+```dart
+// In ViewModel or View
+final localeNotifier = ref.read(localeProvider.notifier);
+
+// Switch to Indonesian
+localeNotifier.setIndonesian();
+
+// Switch to English
+localeNotifier.setEnglish();
+
+// Toggle between EN/ID
+localeNotifier.toggleLocale();
+```
+
+#### Generating Localization Code
+
+After adding/modifying `.arb` files, regenerate the localization code:
+
+```bash
+# One-time generation
+flutter gen-l10n
+
+# Or use build_runner (if watching for other generated code)
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+The generated files will be in `lib/gen/l10n/`.
+
 ---
 
 ## Dependencies
@@ -543,6 +668,7 @@ final loginViewModelProvider =
 - [ ] Consistent naming conventions
 - [ ] No hardcoded strings (use constants)
 - [ ] Route paths defined in `route_path.dart` (not hardcoded in router/views)
+- [ ] All user-facing text localized (no hardcoded strings in views)
 
 ---
 

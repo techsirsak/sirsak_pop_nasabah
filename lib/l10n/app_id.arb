@@ -36,5 +36,61 @@
         "example": "5"
       }
     }
+  },
+  "landingPageTitlePart1": "Membangun ",
+  "@landingPageTitlePart1": {
+    "description": "Judul utama halaman landing - bagian 1"
+  },
+  "landingPageTitlePart2": "terbesar dan tertelusur",
+  "@landingPageTitlePart2": {
+    "description": "Judul utama halaman landing - bagian 2 (teks tebal)"
+  },
+  "landingPageTitlePart3": " jaringan nilai limbah Indonesia",
+  "@landingPageTitlePart3": {
+    "description": "Judul utama halaman landing - bagian 3"
+  },
+  "landingPageFeature1Title": "Cari",
+  "@landingPageFeature1Title": {
+    "description": "Judul fitur 1 halaman landing"
+  },
+  "landingPageFeature1Desc": "titik pengumpulan limbah terdekat Anda",
+  "@landingPageFeature1Desc": {
+    "description": "Deskripsi fitur 1 halaman landing"
+  },
+  "landingPageFeature2Title": "Antar",
+  "@landingPageFeature2Title": {
+    "description": "Judul fitur 2 halaman landing"
+  },
+  "landingPageFeature2Desc": "limbah daur ulang yang sudah dipilah",
+  "@landingPageFeature2Desc": {
+    "description": "Deskripsi fitur 2 halaman landing"
+  },
+  "landingPageFeature3Title": "Dapatkan poin",
+  "@landingPageFeature3Title": {
+    "description": "Judul fitur 3 halaman landing"
+  },
+  "landingPageFeature3Desc": "dan tukarkan hadiah!",
+  "@landingPageFeature3Desc": {
+    "description": "Deskripsi fitur 3 halaman landing"
+  },
+  "landingPageGetStartedButton": "Mulai",
+  "@landingPageGetStartedButton": {
+    "description": "Teks tombol Mulai halaman landing"
+  },
+  "landingPageSignInButton": "Masuk",
+  "@landingPageSignInButton": {
+    "description": "Teks tombol Masuk halaman landing"
+  },
+  "landingPageContactEmail": "hello@sirsak.com",
+  "@landingPageContactEmail": {
+    "description": "Alamat email kontak halaman landing"
+  },
+  "landingPageContactPhone": "+628 777 0808 578",
+  "@landingPageContactPhone": {
+    "description": "Nomor telepon kontak halaman landing"
+  },
+  "landingPageContactInstagram": "sirsak.hub",
+  "@landingPageContactInstagram": {
+    "description": "Handle Instagram halaman landing"
   }
 }

@@ -193,6 +193,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =0{No items} =1{1 item} other{{count} items}}'**
   String itemCount(int count);
+
+  /// Landing page main title - part 1
+  ///
+  /// In en, this message translates to:
+  /// **'Building Indonesia\'s '**
+  String get landingPageTitlePart1;
+
+  /// Landing page main title - part 2 (bold text)
+  ///
+  /// In en, this message translates to:
+  /// **'largest,\ntraceable'**
+  String get landingPageTitlePart2;
+
+  /// Landing page main title - part 3
+  ///
+  /// In en, this message translates to:
+  /// **' waste value chain network'**
+  String get landingPageTitlePart3;
+
+  /// Landing page feature 1 title
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get landingPageFeature1Title;
+
+  /// Landing page feature 1 description
+  ///
+  /// In en, this message translates to:
+  /// **'for your nearest waste collection points'**
+  String get landingPageFeature1Desc;
+
+  /// Landing page feature 2 title
+  ///
+  /// In en, this message translates to:
+  /// **'Drop'**
+  String get landingPageFeature2Title;
+
+  /// Landing page feature 2 description
+  ///
+  /// In en, this message translates to:
+  /// **'your separated recyclable waste'**
+  String get landingPageFeature2Desc;
+
+  /// Landing page feature 3 title
+  ///
+  /// In en, this message translates to:
+  /// **'Get points'**
+  String get landingPageFeature3Title;
+
+  /// Landing page feature 3 description
+  ///
+  /// In en, this message translates to:
+  /// **'and redeem rewards!'**
+  String get landingPageFeature3Desc;
+
+  /// Landing page Get Started button text
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get landingPageGetStartedButton;
+
+  /// Landing page Sign in button text
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get landingPageSignInButton;
+
+  /// Landing page contact email address
+  ///
+  /// In en, this message translates to:
+  /// **'hello@sirsak.com'**
+  String get landingPageContactEmail;
+
+  /// Landing page contact phone number
+  ///
+  /// In en, this message translates to:
+  /// **'+628 777 0808 578'**
+  String get landingPageContactPhone;
+
+  /// Landing page Instagram handle
+  ///
+  /// In en, this message translates to:
+  /// **'sirsak.hub'**
+  String get landingPageContactInstagram;
 }
 
 class _AppLocalizationsDelegate

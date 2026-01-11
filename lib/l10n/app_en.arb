@@ -36,5 +36,61 @@
         "example": "5"
       }
     }
+  },
+  "landingPageTitlePart1": "Building Indonesia's ",
+  "@landingPageTitlePart1": {
+    "description": "Landing page main title - part 1"
+  },
+  "landingPageTitlePart2": "largest,\ntraceable",
+  "@landingPageTitlePart2": {
+    "description": "Landing page main title - part 2 (bold text)"
+  },
+  "landingPageTitlePart3": " waste value chain network",
+  "@landingPageTitlePart3": {
+    "description": "Landing page main title - part 3"
+  },
+  "landingPageFeature1Title": "Search",
+  "@landingPageFeature1Title": {
+    "description": "Landing page feature 1 title"
+  },
+  "landingPageFeature1Desc": "for your nearest waste collection points",
+  "@landingPageFeature1Desc": {
+    "description": "Landing page feature 1 description"
+  },
+  "landingPageFeature2Title": "Drop",
+  "@landingPageFeature2Title": {
+    "description": "Landing page feature 2 title"
+  },
+  "landingPageFeature2Desc": "your separated recyclable waste",
+  "@landingPageFeature2Desc": {
+    "description": "Landing page feature 2 description"
+  },
+  "landingPageFeature3Title": "Get points",
+  "@landingPageFeature3Title": {
+    "description": "Landing page feature 3 title"
+  },
+  "landingPageFeature3Desc": "and redeem rewards!",
+  "@landingPageFeature3Desc": {
+    "description": "Landing page feature 3 description"
+  },
+  "landingPageGetStartedButton": "Get Started",
+  "@landingPageGetStartedButton": {
+    "description": "Landing page Get Started button text"
+  },
+  "landingPageSignInButton": "Sign in",
+  "@landingPageSignInButton": {
+    "description": "Landing page Sign in button text"
+  },
+  "landingPageContactEmail": "hello@sirsak.com",
+  "@landingPageContactEmail": {
+    "description": "Landing page contact email address"
+  },
+  "landingPageContactPhone": "+628 777 0808 578",
+  "@landingPageContactPhone": {
+    "description": "Landing page contact phone number"
+  },
+  "landingPageContactInstagram": "sirsak.hub",
+  "@landingPageContactInstagram": {
+    "description": "Landing page Instagram handle"
   }
 }

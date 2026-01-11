@@ -66,4 +66,47 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get landingPageTitlePart1 => 'Building Indonesia\'s ';
+
+  @override
+  String get landingPageTitlePart2 => 'largest,\ntraceable';
+
+  @override
+  String get landingPageTitlePart3 => ' waste value chain network';
+
+  @override
+  String get landingPageFeature1Title => 'Search';
+
+  @override
+  String get landingPageFeature1Desc =>
+      'for your nearest waste collection points';
+
+  @override
+  String get landingPageFeature2Title => 'Drop';
+
+  @override
+  String get landingPageFeature2Desc => 'your separated recyclable waste';
+
+  @override
+  String get landingPageFeature3Title => 'Get points';
+
+  @override
+  String get landingPageFeature3Desc => 'and redeem rewards!';
+
+  @override
+  String get landingPageGetStartedButton => 'Get Started';
+
+  @override
+  String get landingPageSignInButton => 'Sign in';
+
+  @override
+  String get landingPageContactEmail => 'hello@sirsak.com';
+
+  @override
+  String get landingPageContactPhone => '+628 777 0808 578';
+
+  @override
+  String get landingPageContactInstagram => 'sirsak.hub';
 }

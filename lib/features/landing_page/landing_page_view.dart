@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
+import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_provider.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/gen/fonts.gen.dart';
+import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 
 class LandingPageView extends ConsumerWidget {
   const LandingPageView({super.key});
@@ -41,15 +43,14 @@ class LandingPageView extends ConsumerWidget {
                   text: TextSpan(
                     style: textTheme.headlineSmall?.copyWith(
                       color: Colors.white,
-                      height: 1.3,
                     ),
-                    children: const [
-                      TextSpan(text: "Building Indonesia's "),
+                    children: [
+                      TextSpan(text: context.l10n.landingPageTitlePart1),
                       TextSpan(
-                        text: 'largest,\ntraceable',
-                        style: TextStyle(fontWeight: FontWeight.w900),
+                        text: context.l10n.landingPageTitlePart2,
+                        style: const TextStyle(fontVariations: AppFonts.extraBold),
                       ),
-                      TextSpan(text: ' waste value chain network'),
+                      TextSpan(text: context.l10n.landingPageTitlePart3),
                     ],
                   ),
                 ),
@@ -58,24 +59,24 @@ class LandingPageView extends ConsumerWidget {
                 // Feature 1: Search
                 _FeatureItem(
                   icon: Icons.location_on_outlined,
-                  title: 'Search',
-                  description: 'for your nearest waste collection points',
+                  title: context.l10n.landingPageFeature1Title,
+                  description: context.l10n.landingPageFeature1Desc,
                 ),
                 const SizedBox(height: 24),
 
                 // Feature 2: Drop
                 _FeatureItem(
                   icon: Icons.delete_outline,
-                  title: 'Drop',
-                  description: 'your separated recyclable waste',
+                  title: context.l10n.landingPageFeature2Title,
+                  description: context.l10n.landingPageFeature2Desc,
                 ),
                 const SizedBox(height: 24),
 
                 // Feature 3: Get points
                 _FeatureItem(
                   icon: Icons.card_giftcard_outlined,
-                  title: 'Get points',
-                  description: 'and redeem rewards!',
+                  title: context.l10n.landingPageFeature3Title,
+                  description: context.l10n.landingPageFeature3Desc,
                 ),
                 const SizedBox(height: 40),
 
@@ -115,7 +116,7 @@ class LandingPageView extends ConsumerWidget {
                       elevation: 0,
                     ),
                     child: Text(
-                      'Get Started',
+                      context.l10n.landingPageGetStartedButton,
                       style: textTheme.titleMedium?.copyWith(
                         color: colorScheme.primary,
                         fontWeight: FontWeight.bold,
@@ -137,7 +138,7 @@ class LandingPageView extends ConsumerWidget {
                     ),
                   ),
                   child: Text(
-                    'Sign in',
+                    context.l10n.landingPageSignInButton,
                     style: textTheme.titleMedium?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -149,20 +150,24 @@ class LandingPageView extends ConsumerWidget {
                 // Contact Information
                 _ContactLink(
                   icon: Icons.email_outlined,
-                  text: 'hello@sirsak.com',
-                  onTap: () => viewModel.launchEmail('hello@sirsak.com'),
+                  text: context.l10n.landingPageContactEmail,
+                  onTap: () => viewModel.launchEmail(
+                    context.l10n.landingPageContactEmail,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 _ContactLink(
                   icon: Icons.phone_outlined,
-                  text: '+628 777 0808 578',
+                  text: context.l10n.landingPageContactPhone,
                   onTap: () => viewModel.launchPhone('+6287770808578'),
                 ),
                 const SizedBox(height: 12),
                 _ContactLink(
                   icon: Icons.camera_alt_outlined,
-                  text: 'sirsak.hub',
-                  onTap: () => viewModel.launchInstagram('sirsak.hub'),
+                  text: context.l10n.landingPageContactInstagram,
+                  onTap: () => viewModel.launchInstagram(
+                    context.l10n.landingPageContactInstagram,
+                  ),
                 ),
                 const SizedBox(height: 20),
               ],

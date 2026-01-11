@@ -97,13 +97,13 @@ class AppTheme {
           fontFamily: FontFamily.montserrat,
           fontSize: 20,
           color: colorScheme.onSurface,
-          fontVariations: AppFonts.semiBold,
+          fontVariations: AppFonts.medium,
         ),
         headlineSmall: TextStyle(
           fontFamily: FontFamily.nunitoSans,
           fontSize: 18,
           color: colorScheme.onSurface,
-          fontVariations: AppFonts.semiBold,
+          fontVariations: AppFonts.medium,
         ),
         bodyLarge: TextStyle(
           fontFamily: FontFamily.montserrat,

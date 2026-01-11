@@ -66,4 +66,47 @@ class AppLocalizationsId extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get landingPageTitlePart1 => 'Membangun ';
+
+  @override
+  String get landingPageTitlePart2 => 'terbesar dan tertelusur';
+
+  @override
+  String get landingPageTitlePart3 => ' jaringan nilai limbah Indonesia';
+
+  @override
+  String get landingPageFeature1Title => 'Cari';
+
+  @override
+  String get landingPageFeature1Desc =>
+      'titik pengumpulan limbah terdekat Anda';
+
+  @override
+  String get landingPageFeature2Title => 'Antar';
+
+  @override
+  String get landingPageFeature2Desc => 'limbah daur ulang yang sudah dipilah';
+
+  @override
+  String get landingPageFeature3Title => 'Dapatkan poin';
+
+  @override
+  String get landingPageFeature3Desc => 'dan tukarkan hadiah!';
+
+  @override
+  String get landingPageGetStartedButton => 'Mulai';
+
+  @override
+  String get landingPageSignInButton => 'Masuk';
+
+  @override
+  String get landingPageContactEmail => 'hello@sirsak.com';
+
+  @override
+  String get landingPageContactPhone => '+628 777 0808 578';
+
+  @override
+  String get landingPageContactInstagram => 'sirsak.hub';
 }
