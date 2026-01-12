@@ -109,4 +109,25 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get landingPageContactInstagram => 'sirsak.hub';
+
+  @override
+  String get signIn => 'Masuk';
+
+  @override
+  String get emailAddress => 'Alamat Email';
+
+  @override
+  String get forgotPassword => 'Lupa Kata Sandi?';
+
+  @override
+  String get continueWithGoogle => 'Lanjutkan dengan Google';
+
+  @override
+  String get dontHaveAccount => 'Belum punya akun?';
+
+  @override
+  String get signUp => 'Daftar';
+
+  @override
+  String get or => 'atau';
 }

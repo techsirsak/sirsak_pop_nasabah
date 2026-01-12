@@ -109,4 +109,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get landingPageContactInstagram => 'sirsak.hub';
+
+  @override
+  String get signIn => 'Sign In';
+
+  @override
+  String get emailAddress => 'Email Address';
+
+  @override
+  String get forgotPassword => 'Forgot Password?';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get or => 'or';
 }

@@ -277,6 +277,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'sirsak.hub'**
   String get landingPageContactInstagram;
+
+  /// Sign in button and page title
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signIn;
+
+  /// Email address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailAddress;
+
+  /// Forgot password link text
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
+  /// Google sign in button text
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// Sign up prompt text
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
+
+  /// Sign up link text
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// Divider text between login options
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get or;
 }
 
 class _AppLocalizationsDelegate

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
+import 'package:sirsak_pop_nasabah/features/auth/forgot_password/forgot_password_view.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_view.dart';
+import 'package:sirsak_pop_nasabah/features/auth/signup/signup_view.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_view.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_view.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_view.dart';
@@ -42,6 +44,20 @@ GoRouter router(Ref ref) {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const HomeView(),
+        ),
+      ),
+      GoRoute(
+        path: SAppRoutePath.forgotPassword,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const ForgotPasswordView(),
+        ),
+      ),
+      GoRoute(
+        path: SAppRoutePath.signUp,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const SignUpView(),
         ),
       ),
     ],

@@ -12,7 +12,7 @@ class LandingPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.read(landingPageViewModelProvider.notifier);
+    final viewModel = ref.watch(landingPageViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -32,10 +32,10 @@ class LandingPageView extends ConsumerWidget {
               children: [
                 // Sirsak Logo
                 Image.asset(
-                  Assets.images.sirsakLogoWhite.path,
-                  height: 120,
+                  Assets.images.sirsakMainLogoWhite.path,
+                  height: 160,
                 ),
-                const Gap(12),
+                const Gap(16),
 
                 // Main Title
                 RichText(
@@ -56,7 +56,7 @@ class LandingPageView extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const Gap(30),
+                const Gap(32),
 
                 // Feature 1: Search
                 _FeatureItem(
@@ -196,7 +196,7 @@ class _FeatureItem extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           // Icon container

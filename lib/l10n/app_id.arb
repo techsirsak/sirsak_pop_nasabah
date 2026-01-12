@@ -92,5 +92,33 @@
   "landingPageContactInstagram": "sirsak.hub",
   "@landingPageContactInstagram": {
     "description": "Handle Instagram halaman landing"
+  },
+  "signIn": "Masuk",
+  "@signIn": {
+    "description": "Teks tombol dan judul halaman masuk"
+  },
+  "emailAddress": "Alamat Email",
+  "@emailAddress": {
+    "description": "Label field alamat email"
+  },
+  "forgotPassword": "Lupa Kata Sandi?",
+  "@forgotPassword": {
+    "description": "Teks link lupa kata sandi"
+  },
+  "continueWithGoogle": "Lanjutkan dengan Google",
+  "@continueWithGoogle": {
+    "description": "Teks tombol masuk dengan Google"
+  },
+  "dontHaveAccount": "Belum punya akun?",
+  "@dontHaveAccount": {
+    "description": "Teks ajakan daftar"
+  },
+  "signUp": "Daftar",
+  "@signUp": {
+    "description": "Teks link daftar"
+  },
+  "or": "atau",
+  "@or": {
+    "description": "Teks pembatas antara opsi masuk"
   }
 }

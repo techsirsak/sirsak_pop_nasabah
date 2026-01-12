@@ -26,16 +26,46 @@ class $AssetsImagesGen {
   AssetGenImage get sirsakLogoWhite =>
       const AssetGenImage('assets/images/sirsak_logo_white.png');
 
+  /// File path: assets/images/sirsak_main_logo_green.png
+  AssetGenImage get sirsakMainLogoGreen =>
+      const AssetGenImage('assets/images/sirsak_main_logo_green.png');
+
+  /// File path: assets/images/sirsak_main_logo_white.png
+  AssetGenImage get sirsakMainLogoWhite =>
+      const AssetGenImage('assets/images/sirsak_main_logo_white.png');
+
   /// File path: assets/images/trash_cans.png
   AssetGenImage get trashCans =>
       const AssetGenImage('assets/images/trash_cans.png');
+
+  /// File path: assets/images/tutorial1.png
+  AssetGenImage get tutorial1 =>
+      const AssetGenImage('assets/images/tutorial1.png');
+
+  /// File path: assets/images/tutorial2.png
+  AssetGenImage get tutorial2 =>
+      const AssetGenImage('assets/images/tutorial2.png');
+
+  /// File path: assets/images/tutorial3.png
+  AssetGenImage get tutorial3 =>
+      const AssetGenImage('assets/images/tutorial3.png');
+
+  /// File path: assets/images/tutorial4.png
+  AssetGenImage get tutorial4 =>
+      const AssetGenImage('assets/images/tutorial4.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
     landingpageBackground,
     sirsakAppIcon,
     sirsakLogoWhite,
+    sirsakMainLogoGreen,
+    sirsakMainLogoWhite,
     trashCans,
+    tutorial1,
+    tutorial2,
+    tutorial3,
+    tutorial4,
   ];
 }
 

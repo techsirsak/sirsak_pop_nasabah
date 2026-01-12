@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_state.dart';
 
@@ -90,5 +93,13 @@ class LoginViewModel extends _$LoginViewModel {
 
   void clearError() {
     state = state.copyWith(errorMessage: null);
+  }
+
+  void navigateToForgotPassword() {
+    unawaited(ref.read(routerProvider).push(SAppRoutePath.forgotPassword));
+  }
+
+  void navigateToSignUp() {
+    unawaited(ref.read(routerProvider).push(SAppRoutePath.signUp));
   }
 }
