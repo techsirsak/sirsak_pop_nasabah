@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_provider.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
-import 'package:sirsak_pop_nasabah/gen/fonts.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 
 class LandingPageView extends ConsumerWidget {
