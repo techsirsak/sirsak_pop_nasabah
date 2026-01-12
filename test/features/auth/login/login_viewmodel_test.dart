@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sirsak_pop_nasabah/features/auth/login/login_provider.dart';
+import 'package:sirsak_pop_nasabah/features/auth/login/login_viewmodel.dart';
 
 void main() {
   group('LoginViewModel Tests', () {

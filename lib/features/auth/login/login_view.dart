@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
-import 'package:sirsak_pop_nasabah/features/auth/login/login_provider.dart';
+import 'package:sirsak_pop_nasabah/features/auth/login/login_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/custom_button.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/custom_text_field.dart';
 
@@ -12,7 +11,6 @@ class LoginView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(loginViewModelProvider);
     final viewModel = ref.read(loginViewModelProvider.notifier);
-    final router = ref.read(routerProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -105,7 +103,7 @@ class LoginView extends ConsumerWidget {
                 text: 'loginButton',
                 isLoading: state.isLoading,
                 icon: Icons.login,
-                onPressed: () => viewModel.login(router),
+                onPressed: viewModel.login,
               ),
 
 

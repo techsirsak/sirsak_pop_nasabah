@@ -1,9 +1,11 @@
+// ignore_for_file: directives_ordering
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../core/constants/route_path.dart';
-import 'landing_page_state.dart';
+import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_state.dart';
 
 class LandingPageViewModel extends StateNotifier<LandingPageState> {
   LandingPageViewModel() : super(const LandingPageState());

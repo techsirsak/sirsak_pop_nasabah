@@ -1,9 +1,15 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_state.dart';
 
-class LoginViewModel extends StateNotifier<LoginState> {
-  LoginViewModel() : super(const LoginState());
+part 'login_viewmodel.g.dart';
+
+@riverpod
+class LoginViewModel extends _$LoginViewModel {
+  @override
+  LoginState build() {
+    return const LoginState();
+  }
 
   void setEmail(String email) {
     state = state.copyWith(email: email, emailError: null);
@@ -52,7 +58,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
     return emailValid && passwordValid;
   }
 
-  Future<void> login(GoRouter router) async {
+  Future<void> login() async {
     // Clear previous errors
     state = state.copyWith(
       errorMessage: null,
@@ -73,6 +79,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       await Future<void>.delayed(const Duration(seconds: 1));
 
       // Mock successful login - navigate to home
+      final router = ref.read(routerProvider);
       router.go('/home');
     } catch (e) {
       state = state.copyWith(
