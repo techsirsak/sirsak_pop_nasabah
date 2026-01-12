@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_view.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_view.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_view.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_view.dart';
 
-final routerProvider = Provider<GoRouter>((ref) {
+part 'app_router.g.dart';
+
+@riverpod
+GoRouter router(Ref ref) {
   return GoRouter(
     initialLocation: '/',
     routes: [
@@ -48,4 +51,4 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
     ),
   );
-});
+}

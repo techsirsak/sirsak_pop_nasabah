@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
-import 'package:sirsak_pop_nasabah/features/splash/splash_provider.dart';
+import 'package:sirsak_pop_nasabah/features/splash/splash_viewmodel.dart';
 
 class SplashView extends ConsumerStatefulWidget {
   const SplashView({super.key});
@@ -18,9 +17,8 @@ class _SplashViewState extends ConsumerState<SplashView> {
     super.initState();
     // Initialize splash after first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final router = ref.read(routerProvider);
       unawaited(
-        ref.read(splashViewModelProvider.notifier).initializeSplash(router),
+        ref.read(splashViewModelProvider.notifier).initializeSplash(),
       );
     });
   }

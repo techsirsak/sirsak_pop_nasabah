@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
-import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_provider.dart';
+import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 
@@ -12,7 +11,6 @@ class LandingPageView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.read(landingPageViewModelProvider.notifier);
-    final router = ref.read(routerProvider);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -103,7 +101,7 @@ class LandingPageView extends ConsumerWidget {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: () => viewModel.navigateToGetStarted(router),
+                    onPressed: viewModel.navigateToGetStarted,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       foregroundColor: colorScheme.primary,
@@ -126,7 +124,7 @@ class LandingPageView extends ConsumerWidget {
 
                 // Sign In Button (Outlined)
                 OutlinedButton(
-                  onPressed: () => viewModel.navigateToSignIn(router),
+                  onPressed: viewModel.navigateToSignIn,
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white,
                     side: const BorderSide(color: Colors.white, width: 2),

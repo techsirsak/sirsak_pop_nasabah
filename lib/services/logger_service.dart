@@ -1,13 +1,16 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'logger_service.g.dart';
 
 /// Provider for LoggerService
-final loggerServiceProvider = Provider<LoggerService>((ref) {
+@riverpod
+LoggerService loggerService(Ref ref) {
   return LoggerService();
-});
+}
 
 /// {@template logger_service}
 ///

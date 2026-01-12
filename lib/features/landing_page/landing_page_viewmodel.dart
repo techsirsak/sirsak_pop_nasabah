@@ -1,25 +1,30 @@
-// ignore_for_file: directives_ordering
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
+import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
+import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_state.dart';
+part 'landing_page_viewmodel.g.dart';
 
-class LandingPageViewModel extends StateNotifier<LandingPageState> {
-  LandingPageViewModel() : super(const LandingPageState());
+@riverpod
+class LandingPageViewModel extends _$LandingPageViewModel {
+  @override
+  LandingPageState build() {
+    return const LandingPageState();
+  }
 
   /// Navigate to login page when "Get Started" button is tapped
-  Future<void> navigateToGetStarted(GoRouter router) async {
+  Future<void> navigateToGetStarted() async {
     state = state.copyWith(isNavigating: true);
+    final router = ref.read(routerProvider);
     await router.push(SAppRoutePath.login);
     state = state.copyWith(isNavigating: false);
   }
 
   /// Navigate to login page when "Sign in" button is tapped
-  Future<void> navigateToSignIn(GoRouter router) async {
+  Future<void> navigateToSignIn() async {
     state = state.copyWith(isNavigating: true);
+    final router = ref.read(routerProvider);
     await router.push(SAppRoutePath.login);
     state = state.copyWith(isNavigating: false);
   }
