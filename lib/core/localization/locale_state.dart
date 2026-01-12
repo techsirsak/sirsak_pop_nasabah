@@ -6,6 +6,6 @@ part 'locale_state.freezed.dart';
 @freezed
 abstract class LocaleState with _$LocaleState {
   const factory LocaleState({
-    @Default(Locale('en')) Locale locale,
+    @Default(Locale('id')) Locale locale,
   }) = _LocaleState;
 }

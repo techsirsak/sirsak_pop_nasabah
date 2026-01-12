@@ -37,15 +37,15 @@
       }
     }
   },
-  "landingPageTitlePart1": "Membangun ",
+  "landingPageTitlePart1": "Membangun jaringan ",
   "@landingPageTitlePart1": {
     "description": "Judul utama halaman landing - bagian 1"
   },
-  "landingPageTitlePart2": "terbesar dan tertelusur",
+  "landingPageTitlePart2": "terbesar\ndan tertelusur",
   "@landingPageTitlePart2": {
     "description": "Judul utama halaman landing - bagian 2 (teks tebal)"
   },
-  "landingPageTitlePart3": " jaringan nilai limbah Indonesia",
+  "landingPageTitlePart3": " untuk limbah Indonesia",
   "@landingPageTitlePart3": {
     "description": "Judul utama halaman landing - bagian 3"
   },

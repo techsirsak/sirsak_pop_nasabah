@@ -68,13 +68,13 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get landingPageTitlePart1 => 'Membangun ';
+  String get landingPageTitlePart1 => 'Membangun jaringan ';
 
   @override
-  String get landingPageTitlePart2 => 'terbesar dan tertelusur';
+  String get landingPageTitlePart2 => 'terbesar\ndan tertelusur';
 
   @override
-  String get landingPageTitlePart3 => ' jaringan nilai limbah Indonesia';
+  String get landingPageTitlePart3 => ' untuk limbah Indonesia';
 
   @override
   String get landingPageFeature1Title => 'Cari';

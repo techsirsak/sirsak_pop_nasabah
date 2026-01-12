@@ -185,7 +185,7 @@ class LoginView extends ConsumerWidget {
                   ),
                   child: Text(
                     context.l10n.forgotPassword,
-                    style: textTheme.bodyMedium?.copyWith(
+                    style: textTheme.titleSmall?.copyWith(
                       color: colorScheme.tertiary,
                       fontWeight: FontWeight.w500,
                     ),
