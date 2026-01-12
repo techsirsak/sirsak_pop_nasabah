@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
@@ -13,6 +15,8 @@ class LandingPageView extends ConsumerWidget {
     final viewModel = ref.read(landingPageViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+
+    final size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       body: Container(
@@ -31,7 +35,7 @@ class LandingPageView extends ConsumerWidget {
                   Assets.images.sirsakLogoWhite.path,
                   height: 120,
                 ),
-                const SizedBox(height: 24),
+                const Gap(12),
 
                 // Main Title
                 RichText(
@@ -44,57 +48,57 @@ class LandingPageView extends ConsumerWidget {
                       TextSpan(text: context.l10n.landingPageTitlePart1),
                       TextSpan(
                         text: context.l10n.landingPageTitlePart2,
-                        style: const TextStyle(fontVariations: AppFonts.extraBold),
+                        style: const TextStyle(
+                          fontVariations: AppFonts.extraBold,
+                        ),
                       ),
                       TextSpan(text: context.l10n.landingPageTitlePart3),
                     ],
                   ),
                 ),
-                const SizedBox(height: 40),
+                const Gap(30),
 
                 // Feature 1: Search
                 _FeatureItem(
-                  icon: Icons.location_on_outlined,
+                  icon: PhosphorIcons.mapPin(),
                   title: context.l10n.landingPageFeature1Title,
                   description: context.l10n.landingPageFeature1Desc,
                 ),
-                const SizedBox(height: 24),
+                const Gap(20),
 
                 // Feature 2: Drop
                 _FeatureItem(
-                  icon: Icons.delete_outline,
+                  icon: PhosphorIcons.trash(),
                   title: context.l10n.landingPageFeature2Title,
                   description: context.l10n.landingPageFeature2Desc,
                 ),
-                const SizedBox(height: 24),
+                const Gap(20),
 
                 // Feature 3: Get points
                 _FeatureItem(
-                  icon: Icons.card_giftcard_outlined,
+                  icon: PhosphorIcons.gift(),
                   title: context.l10n.landingPageFeature3Title,
                   description: context.l10n.landingPageFeature3Desc,
                 ),
-                const SizedBox(height: 40),
+                const Gap(30),
 
                 // Photo Showcase - Three waste bins
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    Assets.images.trashCans.path,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+                Image.asset(
+                  Assets.images.trashCans.path,
+                  // height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                const SizedBox(height: 40),
+                const Gap(40),
 
                 // Get Started Button
                 Container(
+                  width: size.width / 2,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: .1),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),
@@ -123,49 +127,49 @@ class LandingPageView extends ConsumerWidget {
                 const SizedBox(height: 16),
 
                 // Sign In Button (Outlined)
-                OutlinedButton(
-                  onPressed: viewModel.navigateToSignIn,
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.white, width: 2),
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                SizedBox(
+                  width: size.width / 2,
+                  child: OutlinedButton(
+                    onPressed: viewModel.navigateToSignIn,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: Colors.white, width: 2),
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    context.l10n.landingPageSignInButton,
-                    style: textTheme.titleMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    child: Text(
+                      context.l10n.landingPageSignInButton,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
-
+                const Gap(30),
                 // Contact Information
                 _ContactLink(
-                  icon: Icons.email_outlined,
+                  icon: PhosphorIcons.envelope(),
                   text: context.l10n.landingPageContactEmail,
                   onTap: () => viewModel.launchEmail(
                     context.l10n.landingPageContactEmail,
                   ),
                 ),
-                const SizedBox(height: 12),
                 _ContactLink(
-                  icon: Icons.phone_outlined,
+                  icon: PhosphorIcons.phone(),
                   text: context.l10n.landingPageContactPhone,
                   onTap: () => viewModel.launchPhone('+6287770808578'),
                 ),
-                const SizedBox(height: 12),
                 _ContactLink(
-                  icon: Icons.camera_alt_outlined,
+                  icon: PhosphorIcons.instagramLogo(),
                   text: context.l10n.landingPageContactInstagram,
                   onTap: () => viewModel.launchInstagram(
                     context.l10n.landingPageContactInstagram,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const Gap(30),
               ],
             ),
           ),
@@ -191,63 +195,53 @@ class _FeatureItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Icon container
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          // Icon container
+          Icon(
             icon,
             color: Colors.white,
             size: 32,
           ),
-        ),
-        const SizedBox(width: 16),
+          const SizedBox(width: 16),
 
-        // Text content
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: textTheme.titleLarge?.copyWith(
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                text: title,
+                style: textTheme.titleMedium?.copyWith(
                   color: Colors.white,
-                  fontWeight: FontWeight.bold,
                 ),
+                children: [
+                  TextSpan(
+                    text: ' $description',
+                    style: textTheme.bodyLarge?.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 4),
-              Text(
-                description,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: Colors.white.withOpacity(0.9),
-                  height: 1.4,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
 /// Contact link widget with icon and text
 class _ContactLink extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final VoidCallback onTap;
-
   const _ContactLink({
     required this.icon,
     required this.text,
     required this.onTap,
   });
+
+  final IconData icon;
+  final String text;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -271,7 +265,6 @@ class _ContactLink extends StatelessWidget {
               text,
               style: textTheme.bodyMedium?.copyWith(
                 color: Colors.white,
-                decoration: TextDecoration.underline,
               ),
             ),
           ],

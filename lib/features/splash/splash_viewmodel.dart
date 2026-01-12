@@ -18,7 +18,6 @@ class SplashViewModel extends _$SplashViewModel {
     await Future<void>.delayed(const Duration(seconds: 2));
 
     // Navigate to landing page
-    final router = ref.read(routerProvider);
-    router.go(SAppRoutePath.landingPage);
+    ref.read(routerProvider).go(SAppRoutePath.landingPage);
   }
 }

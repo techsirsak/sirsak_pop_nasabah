@@ -105,6 +105,24 @@ class AppTheme {
           color: colorScheme.onSurface,
           fontVariations: AppFonts.medium,
         ),
+        titleLarge: TextStyle(
+          fontFamily: FontFamily.montserrat,
+          fontSize: 22,
+          color: colorScheme.onSurface,
+          fontVariations: AppFonts.semiBold,
+        ),
+        titleMedium: TextStyle(
+          fontFamily: FontFamily.montserrat,
+          fontSize: 16,
+          color: colorScheme.onSurface,
+          fontVariations: AppFonts.semiBold,
+        ),
+        titleSmall: TextStyle(
+          fontFamily: FontFamily.montserrat,
+          fontSize: 14,
+          color: colorScheme.onSurface,
+          fontVariations: AppFonts.semiBold,
+        ),
         bodyLarge: TextStyle(
           fontFamily: FontFamily.montserrat,
           fontSize: 16,

@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String label;
-  final String? hintText;
-  final String? errorText;
-  final bool obscureText;
-  final TextInputType? keyboardType;
-  final ValueChanged<String>? onChanged;
-  final TextEditingController? controller;
-  final Widget? prefixIcon;
-  final Widget? suffixIcon;
-
   const CustomTextField({
-    super.key,
     required this.label,
     this.hintText,
     this.errorText,
@@ -22,7 +11,18 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.prefixIcon,
     this.suffixIcon,
+    super.key,
   });
+
+  final String label;
+  final String? hintText;
+  final String? errorText;
+  final bool obscureText;
+  final TextInputType? keyboardType;
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {

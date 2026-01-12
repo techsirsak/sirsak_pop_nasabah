@@ -24,9 +24,9 @@ void main() {
     });
 
     test('setEmail should update email in state', () {
-      final viewModel = container.read(loginViewModelProvider.notifier);
-
-      viewModel.setEmail('test@example.com');
+      container
+          .read(loginViewModelProvider.notifier)
+          .setEmail('test@example.com');
 
       final state = container.read(loginViewModelProvider);
       expect(state.email, 'test@example.com');
@@ -34,9 +34,9 @@ void main() {
     });
 
     test('setPassword should update password in state', () {
-      final viewModel = container.read(loginViewModelProvider.notifier);
-
-      viewModel.setPassword('password123');
+      container
+          .read(loginViewModelProvider.notifier)
+          .setPassword('password123');
 
       final state = container.read(loginViewModelProvider);
       expect(state.password, 'password123');
@@ -44,27 +44,25 @@ void main() {
     });
 
     test('setEmail should clear emailError', () {
-      final viewModel = container.read(loginViewModelProvider.notifier);
-
-      viewModel.setEmail('test@example.com');
+      container
+          .read(loginViewModelProvider.notifier)
+          .setEmail('test@example.com');
 
       final state = container.read(loginViewModelProvider);
       expect(state.emailError, null);
     });
 
     test('setPassword should clear passwordError', () {
-      final viewModel = container.read(loginViewModelProvider.notifier);
-
-      viewModel.setPassword('password123');
+      container
+          .read(loginViewModelProvider.notifier)
+          .setPassword('password123');
 
       final state = container.read(loginViewModelProvider);
       expect(state.passwordError, null);
     });
 
     test('clearError should clear error message', () {
-      final viewModel = container.read(loginViewModelProvider.notifier);
-
-      viewModel.clearError();
+      container.read(loginViewModelProvider.notifier).clearError();
 
       final state = container.read(loginViewModelProvider);
       expect(state.errorMessage, null);

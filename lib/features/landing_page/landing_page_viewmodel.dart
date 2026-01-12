@@ -31,7 +31,7 @@ class LandingPageViewModel extends _$LandingPageViewModel {
 
   /// Launch email client
   Future<void> launchEmail(String email) async {
-    final Uri emailUri = Uri(
+    final emailUri = Uri(
       scheme: 'mailto',
       path: email,
     );
@@ -42,7 +42,7 @@ class LandingPageViewModel extends _$LandingPageViewModel {
 
   /// Launch phone dialer
   Future<void> launchPhone(String phone) async {
-    final Uri phoneUri = Uri(
+    final phoneUri = Uri(
       scheme: 'tel',
       path: phone,
     );
@@ -53,7 +53,7 @@ class LandingPageViewModel extends _$LandingPageViewModel {
 
   /// Launch Instagram app or web
   Future<void> launchInstagram(String handle) async {
-    final Uri instagramUri = Uri.parse('https://instagram.com/$handle');
+    final instagramUri = Uri.parse('https://instagram.com/$handle');
     if (await canLaunchUrl(instagramUri)) {
       await launchUrl(instagramUri, mode: LaunchMode.externalApplication);
     }

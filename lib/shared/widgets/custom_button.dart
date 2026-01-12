@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final String text;
-  final VoidCallback? onPressed;
-  final bool isLoading;
-  final IconData? icon;
-
   const CustomButton({
-    super.key,
     required this.text,
     this.onPressed,
     this.isLoading = false,
     this.icon,
+    super.key,
   });
+
+  final String text;
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {

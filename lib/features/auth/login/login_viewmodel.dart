@@ -79,8 +79,7 @@ class LoginViewModel extends _$LoginViewModel {
       await Future<void>.delayed(const Duration(seconds: 1));
 
       // Mock successful login - navigate to home
-      final router = ref.read(routerProvider);
-      router.go('/home');
+      ref.read(routerProvider).go('/home');
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
