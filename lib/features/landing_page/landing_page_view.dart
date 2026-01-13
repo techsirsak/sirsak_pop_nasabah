@@ -31,9 +31,12 @@ class LandingPageView extends ConsumerWidget {
             child: Column(
               children: [
                 // Sirsak Logo
-                Image.asset(
-                  Assets.images.sirsakMainLogoWhite.path,
-                  height: 160,
+                Hero(
+                  tag: 'sirsak_logo',
+                  child: Image.asset(
+                    Assets.images.sirsakMainLogoWhite.path,
+                    height: 160,
+                  ),
                 ),
                 const Gap(16),
 

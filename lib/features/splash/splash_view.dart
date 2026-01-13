@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_viewmodel.dart';
+import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 
 class SplashView extends ConsumerStatefulWidget {
   const SplashView({super.key});
@@ -26,6 +27,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    ref.watch(splashViewModelProvider);
 
     return Scaffold(
       backgroundColor: colorScheme.primary,
@@ -33,25 +35,12 @@ class _SplashViewState extends ConsumerState<SplashView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Placeholder for logo
-            const Icon(
-              Icons.account_balance_wallet,
-              size: 100,
-              color: Colors.white,
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'appName',
-              style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'splashTitle',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.white.withValues(alpha: .9),
+            // Sirsak Logo
+            Hero(
+              tag: 'sirsak_logo',
+              child: Image.asset(
+                Assets.images.sirsakMainLogoWhite.path,
+                height: 160,
               ),
             ),
             const SizedBox(height: 48),

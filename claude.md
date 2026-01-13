@@ -213,6 +213,66 @@ final loginViewModelProvider =
 3. **Single Source of Truth**: One provider per feature state
 4. **Explicit Dependencies**: Inject dependencies through provider refs
 
+### UI Widget Guidelines
+
+#### Spacing with Gap
+- **IMPORTANT**: Always use the `Gap` widget from the `gap` package instead of `SizedBox()` for spacing
+- Gap provides cleaner, more readable code for both vertical and horizontal spacing
+- The gap value directly represents pixels (e.g., `Gap(16)` = 16 pixels)
+
+**Import Required**:
+```dart
+import 'package:gap/gap.dart';
+```
+
+**Usage Examples**:
+
+```dart
+// ✅ CORRECT: Use Gap for spacing
+Column(
+  children: [
+    Text('Title'),
+    Gap(16),  // Vertical spacing
+    Text('Subtitle'),
+    Gap(24),
+    ElevatedButton(
+      onPressed: () {},
+      child: Text('Submit'),
+    ),
+  ],
+)
+
+Row(
+  children: [
+    Icon(Icons.star),
+    Gap(8),  // Horizontal spacing
+    Text('Rating'),
+  ],
+)
+
+// ❌ INCORRECT: Don't use SizedBox for spacing
+Column(
+  children: [
+    Text('Title'),
+    SizedBox(height: 16),  // Don't do this
+    Text('Subtitle'),
+  ],
+)
+
+Row(
+  children: [
+    Icon(Icons.star),
+    SizedBox(width: 8),  // Don't do this
+    Text('Rating'),
+  ],
+)
+```
+
+**When to use SizedBox**:
+- Only use `SizedBox` when you need to explicitly constrain widget size (width AND height together)
+- Example: `SizedBox(width: 200, height: 100, child: Container(...))`
+- For pure spacing, always prefer `Gap`
+
 ### Navigation
 - Use **GoRouter** for declarative routing
 - Define routes in `lib/core/router/app_router.dart`
@@ -669,10 +729,11 @@ final loginViewModelProvider =
 - [ ] No hardcoded strings (use constants)
 - [ ] Route paths defined in `route_path.dart` (not hardcoded in router/views)
 - [ ] All user-facing text localized (no hardcoded strings in views)
+- [ ] Gap widget used for spacing (not SizedBox)
 
 ---
 
-**Last Updated**: 2026-01-09
+**Last Updated**: 2026-01-12
 **Architecture Version**: 1.0
 **Flutter Version**: 3.29.0
 **Dart Version**: 3.7.0

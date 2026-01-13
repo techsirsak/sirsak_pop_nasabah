@@ -17,16 +17,14 @@ GoRouter router(Ref ref) {
     initialLocation: '/',
     routes: [
       GoRoute(
-        path: '/splash',
-        name: 'splash',
+        path: '/',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const SplashView(),
         ),
       ),
       GoRoute(
-        path: '/',
-        // path: SAppRoutePath.landingPage,
+        path: SAppRoutePath.landingPage,
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const LandingPageView(),

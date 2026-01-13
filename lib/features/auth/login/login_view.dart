@@ -55,7 +55,7 @@ class LoginView extends ConsumerWidget {
                 ),
               ),
 
-              const Gap(30),
+              const Gap(40),
 
               // Email Address Field
               Text(
@@ -297,9 +297,8 @@ class LoginView extends ConsumerWidget {
                       const TextSpan(text: ' '),
                       TextSpan(
                         text: context.l10n.signUp,
-                        style: TextStyle(
+                        style: textTheme.titleSmall?.copyWith(
                           color: colorScheme.tertiary,
-                          fontWeight: FontWeight.w600,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = viewModel.navigateToSignUp,

@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_state.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:sirsak_pop_nasabah/services/url_launcher_service.dart';
 
 part 'landing_page_viewmodel.g.dart';
 
@@ -31,31 +31,19 @@ class LandingPageViewModel extends _$LandingPageViewModel {
 
   /// Launch email client
   Future<void> launchEmail(String email) async {
-    final emailUri = Uri(
-      scheme: 'mailto',
-      path: email,
-    );
-    if (await canLaunchUrl(emailUri)) {
-      await launchUrl(emailUri);
-    }
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    await urlLauncher.launchEmail(email);
   }
 
   /// Launch phone dialer
   Future<void> launchPhone(String phone) async {
-    final phoneUri = Uri(
-      scheme: 'tel',
-      path: phone,
-    );
-    if (await canLaunchUrl(phoneUri)) {
-      await launchUrl(phoneUri);
-    }
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    await urlLauncher.launchPhone(phone);
   }
 
   /// Launch Instagram app or web
   Future<void> launchInstagram(String handle) async {
-    final instagramUri = Uri.parse('https://instagram.com/$handle');
-    if (await canLaunchUrl(instagramUri)) {
-      await launchUrl(instagramUri, mode: LaunchMode.externalApplication);
-    }
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    await urlLauncher.launchInstagram(handle);
   }
 }
