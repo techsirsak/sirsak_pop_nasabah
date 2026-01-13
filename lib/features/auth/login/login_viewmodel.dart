@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_state.dart';
+import 'package:sirsak_pop_nasabah/services/preferences_service.dart';
 
 part 'login_viewmodel.g.dart';
 
@@ -70,9 +71,10 @@ class LoginViewModel extends _$LoginViewModel {
     );
 
     // Validate form
-    if (!_validateForm()) {
-      return;
-    }
+    // TODO(devin): validate and call Auth API
+    // if (!_validateForm()) {
+    //   return;
+    // }
 
     // Show loading
     state = state.copyWith(isLoading: true);
@@ -81,8 +83,15 @@ class LoginViewModel extends _$LoginViewModel {
       // Simulate API call delay
       await Future<void>.delayed(const Duration(seconds: 1));
 
-      // Mock successful login - navigate to home
-      ref.read(routerProvider).go('/home');
+      // Mock successful login - check if tutorial needed
+      final prefsService = ref.read(preferencesServiceProvider);
+      final hasSeenTutorial = await prefsService.hasSeenTutorial();
+
+      if (hasSeenTutorial) {
+        ref.read(routerProvider).go(SAppRoutePath.home);
+      } else {
+        ref.read(routerProvider).go(SAppRoutePath.tutorial);
+      }
     } catch (e) {
       state = state.copyWith(
         isLoading: false,

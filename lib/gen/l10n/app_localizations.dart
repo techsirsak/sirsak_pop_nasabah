@@ -314,6 +314,66 @@ abstract class AppLocalizations {
   /// **'Welcome'**
   String get splashTitle;
 
+  /// No description provided for @tutorialDesc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the nearest waste collection points around you'**
+  String get tutorialDesc1;
+
+  /// No description provided for @tutorialDesc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Bring your separated recyclable waste to the collection points'**
+  String get tutorialDesc2;
+
+  /// No description provided for @tutorialDesc3.
+  ///
+  /// In en, this message translates to:
+  /// **'Get rewarded with points for every waste you drop'**
+  String get tutorialDesc3;
+
+  /// No description provided for @tutorialDesc4.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your points to redeem exciting rewards and prizes'**
+  String get tutorialDesc4;
+
+  /// No description provided for @tutorialSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get tutorialSkip;
+
+  /// No description provided for @tutorialStartButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Now!'**
+  String get tutorialStartButton;
+
+  /// No description provided for @tutorialTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for Collection Points'**
+  String get tutorialTitle1;
+
+  /// No description provided for @tutorialTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop Your Waste'**
+  String get tutorialTitle2;
+
+  /// No description provided for @tutorialTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Earn Points'**
+  String get tutorialTitle3;
+
+  /// No description provided for @tutorialTitle4.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem Rewards'**
+  String get tutorialTitle4;
+
   /// No description provided for @welcomeUser.
   ///
   /// In en, this message translates to:

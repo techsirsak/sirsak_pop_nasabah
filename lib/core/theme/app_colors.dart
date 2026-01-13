@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Material Design 3 color system for Sirsak Pop Nasabah
 ///
-/// This class defines the app's color palette following Material Design 3 
+/// This class defines the app's color palette following Material Design 3
 /// guidelines.
 /// All designer colors are preserved and mapped to semantic ColorScheme roles.
 ///
@@ -56,29 +56,24 @@ class AppColors {
     return const ColorScheme.light(
       // Primary colors - Main brand identity
       primary: _brandGreenDark, // Main green for CTAs, app bar
-      primaryContainer: _brandGreenLight, // Light green containers
-      onPrimaryContainer: _brandGreenDarker, // Text on light containers
-
+      primaryContainer: _brandGreenDarker, // Light green containers
+      onPrimaryContainer: _brandGreenLight, // Text on light containers
       // Secondary colors - Accents and secondary actions
       secondary: _brandOrange, // Orange for highlights, secondary CTAs
       secondaryContainer: _brandYellow, // Light yellow for info
       onSecondaryContainer: Color(0xFF2D1600), // Dark brown text
-
       // Tertiary colors - Alternative accents
       tertiary: _brandGreenMedium, // Medium green decorative
       tertiaryContainer: Color(0xFFD5E8D8), // Very light green
       onTertiaryContainer: Color(0xFF1A3520), // Dark green text
-
       // Error colors - Validation and error states
       errorContainer: Color(0xFFFFDAD6), // Light red backgrounds
       onErrorContainer: Color(0xFF410002), // Dark red text
-
       // Surface colors - Backgrounds for components
       onSurface: Color(0xFF1C1B1F), // Primary text (was kcDarkGreyColor)
       // surfaceContainerHighest replaces deprecated surfaceVariant
       surfaceContainerHighest: Color(0xFFE7E0EC), // (was kcVeryLightGrey)
       onSurfaceVariant: Color(0xFF49454F), // Secondary text (kcMediumGrey)
-
       // Outline colors - Borders and dividers
       outline: Color(0xFF79747E), // Border color (was kcLightGrey)
       outlineVariant: Color(0xFFCAC4D0), // Subtle borders

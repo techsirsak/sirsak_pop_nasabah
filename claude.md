@@ -215,6 +215,77 @@ final loginViewModelProvider =
 
 ### UI Widget Guidelines
 
+#### Typography with Variable Fonts
+- **IMPORTANT**: Always use `fontVariations: AppFonts.xxx` instead of `fontWeight: FontWeight.xxx` for custom font weights
+- The app uses variable fonts (Montserrat, League Spartan, Nunito Sans) which require `fontVariations` instead of `fontWeight`
+- AppFonts provides semantic weight constants: `thin`, `extraLight`, `light`, `regular`, `medium`, `semiBold`, `bold`, `extraBold`, `black`
+
+**Import Required**:
+```dart
+import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
+```
+
+**Usage Examples**:
+
+```dart
+// ✅ CORRECT: Use fontVariations with AppFonts
+Text(
+  'Bold Title',
+  style: textTheme.titleLarge?.copyWith(
+    fontVariations: AppFonts.bold,
+  ),
+)
+
+Text(
+  'Medium Text',
+  style: textTheme.bodyLarge?.copyWith(
+    fontVariations: AppFonts.medium,
+  ),
+)
+
+Text(
+  'Semi-bold Button',
+  style: textTheme.titleMedium?.copyWith(
+    fontVariations: AppFonts.semiBold,
+  ),
+)
+
+// ❌ INCORRECT: Don't use fontWeight
+Text(
+  'Bold Title',
+  style: textTheme.titleLarge?.copyWith(
+    fontWeight: FontWeight.bold,  // Don't do this
+  ),
+)
+
+Text(
+  'Medium Text',
+  style: textTheme.bodyLarge?.copyWith(
+    fontWeight: FontWeight.w500,  // Don't do this
+  ),
+)
+```
+
+**Available Font Weight Constants**:
+- `AppFonts.thin` - weight 100
+- `AppFonts.extraLight` - weight 200
+- `AppFonts.light` - weight 300
+- `AppFonts.regular` - weight 400 (body text)
+- `AppFonts.medium` - weight 500 (labels, secondary emphasis)
+- `AppFonts.semiBold` - weight 600 (sub-headings, important text)
+- `AppFonts.bold` - weight 700 (headings, strong emphasis)
+- `AppFonts.extraBold` - weight 800
+- `AppFonts.black` - weight 900 (maximum emphasis)
+
+**When to use each weight**:
+- Use `regular` for body text and normal content
+- Use `medium` for labels, field labels, and subtle emphasis
+- Use `semiBold` for buttons, sub-headings, and important text
+- Use `bold` for page titles, section headings, and strong emphasis
+- Use heavier weights (`extraBold`, `black`) sparingly for maximum impact
+
+**Note**: The base TextTheme in `app_theme.dart` already has appropriate font variations configured. Only override when you need a different weight than the default for that text style.
+
 #### Spacing with Gap
 - **IMPORTANT**: Always use the `Gap` widget from the `gap` package instead of `SizedBox()` for spacing
 - Gap provides cleaner, more readable code for both vertical and horizontal spacing
@@ -734,6 +805,7 @@ final loginViewModelProvider =
 - [ ] Route paths defined in `route_path.dart` (not hardcoded in router/views)
 - [ ] All user-facing text localized (no hardcoded strings in views)
 - [ ] Gap widget used for spacing (not SizedBox)
+- [ ] Font variations used with AppFonts (not fontWeight)
 
 ---
 

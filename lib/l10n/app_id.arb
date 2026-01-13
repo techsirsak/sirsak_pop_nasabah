@@ -43,6 +43,16 @@
   "signIn": "Masuk",
   "signUp": "Daftar sekarang",
   "splashTitle": "Selamat Datang",
+  "tutorialDesc1": "Cari titik pengumpulan sampah terdekat di sekitar Anda",
+  "tutorialDesc2": "Bawa sampah daur ulang yang sudah dipilah ke titik pengumpulan",
+  "tutorialDesc3": "Raih poin sebagai hadiah untuk setiap sampah yang Anda buang",
+  "tutorialDesc4": "Gunakan poin Anda untuk menukar hadiah dan hadiah menarik",
+  "tutorialSkip": "Lewati",
+  "tutorialStartButton": "Mulai Sekarang!",
+  "tutorialTitle1": "Temukan Titik Pengumpulan",
+  "tutorialTitle2": "Buang Sampah Anda",
+  "tutorialTitle3": "Dapatkan Poin",
+  "tutorialTitle4": "Tukar Hadiah",
   "welcomeUser": "Selamat datang, {userName}!",
   "@welcomeUser": {
     "placeholders": {

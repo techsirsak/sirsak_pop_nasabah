@@ -127,6 +127,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get splashTitle => 'Welcome';
 
   @override
+  String get tutorialDesc1 =>
+      'Find the nearest waste collection points around you';
+
+  @override
+  String get tutorialDesc2 =>
+      'Bring your separated recyclable waste to the collection points';
+
+  @override
+  String get tutorialDesc3 =>
+      'Get rewarded with points for every waste you drop';
+
+  @override
+  String get tutorialDesc4 =>
+      'Use your points to redeem exciting rewards and prizes';
+
+  @override
+  String get tutorialSkip => 'Skip';
+
+  @override
+  String get tutorialStartButton => 'Start Now!';
+
+  @override
+  String get tutorialTitle1 => 'Search for Collection Points';
+
+  @override
+  String get tutorialTitle2 => 'Drop Your Waste';
+
+  @override
+  String get tutorialTitle3 => 'Earn Points';
+
+  @override
+  String get tutorialTitle4 => 'Redeem Rewards';
+
+  @override
   String welcomeUser(String userName) {
     return 'Welcome, $userName!';
   }

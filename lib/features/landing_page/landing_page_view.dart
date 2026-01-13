@@ -35,7 +35,7 @@ class LandingPageView extends ConsumerWidget {
                   tag: 'sirsak_logo',
                   child: Image.asset(
                     Assets.images.sirsakMainLogoWhite.path,
-                    height: 160,
+                    height: 140,
                   ),
                 ),
                 const Gap(16),
@@ -96,7 +96,7 @@ class LandingPageView extends ConsumerWidget {
 
                 // Get Started Button
                 Container(
-                  width: size.width / 2,
+                  width: size.width * 2 / 3,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
@@ -111,7 +111,7 @@ class LandingPageView extends ConsumerWidget {
                     onPressed: viewModel.navigateToGetStarted,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      foregroundColor: colorScheme.primary,
+                      foregroundColor: colorScheme.primaryContainer,
                       minimumSize: const Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -121,8 +121,8 @@ class LandingPageView extends ConsumerWidget {
                     child: Text(
                       context.l10n.landingPageGetStartedButton,
                       style: textTheme.titleMedium?.copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.bold,
+                        color: colorScheme.primaryContainer,
+                        fontVariations: AppFonts.bold,
                       ),
                     ),
                   ),
@@ -131,7 +131,7 @@ class LandingPageView extends ConsumerWidget {
 
                 // Sign In Button (Outlined)
                 SizedBox(
-                  width: size.width / 2,
+                  width: size.width * 2 / 3,
                   child: OutlinedButton(
                     onPressed: viewModel.navigateToSignIn,
                     style: OutlinedButton.styleFrom(
@@ -146,7 +146,7 @@ class LandingPageView extends ConsumerWidget {
                       context.l10n.landingPageSignInButton,
                       style: textTheme.titleMedium?.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        fontVariations: AppFonts.bold,
                       ),
                     ),
                   ),

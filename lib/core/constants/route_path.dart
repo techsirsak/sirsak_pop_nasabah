@@ -5,4 +5,6 @@ class SAppRoutePath {
   static const home = '/home';
   static const forgotPassword = '/forgot-password';
   static const signUp = '/signup';
+  static const tutorial = '/tutorial';
+  static const widgetShowcase = '/widget-showcase';
 }

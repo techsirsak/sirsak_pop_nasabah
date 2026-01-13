@@ -127,6 +127,40 @@ class AppLocalizationsId extends AppLocalizations {
   String get splashTitle => 'Selamat Datang';
 
   @override
+  String get tutorialDesc1 =>
+      'Cari titik pengumpulan sampah terdekat di sekitar Anda';
+
+  @override
+  String get tutorialDesc2 =>
+      'Bawa sampah daur ulang yang sudah dipilah ke titik pengumpulan';
+
+  @override
+  String get tutorialDesc3 =>
+      'Raih poin sebagai hadiah untuk setiap sampah yang Anda buang';
+
+  @override
+  String get tutorialDesc4 =>
+      'Gunakan poin Anda untuk menukar hadiah dan hadiah menarik';
+
+  @override
+  String get tutorialSkip => 'Lewati';
+
+  @override
+  String get tutorialStartButton => 'Mulai Sekarang!';
+
+  @override
+  String get tutorialTitle1 => 'Temukan Titik Pengumpulan';
+
+  @override
+  String get tutorialTitle2 => 'Buang Sampah Anda';
+
+  @override
+  String get tutorialTitle3 => 'Dapatkan Poin';
+
+  @override
+  String get tutorialTitle4 => 'Tukar Hadiah';
+
+  @override
   String welcomeUser(String userName) {
     return 'Selamat datang, $userName!';
   }

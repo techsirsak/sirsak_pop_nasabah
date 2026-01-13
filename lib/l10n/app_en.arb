@@ -43,6 +43,16 @@
   "signIn": "Sign In",
   "signUp": "Sign Up",
   "splashTitle": "Welcome",
+  "tutorialDesc1": "Find the nearest waste collection points around you",
+  "tutorialDesc2": "Bring your separated recyclable waste to the collection points",
+  "tutorialDesc3": "Get rewarded with points for every waste you drop",
+  "tutorialDesc4": "Use your points to redeem exciting rewards and prizes",
+  "tutorialSkip": "Skip",
+  "tutorialStartButton": "Start Now!",
+  "tutorialTitle1": "Search for Collection Points",
+  "tutorialTitle2": "Drop Your Waste",
+  "tutorialTitle3": "Earn Points",
+  "tutorialTitle4": "Redeem Rewards",
   "welcomeUser": "Welcome, {userName}!",
   "@welcomeUser": {
     "placeholders": {

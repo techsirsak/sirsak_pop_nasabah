@@ -2,10 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
+import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 
 class LoginView extends ConsumerWidget {
   const LoginView({super.key});
@@ -29,15 +32,14 @@ class LoginView extends ConsumerWidget {
         title: Text(
           context.l10n.signIn,
           style: textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w600,
+            fontVariations: AppFonts.semiBold,
           ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.home),
-            onPressed: () =>
-                Navigator.of(context).pushNamed(SAppRoutePath.landingPage),
+            onPressed: () => context.go(SAppRoutePath.landingPage),
           ),
         ],
       ),
@@ -66,7 +68,7 @@ class LoginView extends ConsumerWidget {
               Text(
                 context.l10n.emailAddress,
                 style: textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
+                  fontVariations: AppFonts.medium,
                 ),
               ),
               const Gap(8),
@@ -124,7 +126,7 @@ class LoginView extends ConsumerWidget {
               Text(
                 context.l10n.passwordLabel,
                 style: textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
+                  fontVariations: AppFonts.medium,
                 ),
               ),
               const Gap(8),
@@ -181,55 +183,24 @@ class LoginView extends ConsumerWidget {
               // Forgot Password Link
               Align(
                 alignment: Alignment.centerRight,
-                child: TextButton(
+                child: SButton(
+                  text: context.l10n.forgotPassword,
                   onPressed: viewModel.navigateToForgotPassword,
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Text(
-                    context.l10n.forgotPassword,
-                    style: textTheme.titleSmall?.copyWith(
-                      color: colorScheme.tertiary,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  variant: ButtonVariant.text,
+                  size: ButtonSize.small,
+                  isFullWidth: false,
                 ),
               ),
 
               const Gap(24),
 
               // Sign In Button
-              SizedBox(
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: state.isLoading ? null : viewModel.login,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: state.isLoading
-                      ? const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : Text(
-                          context.l10n.signIn,
-                          style: textTheme.titleMedium?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                ),
+              SButton(
+                text: context.l10n.signIn,
+                onPressed: viewModel.login,
+                variant: ButtonVariant.primary,
+                size: ButtonSize.large,
+                isLoading: state.isLoading,
               ),
 
               const Gap(24),
@@ -264,28 +235,11 @@ class LoginView extends ConsumerWidget {
               const Gap(24),
 
               // Continue with Google Button (Disabled)
-              SizedBox(
-                height: 56,
-                child: OutlinedButton(
-                  onPressed: null,
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    side: BorderSide(
-                      color: colorScheme.outline.withValues(alpha: 0.3),
-                    ),
-                    disabledForegroundColor: colorScheme.onSurfaceVariant
-                        .withValues(alpha: 0.5),
-                  ),
-                  child: Text(
-                    context.l10n.continueWithGoogle,
-                    style: textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
+              SButton(
+                text: context.l10n.continueWithGoogle,
+                onPressed: null,
+                variant: ButtonVariant.outlined,
+                size: ButtonSize.large,
               ),
 
               const Gap(24),
@@ -317,6 +271,12 @@ class LoginView extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push(SAppRoutePath.widgetShowcase),
+        icon: const Icon(Icons.widgets),
+        label: const Text('Widget Showcase'),
+        backgroundColor: colorScheme.secondary,
       ),
     );
   }
