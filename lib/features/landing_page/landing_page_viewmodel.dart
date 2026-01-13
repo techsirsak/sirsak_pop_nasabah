@@ -17,7 +17,7 @@ class LandingPageViewModel extends _$LandingPageViewModel {
   Future<void> navigateToGetStarted() async {
     state = state.copyWith(isNavigating: true);
     final router = ref.read(routerProvider);
-    await router.push(SAppRoutePath.login);
+    await router.push(SAppRoutePath.signUp);
     state = state.copyWith(isNavigating: false);
   }
 

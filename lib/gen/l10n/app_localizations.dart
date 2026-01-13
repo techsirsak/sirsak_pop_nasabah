@@ -98,23 +98,11 @@ abstract class AppLocalizations {
     Locale('id'),
   ];
 
-  /// The application name
+  /// No description provided for @appName.
   ///
   /// In en, this message translates to:
   /// **'Sirsak Pop Nasabah'**
   String get appName;
-
-  /// No description provided for @loading.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading...'**
-  String get loading;
-
-  /// No description provided for @error.
-  ///
-  /// In en, this message translates to:
-  /// **'Error'**
-  String get error;
 
   /// No description provided for @cancel.
   ///
@@ -122,47 +110,23 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
-  /// No description provided for @ok.
+  /// No description provided for @continueWithGoogle.
   ///
   /// In en, this message translates to:
-  /// **'OK'**
-  String get ok;
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
 
-  /// No description provided for @splashTitle.
+  /// No description provided for @dontHaveAccount.
   ///
   /// In en, this message translates to:
-  /// **'Welcome'**
-  String get splashTitle;
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
 
-  /// No description provided for @loginTitle.
+  /// No description provided for @emailAddress.
   ///
   /// In en, this message translates to:
-  /// **'Login'**
-  String get loginTitle;
-
-  /// No description provided for @emailLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get emailLabel;
-
-  /// No description provided for @passwordLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get passwordLabel;
-
-  /// No description provided for @loginButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Login'**
-  String get loginButton;
-
-  /// No description provided for @emailRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Email is required'**
-  String get emailRequired;
+  /// **'Email Address'**
+  String get emailAddress;
 
   /// No description provided for @emailInvalid.
   ///
@@ -170,11 +134,155 @@ abstract class AppLocalizations {
   /// **'Invalid email format'**
   String get emailInvalid;
 
-  /// No description provided for @passwordRequired.
+  /// No description provided for @emailLabel.
   ///
   /// In en, this message translates to:
-  /// **'Password is required'**
-  String get passwordRequired;
+  /// **'Email'**
+  String get emailLabel;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
+  /// No description provided for @itemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No items} =1{1 item} other{{count} items}}'**
+  String itemCount(int count);
+
+  /// No description provided for @landingPageContactEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'hello@sirsak.com'**
+  String get landingPageContactEmail;
+
+  /// No description provided for @landingPageContactInstagram.
+  ///
+  /// In en, this message translates to:
+  /// **'sirsak.hub'**
+  String get landingPageContactInstagram;
+
+  /// No description provided for @landingPageContactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'+628 777 0808 578'**
+  String get landingPageContactPhone;
+
+  /// No description provided for @landingPageFeature1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'for your nearest waste collection points'**
+  String get landingPageFeature1Desc;
+
+  /// No description provided for @landingPageFeature1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get landingPageFeature1Title;
+
+  /// No description provided for @landingPageFeature2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'your separated recyclable waste'**
+  String get landingPageFeature2Desc;
+
+  /// No description provided for @landingPageFeature2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop'**
+  String get landingPageFeature2Title;
+
+  /// No description provided for @landingPageFeature3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'and redeem rewards!'**
+  String get landingPageFeature3Desc;
+
+  /// No description provided for @landingPageFeature3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Get points'**
+  String get landingPageFeature3Title;
+
+  /// No description provided for @landingPageGetStartedButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get landingPageGetStartedButton;
+
+  /// No description provided for @landingPageSignInButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get landingPageSignInButton;
+
+  /// No description provided for @landingPageTitlePart1.
+  ///
+  /// In en, this message translates to:
+  /// **'Building Indonesia\'s '**
+  String get landingPageTitlePart1;
+
+  /// No description provided for @landingPageTitlePart2.
+  ///
+  /// In en, this message translates to:
+  /// **'largest,\ntraceable'**
+  String get landingPageTitlePart2;
+
+  /// No description provided for @landingPageTitlePart3.
+  ///
+  /// In en, this message translates to:
+  /// **' waste value chain network'**
+  String get landingPageTitlePart3;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// No description provided for @loginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginButton;
+
+  /// No description provided for @loginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginTitle;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get or;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
 
   /// No description provided for @passwordMinLength.
   ///
@@ -182,143 +290,35 @@ abstract class AppLocalizations {
   /// **'Password must be at least 6 characters'**
   String get passwordMinLength;
 
-  /// Welcome message with user name
+  /// No description provided for @passwordRequired.
   ///
   /// In en, this message translates to:
-  /// **'Welcome, {userName}!'**
-  String welcomeUser(String userName);
+  /// **'Password is required'**
+  String get passwordRequired;
 
-  /// Item count with plural forms
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =0{No items} =1{1 item} other{{count} items}}'**
-  String itemCount(int count);
-
-  /// Landing page main title - part 1
-  ///
-  /// In en, this message translates to:
-  /// **'Building Indonesia\'s '**
-  String get landingPageTitlePart1;
-
-  /// Landing page main title - part 2 (bold text)
-  ///
-  /// In en, this message translates to:
-  /// **'largest,\ntraceable'**
-  String get landingPageTitlePart2;
-
-  /// Landing page main title - part 3
-  ///
-  /// In en, this message translates to:
-  /// **' waste value chain network'**
-  String get landingPageTitlePart3;
-
-  /// Landing page feature 1 title
-  ///
-  /// In en, this message translates to:
-  /// **'Search'**
-  String get landingPageFeature1Title;
-
-  /// Landing page feature 1 description
-  ///
-  /// In en, this message translates to:
-  /// **'for your nearest waste collection points'**
-  String get landingPageFeature1Desc;
-
-  /// Landing page feature 2 title
-  ///
-  /// In en, this message translates to:
-  /// **'Drop'**
-  String get landingPageFeature2Title;
-
-  /// Landing page feature 2 description
-  ///
-  /// In en, this message translates to:
-  /// **'your separated recyclable waste'**
-  String get landingPageFeature2Desc;
-
-  /// Landing page feature 3 title
-  ///
-  /// In en, this message translates to:
-  /// **'Get points'**
-  String get landingPageFeature3Title;
-
-  /// Landing page feature 3 description
-  ///
-  /// In en, this message translates to:
-  /// **'and redeem rewards!'**
-  String get landingPageFeature3Desc;
-
-  /// Landing page Get Started button text
-  ///
-  /// In en, this message translates to:
-  /// **'Get Started'**
-  String get landingPageGetStartedButton;
-
-  /// Landing page Sign in button text
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in'**
-  String get landingPageSignInButton;
-
-  /// Landing page contact email address
-  ///
-  /// In en, this message translates to:
-  /// **'hello@sirsak.com'**
-  String get landingPageContactEmail;
-
-  /// Landing page contact phone number
-  ///
-  /// In en, this message translates to:
-  /// **'+628 777 0808 578'**
-  String get landingPageContactPhone;
-
-  /// Landing page Instagram handle
-  ///
-  /// In en, this message translates to:
-  /// **'sirsak.hub'**
-  String get landingPageContactInstagram;
-
-  /// Sign in button and page title
+  /// No description provided for @signIn.
   ///
   /// In en, this message translates to:
   /// **'Sign In'**
   String get signIn;
 
-  /// Email address field label
-  ///
-  /// In en, this message translates to:
-  /// **'Email Address'**
-  String get emailAddress;
-
-  /// Forgot password link text
-  ///
-  /// In en, this message translates to:
-  /// **'Forgot Password?'**
-  String get forgotPassword;
-
-  /// Google sign in button text
-  ///
-  /// In en, this message translates to:
-  /// **'Continue with Google'**
-  String get continueWithGoogle;
-
-  /// Sign up prompt text
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t have an account?'**
-  String get dontHaveAccount;
-
-  /// Sign up link text
+  /// No description provided for @signUp.
   ///
   /// In en, this message translates to:
   /// **'Sign Up'**
   String get signUp;
 
-  /// Divider text between login options
+  /// No description provided for @splashTitle.
   ///
   /// In en, this message translates to:
-  /// **'or'**
-  String get or;
+  /// **'Welcome'**
+  String get splashTitle;
+
+  /// No description provided for @welcomeUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome, {userName}!'**
+  String welcomeUser(String userName);
 }
 
 class _AppLocalizationsDelegate

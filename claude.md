@@ -342,25 +342,21 @@ final router = GoRouter(
 - Use `LocaleNotifier` for runtime language switching
 
 #### ARB File Structure
-Translations are defined in JSON format in `.arb` files:
+Translations are defined in JSON format in `.arb` files. Keep the structure simple and only use `@` metadata for entries with placeholders or special configurations (like plurals).
 
 ```dart
 // lib/l10n/app_en.arb (Template)
 {
   "@@locale": "en",
-  "keyName": "English text",
-  "@keyName": {
-    "description": "Description of what this text is used for"
-  }
+  "simpleKey": "English text",
+  "anotherKey": "More text"
 }
 
 // lib/l10n/app_id.arb (Indonesian)
 {
   "@@locale": "id",
-  "keyName": "Teks dalam bahasa Indonesia",
-  "@keyName": {
-    "description": "Deskripsi penggunaan teks ini"
-  }
+  "simpleKey": "Teks bahasa Indonesia",
+  "anotherKey": "Lebih banyak teks"
 }
 ```
 
@@ -369,6 +365,16 @@ Translations are defined in JSON format in `.arb` files:
 - Prefix keys with feature/screen name for organization (e.g., `landingPageTitle`, `loginButton`)
 - Use descriptive names that indicate purpose (e.g., `emailRequired`, not `error1`)
 - For multi-part text, use numbered suffixes (e.g., `titlePart1`, `titlePart2`)
+
+**Metadata Rules**:
+- **DO NOT** add `@keyName` metadata entries with just descriptions
+- **ONLY** use `@keyName` metadata when the entry has placeholders or special configuration
+- Remove unnecessary `description` and `example` fields to keep files clean
+
+**File Organization**:
+- **ALWAYS** sort translation keys alphabetically (except `@@locale` which stays first)
+- This makes keys easier to find and prevents merge conflicts
+- Group metadata (`@keyName`) immediately after its corresponding key
 
 #### Usage in Views
 
@@ -387,17 +393,15 @@ class MyView extends ConsumerWidget {
 
 #### Parameterized Strings
 
-For strings with placeholders:
+For strings with placeholders, you MUST include the `@` metadata with placeholders configuration:
 
 ```dart
 // ARB file:
 "welcomeUser": "Welcome, {userName}!",
 "@welcomeUser": {
-  "description": "Welcome message with user name",
   "placeholders": {
     "userName": {
-      "type": "String",
-      "example": "John"
+      "type": "String"
     }
   }
 }
@@ -408,17 +412,15 @@ Text(context.l10n.welcomeUser('Alice'))
 
 #### Plural Forms
 
-For strings with pluralization:
+For strings with pluralization, you MUST include the `@` metadata with placeholders configuration:
 
 ```dart
 // ARB file:
 "itemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
 "@itemCount": {
-  "description": "Item count with plural forms",
   "placeholders": {
     "count": {
-      "type": "int",
-      "example": "5"
+      "type": "int"
     }
   }
 }
@@ -426,6 +428,8 @@ For strings with pluralization:
 // Usage:
 Text(context.l10n.itemCount(5))
 ```
+
+**Note**: Only include `description` and `example` fields if they provide value for documentation. For most cases, the minimal placeholder configuration (just `type`) is sufficient.
 
 #### Switching Language at Runtime
 

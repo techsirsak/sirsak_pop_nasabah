@@ -21,6 +21,11 @@ class LoginView extends ConsumerWidget {
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
         backgroundColor: colorScheme.surface,
+        shape: Border(
+          bottom: BorderSide(
+            color: colorScheme.outline,
+          ),
+        ),
         title: Text(
           context.l10n.signIn,
           style: textTheme.titleLarge?.copyWith(
@@ -48,7 +53,7 @@ class LoginView extends ConsumerWidget {
               Center(
                 child: Image.asset(
                   Assets.images.sirsakLogoWhite.path,
-                  width: 180,
+                  width: 160,
                   height: 50,
                   fit: BoxFit.cover,
                   color: colorScheme.primary,

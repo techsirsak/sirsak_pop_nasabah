@@ -12,48 +12,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
-  String get loading => 'Loading...';
-
-  @override
-  String get error => 'Error';
-
-  @override
   String get cancel => 'Cancel';
 
   @override
-  String get ok => 'OK';
+  String get continueWithGoogle => 'Continue with Google';
 
   @override
-  String get splashTitle => 'Welcome';
+  String get dontHaveAccount => 'Don\'t have an account?';
 
   @override
-  String get loginTitle => 'Login';
-
-  @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get passwordLabel => 'Password';
-
-  @override
-  String get loginButton => 'Login';
-
-  @override
-  String get emailRequired => 'Email is required';
+  String get emailAddress => 'Email Address';
 
   @override
   String get emailInvalid => 'Invalid email format';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get emailLabel => 'Email';
 
   @override
-  String get passwordMinLength => 'Password must be at least 6 characters';
+  String get emailRequired => 'Email is required';
 
   @override
-  String welcomeUser(String userName) {
-    return 'Welcome, $userName!';
-  }
+  String get error => 'Error';
+
+  @override
+  String get forgotPassword => 'Forgot Password?';
 
   @override
   String itemCount(int count) {
@@ -68,6 +51,40 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get landingPageContactEmail => 'hello@sirsak.com';
+
+  @override
+  String get landingPageContactInstagram => 'sirsak.hub';
+
+  @override
+  String get landingPageContactPhone => '+628 777 0808 578';
+
+  @override
+  String get landingPageFeature1Desc =>
+      'for your nearest waste collection points';
+
+  @override
+  String get landingPageFeature1Title => 'Search';
+
+  @override
+  String get landingPageFeature2Desc => 'your separated recyclable waste';
+
+  @override
+  String get landingPageFeature2Title => 'Drop';
+
+  @override
+  String get landingPageFeature3Desc => 'and redeem rewards!';
+
+  @override
+  String get landingPageFeature3Title => 'Get points';
+
+  @override
+  String get landingPageGetStartedButton => 'Get Started';
+
+  @override
+  String get landingPageSignInButton => 'Sign in';
+
+  @override
   String get landingPageTitlePart1 => 'Building Indonesia\'s ';
 
   @override
@@ -77,57 +94,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get landingPageTitlePart3 => ' waste value chain network';
 
   @override
-  String get landingPageFeature1Title => 'Search';
+  String get loading => 'Loading...';
 
   @override
-  String get landingPageFeature1Desc =>
-      'for your nearest waste collection points';
+  String get loginButton => 'Login';
 
   @override
-  String get landingPageFeature2Title => 'Drop';
+  String get loginTitle => 'Login';
 
   @override
-  String get landingPageFeature2Desc => 'your separated recyclable waste';
+  String get ok => 'OK';
 
   @override
-  String get landingPageFeature3Title => 'Get points';
+  String get or => 'or';
 
   @override
-  String get landingPageFeature3Desc => 'and redeem rewards!';
+  String get passwordLabel => 'Password';
 
   @override
-  String get landingPageGetStartedButton => 'Get Started';
+  String get passwordMinLength => 'Password must be at least 6 characters';
 
   @override
-  String get landingPageSignInButton => 'Sign in';
-
-  @override
-  String get landingPageContactEmail => 'hello@sirsak.com';
-
-  @override
-  String get landingPageContactPhone => '+628 777 0808 578';
-
-  @override
-  String get landingPageContactInstagram => 'sirsak.hub';
+  String get passwordRequired => 'Password is required';
 
   @override
   String get signIn => 'Sign In';
 
   @override
-  String get emailAddress => 'Email Address';
-
-  @override
-  String get forgotPassword => 'Forgot Password?';
-
-  @override
-  String get continueWithGoogle => 'Continue with Google';
-
-  @override
-  String get dontHaveAccount => 'Don\'t have an account?';
-
-  @override
   String get signUp => 'Sign Up';
 
   @override
-  String get or => 'or';
+  String get splashTitle => 'Welcome';
+
+  @override
+  String welcomeUser(String userName) {
+    return 'Welcome, $userName!';
+  }
 }

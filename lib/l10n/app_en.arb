@@ -1,124 +1,54 @@
 {
   "@@locale": "en",
   "appName": "Sirsak Pop Nasabah",
-  "@appName": {
-    "description": "The application name"
-  },
-  "loading": "Loading...",
-  "error": "Error",
   "cancel": "Cancel",
-  "ok": "OK",
-  "splashTitle": "Welcome",
-  "loginTitle": "Login",
-  "emailLabel": "Email",
-  "passwordLabel": "Password",
-  "loginButton": "Login",
-  "emailRequired": "Email is required",
+  "continueWithGoogle": "Continue with Google",
+  "dontHaveAccount": "Don't have an account?",
+  "emailAddress": "Email Address",
   "emailInvalid": "Invalid email format",
-  "passwordRequired": "Password is required",
-  "passwordMinLength": "Password must be at least 6 characters",
-  "welcomeUser": "Welcome, {userName}!",
-  "@welcomeUser": {
-    "description": "Welcome message with user name",
-    "placeholders": {
-      "userName": {
-        "type": "String",
-        "example": "John"
-      }
-    }
-  },
+  "emailLabel": "Email",
+  "emailRequired": "Email is required",
+  "error": "Error",
+  "forgotPassword": "Forgot Password?",
   "itemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
   "@itemCount": {
-    "description": "Item count with plural forms",
     "placeholders": {
       "count": {
-        "type": "int",
-        "example": "5"
+        "type": "int"
       }
     }
   },
-  "landingPageTitlePart1": "Building Indonesia's ",
-  "@landingPageTitlePart1": {
-    "description": "Landing page main title - part 1"
-  },
-  "landingPageTitlePart2": "largest,\ntraceable",
-  "@landingPageTitlePart2": {
-    "description": "Landing page main title - part 2 (bold text)"
-  },
-  "landingPageTitlePart3": " waste value chain network",
-  "@landingPageTitlePart3": {
-    "description": "Landing page main title - part 3"
-  },
-  "landingPageFeature1Title": "Search",
-  "@landingPageFeature1Title": {
-    "description": "Landing page feature 1 title"
-  },
-  "landingPageFeature1Desc": "for your nearest waste collection points",
-  "@landingPageFeature1Desc": {
-    "description": "Landing page feature 1 description"
-  },
-  "landingPageFeature2Title": "Drop",
-  "@landingPageFeature2Title": {
-    "description": "Landing page feature 2 title"
-  },
-  "landingPageFeature2Desc": "your separated recyclable waste",
-  "@landingPageFeature2Desc": {
-    "description": "Landing page feature 2 description"
-  },
-  "landingPageFeature3Title": "Get points",
-  "@landingPageFeature3Title": {
-    "description": "Landing page feature 3 title"
-  },
-  "landingPageFeature3Desc": "and redeem rewards!",
-  "@landingPageFeature3Desc": {
-    "description": "Landing page feature 3 description"
-  },
-  "landingPageGetStartedButton": "Get Started",
-  "@landingPageGetStartedButton": {
-    "description": "Landing page Get Started button text"
-  },
-  "landingPageSignInButton": "Sign in",
-  "@landingPageSignInButton": {
-    "description": "Landing page Sign in button text"
-  },
   "landingPageContactEmail": "hello@sirsak.com",
-  "@landingPageContactEmail": {
-    "description": "Landing page contact email address"
-  },
-  "landingPageContactPhone": "+628 777 0808 578",
-  "@landingPageContactPhone": {
-    "description": "Landing page contact phone number"
-  },
   "landingPageContactInstagram": "sirsak.hub",
-  "@landingPageContactInstagram": {
-    "description": "Landing page Instagram handle"
-  },
-  "signIn": "Sign In",
-  "@signIn": {
-    "description": "Sign in button and page title"
-  },
-  "emailAddress": "Email Address",
-  "@emailAddress": {
-    "description": "Email address field label"
-  },
-  "forgotPassword": "Forgot Password?",
-  "@forgotPassword": {
-    "description": "Forgot password link text"
-  },
-  "continueWithGoogle": "Continue with Google",
-  "@continueWithGoogle": {
-    "description": "Google sign in button text"
-  },
-  "dontHaveAccount": "Don't have an account?",
-  "@dontHaveAccount": {
-    "description": "Sign up prompt text"
-  },
-  "signUp": "Sign Up",
-  "@signUp": {
-    "description": "Sign up link text"
-  },
+  "landingPageContactPhone": "+628 777 0808 578",
+  "landingPageFeature1Desc": "for your nearest waste collection points",
+  "landingPageFeature1Title": "Search",
+  "landingPageFeature2Desc": "your separated recyclable waste",
+  "landingPageFeature2Title": "Drop",
+  "landingPageFeature3Desc": "and redeem rewards!",
+  "landingPageFeature3Title": "Get points",
+  "landingPageGetStartedButton": "Get Started",
+  "landingPageSignInButton": "Sign in",
+  "landingPageTitlePart1": "Building Indonesia's ",
+  "landingPageTitlePart2": "largest,\ntraceable",
+  "landingPageTitlePart3": " waste value chain network",
+  "loading": "Loading...",
+  "loginButton": "Login",
+  "loginTitle": "Login",
+  "ok": "OK",
   "or": "or",
-  "@or": {
-    "description": "Divider text between login options"
+  "passwordLabel": "Password",
+  "passwordMinLength": "Password must be at least 6 characters",
+  "passwordRequired": "Password is required",
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "splashTitle": "Welcome",
+  "welcomeUser": "Welcome, {userName}!",
+  "@welcomeUser": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
   }
 }

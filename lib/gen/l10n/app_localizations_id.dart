@@ -12,48 +12,31 @@ class AppLocalizationsId extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
-  String get loading => 'Memuat...';
-
-  @override
-  String get error => 'Kesalahan';
-
-  @override
   String get cancel => 'Batal';
 
   @override
-  String get ok => 'OK';
+  String get continueWithGoogle => 'Lanjutkan dengan Google';
 
   @override
-  String get splashTitle => 'Selamat Datang';
+  String get dontHaveAccount => 'Belum punya akun?';
 
   @override
-  String get loginTitle => 'Masuk';
-
-  @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get passwordLabel => 'Kata Sandi';
-
-  @override
-  String get loginButton => 'Masuk';
-
-  @override
-  String get emailRequired => 'Email wajib diisi';
+  String get emailAddress => 'Alamat Email';
 
   @override
   String get emailInvalid => 'Format email tidak valid';
 
   @override
-  String get passwordRequired => 'Kata sandi wajib diisi';
+  String get emailLabel => 'Email';
 
   @override
-  String get passwordMinLength => 'Kata sandi minimal 6 karakter';
+  String get emailRequired => 'Email wajib diisi';
 
   @override
-  String welcomeUser(String userName) {
-    return 'Selamat datang, $userName!';
-  }
+  String get error => 'Kesalahan';
+
+  @override
+  String get forgotPassword => 'Lupa Kata Sandi?';
 
   @override
   String itemCount(int count) {
@@ -68,6 +51,40 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
+  String get landingPageContactEmail => 'hello@sirsak.com';
+
+  @override
+  String get landingPageContactInstagram => 'sirsak.hub';
+
+  @override
+  String get landingPageContactPhone => '+628 777 0808 578';
+
+  @override
+  String get landingPageFeature1Desc =>
+      'titik pengumpulan sampah terdekat Anda';
+
+  @override
+  String get landingPageFeature1Title => 'Temukan';
+
+  @override
+  String get landingPageFeature2Desc => 'sampah daur ulang yang sudah dipilah';
+
+  @override
+  String get landingPageFeature2Title => 'Buanglah';
+
+  @override
+  String get landingPageFeature3Desc => 'dan tukarkan hadiah!';
+
+  @override
+  String get landingPageFeature3Title => 'Dapatkan poin';
+
+  @override
+  String get landingPageGetStartedButton => 'Daftar';
+
+  @override
+  String get landingPageSignInButton => 'Masuk';
+
+  @override
   String get landingPageTitlePart1 => 'Membangun jaringan ';
 
   @override
@@ -77,57 +94,40 @@ class AppLocalizationsId extends AppLocalizations {
   String get landingPageTitlePart3 => ' untuk limbah Indonesia';
 
   @override
-  String get landingPageFeature1Title => 'Cari';
+  String get loading => 'Memuat...';
 
   @override
-  String get landingPageFeature1Desc =>
-      'titik pengumpulan limbah terdekat Anda';
+  String get loginButton => 'Masuk';
 
   @override
-  String get landingPageFeature2Title => 'Antar';
+  String get loginTitle => 'Masuk';
 
   @override
-  String get landingPageFeature2Desc => 'limbah daur ulang yang sudah dipilah';
+  String get ok => 'OK';
 
   @override
-  String get landingPageFeature3Title => 'Dapatkan poin';
+  String get or => 'atau';
 
   @override
-  String get landingPageFeature3Desc => 'dan tukarkan hadiah!';
+  String get passwordLabel => 'Kata Sandi';
 
   @override
-  String get landingPageGetStartedButton => 'Mulai';
+  String get passwordMinLength => 'Kata sandi minimal 6 karakter';
 
   @override
-  String get landingPageSignInButton => 'Masuk';
-
-  @override
-  String get landingPageContactEmail => 'hello@sirsak.com';
-
-  @override
-  String get landingPageContactPhone => '+628 777 0808 578';
-
-  @override
-  String get landingPageContactInstagram => 'sirsak.hub';
+  String get passwordRequired => 'Kata sandi wajib diisi';
 
   @override
   String get signIn => 'Masuk';
 
   @override
-  String get emailAddress => 'Alamat Email';
+  String get signUp => 'Daftar sekarang';
 
   @override
-  String get forgotPassword => 'Lupa Kata Sandi?';
+  String get splashTitle => 'Selamat Datang';
 
   @override
-  String get continueWithGoogle => 'Lanjutkan dengan Google';
-
-  @override
-  String get dontHaveAccount => 'Belum punya akun?';
-
-  @override
-  String get signUp => 'Daftar';
-
-  @override
-  String get or => 'atau';
+  String welcomeUser(String userName) {
+    return 'Selamat datang, $userName!';
+  }
 }
