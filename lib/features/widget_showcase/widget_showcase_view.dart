@@ -13,7 +13,9 @@ class WidgetShowcaseView extends ConsumerWidget {
   const WidgetShowcaseView({super.key});
 
   void _showSnackbar(WidgetRef ref) {
-    ref.read(toastServiceProvider).success(
+    ref
+        .read(toastServiceProvider)
+        .success(
           title: 'Button pressed!',
           duration: 1,
         );

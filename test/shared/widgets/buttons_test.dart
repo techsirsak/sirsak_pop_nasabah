@@ -38,8 +38,9 @@ void main() {
       expect(wasCalled, isTrue);
     });
 
-    testWidgets('shows loading indicator when isLoading is true',
-        (tester) async {
+    testWidgets('shows loading indicator when isLoading is true', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -58,11 +59,10 @@ void main() {
 
     testWidgets('is disabled when onPressed is null', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: SButton(
               text: 'Test',
-              onPressed: null,
             ),
           ),
         ),
@@ -146,7 +146,7 @@ void main() {
 
       // Find the Semantics widget with button properties (our wrapper)
       final semantics = semanticsList.firstWhere(
-        (s) => s.properties.button == true,
+        (s) => s.properties.button ?? false,
       );
 
       expect(semantics.properties.button, isTrue);
@@ -154,14 +154,14 @@ void main() {
       expect(semantics.properties.label, 'Test Button');
     });
 
-    testWidgets('Semantics marks button as disabled when onPressed is null',
-        (tester) async {
+    testWidgets('Semantics marks button as disabled when onPressed is null', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: SButton(
               text: 'Test',
-              onPressed: null,
             ),
           ),
         ),
@@ -176,14 +176,15 @@ void main() {
 
       // Find the Semantics widget with button properties (our wrapper)
       final semantics = semanticsList.firstWhere(
-        (s) => s.properties.button == true,
+        (s) => s.properties.button ?? false,
       );
 
       expect(semantics.properties.enabled, isFalse);
     });
 
-    testWidgets('Semantics marks button as disabled when isLoading is true',
-        (tester) async {
+    testWidgets('Semantics marks button as disabled when isLoading is true', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -205,7 +206,7 @@ void main() {
 
       // Find the Semantics widget with button properties (our wrapper)
       final semantics = semanticsList.firstWhere(
-        (s) => s.properties.button == true,
+        (s) => s.properties.button ?? false,
       );
 
       expect(semantics.properties.enabled, isFalse);
@@ -219,7 +220,6 @@ void main() {
               body: SButton(
                 text: 'Test',
                 onPressed: () {},
-                variant: ButtonVariant.primary,
               ),
             ),
           ),
@@ -266,15 +266,15 @@ void main() {
         expect(find.byType(OutlinedButton), findsNothing);
       });
 
-      testWidgets('primary variant shows loading indicator in white',
-          (tester) async {
+      testWidgets('primary variant shows loading indicator in white', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
               body: SButton(
                 text: 'Test',
                 onPressed: () {},
-                variant: ButtonVariant.primary,
                 isLoading: true,
               ),
             ),
@@ -286,31 +286,34 @@ void main() {
         );
 
         expect(
-          (indicator.valueColor as AlwaysStoppedAnimation<Color>).value,
+          (indicator.valueColor! as AlwaysStoppedAnimation<Color>).value,
           Colors.white,
         );
       });
 
-      testWidgets('outlined variant shows loading indicator in primaryContainer',
-          (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: SButton(
-                text: 'Test',
-                onPressed: () {},
-                variant: ButtonVariant.outlined,
-                isLoading: true,
+      testWidgets(
+        'outlined variant shows loading indicator in primaryContainer',
+        (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: SButton(
+                  text: 'Test',
+                  onPressed: () {},
+                  variant: ButtonVariant.outlined,
+                  isLoading: true,
+                ),
               ),
             ),
-          ),
-        );
+          );
 
-        expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      });
+          expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        },
+      );
 
-      testWidgets('text variant shows loading indicator in tertiary color',
-          (tester) async {
+      testWidgets('text variant shows loading indicator in tertiary color', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
@@ -328,135 +331,142 @@ void main() {
       });
     });
 
-    group('Sizes', () {
-      testWidgets('small size has correct height', (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: SButton(
-                text: 'Test',
-                onPressed: () {},
-                size: ButtonSize.small,
+    group(
+      'Sizes',
+      () {
+        testWidgets('small size has correct height', (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: SButton(
+                  text: 'Test',
+                  onPressed: () {},
+                  size: ButtonSize.small,
+                ),
               ),
             ),
-          ),
-        );
+          );
 
-        // Find the SizedBox that wraps the ElevatedButton (direct parent)
-        final sizedBoxList = tester.widgetList<SizedBox>(
-          find.ancestor(
-            of: find.byType(ElevatedButton),
-            matching: find.byType(SizedBox),
-          ),
-        );
+          // Find the SizedBox that wraps the ElevatedButton (direct parent)
+          final sizedBoxList = tester.widgetList<SizedBox>(
+            find.ancestor(
+              of: find.byType(ElevatedButton),
+              matching: find.byType(SizedBox),
+            ),
+          );
 
-        // Find the one with height property set to 40
-        final sizedBox = sizedBoxList.firstWhere((sb) => sb.height == 40);
+          // Find the one with height property set to 40
+          final sizedBox = sizedBoxList.firstWhere((sb) => sb.height == 40);
 
-        expect(sizedBox.height, 40);
-      });
+          expect(sizedBox.height, 40);
+        });
 
-      testWidgets('medium size has correct height', (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: SButton(
-                text: 'Test',
-                onPressed: () {},
-                size: ButtonSize.medium,
+        testWidgets('medium size has correct height', (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: SButton(
+                  text: 'Test',
+                  onPressed: () {},
+                ),
               ),
             ),
-          ),
-        );
+          );
 
-        final sizedBox = tester.widget<SizedBox>(
-          find.ancestor(
-            of: find.byType(ElevatedButton),
-            matching: find.byType(SizedBox),
-          ),
-        );
+          final sizedBox = tester.widget<SizedBox>(
+            find.ancestor(
+              of: find.byType(ElevatedButton),
+              matching: find.byType(SizedBox),
+            ),
+          );
 
-        expect(sizedBox.height, 50);
-      });
+          expect(sizedBox.height, 50);
+        });
 
-      testWidgets('large size has correct height', (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: SButton(
-                text: 'Test',
-                onPressed: () {},
-                size: ButtonSize.large,
+        testWidgets('large size has correct height', (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: SButton(
+                  text: 'Test',
+                  onPressed: () {},
+                  size: ButtonSize.large,
+                ),
               ),
             ),
-          ),
-        );
+          );
 
-        final sizedBox = tester.widget<SizedBox>(
-          find.ancestor(
-            of: find.byType(ElevatedButton),
-            matching: find.byType(SizedBox),
-          ),
-        );
+          final sizedBox = tester.widget<SizedBox>(
+            find.ancestor(
+              of: find.byType(ElevatedButton),
+              matching: find.byType(SizedBox),
+            ),
+          );
 
-        expect(sizedBox.height, 56);
-      });
+          expect(sizedBox.height, 56);
+        });
 
-      testWidgets('small size has touch target padding', (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: SButton(
-                text: 'Test',
-                onPressed: () {},
-                size: ButtonSize.small,
+        testWidgets('small size has touch target padding', (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: SButton(
+                  text: 'Test',
+                  onPressed: () {},
+                  size: ButtonSize.small,
+                ),
               ),
             ),
-          ),
-        );
+          );
 
-        // Small buttons should have Padding wrapper for touch target
-        expect(
-          find.ancestor(
-            of: find.byType(SizedBox),
-            matching: find.byType(Padding),
-          ),
-          findsOneWidget,
-        );
-      });
+          // Small buttons should have Padding wrapper for touch target
+          expect(
+            find.ancestor(
+              of: find.byType(SizedBox),
+              matching: find.byType(Padding),
+            ),
+            findsOneWidget,
+          );
+        });
 
-      testWidgets('medium and large sizes do not have extra touch target padding',
-          (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: Column(
-                children: [
-                  SButton(
-                    text: 'Medium',
-                    onPressed: () {},
-                    size: ButtonSize.medium,
+        testWidgets(
+          'medium and large sizes do not have extra touch target padding',
+          (
+            tester,
+          ) async {
+            await tester.pumpWidget(
+              MaterialApp(
+                home: Scaffold(
+                  body: Column(
+                    children: [
+                      SButton(
+                        text: 'Medium',
+                        onPressed: () {},
+                      ),
+                      SButton(
+                        text: 'Large',
+                        onPressed: () {},
+                        size: ButtonSize.large,
+                      ),
+                    ],
                   ),
-                  SButton(
-                    text: 'Large',
-                    onPressed: () {},
-                    size: ButtonSize.large,
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+
+            // Medium and large should have no extra padding
+            // (Padding is for touch target only)
+            // We check that the immediate parent of Semantics is NOT Padding
+            //with vertical padding
+            final mediumButton = find.text('Medium');
+            final largeButton = find.text('Large');
+
+            expect(mediumButton, findsOneWidget);
+            expect(largeButton, findsOneWidget);
+          },
         );
-
-        // Medium and large should have no extra padding (Padding is for touch target only)
-        // We check that the immediate parent of Semantics is NOT Padding with vertical padding
-        final mediumButton = find.text('Medium');
-        final largeButton = find.text('Large');
-
-        expect(mediumButton, findsOneWidget);
-        expect(largeButton, findsOneWidget);
-      });
-    });
+      },
+    );
 
     group('Full Width', () {
       testWidgets('is full width by default', (tester) async {
@@ -482,7 +492,8 @@ void main() {
           ),
         );
 
-        // Find the one with height property (button wrapper) which also has width
+        // Find the one with height property (button wrapper)
+        // which also has width
         final sizedBox = sizedBoxList.firstWhere((sb) => sb.height != null);
 
         expect(sizedBox.width, double.infinity);
@@ -570,11 +581,10 @@ void main() {
     group('Edge Cases', () {
       testWidgets('handles null onPressed and isLoading true', (tester) async {
         await tester.pumpWidget(
-          MaterialApp(
+          const MaterialApp(
             home: Scaffold(
               body: SButton(
                 text: 'Test',
-                onPressed: null,
                 isLoading: true,
               ),
             ),
@@ -644,8 +654,9 @@ void main() {
         expect(sizedBox.width, isNull);
       });
 
-      testWidgets('loading indicator size scales with button size',
-          (tester) async {
+      testWidgets('loading indicator size scales with button size', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
@@ -660,7 +671,6 @@ void main() {
                   SButton(
                     text: 'Medium',
                     onPressed: () {},
-                    size: ButtonSize.medium,
                     isLoading: true,
                   ),
                   SButton(
@@ -684,7 +694,12 @@ void main() {
         // Large button: 56 * 0.6 = 33.6
         final indicatorSizes = tester
             .widgetList<SizedBox>(find.byType(SizedBox))
-            .where((sb) => sb.width != null && sb.height != null && sb.width == sb.height)
+            .where(
+              (sb) =>
+                  sb.width != null &&
+                  sb.height != null &&
+                  sb.width == sb.height,
+            )
             .map((sb) => sb.width)
             .toSet();
 
@@ -704,7 +719,6 @@ void main() {
               body: SButton(
                 text: 'Test',
                 onPressed: () {},
-                variant: ButtonVariant.primary,
               ),
             ),
           ),
@@ -717,7 +731,7 @@ void main() {
         final shape = button.style?.shape?.resolve({});
         expect(shape, isA<RoundedRectangleBorder>());
 
-        final roundedShape = shape as RoundedRectangleBorder;
+        final roundedShape = shape! as RoundedRectangleBorder;
         expect(
           roundedShape.borderRadius,
           BorderRadius.circular(12),
@@ -744,7 +758,7 @@ void main() {
         final shape = button.style?.shape?.resolve({});
         expect(shape, isA<RoundedRectangleBorder>());
 
-        final roundedShape = shape as RoundedRectangleBorder;
+        final roundedShape = shape! as RoundedRectangleBorder;
         expect(
           roundedShape.borderRadius,
           BorderRadius.circular(12),
@@ -771,7 +785,7 @@ void main() {
         final shape = button.style?.shape?.resolve({});
         expect(shape, isA<RoundedRectangleBorder>());
 
-        final roundedShape = shape as RoundedRectangleBorder;
+        final roundedShape = shape! as RoundedRectangleBorder;
         expect(
           roundedShape.borderRadius,
           BorderRadius.circular(8),
@@ -785,7 +799,6 @@ void main() {
               body: SButton(
                 text: 'Test',
                 onPressed: () {},
-                variant: ButtonVariant.primary,
               ),
             ),
           ),

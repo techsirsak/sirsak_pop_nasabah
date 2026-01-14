@@ -323,25 +323,25 @@ abstract class AppLocalizations {
   /// No description provided for @tutorialDesc1.
   ///
   /// In en, this message translates to:
-  /// **'Find the nearest waste collection points around you'**
+  /// **'Separate your recyclable waste into the following categories: **plastic wrappers**, **PET bottles**, **paper**, and **other recyclables**.'**
   String get tutorialDesc1;
 
   /// No description provided for @tutorialDesc2.
   ///
   /// In en, this message translates to:
-  /// **'Bring your separated recyclable waste to the collection points'**
+  /// **'Bring and dispose waste at **waste banks** and **other collection points** registered in the Sirsak community.'**
   String get tutorialDesc2;
 
   /// No description provided for @tutorialDesc3.
   ///
   /// In en, this message translates to:
-  /// **'Get rewarded with points for every waste you drop'**
+  /// **'Earn points for every waste returned to collection points. Exchange with **vouchers**, **discounts**, and other **rewards**.'**
   String get tutorialDesc3;
 
   /// No description provided for @tutorialDesc4.
   ///
   /// In en, this message translates to:
-  /// **'Use your points to redeem exciting rewards and prizes'**
+  /// **'We ensure all waste sent to collection points will be **handled responsibly** to **minimize environmental impact**.'**
   String get tutorialDesc4;
 
   /// No description provided for @tutorialSkip.
@@ -359,25 +359,25 @@ abstract class AppLocalizations {
   /// No description provided for @tutorialTitle1.
   ///
   /// In en, this message translates to:
-  /// **'Search for Collection Points'**
+  /// **'Sort your waste'**
   String get tutorialTitle1;
 
   /// No description provided for @tutorialTitle2.
   ///
   /// In en, this message translates to:
-  /// **'Drop Your Waste'**
+  /// **'Dispose at nearby collection points'**
   String get tutorialTitle2;
 
   /// No description provided for @tutorialTitle3.
   ///
   /// In en, this message translates to:
-  /// **'Earn Points'**
+  /// **'Get exclusive rewards'**
   String get tutorialTitle3;
 
   /// No description provided for @tutorialTitle4.
   ///
   /// In en, this message translates to:
-  /// **'Redeem Rewards'**
+  /// **'Join our community'**
   String get tutorialTitle4;
 
   /// No description provided for @welcomeUser.

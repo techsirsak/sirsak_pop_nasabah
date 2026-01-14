@@ -131,37 +131,38 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tutorialDesc1 =>
-      'Cari titik pengumpulan sampah terdekat di sekitar Anda';
+      '**Pisahkan** sampah daur ulang anda ke dalam kategori berikut: **plastik berlapis**, **botol PET**, **kertas**, dan **sampah daur ulang lainnya**.';
 
   @override
   String get tutorialDesc2 =>
-      'Bawa sampah daur ulang yang sudah dipilah ke titik pengumpulan';
+      '**Bawa** dan buang sampah di **bank sampah dan titik pengumpulan lainnya** yang terdaftar dalam komunitas Sirsak.';
 
   @override
   String get tutorialDesc3 =>
-      'Raih poin sebagai hadiah untuk setiap sampah yang Anda buang';
+      '**Dapatkan poin** untuk setiap sampah yang dikembalikan ke titik pengumpulan. Tukarkan dengan **voucher**, **diskon**, dan **hadiah** lainnya.';
 
   @override
   String get tutorialDesc4 =>
-      'Gunakan poin Anda untuk menukar hadiah dan hadiah menarik';
+      'Kami memastikan semua sampah yang dikirim ke titik pengumpulan akan **ditangani secara bertanggung jawab** untuk **meminimalkan dampak lingkungan**.';
 
   @override
-  String get tutorialSkip => 'Lewati';
+  String get tutorialSkip => 'Lewatkan';
 
   @override
   String get tutorialStartButton => 'Mulai Sekarang!';
 
   @override
-  String get tutorialTitle1 => 'Temukan Titik Pengumpulan';
+  String get tutorialTitle1 => 'Pilah sampahmu';
 
   @override
-  String get tutorialTitle2 => 'Buang Sampah Anda';
+  String get tutorialTitle2 =>
+      'Buang sampah di titik pengumpulan terdekat Anda';
 
   @override
-  String get tutorialTitle3 => 'Dapatkan Poin';
+  String get tutorialTitle3 => 'Dapatkan hadiah eksklusif';
 
   @override
-  String get tutorialTitle4 => 'Tukar Hadiah';
+  String get tutorialTitle4 => 'Bergabunglah dengan komunitas kami';
 
   @override
   String welcomeUser(String userName) {

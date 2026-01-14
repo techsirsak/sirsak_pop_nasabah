@@ -270,12 +270,6 @@ class LoginView extends ConsumerWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push(SAppRoutePath.widgetShowcase),
-        icon: const Icon(Icons.widgets),
-        label: const Text('Widget Showcase'),
-        backgroundColor: colorScheme.secondary,
-      ),
     );
   }
 }

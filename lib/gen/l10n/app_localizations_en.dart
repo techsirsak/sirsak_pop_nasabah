@@ -131,19 +131,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutorialDesc1 =>
-      'Find the nearest waste collection points around you';
+      'Separate your recyclable waste into the following categories: **plastic wrappers**, **PET bottles**, **paper**, and **other recyclables**.';
 
   @override
   String get tutorialDesc2 =>
-      'Bring your separated recyclable waste to the collection points';
+      'Bring and dispose waste at **waste banks** and **other collection points** registered in the Sirsak community.';
 
   @override
   String get tutorialDesc3 =>
-      'Get rewarded with points for every waste you drop';
+      'Earn points for every waste returned to collection points. Exchange with **vouchers**, **discounts**, and other **rewards**.';
 
   @override
   String get tutorialDesc4 =>
-      'Use your points to redeem exciting rewards and prizes';
+      'We ensure all waste sent to collection points will be **handled responsibly** to **minimize environmental impact**.';
 
   @override
   String get tutorialSkip => 'Skip';
@@ -152,16 +152,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tutorialStartButton => 'Start Now!';
 
   @override
-  String get tutorialTitle1 => 'Search for Collection Points';
+  String get tutorialTitle1 => 'Sort your waste';
 
   @override
-  String get tutorialTitle2 => 'Drop Your Waste';
+  String get tutorialTitle2 => 'Dispose at nearby collection points';
 
   @override
-  String get tutorialTitle3 => 'Earn Points';
+  String get tutorialTitle3 => 'Get exclusive rewards';
 
   @override
-  String get tutorialTitle4 => 'Redeem Rewards';
+  String get tutorialTitle4 => 'Join our community';
 
   @override
   String welcomeUser(String userName) {
