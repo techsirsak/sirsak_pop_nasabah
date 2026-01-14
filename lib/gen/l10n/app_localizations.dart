@@ -158,6 +158,12 @@ abstract class AppLocalizations {
   /// **'Forgot Password?'**
   String get forgotPassword;
 
+  /// No description provided for @generalErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get generalErrorTitle;
+
   /// No description provided for @itemCount.
   ///
   /// In en, this message translates to:

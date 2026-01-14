@@ -9,6 +9,7 @@ import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_theme.dart';
 import 'package:sirsak_pop_nasabah/gen/l10n/app_localizations.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:toastification/toastification.dart';
 
 Future<void> bootstrap({
   required String env,
@@ -54,13 +55,15 @@ class MainApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     final locale = ref.watch(currentLocaleProvider);
 
-    return MaterialApp.router(
-      theme: AppTheme.lightTheme,
-      routerConfig: router,
-      debugShowCheckedModeBanner: false,
-      locale: locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+    return ToastificationWrapper(
+      child: MaterialApp.router(
+        theme: AppTheme.lightTheme,
+        routerConfig: router,
+        debugShowCheckedModeBanner: false,
+        locale: locale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
     );
   }
 }

@@ -39,6 +39,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get forgotPassword => 'Lupa Kata Sandi?';
 
   @override
+  String get generalErrorTitle => 'Terjadi kesalahan';
+
+  @override
   String itemCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

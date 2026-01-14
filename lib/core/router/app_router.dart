@@ -8,6 +8,8 @@ import 'package:sirsak_pop_nasabah/features/auth/signup/signup_view.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_view.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_view.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_view.dart';
+import 'package:sirsak_pop_nasabah/features/tutorial/tutorial_view.dart';
+import 'package:sirsak_pop_nasabah/features/widget_showcase/widget_showcase_view.dart';
 
 part 'app_router.g.dart';
 
@@ -16,6 +18,13 @@ GoRouter router(Ref ref) {
   return GoRouter(
     initialLocation: '/',
     routes: [
+      GoRoute(
+        path: SAppRoutePath.widgetShowcase,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const WidgetShowcaseView(),
+        ),
+      ),
       GoRoute(
         path: '/',
         pageBuilder: (context, state) => MaterialPage(
@@ -56,6 +65,13 @@ GoRouter router(Ref ref) {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const SignUpView(),
+        ),
+      ),
+      GoRoute(
+        path: SAppRoutePath.tutorial,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const TutorialView(),
         ),
       ),
     ],

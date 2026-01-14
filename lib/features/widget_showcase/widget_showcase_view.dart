@@ -6,18 +6,17 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/widget_showcase/widget_showcase_viewmodel.dart';
+import 'package:sirsak_pop_nasabah/services/toast_service.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 
 class WidgetShowcaseView extends ConsumerWidget {
   const WidgetShowcaseView({super.key});
 
-  void _showSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Button pressed!'),
-        duration: Duration(seconds: 1),
-      ),
-    );
+  void _showSnackbar(WidgetRef ref) {
+    ref.read(toastServiceProvider).success(
+          title: 'Button pressed!',
+          duration: 1,
+        );
   }
 
   @override
@@ -71,7 +70,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Large Primary Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.primary,
                 size: ButtonSize.large,
               ),
@@ -87,7 +86,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Medium Primary Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.primary,
                 size: ButtonSize.medium,
               ),
@@ -103,7 +102,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Small Primary Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.primary,
                 size: ButtonSize.small,
               ),
@@ -119,7 +118,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Add Item',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.primary,
                 icon: Icons.add,
               ),
@@ -135,7 +134,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Loading Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.primary,
                 isLoading: state.isLoading,
               ),
@@ -182,7 +181,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Large Outlined Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.outlined,
                 size: ButtonSize.large,
               ),
@@ -198,7 +197,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Medium Outlined Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.outlined,
                 size: ButtonSize.medium,
               ),
@@ -214,7 +213,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Small Outlined Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.outlined,
                 size: ButtonSize.small,
               ),
@@ -230,7 +229,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Continue with Google',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.outlined,
                 icon: Icons.g_mobiledata,
               ),
@@ -266,7 +265,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Large Text Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.text,
                 size: ButtonSize.large,
               ),
@@ -282,7 +281,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Medium Text Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.text,
                 size: ButtonSize.medium,
               ),
@@ -298,7 +297,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               const Gap(8),
               SButton(
                 text: 'Small Text Button',
-                onPressed: () => _showSnackbar(context),
+                onPressed: () => _showSnackbar(ref),
                 variant: ButtonVariant.text,
                 size: ButtonSize.small,
               ),
@@ -316,7 +315,7 @@ class WidgetShowcaseView extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: SButton(
                   text: 'Forgot Password?',
-                  onPressed: () => _showSnackbar(context),
+                  onPressed: () => _showSnackbar(ref),
                   variant: ButtonVariant.text,
                   size: ButtonSize.small,
                   isFullWidth: false,

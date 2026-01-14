@@ -10,6 +10,7 @@
   "emailRequired": "Email wajib diisi",
   "error": "Kesalahan",
   "forgotPassword": "Lupa Kata Sandi?",
+  "generalErrorTitle": "Terjadi kesalahan",
   "itemCount": "{count, plural, =0{Tidak ada item} =1{1 item} other{{count} item}}",
   "@itemCount": {
     "placeholders": {

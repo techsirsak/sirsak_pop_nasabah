@@ -10,6 +10,7 @@
   "emailRequired": "Email is required",
   "error": "Error",
   "forgotPassword": "Forgot Password?",
+  "generalErrorTitle": "Something went wrong",
   "itemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
   "@itemCount": {
     "placeholders": {
