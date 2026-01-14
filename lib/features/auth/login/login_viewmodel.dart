@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_state.dart';
-import 'package:sirsak_pop_nasabah/services/preferences_service.dart';
+import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 
 part 'login_viewmodel.g.dart';
 
@@ -84,8 +84,8 @@ class LoginViewModel extends _$LoginViewModel {
       await Future<void>.delayed(const Duration(seconds: 1));
 
       // Mock successful login - check if tutorial needed
-      final prefsService = ref.read(preferencesServiceProvider);
-      final hasSeenTutorial = await prefsService.hasSeenTutorial();
+      final localStorageService = ref.read(localStorageServiceProvider);
+      final hasSeenTutorial = await localStorageService.hasSeenTutorial();
 
       if (hasSeenTutorial) {
         ref.read(routerProvider).go(SAppRoutePath.home);

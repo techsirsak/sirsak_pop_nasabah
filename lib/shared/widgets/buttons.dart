@@ -134,201 +134,19 @@ class SButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      enabled: onPressed != null && !isLoading,
-      label: text,
-      child: _buildButton(context),
+    return _ButtonWrapper(
+      text: text,
+      icon: icon,
+      isLoading: isLoading,
+      onPressed: onPressed,
+      variant: variant,
+      size: size,
+      isFullWidth: isFullWidth,
     );
-  }
-
-  /// Builds the appropriate Material button based on variant
-  Widget _buildButton(BuildContext context) {
-    final button = switch (variant) {
-      ButtonVariant.primary => _buildElevatedButton(context),
-      ButtonVariant.outlined => _buildOutlinedButton(context),
-      ButtonVariant.text => _buildTextButton(context),
-    };
-
-    // Apply touch target size adjustment for small buttons
-    return _applyTouchTarget(button);
-  }
-
-  /// Builds an ElevatedButton for primary variant
-  Widget _buildElevatedButton(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final config = _sizeConfigs[size]!;
-
-    return SizedBox(
-      width: isFullWidth ? double.infinity : null,
-      height: config.height,
-      child: ElevatedButton(
-        onPressed: _getEffectiveOnPressed(),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: colorScheme.primaryContainer,
-          foregroundColor: Colors.white,
-          disabledBackgroundColor: colorScheme.surfaceContainerHighest,
-          disabledForegroundColor:
-              colorScheme.onSurfaceVariant.withValues(alpha: 0.38),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 0,
-          padding: config.padding,
-          textStyle: TextStyle(
-            fontSize: config.fontSize,
-            fontVariations: config.fontVariations,
-          ),
-        ),
-        child: _buildContent(context),
-      ),
-    );
-  }
-
-  /// Builds an OutlinedButton for outlined variant
-  Widget _buildOutlinedButton(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final config = _sizeConfigs[size]!;
-
-    return SizedBox(
-      width: isFullWidth ? double.infinity : null,
-      height: config.height,
-      child: OutlinedButton(
-        onPressed: _getEffectiveOnPressed(),
-        style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          foregroundColor: colorScheme.primaryContainer,
-          disabledForegroundColor:
-              colorScheme.onSurfaceVariant.withValues(alpha: 0.38),
-          side: BorderSide(
-            color: _getEffectiveOnPressed() == null
-                ? colorScheme.onSurfaceVariant.withValues(alpha: 0.12)
-                : colorScheme.primaryContainer,
-            width: 2,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: config.padding,
-          textStyle: TextStyle(
-            fontSize: config.fontSize,
-            fontVariations: config.fontVariations,
-          ),
-        ),
-        child: _buildContent(context),
-      ),
-    );
-  }
-
-  /// Builds a TextButton for text variant
-  Widget _buildTextButton(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final config = _sizeConfigs[size]!;
-
-    return SizedBox(
-      width: isFullWidth ? double.infinity : null,
-      height: config.height,
-      child: TextButton(
-        onPressed: _getEffectiveOnPressed(),
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          foregroundColor: colorScheme.tertiary,
-          disabledForegroundColor:
-              colorScheme.onSurfaceVariant.withValues(alpha: 0.38),
-          overlayColor: colorScheme.tertiary.withValues(alpha: 0.08),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          padding: config.padding,
-          textStyle: TextStyle(
-            fontSize: config.fontSize,
-            fontVariations: config.fontVariations,
-          ),
-        ),
-        child: _buildContent(context),
-      ),
-    );
-  }
-
-  /// Builds the button content (text, icon, or loading indicator)
-  Widget _buildContent(BuildContext context) {
-    if (isLoading) {
-      return _buildLoadingIndicator(Theme.of(context).colorScheme);
-    }
-    return _buildButtonContent();
-  }
-
-  /// Builds the text and optional icon
-  Widget _buildButtonContent() {
-    final config = _sizeConfigs[size]!;
-
-    if (icon == null) {
-      // Text only
-      return Text(text);
-    }
-
-    // Icon + Text
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, size: config.iconSize),
-        Gap(config.iconGap),
-        Text(text),
-      ],
-    );
-  }
-
-  /// Builds a loading indicator with variant-specific color
-  Widget _buildLoadingIndicator(ColorScheme colorScheme) {
-    final indicatorColor = _getLoadingIndicatorColor(colorScheme);
-    final config = _sizeConfigs[size]!;
-
-    // Indicator size is 60% of button height for visual balance
-    final indicatorSize = config.height * 0.6;
-
-    return SizedBox(
-      width: indicatorSize,
-      height: indicatorSize,
-      child: CircularProgressIndicator(
-        strokeWidth: 2,
-        valueColor: AlwaysStoppedAnimation<Color>(indicatorColor),
-      ),
-    );
-  }
-
-  /// Gets the appropriate loading indicator color based on variant
-  Color _getLoadingIndicatorColor(ColorScheme colorScheme) {
-    return switch (variant) {
-      ButtonVariant.primary => Colors.white,
-      ButtonVariant.outlined => colorScheme.primaryContainer,
-      ButtonVariant.text => colorScheme.tertiary,
-    };
-  }
-
-  /// Gets the effective onPressed callback (null if loading or disabled)
-  VoidCallback? _getEffectiveOnPressed() {
-    if (isLoading || onPressed == null) {
-      return null;
-    }
-    return onPressed;
-  }
-
-  /// Adds vertical padding to small buttons to meet minimum touch target size
-  Widget _applyTouchTarget(Widget button) {
-    if (size == ButtonSize.small) {
-      // Add 8px vertical padding to reach 48px minimum (40px + 8px = 48px)
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: button,
-      );
-    }
-    // Medium (50px) and Large (56px) already meet minimum
-    return button;
   }
 
   /// Size configuration presets
-  static const _sizeConfigs = {
+  static const Map<ButtonSize, _ButtonSizeConfig> _sizeConfigs = {
     ButtonSize.small: _ButtonSizeConfig(
       height: 40,
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -341,7 +159,7 @@ class SButton extends StatelessWidget {
       height: 50,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       fontSize: 16,
-      fontVariations: AppFonts.semiBold,
+      fontVariations: AppFonts.bold,
       iconSize: 20,
       iconGap: 8,
     ),
@@ -373,4 +191,354 @@ class _ButtonSizeConfig {
   final List<FontVariation> fontVariations;
   final double iconSize;
   final double iconGap;
+}
+
+// ============================================================================
+// Content-Level Widget Classes
+// ============================================================================
+
+/// Loading indicator with variant-specific color
+class _LoadingIndicator extends StatelessWidget {
+  const _LoadingIndicator({
+    required this.variant,
+    required this.size,
+  });
+
+  final ButtonVariant variant;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final indicatorColor = switch (variant) {
+      ButtonVariant.primary => Colors.white,
+      ButtonVariant.outlined => colorScheme.primaryContainer,
+      ButtonVariant.text => colorScheme.tertiary,
+    };
+
+    return SizedBox(
+      width: size,
+      height: size,
+      child: CircularProgressIndicator(
+        strokeWidth: 2,
+        valueColor: AlwaysStoppedAnimation<Color>(indicatorColor),
+      ),
+    );
+  }
+}
+
+/// Button label with optional icon
+class _ButtonLabel extends StatelessWidget {
+  const _ButtonLabel({
+    required this.text,
+    required this.icon,
+    required this.config,
+  });
+
+  final String text;
+  final IconData? icon;
+  final _ButtonSizeConfig config;
+
+  @override
+  Widget build(BuildContext context) {
+    if (icon == null) {
+      return Text(text);
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, size: config.iconSize),
+        Gap(config.iconGap),
+        Text(text),
+      ],
+    );
+  }
+}
+
+/// Button content that switches between label and loading indicator
+class _ButtonContent extends StatelessWidget {
+  const _ButtonContent({
+    required this.text,
+    required this.icon,
+    required this.isLoading,
+    required this.variant,
+    required this.config,
+  });
+
+  final String text;
+  final IconData? icon;
+  final bool isLoading;
+  final ButtonVariant variant;
+  final _ButtonSizeConfig config;
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      // Indicator size is 60% of button height for visual balance
+      final indicatorSize = config.height * 0.6;
+      return _LoadingIndicator(
+        variant: variant,
+        size: indicatorSize,
+      );
+    }
+
+    return _ButtonLabel(
+      text: text,
+      icon: icon,
+      config: config,
+    );
+  }
+}
+
+// ============================================================================
+// Button Variant Widget Classes
+// ============================================================================
+
+/// ElevatedButton variant for primary buttons
+class _ElevatedButtonVariant extends StatelessWidget {
+  const _ElevatedButtonVariant({
+    required this.text,
+    required this.icon,
+    required this.isLoading,
+    required this.onPressed,
+    required this.isFullWidth,
+    required this.config,
+  });
+
+  final String text;
+  final IconData? icon;
+  final bool isLoading;
+  final VoidCallback? onPressed;
+  final bool isFullWidth;
+  final _ButtonSizeConfig config;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return SizedBox(
+      width: isFullWidth ? double.infinity : null,
+      height: config.height,
+      child: ElevatedButton(
+        onPressed: isLoading ? null : onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorScheme.primaryContainer,
+          foregroundColor: colorScheme.surface,
+          disabledBackgroundColor: colorScheme.surfaceContainerHighest,
+          disabledForegroundColor: colorScheme.onSurfaceVariant.withValues(
+            alpha: 0.38,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 0,
+          padding: config.padding,
+          textStyle: textTheme.titleMedium?.copyWith(
+            fontSize: config.fontSize,
+            fontVariations: config.fontVariations,
+          ),
+        ),
+        child: _ButtonContent(
+          text: text,
+          icon: icon,
+          isLoading: isLoading,
+          variant: ButtonVariant.primary,
+          config: config,
+        ),
+      ),
+    );
+  }
+}
+
+/// OutlinedButton variant for outlined buttons
+class _OutlinedButtonVariant extends StatelessWidget {
+  const _OutlinedButtonVariant({
+    required this.text,
+    required this.icon,
+    required this.isLoading,
+    required this.onPressed,
+    required this.isFullWidth,
+    required this.config,
+  });
+
+  final String text;
+  final IconData? icon;
+  final bool isLoading;
+  final VoidCallback? onPressed;
+  final bool isFullWidth;
+  final _ButtonSizeConfig config;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final effectiveOnPressed = isLoading ? null : onPressed;
+
+    return SizedBox(
+      width: isFullWidth ? double.infinity : null,
+      height: config.height,
+      child: OutlinedButton(
+        onPressed: effectiveOnPressed,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          foregroundColor: colorScheme.primaryContainer,
+          disabledForegroundColor: colorScheme.onSurfaceVariant.withValues(
+            alpha: 0.38,
+          ),
+          side: BorderSide(
+            color: effectiveOnPressed == null
+                ? colorScheme.onSurfaceVariant.withValues(alpha: 0.12)
+                : colorScheme.primaryContainer,
+            width: 2,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: config.padding,
+          textStyle: textTheme.titleMedium?.copyWith(
+            fontSize: config.fontSize,
+            fontVariations: config.fontVariations,
+          ),
+        ),
+        child: _ButtonContent(
+          text: text,
+          icon: icon,
+          isLoading: isLoading,
+          variant: ButtonVariant.outlined,
+          config: config,
+        ),
+      ),
+    );
+  }
+}
+
+/// TextButton variant for text buttons
+class _TextButtonVariant extends StatelessWidget {
+  const _TextButtonVariant({
+    required this.text,
+    required this.icon,
+    required this.isLoading,
+    required this.onPressed,
+    required this.isFullWidth,
+    required this.config,
+  });
+
+  final String text;
+  final IconData? icon;
+  final bool isLoading;
+  final VoidCallback? onPressed;
+  final bool isFullWidth;
+  final _ButtonSizeConfig config;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return SizedBox(
+      width: isFullWidth ? double.infinity : null,
+      height: config.height,
+      child: TextButton(
+        onPressed: isLoading ? null : onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          foregroundColor: colorScheme.tertiary,
+          disabledForegroundColor: colorScheme.onSurfaceVariant.withValues(
+            alpha: 0.38,
+          ),
+          overlayColor: colorScheme.tertiary.withValues(alpha: 0.08),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          padding: config.padding,
+          textStyle: textTheme.titleMedium?.copyWith(
+            fontSize: config.fontSize,
+            fontVariations: config.fontVariations,
+          ),
+        ),
+        child: _ButtonContent(
+          text: text,
+          icon: icon,
+          isLoading: isLoading,
+          variant: ButtonVariant.text,
+          config: config,
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// Button Wrapper Widget
+// ============================================================================
+
+/// Wrapper that adds semantics and touch target adjustments
+class _ButtonWrapper extends StatelessWidget {
+  const _ButtonWrapper({
+    required this.text,
+    required this.icon,
+    required this.isLoading,
+    required this.onPressed,
+    required this.variant,
+    required this.size,
+    required this.isFullWidth,
+  });
+
+  final String text;
+  final IconData? icon;
+  final bool isLoading;
+  final VoidCallback? onPressed;
+  final ButtonVariant variant;
+  final ButtonSize size;
+  final bool isFullWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final config = SButton._sizeConfigs[size]!;
+
+    final button = switch (variant) {
+      ButtonVariant.primary => _ElevatedButtonVariant(
+          text: text,
+          icon: icon,
+          isLoading: isLoading,
+          onPressed: onPressed,
+          isFullWidth: isFullWidth,
+          config: config,
+        ),
+      ButtonVariant.outlined => _OutlinedButtonVariant(
+          text: text,
+          icon: icon,
+          isLoading: isLoading,
+          onPressed: onPressed,
+          isFullWidth: isFullWidth,
+          config: config,
+        ),
+      ButtonVariant.text => _TextButtonVariant(
+          text: text,
+          icon: icon,
+          isLoading: isLoading,
+          onPressed: onPressed,
+          isFullWidth: isFullWidth,
+          config: config,
+        ),
+    };
+
+    // Apply touch target size adjustment for small buttons
+    final wrappedButton = size == ButtonSize.small
+        ? Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: button,
+          )
+        : button;
+
+    return Semantics(
+      button: true,
+      enabled: onPressed != null && !isLoading,
+      label: text,
+      child: wrappedButton,
+    );
+  }
 }

@@ -137,11 +137,16 @@ void main() {
         ),
       );
 
-      final semantics = tester.widget<Semantics>(
+      final semanticsList = tester.widgetList<Semantics>(
         find.ancestor(
           of: find.byType(ElevatedButton),
           matching: find.byType(Semantics),
         ),
+      );
+
+      // Find the Semantics widget with button properties (our wrapper)
+      final semantics = semanticsList.firstWhere(
+        (s) => s.properties.button == true,
       );
 
       expect(semantics.properties.button, isTrue);
@@ -162,11 +167,16 @@ void main() {
         ),
       );
 
-      final semantics = tester.widget<Semantics>(
+      final semanticsList = tester.widgetList<Semantics>(
         find.ancestor(
           of: find.byType(ElevatedButton),
           matching: find.byType(Semantics),
         ),
+      );
+
+      // Find the Semantics widget with button properties (our wrapper)
+      final semantics = semanticsList.firstWhere(
+        (s) => s.properties.button == true,
       );
 
       expect(semantics.properties.enabled, isFalse);
@@ -186,11 +196,16 @@ void main() {
         ),
       );
 
-      final semantics = tester.widget<Semantics>(
+      final semanticsList = tester.widgetList<Semantics>(
         find.ancestor(
           of: find.byType(ElevatedButton),
           matching: find.byType(Semantics),
         ),
+      );
+
+      // Find the Semantics widget with button properties (our wrapper)
+      final semantics = semanticsList.firstWhere(
+        (s) => s.properties.button == true,
       );
 
       expect(semantics.properties.enabled, isFalse);
@@ -327,12 +342,16 @@ void main() {
           ),
         );
 
-        final sizedBox = tester.widget<SizedBox>(
+        // Find the SizedBox that wraps the ElevatedButton (direct parent)
+        final sizedBoxList = tester.widgetList<SizedBox>(
           find.ancestor(
             of: find.byType(ElevatedButton),
             matching: find.byType(SizedBox),
           ),
         );
+
+        // Find the one with height property set to 40
+        final sizedBox = sizedBoxList.firstWhere((sb) => sb.height == 40);
 
         expect(sizedBox.height, 40);
       });
@@ -455,12 +474,16 @@ void main() {
           ),
         );
 
-        final sizedBox = tester.widget<SizedBox>(
+        // Find the SizedBox that wraps the ElevatedButton (direct parent)
+        final sizedBoxList = tester.widgetList<SizedBox>(
           find.ancestor(
             of: find.byType(ElevatedButton),
             matching: find.byType(SizedBox),
           ),
         );
+
+        // Find the one with height property (button wrapper) which also has width
+        final sizedBox = sizedBoxList.firstWhere((sb) => sb.height != null);
 
         expect(sizedBox.width, double.infinity);
       });
@@ -481,12 +504,16 @@ void main() {
           ),
         );
 
-        final sizedBox = tester.widget<SizedBox>(
+        // Find the SizedBox that wraps the ElevatedButton (direct parent)
+        final sizedBoxList = tester.widgetList<SizedBox>(
           find.ancestor(
             of: find.byType(ElevatedButton),
             matching: find.byType(SizedBox),
           ),
         );
+
+        // Find the one with height property (button wrapper)
+        final sizedBox = sizedBoxList.firstWhere((sb) => sb.height != null);
 
         expect(sizedBox.width, isNull);
       });
@@ -602,12 +629,16 @@ void main() {
         expect(find.text('OK'), findsOneWidget);
         expect(find.byIcon(Icons.check), findsOneWidget);
 
-        final sizedBox = tester.widget<SizedBox>(
+        // Find the SizedBox that wraps the ElevatedButton (direct parent)
+        final sizedBoxList = tester.widgetList<SizedBox>(
           find.ancestor(
             of: find.byType(ElevatedButton),
             matching: find.byType(SizedBox),
           ),
         );
+
+        // Find the one with width property (button wrapper)
+        final sizedBox = sizedBoxList.firstWhere((sb) => sb.height != null);
 
         // Should not be full width
         expect(sizedBox.width, isNull);
@@ -647,13 +678,21 @@ void main() {
         // Should have 3 loading indicators
         expect(find.byType(CircularProgressIndicator), findsNWidgets(3));
 
-        // All should have SizedBox wrappers with different sizes
-        final indicatorSizedBoxes = find.descendant(
-          of: find.byType(ElevatedButton),
-          matching: find.byType(SizedBox),
-        );
+        // Verify that loading indicators have different sizes
+        // Small button: 40 * 0.6 = 24
+        // Medium button: 50 * 0.6 = 30
+        // Large button: 56 * 0.6 = 33.6
+        final indicatorSizes = tester
+            .widgetList<SizedBox>(find.byType(SizedBox))
+            .where((sb) => sb.width != null && sb.height != null && sb.width == sb.height)
+            .map((sb) => sb.width)
+            .toSet();
 
-        expect(indicatorSizedBoxes, findsNWidgets(6)); // 3 button heights + 3 indicator sizes
+        // Should have 3 different indicator sizes
+        expect(indicatorSizes.length, 3);
+        expect(indicatorSizes, contains(24.0));
+        expect(indicatorSizes, contains(30.0));
+        expect(indicatorSizes, contains(33.6));
       });
     });
 

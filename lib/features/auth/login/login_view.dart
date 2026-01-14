@@ -198,7 +198,6 @@ class LoginView extends ConsumerWidget {
               SButton(
                 text: context.l10n.signIn,
                 onPressed: viewModel.login,
-                variant: ButtonVariant.primary,
                 size: ButtonSize.large,
                 isLoading: state.isLoading,
               ),
@@ -237,7 +236,6 @@ class LoginView extends ConsumerWidget {
               // Continue with Google Button (Disabled)
               SButton(
                 text: context.l10n.continueWithGoogle,
-                onPressed: null,
                 variant: ButtonVariant.outlined,
                 size: ButtonSize.large,
               ),

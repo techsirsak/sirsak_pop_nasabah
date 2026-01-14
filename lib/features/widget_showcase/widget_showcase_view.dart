@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values, deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -62,7 +64,7 @@ class WidgetShowcaseView extends ConsumerWidget {
               Text(
                 'Large (56px)',
                 style: textTheme.bodySmall?.copyWith(
-                  fontVariations: AppFonts.medium,
+                  fontVariations: AppFonts.bold,
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
