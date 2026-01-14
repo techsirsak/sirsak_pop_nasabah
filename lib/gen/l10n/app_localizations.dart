@@ -188,41 +188,23 @@ abstract class AppLocalizations {
   /// **'+628 777 0808 578'**
   String get landingPageContactPhone;
 
-  /// No description provided for @landingPageFeature1Desc.
+  /// No description provided for @landingPageFeature1.
   ///
   /// In en, this message translates to:
-  /// **'for your nearest waste collection points'**
-  String get landingPageFeature1Desc;
+  /// **'**Search** for your nearest waste collection points'**
+  String get landingPageFeature1;
 
-  /// No description provided for @landingPageFeature1Title.
+  /// No description provided for @landingPageFeature2.
   ///
   /// In en, this message translates to:
-  /// **'Search'**
-  String get landingPageFeature1Title;
+  /// **'**Drop** your separated recyclable waste'**
+  String get landingPageFeature2;
 
-  /// No description provided for @landingPageFeature2Desc.
+  /// No description provided for @landingPageFeature3.
   ///
   /// In en, this message translates to:
-  /// **'your separated recyclable waste'**
-  String get landingPageFeature2Desc;
-
-  /// No description provided for @landingPageFeature2Title.
-  ///
-  /// In en, this message translates to:
-  /// **'Drop'**
-  String get landingPageFeature2Title;
-
-  /// No description provided for @landingPageFeature3Desc.
-  ///
-  /// In en, this message translates to:
-  /// **'and redeem rewards!'**
-  String get landingPageFeature3Desc;
-
-  /// No description provided for @landingPageFeature3Title.
-  ///
-  /// In en, this message translates to:
-  /// **'Get points'**
-  String get landingPageFeature3Title;
+  /// **'**Get points** and redeem rewards!'**
+  String get landingPageFeature3;
 
   /// No description provided for @landingPageGetStartedButton.
   ///

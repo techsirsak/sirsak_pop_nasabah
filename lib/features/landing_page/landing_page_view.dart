@@ -6,6 +6,7 @@ import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/rich_text_helper.dart';
 
 class LandingPageView extends ConsumerWidget {
   const LandingPageView({super.key});
@@ -64,24 +65,21 @@ class LandingPageView extends ConsumerWidget {
                 // Feature 1: Search
                 _FeatureItem(
                   icon: PhosphorIcons.mapPin(),
-                  title: context.l10n.landingPageFeature1Title,
-                  description: context.l10n.landingPageFeature1Desc,
+                  text: context.l10n.landingPageFeature1,
                 ),
                 const Gap(20),
 
                 // Feature 2: Drop
                 _FeatureItem(
                   icon: PhosphorIcons.trash(),
-                  title: context.l10n.landingPageFeature2Title,
-                  description: context.l10n.landingPageFeature2Desc,
+                  text: context.l10n.landingPageFeature2,
                 ),
                 const Gap(20),
 
                 // Feature 3: Get points
                 _FeatureItem(
                   icon: PhosphorIcons.gift(),
-                  title: context.l10n.landingPageFeature3Title,
-                  description: context.l10n.landingPageFeature3Desc,
+                  text: context.l10n.landingPageFeature3,
                 ),
                 const Gap(30),
 
@@ -182,17 +180,15 @@ class LandingPageView extends ConsumerWidget {
   }
 }
 
-/// Feature item widget with icon, title, and description
+/// Feature item widget with icon and text (title in bold)
 class _FeatureItem extends StatelessWidget {
   const _FeatureItem({
     required this.icon,
-    required this.title,
-    required this.description,
+    required this.text,
   });
 
   final IconData icon;
-  final String title;
-  final String description;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -213,18 +209,14 @@ class _FeatureItem extends StatelessWidget {
           Expanded(
             child: RichText(
               text: TextSpan(
-                text: title,
-                style: textTheme.titleMedium?.copyWith(
-                  color: Colors.white,
+                children: parseRichText(
+                  text,
+                  baseStyle: textTheme.bodyLarge?.copyWith(
+                        color: Colors.white,
+                      ) ??
+                      const TextStyle(color: Colors.white),
+                  boldFontVariations: AppFonts.bold,
                 ),
-                children: [
-                  TextSpan(
-                    text: ' $description',
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
               ),
             ),
           ),

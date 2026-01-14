@@ -63,23 +63,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get landingPageContactPhone => '+628 777 0808 578';
 
   @override
-  String get landingPageFeature1Desc =>
-      'for your nearest waste collection points';
+  String get landingPageFeature1 =>
+      '**Search** for your nearest waste collection points';
 
   @override
-  String get landingPageFeature1Title => 'Search';
+  String get landingPageFeature2 => '**Drop** your separated recyclable waste';
 
   @override
-  String get landingPageFeature2Desc => 'your separated recyclable waste';
-
-  @override
-  String get landingPageFeature2Title => 'Drop';
-
-  @override
-  String get landingPageFeature3Desc => 'and redeem rewards!';
-
-  @override
-  String get landingPageFeature3Title => 'Get points';
+  String get landingPageFeature3 => '**Get points** and redeem rewards!';
 
   @override
   String get landingPageGetStartedButton => 'Get Started';

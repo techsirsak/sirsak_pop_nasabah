@@ -63,23 +63,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get landingPageContactPhone => '+628 777 0808 578';
 
   @override
-  String get landingPageFeature1Desc =>
-      'titik pengumpulan sampah terdekat Anda';
+  String get landingPageFeature1 =>
+      '**Temukan** titik pengumpulan sampah terdekat Anda';
 
   @override
-  String get landingPageFeature1Title => 'Temukan';
+  String get landingPageFeature2 =>
+      '**Buanglah** sampah daur ulang yang sudah dipilah';
 
   @override
-  String get landingPageFeature2Desc => 'sampah daur ulang yang sudah dipilah';
-
-  @override
-  String get landingPageFeature2Title => 'Buanglah';
-
-  @override
-  String get landingPageFeature3Desc => 'dan tukarkan hadiah!';
-
-  @override
-  String get landingPageFeature3Title => 'Dapatkan poin';
+  String get landingPageFeature3 => '**Dapatkan poin** dan tukarkan hadiah!';
 
   @override
   String get landingPageGetStartedButton => 'Daftar';
