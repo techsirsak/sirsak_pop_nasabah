@@ -26,7 +26,7 @@ class EventsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          icon: PhosphorIcons.calendar(),
+          icon: PhosphorIcons.calendarDots(),
           title: l10n.homeEvents,
         ),
         const Gap(16),
@@ -38,7 +38,7 @@ class EventsSection extends StatelessWidget {
             itemCount: events.length,
             separatorBuilder: (context, index) => const Gap(12),
             itemBuilder: (context, index) {
-              return EventCard(
+              return _EventCard(
                 event: events[index],
                 onRegister: () => viewModel.registerForEvent(events[index]),
               );
@@ -50,11 +50,10 @@ class EventsSection extends StatelessWidget {
   }
 }
 
-class EventCard extends StatelessWidget {
-  const EventCard({
+class _EventCard extends StatelessWidget {
+  const _EventCard({
     required this.event,
     required this.onRegister,
-    super.key,
   });
 
   final Event event;
@@ -67,7 +66,7 @@ class EventCard extends StatelessWidget {
     final l10n = context.l10n;
 
     return Container(
-      width: 250,
+      width: 200,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -138,7 +137,7 @@ class EventCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const Gap(8),
+                  const Gap(4),
                   Expanded(
                     child: Text(
                       event.description,
@@ -150,11 +149,11 @@ class EventCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const Gap(12),
                   SButton(
                     text: l10n.homeRegisterNow,
                     onPressed: onRegister,
                     size: ButtonSize.small,
+                    borderRadius: 25,
                   ),
                 ],
               ),

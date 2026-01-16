@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 
 class SectionHeader extends StatelessWidget {
   const SectionHeader({
@@ -24,13 +23,13 @@ class SectionHeader extends StatelessWidget {
           Icon(
             icon,
             color: colorScheme.primary,
-            size: 24,
+            size: 28,
           ),
           const Gap(8),
           Text(
             title,
-            style: textTheme.titleLarge?.copyWith(
-              fontVariations: AppFonts.semiBold,
+            style: textTheme.titleMedium?.copyWith(
+              fontSize: 18,
             ),
           ),
         ],

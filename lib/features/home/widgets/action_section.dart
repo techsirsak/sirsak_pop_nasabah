@@ -5,6 +5,7 @@ import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_state.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/features/home/widgets/section_header.dart';
+import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 
 class ActionSection extends StatelessWidget {
@@ -25,7 +26,7 @@ class ActionSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          icon: PhosphorIcons.lightning(),
+          icon: PhosphorIcons.fire(),
           title: l10n.homeTakeAction,
         ),
         const Gap(16),
@@ -33,10 +34,10 @@ class ActionSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              SetorSampahCard(onTap: viewModel.navigateToSetorSampah),
+              _SetorSampahCard(onTap: viewModel.navigateToSetorSampah),
               const Gap(12),
               if (challenge != null)
-                ChallengeCard(
+                _ChallengeCard(
                   challenge: challenge!,
                   onTap: viewModel.navigateToChallenges,
                 ),
@@ -48,10 +49,9 @@ class ActionSection extends StatelessWidget {
   }
 }
 
-class SetorSampahCard extends StatelessWidget {
-  const SetorSampahCard({
+class _SetorSampahCard extends StatelessWidget {
+  const _SetorSampahCard({
     required this.onTap,
-    super.key,
   });
 
   final VoidCallback onTap;
@@ -62,52 +62,54 @@ class SetorSampahCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
 
-    return Material(
-      color: colorScheme.tertiary,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Material(
+        color: colorScheme.primaryContainer,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  Assets.images.mlp.path,
                 ),
-                child: Icon(
+                fit: .cover,
+                opacity: .7,
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
                   PhosphorIcons.mapPin(),
-                  color: Colors.white,
-                  size: 32,
+                  color: colorScheme.surface,
+                  size: 70,
                 ),
-              ),
-              const Gap(16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.homeSetorSampah,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontVariations: AppFonts.semiBold,
+                const Gap(16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.homeSetorSampah,
+                        style: textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const Gap(4),
-                    Text(
-                      l10n.homeSetorSampahDesc,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontVariations: AppFonts.regular,
+                      Text(
+                        l10n.homeSetorSampahDesc,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontVariations: AppFonts.semiBold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -115,11 +117,10 @@ class SetorSampahCard extends StatelessWidget {
   }
 }
 
-class ChallengeCard extends StatelessWidget {
-  const ChallengeCard({
+class _ChallengeCard extends StatelessWidget {
+  const _ChallengeCard({
     required this.challenge,
     required this.onTap,
-    super.key,
   });
 
   final Challenge challenge;
@@ -131,69 +132,78 @@ class ChallengeCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
 
-    return Material(
-      color: colorScheme.primaryContainer,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.homeChallenges,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontVariations: AppFonts.semiBold,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Material(
+        color: colorScheme.primaryContainer,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  Assets.images.setorSampah.path,
+                ),
+                fit: .cover,
+                opacity: .4,
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.homeChallenges,
+                        style: textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
+                      Text(
+                        l10n.homeChallengesDesc,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontVariations: AppFonts.semiBold,
+                        ),
+                      ),
+                      const Gap(12),
+                      Text(
+                        l10n.homeChallengeProgress(
+                          challenge.current,
+                          challenge.total,
+                          challenge.itemType,
+                        ),
+                        style: textTheme.bodySmall?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.8),
+                          fontVariations: AppFonts.medium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Gap(16),
+                Column(
+                  children: [
+                    Icon(
+                      PhosphorIcons.medal(),
+                      color: colorScheme.surface,
+                      size: 70,
                     ),
                     const Gap(4),
                     Text(
-                      l10n.homeChallengesDesc,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontVariations: AppFonts.regular,
-                      ),
-                    ),
-                    const Gap(12),
-                    Text(
-                      l10n.homeChallengeProgress(
-                        challenge.current,
-                        challenge.total,
-                        challenge.itemType,
-                      ),
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.8),
+                      challenge.title,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: Colors.white,
                         fontVariations: AppFonts.medium,
                       ),
                     ),
                   ],
                 ),
-              ),
-              const Gap(16),
-              Column(
-                children: [
-                  Icon(
-                    PhosphorIcons.seal(),
-                    color: colorScheme.secondary,
-                    size: 48,
-                  ),
-                  const Gap(4),
-                  Text(
-                    challenge.title,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: Colors.white,
-                      fontVariations: AppFonts.medium,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

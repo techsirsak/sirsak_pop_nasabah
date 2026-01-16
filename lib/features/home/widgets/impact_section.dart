@@ -22,7 +22,7 @@ class ImpactSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          icon: PhosphorIcons.chartLineUp(),
+          icon: PhosphorIcons.chartBar(),
           title: l10n.homeYourImpact,
         ),
         const Gap(16),
