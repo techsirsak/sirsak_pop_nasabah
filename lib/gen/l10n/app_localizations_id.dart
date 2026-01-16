@@ -42,6 +42,61 @@ class AppLocalizationsId extends AppLocalizations {
   String get generalErrorTitle => 'Terjadi kesalahan';
 
   @override
+  String get homeChallenges => 'Tantangan';
+
+  @override
+  String get homeChallengesDesc => 'Selesaikan tantangan, dapatkan hadiahnya!';
+
+  @override
+  String homeChallengeProgress(int current, int total, String itemType) {
+    return '$current/$total $itemType terkumpulkan';
+  }
+
+  @override
+  String get homeEvents => 'Acara';
+
+  @override
+  String homeGreeting(String userName) {
+    return 'Selamat datang kembali, $userName!';
+  }
+
+  @override
+  String get homeHistory => 'Riwayat';
+
+  @override
+  String get homeImpactCarbonLabel => 'Emisi Karbon Terhindari';
+
+  @override
+  String get homeImpactRecycledLabel => 'Sampah Terdaur Ulang';
+
+  @override
+  String get homeImpactWasteLabel => 'Sampah Terkumpulkan';
+
+  @override
+  String get homePoints => 'poin Sirsak';
+
+  @override
+  String get homeRegisterNow => 'Daftar sekarang';
+
+  @override
+  String get homeRewards => 'Hadiah';
+
+  @override
+  String get homeSetorSampah => 'Setor Sampah';
+
+  @override
+  String get homeSetorSampahDesc => 'Temukan Drop Point sampah terdekat!';
+
+  @override
+  String get homeTakeAction => 'Ambil Aksi';
+
+  @override
+  String get homeWithdraw => 'Tarik';
+
+  @override
+  String get homeYourImpact => 'Dampak Anda';
+
+  @override
   String itemCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

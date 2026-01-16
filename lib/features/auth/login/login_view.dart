@@ -204,43 +204,44 @@ class LoginView extends ConsumerWidget {
 
               const Gap(24),
 
-              // Divider with "or" text
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: colorScheme.outline.withValues(alpha: 0.3),
-                      thickness: 1,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      context.l10n.or,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: colorScheme.outline.withValues(alpha: 0.3),
-                      thickness: 1,
-                    ),
-                  ),
-                ],
-              ),
+              // TODO(devin): enabled when implement sign in with google
+              // // Divider with "or" text
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Divider(
+              //         color: colorScheme.outline.withValues(alpha: 0.3),
+              //         thickness: 1,
+              //       ),
+              //     ),
+              //     Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: 16),
+              //       child: Text(
+              //         context.l10n.or,
+              //         style: textTheme.bodyMedium?.copyWith(
+              //           color: colorScheme.onSurfaceVariant,
+              //         ),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Divider(
+              //         color: colorScheme.outline.withValues(alpha: 0.3),
+              //         thickness: 1,
+              //       ),
+              //     ),
+              //   ],
+              // ),
 
-              const Gap(24),
+              // const Gap(24),
 
-              // Continue with Google Button (Disabled)
-              SButton(
-                text: context.l10n.continueWithGoogle,
-                variant: ButtonVariant.outlined,
-                size: ButtonSize.large,
-              ),
+              // // Continue with Google Button (Disabled)
+              // SButton(
+              //   text: context.l10n.continueWithGoogle,
+              //   variant: ButtonVariant.outlined,
+              //   size: ButtonSize.large,
+              // ),
 
-              const Gap(24),
+              // const Gap(24),
 
               // Don't have account? Sign Up
               Center(

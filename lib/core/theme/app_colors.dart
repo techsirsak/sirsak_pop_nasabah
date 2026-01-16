@@ -80,3 +80,25 @@ class AppColors {
     );
   }
 }
+
+// ========================================================================
+// ColorScheme Extensions
+// ========================================================================
+
+/// Extension methods for generating gradients from ColorScheme
+extension ColorSchemeGradients on ColorScheme {
+  /// Gradient for home page points card background
+  ///
+  /// Creates a diagonal gradient from primaryContainer to a darker shade
+  /// for visual depth and hierarchy
+  LinearGradient get pointsCardGradient {
+    final primaryHSL = HSLColor.fromColor(primaryContainer);
+    final darkerPrimary = primaryHSL.withLightness(0.15).toColor();
+
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [primaryContainer, darkerPrimary],
+    );
+  }
+}

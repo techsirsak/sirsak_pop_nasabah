@@ -11,6 +11,43 @@
   "error": "Kesalahan",
   "forgotPassword": "Lupa Kata Sandi?",
   "generalErrorTitle": "Terjadi kesalahan",
+  "homeChallenges": "Tantangan",
+  "homeChallengesDesc": "Selesaikan tantangan, dapatkan hadiahnya!",
+  "homeChallengeProgress": "{current}/{total} {itemType} terkumpulkan",
+  "@homeChallengeProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "itemType": {
+        "type": "String"
+      }
+    }
+  },
+  "homeEvents": "Acara",
+  "homeGreeting": "Selamat datang kembali, {userName}!",
+  "@homeGreeting": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHistory": "Riwayat",
+  "homeImpactCarbonLabel": "Emisi Karbon Terhindari",
+  "homeImpactRecycledLabel": "Sampah Terdaur Ulang",
+  "homeImpactWasteLabel": "Sampah Terkumpulkan",
+  "homePoints": "poin Sirsak",
+  "homeRegisterNow": "Daftar sekarang",
+  "homeRewards": "Hadiah",
+  "homeSetorSampah": "Setor Sampah",
+  "homeSetorSampahDesc": "Temukan Drop Point sampah terdekat!",
+  "homeTakeAction": "Ambil Aksi",
+  "homeWithdraw": "Tarik",
+  "homeYourImpact": "Dampak Anda",
   "itemCount": "{count, plural, =0{Tidak ada item} =1{1 item} other{{count} item}}",
   "@itemCount": {
     "placeholders": {

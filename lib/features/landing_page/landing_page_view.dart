@@ -211,7 +211,8 @@ class _FeatureItem extends StatelessWidget {
               text: TextSpan(
                 children: parseRichText(
                   text,
-                  baseStyle: textTheme.bodyLarge?.copyWith(
+                  baseStyle:
+                      textTheme.bodyLarge?.copyWith(
                         color: Colors.white,
                       ) ??
                       const TextStyle(color: Colors.white),

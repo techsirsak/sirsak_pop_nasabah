@@ -11,6 +11,43 @@
   "error": "Error",
   "forgotPassword": "Forgot Password?",
   "generalErrorTitle": "Something went wrong",
+  "homeChallenges": "Challenges",
+  "homeChallengesDesc": "Complete challenges and get rewards!",
+  "homeChallengeProgress": "{current}/{total} {itemType} collected",
+  "@homeChallengeProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "itemType": {
+        "type": "String"
+      }
+    }
+  },
+  "homeEvents": "Events",
+  "homeGreeting": "Welcome back, {userName}!",
+  "@homeGreeting": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHistory": "History",
+  "homeImpactCarbonLabel": "Avoided Carbon Emissions",
+  "homeImpactRecycledLabel": "Recycled Waste",
+  "homeImpactWasteLabel": "Waste Collected",
+  "homePoints": "Sirsak points",
+  "homeRegisterNow": "Register now",
+  "homeRewards": "Rewards",
+  "homeSetorSampah": "Setor Sampah",
+  "homeSetorSampahDesc": "Find your nearest drop point!",
+  "homeTakeAction": "Take Action",
+  "homeWithdraw": "Withdraw",
+  "homeYourImpact": "Your Impact",
   "itemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
   "@itemCount": {
     "placeholders": {

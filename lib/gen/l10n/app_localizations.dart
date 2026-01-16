@@ -164,6 +164,108 @@ abstract class AppLocalizations {
   /// **'Something went wrong'**
   String get generalErrorTitle;
 
+  /// No description provided for @homeChallenges.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get homeChallenges;
+
+  /// No description provided for @homeChallengesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete challenges and get rewards!'**
+  String get homeChallengesDesc;
+
+  /// No description provided for @homeChallengeProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{total} {itemType} collected'**
+  String homeChallengeProgress(int current, int total, String itemType);
+
+  /// No description provided for @homeEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get homeEvents;
+
+  /// No description provided for @homeGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back, {userName}!'**
+  String homeGreeting(String userName);
+
+  /// No description provided for @homeHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get homeHistory;
+
+  /// No description provided for @homeImpactCarbonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Avoided Carbon Emissions'**
+  String get homeImpactCarbonLabel;
+
+  /// No description provided for @homeImpactRecycledLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recycled Waste'**
+  String get homeImpactRecycledLabel;
+
+  /// No description provided for @homeImpactWasteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Waste Collected'**
+  String get homeImpactWasteLabel;
+
+  /// No description provided for @homePoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Sirsak points'**
+  String get homePoints;
+
+  /// No description provided for @homeRegisterNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Register now'**
+  String get homeRegisterNow;
+
+  /// No description provided for @homeRewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards'**
+  String get homeRewards;
+
+  /// No description provided for @homeSetorSampah.
+  ///
+  /// In en, this message translates to:
+  /// **'Setor Sampah'**
+  String get homeSetorSampah;
+
+  /// No description provided for @homeSetorSampahDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Find your nearest drop point!'**
+  String get homeSetorSampahDesc;
+
+  /// No description provided for @homeTakeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Action'**
+  String get homeTakeAction;
+
+  /// No description provided for @homeWithdraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get homeWithdraw;
+
+  /// No description provided for @homeYourImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Impact'**
+  String get homeYourImpact;
+
   /// No description provided for @itemCount.
   ///
   /// In en, this message translates to:

@@ -157,7 +157,7 @@ class SButton extends StatelessWidget {
     ),
     ButtonSize.medium: _ButtonSizeConfig(
       height: 50,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
       fontSize: 16,
       fontVariations: AppFonts.bold,
       iconSize: 20,
@@ -165,7 +165,7 @@ class SButton extends StatelessWidget {
     ),
     ButtonSize.large: _ButtonSizeConfig(
       height: 56,
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       fontSize: 16,
       fontVariations: AppFonts.bold,
       iconSize: 24,
@@ -216,12 +216,13 @@ class _LoadingIndicator extends StatelessWidget {
       ButtonVariant.text => colorScheme.tertiary,
     };
 
-    return SizedBox(
-      width: size,
-      height: size,
-      child: CircularProgressIndicator(
-        strokeWidth: 2,
-        valueColor: AlwaysStoppedAnimation<Color>(indicatorColor),
+    return Center(
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(indicatorColor),
+        ),
       ),
     );
   }
@@ -276,11 +277,9 @@ class _ButtonContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      // Indicator size is 60% of button height for visual balance
-      final indicatorSize = config.height * 0.6;
       return _LoadingIndicator(
         variant: variant,
-        size: indicatorSize,
+        size: config.iconSize,
       );
     }
 
