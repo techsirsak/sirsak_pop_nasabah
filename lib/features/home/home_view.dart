@@ -24,10 +24,12 @@ class HomeView extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: colorScheme.surface,
         elevation: 0,
+        centerTitle: false,
         title: Image.asset(
           Assets.images.sirsakLogoWhite.path,
           color: colorScheme.primary,
-          height: 32,
+          fit: .contain,
+          height: 130,
         ),
         actions: const [
           NotificationBell(),

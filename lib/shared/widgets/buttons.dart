@@ -108,6 +108,9 @@ class SButton extends StatelessWidget {
     this.isLoading = false,
     this.icon,
     this.isFullWidth = true,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.borderRadius,
     super.key,
   });
 
@@ -132,6 +135,15 @@ class SButton extends StatelessWidget {
   /// Whether button should take full width of parent
   final bool isFullWidth;
 
+  /// Optional custom background color (overrides theme defaults)
+  final Color? backgroundColor;
+
+  /// Optional custom foreground color for text/icons (overrides theme defaults)
+  final Color? foregroundColor;
+
+  /// Optional custom border radius (overrides default border radius)
+  final double? borderRadius;
+
   @override
   Widget build(BuildContext context) {
     return _ButtonWrapper(
@@ -142,6 +154,9 @@ class SButton extends StatelessWidget {
       variant: variant,
       size: size,
       isFullWidth: isFullWidth,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      borderRadius: borderRadius,
     );
   }
 
@@ -252,7 +267,7 @@ class _ButtonLabel extends StatelessWidget {
       children: [
         Icon(icon, size: config.iconSize),
         Gap(config.iconGap),
-        Text(text),
+        Flexible(child: Text(text)),
       ],
     );
   }
@@ -304,6 +319,9 @@ class _ElevatedButtonVariant extends StatelessWidget {
     required this.onPressed,
     required this.isFullWidth,
     required this.config,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.borderRadius,
   });
 
   final String text;
@@ -312,6 +330,9 @@ class _ElevatedButtonVariant extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isFullWidth;
   final _ButtonSizeConfig config;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -324,14 +345,14 @@ class _ElevatedButtonVariant extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: colorScheme.primaryContainer,
-          foregroundColor: colorScheme.surface,
+          backgroundColor: backgroundColor ?? colorScheme.primaryContainer,
+          foregroundColor: foregroundColor ?? colorScheme.surface,
           disabledBackgroundColor: colorScheme.surfaceContainerHighest,
           disabledForegroundColor: colorScheme.onSurfaceVariant.withValues(
             alpha: 0.38,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(borderRadius ?? 12),
           ),
           elevation: 0,
           padding: config.padding,
@@ -361,6 +382,9 @@ class _OutlinedButtonVariant extends StatelessWidget {
     required this.onPressed,
     required this.isFullWidth,
     required this.config,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.borderRadius,
   });
 
   final String text;
@@ -369,6 +393,9 @@ class _OutlinedButtonVariant extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isFullWidth;
   final _ButtonSizeConfig config;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -382,19 +409,19 @@ class _OutlinedButtonVariant extends StatelessWidget {
       child: OutlinedButton(
         onPressed: effectiveOnPressed,
         style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          foregroundColor: colorScheme.primaryContainer,
+          backgroundColor: backgroundColor ?? Colors.transparent,
+          foregroundColor: foregroundColor ?? colorScheme.primaryContainer,
           disabledForegroundColor: colorScheme.onSurfaceVariant.withValues(
             alpha: 0.38,
           ),
           side: BorderSide(
             color: effectiveOnPressed == null
                 ? colorScheme.onSurfaceVariant.withValues(alpha: 0.12)
-                : colorScheme.primaryContainer,
+                : (foregroundColor ?? colorScheme.primaryContainer),
             width: 2,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(borderRadius ?? 12),
           ),
           padding: config.padding,
           textStyle: textTheme.titleMedium?.copyWith(
@@ -423,6 +450,9 @@ class _TextButtonVariant extends StatelessWidget {
     required this.onPressed,
     required this.isFullWidth,
     required this.config,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.borderRadius,
   });
 
   final String text;
@@ -431,6 +461,9 @@ class _TextButtonVariant extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isFullWidth;
   final _ButtonSizeConfig config;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -443,14 +476,14 @@ class _TextButtonVariant extends StatelessWidget {
       child: TextButton(
         onPressed: isLoading ? null : onPressed,
         style: TextButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          foregroundColor: colorScheme.tertiary,
+          backgroundColor: backgroundColor ?? Colors.transparent,
+          foregroundColor: foregroundColor ?? colorScheme.primary,
           disabledForegroundColor: colorScheme.onSurfaceVariant.withValues(
             alpha: 0.38,
           ),
           overlayColor: colorScheme.tertiary.withValues(alpha: 0.08),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(borderRadius ?? 8),
           ),
           padding: config.padding,
           textStyle: textTheme.titleMedium?.copyWith(
@@ -484,6 +517,9 @@ class _ButtonWrapper extends StatelessWidget {
     required this.variant,
     required this.size,
     required this.isFullWidth,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.borderRadius,
   });
 
   final String text;
@@ -493,6 +529,9 @@ class _ButtonWrapper extends StatelessWidget {
   final ButtonVariant variant;
   final ButtonSize size;
   final bool isFullWidth;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -506,6 +545,9 @@ class _ButtonWrapper extends StatelessWidget {
         onPressed: onPressed,
         isFullWidth: isFullWidth,
         config: config,
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        borderRadius: borderRadius,
       ),
       ButtonVariant.outlined => _OutlinedButtonVariant(
         text: text,
@@ -514,6 +556,9 @@ class _ButtonWrapper extends StatelessWidget {
         onPressed: onPressed,
         isFullWidth: isFullWidth,
         config: config,
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        borderRadius: borderRadius,
       ),
       ButtonVariant.text => _TextButtonVariant(
         text: text,
@@ -522,6 +567,9 @@ class _ButtonWrapper extends StatelessWidget {
         onPressed: onPressed,
         isFullWidth: isFullWidth,
         config: config,
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        borderRadius: borderRadius,
       ),
     };
 

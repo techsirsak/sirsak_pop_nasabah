@@ -28,12 +28,16 @@ class PointsCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 20,
+        ),
         decoration: BoxDecoration(
           gradient: colorScheme.pointsCardGradient,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
+          mainAxisSize: .min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Welcome text and wallet icon
@@ -66,15 +70,17 @@ class PointsCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                Text(
-                  state.points.toString().replaceAllMapped(
-                    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                    (Match m) => '${m[1]},',
-                  ),
-                  style: textTheme.displayLarge?.copyWith(
-                    color: Colors.white,
-                    fontVariations: AppFonts.bold,
-                    height: 1,
+                Flexible(
+                  child: Text(
+                    state.points.toString().replaceAllMapped(
+                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                      (Match m) => '${m[1]},',
+                    ),
+                    style: textTheme.displayLarge?.copyWith(
+                      color: Colors.white,
+                      fontVariations: AppFonts.bold,
+                      height: 1,
+                    ),
                   ),
                 ),
                 const Gap(8),
@@ -90,33 +96,40 @@ class PointsCard extends StatelessWidget {
             const Gap(20),
             // Action buttons
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
+                Flexible(
+                  flex: 5,
                   child: SButton(
                     text: l10n.homeHistory,
                     onPressed: viewModel.navigateToHistory,
-                    variant: ButtonVariant.outlined,
+                    variant: ButtonVariant.text,
                     size: ButtonSize.small,
-                    icon: PhosphorIcons.clockCounterClockwise(),
+                    icon: PhosphorIcons.clipboardText(),
+                    foregroundColor: Colors.white,
                   ),
                 ),
-                const Gap(8),
-                Expanded(
+                Flexible(
+                  flex: 4,
                   child: SButton(
                     text: l10n.homeWithdraw,
                     onPressed: viewModel.navigateToWithdraw,
-                    variant: ButtonVariant.outlined,
+                    variant: ButtonVariant.text,
                     size: ButtonSize.small,
-                    icon: PhosphorIcons.wallet(),
+                    icon: PhosphorIcons.handWithdraw(),
+                    foregroundColor: Colors.white,
                   ),
                 ),
-                const Gap(8),
-                Expanded(
+                Flexible(
+                  flex: 5,
                   child: SButton(
                     text: l10n.homeRewards,
                     onPressed: viewModel.navigateToRewards,
                     size: ButtonSize.small,
                     icon: PhosphorIcons.gift(),
+                    foregroundColor: colorScheme.primary,
+                    backgroundColor: colorScheme.surface,
+                    borderRadius: 25,
                   ),
                 ),
               ],
