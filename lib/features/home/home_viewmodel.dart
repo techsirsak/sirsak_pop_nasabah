@@ -13,7 +13,7 @@ class HomeViewModel extends _$HomeViewModel {
   @override
   HomeState build() {
     return HomeState(
-      userName: 'John Smith',
+      userName: 'John',
       points: 1400,
       impactMetrics: [
         ImpactMetric(
@@ -29,7 +29,7 @@ class HomeViewModel extends _$HomeViewModel {
         ImpactMetric(
           label: 'Emisi Karbon Terhindari',
           value: '5 ton CO2eq',
-          icon: PhosphorIcons.globe(),
+          icon: PhosphorIcons.globeHemisphereEast(),
         ),
       ],
       challenge: const Challenge(
