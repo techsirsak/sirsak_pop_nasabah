@@ -117,6 +117,18 @@
   "tutorialTitle2": "Dispose at nearby collection points",
   "tutorialTitle3": "Get exclusive rewards",
   "tutorialTitle4": "Join our community",
+  "walletBalance": "Saldo Nasabah",
+  "walletBankSampahBalance": "Saldo Bank Sampah",
+  "walletExpiry": "Masa Berlaku",
+  "walletGetRewards": "Get your rewards",
+  "walletHistory": "History",
+  "walletMonthly": "Bulan Ini",
+  "walletRewards": "Rewards",
+  "walletRewardsDesc": "Tukarkan poin dengan voucher, diskon, dan produk eksklusif.",
+  "walletSirsakPoints": "Sirsak Points",
+  "walletTitle": "Wallet",
+  "walletWithdraw": "Withdraw",
+  "walletWithdrawDesc": "Ubah poin menjadi uang tunai dan transfer ke e-wallet.",
   "welcomeUser": "Welcome, {userName}!",
   "@welcomeUser": {
     "placeholders": {

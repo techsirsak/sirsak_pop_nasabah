@@ -554,6 +554,78 @@ abstract class AppLocalizations {
   /// **'Join our community'**
   String get tutorialTitle4;
 
+  /// No description provided for @walletBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Saldo Nasabah'**
+  String get walletBalance;
+
+  /// No description provided for @walletBankSampahBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Saldo Bank Sampah'**
+  String get walletBankSampahBalance;
+
+  /// No description provided for @walletExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Masa Berlaku'**
+  String get walletExpiry;
+
+  /// No description provided for @walletGetRewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Get your rewards'**
+  String get walletGetRewards;
+
+  /// No description provided for @walletHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get walletHistory;
+
+  /// No description provided for @walletMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulan Ini'**
+  String get walletMonthly;
+
+  /// No description provided for @walletRewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards'**
+  String get walletRewards;
+
+  /// No description provided for @walletRewardsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tukarkan poin dengan voucher, diskon, dan produk eksklusif.'**
+  String get walletRewardsDesc;
+
+  /// No description provided for @walletSirsakPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Sirsak Points'**
+  String get walletSirsakPoints;
+
+  /// No description provided for @walletTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get walletTitle;
+
+  /// No description provided for @walletWithdraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get walletWithdraw;
+
+  /// No description provided for @walletWithdrawDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Ubah poin menjadi uang tunai dan transfer ke e-wallet.'**
+  String get walletWithdrawDesc;
+
   /// No description provided for @welcomeUser.
   ///
   /// In en, this message translates to:

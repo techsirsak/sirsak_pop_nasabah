@@ -117,6 +117,18 @@
   "tutorialTitle2": "Buang sampah di titik pengumpulan terdekat Anda",
   "tutorialTitle3": "Dapatkan hadiah eksklusif",
   "tutorialTitle4": "Bergabunglah dengan komunitas kami",
+  "walletBalance": "Saldo Nasabah",
+  "walletBankSampahBalance": "Saldo Bank Sampah",
+  "walletExpiry": "Masa Berlaku",
+  "walletGetRewards": "Dapatkan hadiahmu",
+  "walletHistory": "Riwayat",
+  "walletMonthly": "Bulan Ini",
+  "walletRewards": "Hadiah",
+  "walletRewardsDesc": "Tukarkan poin dengan voucher, diskon, dan produk eksklusif.",
+  "walletSirsakPoints": "Poin Sirsak",
+  "walletTitle": "Dompet",
+  "walletWithdraw": "Tarik",
+  "walletWithdrawDesc": "Ubah poin menjadi uang tunai dan transfer ke e-wallet.",
   "welcomeUser": "Selamat datang, {userName}!",
   "@welcomeUser": {
     "placeholders": {

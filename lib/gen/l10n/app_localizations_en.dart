@@ -260,6 +260,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tutorialTitle4 => 'Join our community';
 
   @override
+  String get walletBalance => 'Saldo Nasabah';
+
+  @override
+  String get walletBankSampahBalance => 'Saldo Bank Sampah';
+
+  @override
+  String get walletExpiry => 'Masa Berlaku';
+
+  @override
+  String get walletGetRewards => 'Get your rewards';
+
+  @override
+  String get walletHistory => 'History';
+
+  @override
+  String get walletMonthly => 'Bulan Ini';
+
+  @override
+  String get walletRewards => 'Rewards';
+
+  @override
+  String get walletRewardsDesc =>
+      'Tukarkan poin dengan voucher, diskon, dan produk eksklusif.';
+
+  @override
+  String get walletSirsakPoints => 'Sirsak Points';
+
+  @override
+  String get walletTitle => 'Wallet';
+
+  @override
+  String get walletWithdraw => 'Withdraw';
+
+  @override
+  String get walletWithdrawDesc =>
+      'Ubah poin menjadi uang tunai dan transfer ke e-wallet.';
+
+  @override
   String welcomeUser(String userName) {
     return 'Welcome, $userName!';
   }
