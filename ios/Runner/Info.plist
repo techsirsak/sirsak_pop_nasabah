@@ -47,5 +47,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Sirsak needs camera access to scan QR codes at drop points for waste collection verification.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Sirsak needs access to your photo library to select a profile picture.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Sirsak needs permission to save photos to your photo library.</string>
 </dict>
 </plist>

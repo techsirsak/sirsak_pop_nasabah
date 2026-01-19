@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -9,11 +11,25 @@ import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_search
 import 'package:sirsak_pop_nasabah/features/home/widgets/notification_bell.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 
-class DropPointView extends ConsumerWidget {
+class DropPointView extends ConsumerStatefulWidget {
   const DropPointView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DropPointView> createState() => _DropPointViewState();
+}
+
+class _DropPointViewState extends ConsumerState<DropPointView> {
+  @override
+  void initState() {
+    super.initState();
+    // Initialize location when view is first opened
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(ref.read(dropPointViewModelProvider.notifier).initLocation());
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(dropPointViewModelProvider);
     final viewModel = ref.read(dropPointViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;

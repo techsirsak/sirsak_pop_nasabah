@@ -10,6 +10,14 @@ enum DropPointFilterType {
   rvm,
 }
 
+/// Location permission status
+enum LocationPermissionStatus {
+  unknown,
+  granted,
+  denied,
+  deniedForever,
+}
+
 /// Sort options for drop point list
 enum DropPointSortBy {
   distance,
@@ -28,6 +36,8 @@ abstract class DropPointState with _$DropPointState {
     @Default(false) bool isLocationFound,
     @Default(false) bool isLoadingLocation,
     String? locationError,
+    @Default(LocationPermissionStatus.unknown)
+    LocationPermissionStatus locationPermissionStatus,
 
     // Search
     @Default('') String searchQuery,

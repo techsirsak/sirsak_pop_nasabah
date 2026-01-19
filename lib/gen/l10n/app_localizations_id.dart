@@ -32,10 +32,17 @@ class AppLocalizationsId extends AppLocalizations {
   String get dropPointLocationFound => 'Lokasi ditemukan';
 
   @override
+  String get dropPointLocationPermissionMessage =>
+      'Aktifkan lokasi untuk melihat posisi Anda';
+
+  @override
   String get dropPointNoResults => 'Tidak ada drop point ditemukan';
 
   @override
   String get dropPointNoResultsHint => 'Coba ubah pencarian atau filter Anda';
+
+  @override
+  String get dropPointOpenSettings => 'Buka Pengaturan';
 
   @override
   String dropPointOpenUntil(String time) {
@@ -49,7 +56,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get dropPointSearchPlaceholder => 'Ketik nama daerahmu di sini...';
 
   @override
-  String get dropPointSortBy => 'Urut Berdasarkan';
+  String get dropPointSortBy => 'Urutkan';
 
   @override
   String get dropPointTitle => 'Drop Point';

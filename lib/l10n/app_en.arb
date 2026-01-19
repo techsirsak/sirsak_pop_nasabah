@@ -14,8 +14,10 @@
   "dropPointDropPoint": "Drop Point",
   "dropPointFilter": "Filter",
   "dropPointLocationFound": "Location found",
+  "dropPointLocationPermissionMessage": "Enable location to see your position",
   "dropPointNoResults": "No drop points found",
   "dropPointNoResultsHint": "Try adjusting your search or filters",
+  "dropPointOpenSettings": "Open Settings",
   "dropPointOpenUntil": "Open until {time}",
   "@dropPointOpenUntil": {
     "placeholders": {

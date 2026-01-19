@@ -14,8 +14,10 @@
   "dropPointDropPoint": "Drop Point",
   "dropPointFilter": "Filter",
   "dropPointLocationFound": "Lokasi ditemukan",
+  "dropPointLocationPermissionMessage": "Aktifkan lokasi untuk melihat posisi Anda",
   "dropPointNoResults": "Tidak ada drop point ditemukan",
   "dropPointNoResultsHint": "Coba ubah pencarian atau filter Anda",
+  "dropPointOpenSettings": "Buka Pengaturan",
   "dropPointOpenUntil": "Buka sampai {time}",
   "@dropPointOpenUntil": {
     "placeholders": {
@@ -26,7 +28,7 @@
   },
   "dropPointRvm": "RVM",
   "dropPointSearchPlaceholder": "Ketik nama daerahmu di sini...",
-  "dropPointSortBy": "Urut Berdasarkan",
+  "dropPointSortBy": "Urutkan",
   "dropPointTitle": "Drop Point",
   "dropPointYourLocation": "Lokasimu",
   "continueWithGoogle": "Lanjutkan dengan Google",

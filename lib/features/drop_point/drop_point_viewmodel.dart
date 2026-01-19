@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_state.dart';
 import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
@@ -12,11 +13,17 @@ part 'drop_point_viewmodel.g.dart';
 class DropPointViewModel extends _$DropPointViewModel {
   @override
   DropPointState build() {
-    unawaited(Future.microtask(() {
-      _loadMockData();
-      unawaited(_initUserLocation());
-    }));
+    unawaited(Future.microtask(_loadMockData));
     return const DropPointState();
+  }
+
+  /// Initialize location - call when Drop Point view becomes visible
+  Future<void> initLocation() async {
+    // Prevent multiple calls if already initialized
+    if (state.locationPermissionStatus != LocationPermissionStatus.unknown) {
+      return;
+    }
+    await _initUserLocation();
   }
 
   /// Load mock drop point data (to be replaced with API call)
@@ -95,9 +102,57 @@ class DropPointViewModel extends _$DropPointViewModel {
     );
   }
 
+  /// Check and request location permission
+  Future<bool> _checkAndRequestLocationPermission() async {
+    final status = await Permission.location.status;
+
+    if (status.isGranted) {
+      state = state.copyWith(
+        locationPermissionStatus: LocationPermissionStatus.granted,
+      );
+      return true;
+    }
+
+    if (status.isPermanentlyDenied) {
+      state = state.copyWith(
+        locationPermissionStatus: LocationPermissionStatus.deniedForever,
+      );
+      return false;
+    }
+
+    // Request permission
+    final result = await Permission.location.request();
+
+    if (result.isGranted) {
+      state = state.copyWith(
+        locationPermissionStatus: LocationPermissionStatus.granted,
+      );
+      return true;
+    }
+
+    if (result.isPermanentlyDenied) {
+      state = state.copyWith(
+        locationPermissionStatus: LocationPermissionStatus.deniedForever,
+      );
+      return false;
+    }
+
+    state = state.copyWith(
+      locationPermissionStatus: LocationPermissionStatus.denied,
+    );
+    return false;
+  }
+
   /// Initialize user location service
   Future<void> _initUserLocation() async {
     state = state.copyWith(isLoadingLocation: true, locationError: null);
+
+    // Check permission first
+    final hasPermission = await _checkAndRequestLocationPermission();
+    if (!hasPermission) {
+      state = state.copyWith(isLoadingLocation: false);
+      return;
+    }
 
     try {
       final locationService = ref.read(locationServiceProvider);
@@ -135,6 +190,11 @@ class DropPointViewModel extends _$DropPointViewModel {
   /// Request location permission and get user location
   Future<void> requestLocation() async {
     await _initUserLocation();
+  }
+
+  /// Open app settings for location permission
+  Future<void> openLocationAppSettings() async {
+    await openAppSettings();
   }
 
   /// Update search query and filter results

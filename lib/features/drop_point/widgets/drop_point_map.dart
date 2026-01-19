@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_state.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/location_found_toast.dart';
+import 'package:sirsak_pop_nasabah/features/drop_point/widgets/location_permission_banner.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/map_legend.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/zoom_control.dart';
 import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
@@ -93,6 +94,17 @@ class DropPointMap extends StatelessWidget {
                 right: 8,
                 child: LocationFoundToast(
                   onDismiss: viewModel.dismissLocationFound,
+                ),
+              ),
+            // Location permission banner
+            if (state.locationPermissionStatus ==
+                LocationPermissionStatus.deniedForever)
+              Positioned(
+                bottom: 8,
+                left: 8,
+                right: 8,
+                child: LocationPermissionBanner(
+                  onOpenSettings: viewModel.openLocationAppSettings,
                 ),
               ),
           ],

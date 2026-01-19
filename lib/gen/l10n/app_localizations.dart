@@ -140,6 +140,12 @@ abstract class AppLocalizations {
   /// **'Location found'**
   String get dropPointLocationFound;
 
+  /// No description provided for @dropPointLocationPermissionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable location to see your position'**
+  String get dropPointLocationPermissionMessage;
+
   /// No description provided for @dropPointNoResults.
   ///
   /// In en, this message translates to:
@@ -151,6 +157,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try adjusting your search or filters'**
   String get dropPointNoResultsHint;
+
+  /// No description provided for @dropPointOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get dropPointOpenSettings;
 
   /// No description provided for @dropPointOpenUntil.
   ///

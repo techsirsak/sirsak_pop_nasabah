@@ -32,10 +32,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dropPointLocationFound => 'Location found';
 
   @override
+  String get dropPointLocationPermissionMessage =>
+      'Enable location to see your position';
+
+  @override
   String get dropPointNoResults => 'No drop points found';
 
   @override
   String get dropPointNoResultsHint => 'Try adjusting your search or filters';
+
+  @override
+  String get dropPointOpenSettings => 'Open Settings';
 
   @override
   String dropPointOpenUntil(String time) {
