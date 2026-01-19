@@ -110,6 +110,84 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @dropPointBankSampah.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Sampah'**
+  String get dropPointBankSampah;
+
+  /// No description provided for @dropPointDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} km away'**
+  String dropPointDistance(String distance);
+
+  /// No description provided for @dropPointDropPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop Point'**
+  String get dropPointDropPoint;
+
+  /// No description provided for @dropPointFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get dropPointFilter;
+
+  /// No description provided for @dropPointLocationFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Location found'**
+  String get dropPointLocationFound;
+
+  /// No description provided for @dropPointNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No drop points found'**
+  String get dropPointNoResults;
+
+  /// No description provided for @dropPointNoResultsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your search or filters'**
+  String get dropPointNoResultsHint;
+
+  /// No description provided for @dropPointOpenUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Open until {time}'**
+  String dropPointOpenUntil(String time);
+
+  /// No description provided for @dropPointRvm.
+  ///
+  /// In en, this message translates to:
+  /// **'RVM'**
+  String get dropPointRvm;
+
+  /// No description provided for @dropPointSearchPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Ketik nama daerahmu di sini...'**
+  String get dropPointSearchPlaceholder;
+
+  /// No description provided for @dropPointSortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort By'**
+  String get dropPointSortBy;
+
+  /// No description provided for @dropPointTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop Point'**
+  String get dropPointTitle;
+
+  /// No description provided for @dropPointYourLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Lokasimu'**
+  String get dropPointYourLocation;
+
   /// No description provided for @continueWithGoogle.
   ///
   /// In en, this message translates to:

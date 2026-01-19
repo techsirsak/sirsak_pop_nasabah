@@ -2,6 +2,33 @@
   "@@locale": "en",
   "appName": "Sirsak Pop Nasabah",
   "cancel": "Cancel",
+  "dropPointBankSampah": "Bank Sampah",
+  "dropPointDistance": "{distance} km away",
+  "@dropPointDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "dropPointDropPoint": "Drop Point",
+  "dropPointFilter": "Filter",
+  "dropPointLocationFound": "Location found",
+  "dropPointNoResults": "No drop points found",
+  "dropPointNoResultsHint": "Try adjusting your search or filters",
+  "dropPointOpenUntil": "Open until {time}",
+  "@dropPointOpenUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "dropPointRvm": "RVM",
+  "dropPointSearchPlaceholder": "Ketik nama daerahmu di sini...",
+  "dropPointSortBy": "Sort By",
+  "dropPointTitle": "Drop Point",
+  "dropPointYourLocation": "Lokasimu",
   "continueWithGoogle": "Continue with Google",
   "dontHaveAccount": "Don't have an account?",
   "emailAddress": "Email Address",

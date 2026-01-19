@@ -14,4 +14,7 @@ class SAppRoutePath {
   static const rewards = '/rewards';
   static const setorSampah = '/setor-sampah';
   static const challenges = '/challenges';
+
+  // Drop point feature routes
+  static const dropPoint = '/drop-point';
 }

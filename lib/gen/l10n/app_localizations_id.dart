@@ -15,6 +15,49 @@ class AppLocalizationsId extends AppLocalizations {
   String get cancel => 'Batal';
 
   @override
+  String get dropPointBankSampah => 'Bank Sampah';
+
+  @override
+  String dropPointDistance(String distance) {
+    return '$distance km dari Anda';
+  }
+
+  @override
+  String get dropPointDropPoint => 'Drop Point';
+
+  @override
+  String get dropPointFilter => 'Filter';
+
+  @override
+  String get dropPointLocationFound => 'Lokasi ditemukan';
+
+  @override
+  String get dropPointNoResults => 'Tidak ada drop point ditemukan';
+
+  @override
+  String get dropPointNoResultsHint => 'Coba ubah pencarian atau filter Anda';
+
+  @override
+  String dropPointOpenUntil(String time) {
+    return 'Buka sampai $time';
+  }
+
+  @override
+  String get dropPointRvm => 'RVM';
+
+  @override
+  String get dropPointSearchPlaceholder => 'Ketik nama daerahmu di sini...';
+
+  @override
+  String get dropPointSortBy => 'Urut Berdasarkan';
+
+  @override
+  String get dropPointTitle => 'Drop Point';
+
+  @override
+  String get dropPointYourLocation => 'Lokasimu';
+
+  @override
   String get continueWithGoogle => 'Lanjutkan dengan Google';
 
   @override

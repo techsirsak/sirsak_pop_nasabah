@@ -46,11 +46,11 @@ class AppBottomNavBar extends ConsumerWidget {
                 colorScheme: colorScheme,
               ),
               // Center QR Scan button
-              _QRScanButton(
-                isSelected: selectedIndex == 2,
-                onTap: () => notifier.setTab(2),
-                colorScheme: colorScheme,
-              ),
+              // _QRScanButton(
+              //   isSelected: selectedIndex == 2,
+              //   onTap: () => notifier.setTab(2),
+              //   colorScheme: colorScheme,
+              // ),
               _NavBarItem(
                 icon: PhosphorIcons.wallet(),
                 iconFilled: PhosphorIcons.wallet(PhosphorIconsStyle.fill),
@@ -125,6 +125,8 @@ class _NavBarItem extends StatelessWidget {
   }
 }
 
+// TODO(devin): implement scan QR
+// ignore: unused_element
 class _QRScanButton extends StatelessWidget {
   const _QRScanButton({
     required this.isSelected,
