@@ -4,7 +4,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_state.dart';
+import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
+import 'package:sirsak_pop_nasabah/services/auth_service.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
+import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/validation_helper.dart';
 
 part 'login_viewmodel.g.dart';
 
@@ -24,35 +28,20 @@ class LoginViewModel extends _$LoginViewModel {
   }
 
   bool _validateEmail() {
-    final email = state.email.trim();
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-
-    if (email.isEmpty) {
-      state = state.copyWith(emailError: 'emailRequired');
+    final error = ValidationHelper.validateEmail(state.email);
+    if (error != null) {
+      state = state.copyWith(emailError: error);
       return false;
     }
-
-    if (!emailRegex.hasMatch(email)) {
-      state = state.copyWith(emailError: 'emailInvalid');
-      return false;
-    }
-
     return true;
   }
 
   bool _validatePassword() {
-    final password = state.password;
-
-    if (password.isEmpty) {
-      state = state.copyWith(passwordError: 'passwordRequired');
+    final error = ValidationHelper.validatePassword(state.password);
+    if (error != null) {
+      state = state.copyWith(passwordError: error);
       return false;
     }
-
-    if (password.length < 6) {
-      state = state.copyWith(passwordError: 'passwordMinLength');
-      return false;
-    }
-
     return true;
   }
 
@@ -71,20 +60,27 @@ class LoginViewModel extends _$LoginViewModel {
     );
 
     // Validate form
-    // TODO(devin): validate and call Auth API
-    // if (!_validateForm()) {
-    //   return;
-    // }
+    if (!_validateForm()) {
+      return;
+    } 
 
     // Show loading
     state = state.copyWith(isLoading: true);
 
     try {
-      // Simulate API call delay
-      await Future<void>.delayed(const Duration(seconds: 1));
+      // Call Auth API for login
+      final authService = ref.read(authServiceProvider);
+      final response = await authService.login(
+        email: state.email.trim(),
+        password: state.password,
+      );
 
-      // Mock successful login - check if tutorial needed
+      // Save tokens
       final localStorageService = ref.read(localStorageServiceProvider);
+      await localStorageService.saveAccessToken(response.accessToken);
+      await localStorageService.saveRefreshToken(response.refreshToken);
+
+      // Check if tutorial needed and navigate
       final hasSeenTutorial = await localStorageService.hasSeenTutorial();
 
       if (hasSeenTutorial) {
@@ -92,11 +88,44 @@ class LoginViewModel extends _$LoginViewModel {
       } else {
         ref.read(routerProvider).go(SAppRoutePath.tutorial);
       }
-    } catch (e) {
+    } on ApiException catch (e) {
+      ref
+          .read(loggerServiceProvider)
+          .warning('[LoginViewModel] Login failed: $e');
+
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: e.when(
+          network: (message, _) => message,
+          server: (message, _) => 'Server error. Please try again later.',
+          client: (message, statusCode, errors) {
+            _handleServerValidationErrors(errors);
+            return message.isNotEmpty ? message : 'Login failed.';
+          },
+          unknown: (message, _) => 'Login failed. Please try again.',
+        ),
+      );
+    } catch (e, stackTrace) {
+      ref
+          .read(loggerServiceProvider)
+          .error('[LoginViewModel] Unexpected error', e, stackTrace);
+
       state = state.copyWith(
         isLoading: false,
         errorMessage: 'Login failed. Please try again.',
       );
+    }
+  }
+
+  /// Handle server-side validation errors
+  void _handleServerValidationErrors(Map<String, dynamic>? errors) {
+    if (errors == null) return;
+
+    if (errors.containsKey('email')) {
+      state = state.copyWith(emailError: 'emailInvalid');
+    }
+    if (errors.containsKey('password')) {
+      state = state.copyWith(passwordError: 'passwordInvalid');
     }
   }
 

@@ -8,6 +8,7 @@ import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/auth_service.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/validation_helper.dart';
 
 part 'signup_viewmodel.g.dart';
 
@@ -75,19 +76,11 @@ class SignupViewModel extends _$SignupViewModel {
   }
 
   bool _validateEmail() {
-    final email = state.email.trim();
-    final emailRegex = RegExp(r'^[\w-\.+]+@([\w-]+\.)+[\w-]{2,4}$');
-
-    if (email.isEmpty) {
-      state = state.copyWith(emailError: 'emailRequired');
+    final error = ValidationHelper.validateEmail(state.email);
+    if (error != null) {
+      state = state.copyWith(emailError: error);
       return false;
     }
-
-    if (!emailRegex.hasMatch(email)) {
-      state = state.copyWith(emailError: 'emailInvalid');
-      return false;
-    }
-
     return true;
   }
 
@@ -111,18 +104,11 @@ class SignupViewModel extends _$SignupViewModel {
   }
 
   bool _validatePassword() {
-    final password = state.password;
-
-    if (password.isEmpty) {
-      state = state.copyWith(passwordError: 'passwordRequired');
+    final error = ValidationHelper.validatePassword(state.password);
+    if (error != null) {
+      state = state.copyWith(passwordError: error);
       return false;
     }
-
-    if (password.length < 6) {
-      state = state.copyWith(passwordError: 'passwordMinLength');
-      return false;
-    }
-
     return true;
   }
 

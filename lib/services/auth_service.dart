@@ -1,4 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/models/auth/login_request.dart';
+import 'package:sirsak_pop_nasabah/models/auth/login_response.dart';
 import 'package:sirsak_pop_nasabah/models/auth/register_request.dart';
 import 'package:sirsak_pop_nasabah/models/auth/register_response.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
@@ -44,6 +46,30 @@ class AuthService {
     );
 
     _logger.info('[AuthService] Registration successful for: $email');
+    return response;
+  }
+
+  /// Login a nasabah user
+  ///
+  /// Throws [ApiException] on failure
+  Future<LoginResponse> login({
+    required String email,
+    required String password,
+  }) async {
+    _logger.info('[AuthService] Logging in user: $email');
+
+    final request = LoginRequest(
+      email: email,
+      password: password,
+    );
+
+    final response = await _apiClient.post(
+      path: '/auth/login',
+      data: request.toJson(),
+      fromJson: LoginResponse.fromJson,
+    );
+
+    _logger.info('[AuthService] Login successful for: $email');
     return response;
   }
 }
