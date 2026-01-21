@@ -458,6 +458,150 @@ abstract class AppLocalizations {
   /// **'or'**
   String get or;
 
+  /// No description provided for @profileAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Akun'**
+  String get profileAccountTitle;
+
+  /// No description provided for @profileBadgesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Badges'**
+  String get profileBadgesTitle;
+
+  /// No description provided for @profileCarbonAvoided.
+  ///
+  /// In en, this message translates to:
+  /// **'Emisi Karbon\nTerhindari'**
+  String get profileCarbonAvoided;
+
+  /// No description provided for @profileChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Ubah Kata Sandi'**
+  String get profileChangePassword;
+
+  /// No description provided for @profileChangePasswordDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Ubah kata sandi akun anda'**
+  String get profileChangePasswordDesc;
+
+  /// No description provided for @profileContactEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get profileContactEmail;
+
+  /// No description provided for @profileContactInstagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get profileContactInstagram;
+
+  /// No description provided for @profileContactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Telpon (Whatsapp chat):'**
+  String get profileContactPhone;
+
+  /// No description provided for @profileContactUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Hubungi Kami:'**
+  String get profileContactUs;
+
+  /// No description provided for @profileDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Hapus Akun'**
+  String get profileDeleteAccount;
+
+  /// No description provided for @profileDeleteAccountDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Hapus akun anda secara permanen'**
+  String get profileDeleteAccountDesc;
+
+  /// No description provided for @profileEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get profileEdit;
+
+  /// No description provided for @profileEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get profileEmailLabel;
+
+  /// No description provided for @profileFaqLinkPre.
+  ///
+  /// In en, this message translates to:
+  /// **'Lihat halaman FAQ '**
+  String get profileFaqLinkPre;
+
+  /// No description provided for @profileFaqLinkText.
+  ///
+  /// In en, this message translates to:
+  /// **'di sini'**
+  String get profileFaqLinkText;
+
+  /// No description provided for @profileFaqQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Punya pertanyaan?'**
+  String get profileFaqQuestion;
+
+  /// No description provided for @profileFaqTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQ'**
+  String get profileFaqTitle;
+
+  /// No description provided for @profileLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get profileLogout;
+
+  /// No description provided for @profileMemberSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Member sejak {year}'**
+  String profileMemberSince(String year);
+
+  /// No description provided for @profileNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Nama'**
+  String get profileNameLabel;
+
+  /// No description provided for @profilePersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Informasi Pribadi'**
+  String get profilePersonalInfo;
+
+  /// No description provided for @profilePhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Nomor Telpon'**
+  String get profilePhoneLabel;
+
+  /// No description provided for @profileWasteCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'Sampah\nTerkumpul'**
+  String get profileWasteCollected;
+
+  /// No description provided for @profileWasteRecycled.
+  ///
+  /// In en, this message translates to:
+  /// **'Sampah\nTerdaur Ulang'**
+  String get profileWasteRecycled;
+
   /// No description provided for @passwordLabel.
   ///
   /// In en, this message translates to:
@@ -487,6 +631,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign Up'**
   String get signUp;
+
+  /// No description provided for @signupAlreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get signupAlreadyHaveAccount;
+
+  /// No description provided for @signupConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get signupConfirmPassword;
+
+  /// No description provided for @signupConfirmPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get signupConfirmPasswordRequired;
+
+  /// No description provided for @signupFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get signupFullName;
+
+  /// No description provided for @signupFullNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name is required'**
+  String get signupFullNameRequired;
+
+  /// No description provided for @signupFullNameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name must be at least 2 characters'**
+  String get signupFullNameTooShort;
+
+  /// No description provided for @signupOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'optional'**
+  String get signupOptional;
+
+  /// No description provided for @signupPasswordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get signupPasswordsDoNotMatch;
+
+  /// No description provided for @signupPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'+62 812 3456 7890'**
+  String get signupPhoneHint;
+
+  /// No description provided for @signupPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number format'**
+  String get signupPhoneInvalid;
+
+  /// No description provided for @signupPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get signupPhoneNumber;
+
+  /// No description provided for @signupTermsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Conditions'**
+  String get signupTermsLink;
+
+  /// No description provided for @signupTermsPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the '**
+  String get signupTermsPrefix;
+
+  /// No description provided for @signupTermsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'You must accept the terms and conditions'**
+  String get signupTermsRequired;
 
   /// No description provided for @splashTitle.
   ///

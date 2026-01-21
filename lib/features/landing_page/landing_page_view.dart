@@ -13,7 +13,6 @@ class LandingPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(landingPageViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -106,7 +105,9 @@ class LandingPageView extends ConsumerWidget {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: viewModel.navigateToGetStarted,
+                    onPressed: () => ref
+                        .read(landingPageViewModelProvider.notifier)
+                        .navigateToGetStarted(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       foregroundColor: colorScheme.primaryContainer,
@@ -131,7 +132,9 @@ class LandingPageView extends ConsumerWidget {
                 SizedBox(
                   width: size.width * 2 / 3,
                   child: OutlinedButton(
-                    onPressed: viewModel.navigateToSignIn,
+                    onPressed: () => ref
+                        .read(landingPageViewModelProvider.notifier)
+                        .navigateToSignIn(),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
                       side: const BorderSide(color: Colors.white, width: 2),
@@ -154,21 +157,23 @@ class LandingPageView extends ConsumerWidget {
                 _ContactLink(
                   icon: PhosphorIcons.envelope(),
                   text: context.l10n.landingPageContactEmail,
-                  onTap: () => viewModel.launchEmail(
-                    context.l10n.landingPageContactEmail,
-                  ),
+                  onTap: () => ref
+                      .read(landingPageViewModelProvider.notifier)
+                      .launchEmail(context.l10n.landingPageContactEmail),
                 ),
                 _ContactLink(
                   icon: PhosphorIcons.phone(),
                   text: context.l10n.landingPageContactPhone,
-                  onTap: () => viewModel.launchPhone('+6287770808578'),
+                  onTap: () => ref
+                      .read(landingPageViewModelProvider.notifier)
+                      .launchPhone('+6287770808578'),
                 ),
                 _ContactLink(
                   icon: PhosphorIcons.instagramLogo(),
                   text: context.l10n.landingPageContactInstagram,
-                  onTap: () => viewModel.launchInstagram(
-                    context.l10n.landingPageContactInstagram,
-                  ),
+                  onTap: () => ref
+                      .read(landingPageViewModelProvider.notifier)
+                      .launchInstagram(context.l10n.landingPageContactInstagram),
                 ),
                 const Gap(30),
               ],

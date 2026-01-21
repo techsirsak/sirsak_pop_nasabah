@@ -208,6 +208,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get or => 'or';
 
   @override
+  String get profileAccountTitle => 'Akun';
+
+  @override
+  String get profileBadgesTitle => 'Your Badges';
+
+  @override
+  String get profileCarbonAvoided => 'Emisi Karbon\nTerhindari';
+
+  @override
+  String get profileChangePassword => 'Ubah Kata Sandi';
+
+  @override
+  String get profileChangePasswordDesc => 'Ubah kata sandi akun anda';
+
+  @override
+  String get profileContactEmail => 'Email';
+
+  @override
+  String get profileContactInstagram => 'Instagram';
+
+  @override
+  String get profileContactPhone => 'Telpon (Whatsapp chat):';
+
+  @override
+  String get profileContactUs => 'Hubungi Kami:';
+
+  @override
+  String get profileDeleteAccount => 'Hapus Akun';
+
+  @override
+  String get profileDeleteAccountDesc => 'Hapus akun anda secara permanen';
+
+  @override
+  String get profileEdit => 'Edit';
+
+  @override
+  String get profileEmailLabel => 'Email';
+
+  @override
+  String get profileFaqLinkPre => 'Lihat halaman FAQ ';
+
+  @override
+  String get profileFaqLinkText => 'di sini';
+
+  @override
+  String get profileFaqQuestion => 'Punya pertanyaan?';
+
+  @override
+  String get profileFaqTitle => 'FAQ';
+
+  @override
+  String get profileLogout => 'Log out';
+
+  @override
+  String profileMemberSince(String year) {
+    return 'Member sejak $year';
+  }
+
+  @override
+  String get profileNameLabel => 'Nama';
+
+  @override
+  String get profilePersonalInfo => 'Informasi Pribadi';
+
+  @override
+  String get profilePhoneLabel => 'Nomor Telpon';
+
+  @override
+  String get profileWasteCollected => 'Sampah\nTerkumpul';
+
+  @override
+  String get profileWasteRecycled => 'Sampah\nTerdaur Ulang';
+
+  @override
   String get passwordLabel => 'Password';
 
   @override
@@ -221,6 +295,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signUp => 'Sign Up';
+
+  @override
+  String get signupAlreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get signupConfirmPassword => 'Confirm Password';
+
+  @override
+  String get signupConfirmPasswordRequired => 'Please confirm your password';
+
+  @override
+  String get signupFullName => 'Full Name';
+
+  @override
+  String get signupFullNameRequired => 'Full name is required';
+
+  @override
+  String get signupFullNameTooShort =>
+      'Full name must be at least 2 characters';
+
+  @override
+  String get signupOptional => 'optional';
+
+  @override
+  String get signupPasswordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get signupPhoneHint => '+62 812 3456 7890';
+
+  @override
+  String get signupPhoneInvalid => 'Invalid phone number format';
+
+  @override
+  String get signupPhoneNumber => 'Phone Number';
+
+  @override
+  String get signupTermsLink => 'Terms and Conditions';
+
+  @override
+  String get signupTermsPrefix => 'I agree to the ';
+
+  @override
+  String get signupTermsRequired => 'You must accept the terms and conditions';
 
   @override
   String get splashTitle => 'Welcome';

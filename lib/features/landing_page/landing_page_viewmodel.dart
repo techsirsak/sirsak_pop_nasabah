@@ -16,16 +16,14 @@ class LandingPageViewModel extends _$LandingPageViewModel {
   /// Navigate to login page when "Get Started" button is tapped
   Future<void> navigateToGetStarted() async {
     state = state.copyWith(isNavigating: true);
-    final router = ref.read(routerProvider);
-    await router.push(SAppRoutePath.signUp);
+    ref.read(routerProvider).push(SAppRoutePath.signUp);
     state = state.copyWith(isNavigating: false);
   }
 
   /// Navigate to login page when "Sign in" button is tapped
   Future<void> navigateToSignIn() async {
     state = state.copyWith(isNavigating: true);
-    final router = ref.read(routerProvider);
-    await router.push(SAppRoutePath.login);
+    ref.read(routerProvider) .push(SAppRoutePath.login);
     state = state.copyWith(isNavigating: false);
   }
 

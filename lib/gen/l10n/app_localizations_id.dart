@@ -209,6 +209,80 @@ class AppLocalizationsId extends AppLocalizations {
   String get or => 'atau';
 
   @override
+  String get profileAccountTitle => 'Akun';
+
+  @override
+  String get profileBadgesTitle => 'Lencana Kamu';
+
+  @override
+  String get profileCarbonAvoided => 'Emisi Karbon\nTerhindari';
+
+  @override
+  String get profileChangePassword => 'Ubah Kata Sandi';
+
+  @override
+  String get profileChangePasswordDesc => 'Ubah kata sandi akun anda';
+
+  @override
+  String get profileContactEmail => 'Email';
+
+  @override
+  String get profileContactInstagram => 'Instagram';
+
+  @override
+  String get profileContactPhone => 'Telpon (Whatsapp chat):';
+
+  @override
+  String get profileContactUs => 'Hubungi Kami:';
+
+  @override
+  String get profileDeleteAccount => 'Hapus Akun';
+
+  @override
+  String get profileDeleteAccountDesc => 'Hapus akun anda secara permanen';
+
+  @override
+  String get profileEdit => 'Edit';
+
+  @override
+  String get profileEmailLabel => 'Email';
+
+  @override
+  String get profileFaqLinkPre => 'Lihat halaman FAQ ';
+
+  @override
+  String get profileFaqLinkText => 'di sini';
+
+  @override
+  String get profileFaqQuestion => 'Punya pertanyaan?';
+
+  @override
+  String get profileFaqTitle => 'FAQ';
+
+  @override
+  String get profileLogout => 'Keluar';
+
+  @override
+  String profileMemberSince(String year) {
+    return 'Member sejak $year';
+  }
+
+  @override
+  String get profileNameLabel => 'Nama';
+
+  @override
+  String get profilePersonalInfo => 'Informasi Pribadi';
+
+  @override
+  String get profilePhoneLabel => 'Nomor Telpon';
+
+  @override
+  String get profileWasteCollected => 'Sampah\nTerkumpul';
+
+  @override
+  String get profileWasteRecycled => 'Sampah\nTerdaur Ulang';
+
+  @override
   String get passwordLabel => 'Kata Sandi';
 
   @override
@@ -221,7 +295,51 @@ class AppLocalizationsId extends AppLocalizations {
   String get signIn => 'Masuk';
 
   @override
-  String get signUp => 'Daftar sekarang';
+  String get signUp => 'Daftar';
+
+  @override
+  String get signupAlreadyHaveAccount => 'Sudah punya akun?';
+
+  @override
+  String get signupConfirmPassword => 'Konfirmasi Kata Sandi';
+
+  @override
+  String get signupConfirmPasswordRequired =>
+      'Silakan konfirmasi kata sandi Anda';
+
+  @override
+  String get signupFullName => 'Nama Lengkap';
+
+  @override
+  String get signupFullNameRequired => 'Nama lengkap wajib diisi';
+
+  @override
+  String get signupFullNameTooShort => 'Nama lengkap minimal 2 karakter';
+
+  @override
+  String get signupOptional => 'opsional';
+
+  @override
+  String get signupPasswordsDoNotMatch => 'Kata sandi tidak cocok';
+
+  @override
+  String get signupPhoneHint => '+62 812 3456 7890';
+
+  @override
+  String get signupPhoneInvalid => 'Format nomor telepon tidak valid';
+
+  @override
+  String get signupPhoneNumber => 'Nomor Telepon';
+
+  @override
+  String get signupTermsLink => 'Syarat dan Ketentuan';
+
+  @override
+  String get signupTermsPrefix => 'Saya menyetujui ';
+
+  @override
+  String get signupTermsRequired =>
+      'Anda harus menyetujui syarat dan ketentuan';
 
   @override
   String get splashTitle => 'Selamat Datang';
