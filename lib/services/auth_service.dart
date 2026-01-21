@@ -1,6 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/models/auth/login_request.dart';
 import 'package:sirsak_pop_nasabah/models/auth/login_response.dart';
+import 'package:sirsak_pop_nasabah/models/auth/refresh_token_request.dart';
+import 'package:sirsak_pop_nasabah/models/auth/refresh_token_response.dart';
 import 'package:sirsak_pop_nasabah/models/auth/register_request.dart';
 import 'package:sirsak_pop_nasabah/models/auth/register_response.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
@@ -70,6 +72,26 @@ class AuthService {
     );
 
     _logger.info('[AuthService] Login successful for: $email');
+    return response;
+  }
+
+  /// Refresh access token using refresh token
+  ///
+  /// Throws [ApiException] on failure
+  Future<RefreshTokenResponse> refreshToken({
+    required String refreshToken,
+  }) async {
+    _logger.info('[AuthService] Refreshing access token');
+
+    final request = RefreshTokenRequest(refreshToken: refreshToken);
+
+    final response = await _apiClient.post(
+      path: '/auth/refresh',
+      data: request.toJson(),
+      fromJson: RefreshTokenResponse.fromJson,
+    );
+
+    _logger.info('[AuthService] Token refresh successful');
     return response;
   }
 }
