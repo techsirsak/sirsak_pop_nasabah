@@ -59,7 +59,6 @@ class ProfileView extends ConsumerWidget {
               child: SButton(
                 text: l10n.profileLogout,
                 onPressed: viewModel.logout,
-                variant: ButtonVariant.primary,
                 size: ButtonSize.large,
                 isLoading: state.isLoggingOut,
               ),

@@ -111,7 +111,6 @@ class _InfoField extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: colorScheme.outlineVariant,
-              width: 1,
             ),
           ),
           child: Text(

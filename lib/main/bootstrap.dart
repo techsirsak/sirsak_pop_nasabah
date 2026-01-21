@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sirsak_pop_nasabah/core/config/env_config.dart';
 import 'package:sirsak_pop_nasabah/core/localization/locale_provider.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_theme.dart';
@@ -17,6 +18,11 @@ Future<void> bootstrap({
 }) async {
   // Create logger instance for bootstrap (before Riverpod is available)
   final logger = LoggerService();
+
+  // Initialize environment config before ProviderScope
+  initEnvConfig(baseApiUrl: baseApiUrl, env: env);
+  logger.info('[Bootstrap] Env: $env, API URL: $baseApiUrl');
+
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();

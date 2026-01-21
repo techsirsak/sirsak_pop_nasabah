@@ -173,7 +173,9 @@ class LandingPageView extends ConsumerWidget {
                   text: context.l10n.landingPageContactInstagram,
                   onTap: () => ref
                       .read(landingPageViewModelProvider.notifier)
-                      .launchInstagram(context.l10n.landingPageContactInstagram),
+                      .launchInstagram(
+                        context.l10n.landingPageContactInstagram,
+                      ),
                 ),
                 const Gap(30),
               ],

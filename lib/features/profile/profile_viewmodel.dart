@@ -13,9 +13,9 @@ class ProfileViewModel extends _$ProfileViewModel {
       phoneNumber: '0812 1234 5678',
       memberSince: '2024',
       stats: const ProfileStats(
-        wasteCollected: 12.0,
-        wasteRecycled: 10.0,
-        carbonAvoided: 5.0,
+        wasteCollected: 12,
+        wasteRecycled: 10,
+        carbonAvoided: 5,
       ),
       badges: _getMockBadges(),
     );
@@ -29,33 +29,19 @@ class ProfileViewModel extends _$ProfileViewModel {
     ];
   }
 
-  void navigateToEditProfile() {
-    // TODO: Navigate to edit profile screen
-  }
+  void navigateToEditProfile() {}
 
-  void navigateToFaq() {
-    // TODO: Navigate to FAQ page or open external link
-  }
+  void navigateToFaq() {}
 
-  void openWhatsApp() {
-    // TODO: Open WhatsApp with phone number
-  }
+  void openWhatsApp() {}
 
-  void openEmail() {
-    // TODO: Open email client
-  }
+  void openEmail() {}
 
-  void openInstagram() {
-    // TODO: Open Instagram profile
-  }
+  void openInstagram() {}
 
-  void navigateToChangePassword() {
-    // TODO: Navigate to change password screen
-  }
+  void navigateToChangePassword() {}
 
-  void navigateToDeleteAccount() {
-    // TODO: Navigate to delete account confirmation
-  }
+  void navigateToDeleteAccount() {}
 
   Future<void> logout() async {
     state = state.copyWith(isLoggingOut: true, errorMessage: null);
