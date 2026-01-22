@@ -273,6 +273,7 @@ class SignUpView extends ConsumerWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _buildTermsCheckbox({
     required BuildContext context,
     required SignupState state,

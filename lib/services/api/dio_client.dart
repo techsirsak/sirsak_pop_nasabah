@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show debugPrint, kDebugMode;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/config/env_config.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
+import 'package:sirsak_pop_nasabah/services/api/auth_interceptor.dart';
+import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
 part 'dio_client.g.dart';
@@ -26,28 +31,11 @@ Dio dioClient(Ref ref) {
   );
 
   // Add logging interceptor
-  dio.interceptors.add(
-    InterceptorsWrapper(
-      onRequest: (options, handler) {
-        logger.info('[API Request] ${options.method} ${options.path}');
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        logger.info(
-          '[API Response] ${response.statusCode} ${response.requestOptions.path}',
-        );
-        return handler.next(response);
-      },
-      onError: (error, handler) {
-        logger.error(
-          '[API Error] ${error.requestOptions.path}',
-          error,
-          error.stackTrace,
-        );
-        return handler.next(error);
-      },
-    ),
-  );
+  dio.interceptors.add(LoggingInterceptor());
+
+  // Add auth interceptor to inject Bearer token
+  final localStorage = ref.read(localStorageServiceProvider);
+  dio.interceptors.add(AuthInterceptor(localStorage, logger));
 
   return dio;
 }
@@ -167,6 +155,35 @@ class ApiClient {
           message: error.message ?? 'An unexpected error occurred',
           error: error,
         );
+    }
+  }
+}
+
+/// HTTP Logger
+class LoggingInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    super.onRequest(options, handler);
+    if (kDebugMode) {
+      debugPrint(
+        '<------------ REQUEST '
+        '${options.method} ${options.baseUrl}${options.path}',
+      );
+      log('HEADERS: ${options.headers}');
+      debugPrint('QueryParam: ${options.queryParameters}');
+      debugPrint('Payload:  ${options.data}');
+    }
+  }
+
+  @override
+  void onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
+    super.onResponse(response, handler);
+    if (kDebugMode) {
+      debugPrint('<------------ ${response.statusCode} Response Data:');
+      log('${response.data}');
     }
   }
 }

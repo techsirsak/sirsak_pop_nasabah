@@ -1,8 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/models/auth/auth_token_response.dart';
 import 'package:sirsak_pop_nasabah/models/auth/login_request.dart';
-import 'package:sirsak_pop_nasabah/models/auth/login_response.dart';
-import 'package:sirsak_pop_nasabah/models/auth/refresh_token_request.dart';
-import 'package:sirsak_pop_nasabah/models/auth/refresh_token_response.dart';
 import 'package:sirsak_pop_nasabah/models/auth/register_request.dart';
 import 'package:sirsak_pop_nasabah/models/auth/register_response.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
@@ -54,7 +52,7 @@ class AuthService {
   /// Login a nasabah user
   ///
   /// Throws [ApiException] on failure
-  Future<LoginResponse> login({
+  Future<AuthTokenResponse> login({
     required String email,
     required String password,
   }) async {
@@ -68,7 +66,7 @@ class AuthService {
     final response = await _apiClient.post(
       path: '/auth/login',
       data: request.toJson(),
-      fromJson: LoginResponse.fromJson,
+      fromJson: AuthTokenResponse.fromJson,
     );
 
     _logger.info('[AuthService] Login successful for: $email');
@@ -78,17 +76,17 @@ class AuthService {
   /// Refresh access token using refresh token
   ///
   /// Throws [ApiException] on failure
-  Future<RefreshTokenResponse> refreshToken({
+  Future<AuthTokenResponse> refreshToken({
     required String refreshToken,
   }) async {
     _logger.info('[AuthService] Refreshing access token');
 
-    final request = RefreshTokenRequest(refreshToken: refreshToken);
-
     final response = await _apiClient.post(
-      path: '/auth/refresh',
-      data: request.toJson(),
-      fromJson: RefreshTokenResponse.fromJson,
+      path: '/auth/refresh-token',
+      data: {
+        'refresh_token': refreshToken,
+      },
+      fromJson: AuthTokenResponse.fromJson,
     );
 
     _logger.info('[AuthService] Token refresh successful');

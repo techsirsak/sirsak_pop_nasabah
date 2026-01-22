@@ -14,6 +14,10 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/challenge_badge.png
+  AssetGenImage get challengeBadge =>
+      const AssetGenImage('assets/images/challenge_badge.png');
+
   /// File path: assets/images/landingpage_background.png
   AssetGenImage get landingpageBackground =>
       const AssetGenImage('assets/images/landingpage_background.png');
@@ -63,6 +67,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    challengeBadge,
     landingpageBackground,
     mlp,
     setorSampah,

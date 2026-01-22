@@ -6,6 +6,7 @@ import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_state.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/auth_service.dart';
+import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 import 'package:sirsak_pop_nasabah/shared/helpers/validation_helper.dart';
@@ -62,7 +63,7 @@ class LoginViewModel extends _$LoginViewModel {
     // Validate form
     if (!_validateForm()) {
       return;
-    } 
+    }
 
     // Show loading
     state = state.copyWith(isLoading: true);
@@ -79,6 +80,20 @@ class LoginViewModel extends _$LoginViewModel {
       final localStorageService = ref.read(localStorageServiceProvider);
       await localStorageService.saveAccessToken(response.accessToken);
       await localStorageService.saveRefreshToken(response.refreshToken);
+
+      // Fetch user data after successful login
+      final userFetched = await ref
+          .read(currentUserProvider.notifier)
+          .fetchCurrentUser();
+
+      if (!userFetched) {
+        ref
+            .read(loggerServiceProvider)
+            .warning(
+              '[LoginViewModel] Failed to fetch user data after login',
+            );
+        // Continue anyway - user can still use the app
+      }
 
       // Check if tutorial needed and navigate
       final hasSeenTutorial = await localStorageService.hasSeenTutorial();

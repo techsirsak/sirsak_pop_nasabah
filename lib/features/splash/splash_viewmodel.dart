@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/services/auth_service.dart';
+import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
@@ -43,6 +44,20 @@ class SplashViewModel extends _$SplashViewModel {
     final isValid = await _refreshAccessToken(refreshToken);
 
     if (isValid) {
+      // Fetch user data after successful token refresh
+      final userFetched = await ref
+          .read(currentUserProvider.notifier)
+          .fetchCurrentUser();
+
+      if (!userFetched) {
+        ref
+            .read(loggerServiceProvider)
+            .warning(
+              '[SplashViewModel] Failed to fetch user data on startup',
+            );
+        // Continue anyway - user can still use the app
+      }
+
       ref.read(routerProvider).go(SAppRoutePath.home);
     } else {
       // Token refresh failed, clear tokens and go to landing page

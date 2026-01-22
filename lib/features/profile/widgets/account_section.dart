@@ -96,9 +96,12 @@ class _AccountRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconColor = isDestructive ? colorScheme.error : colorScheme.primary;
-    final titleColor = isDestructive ? colorScheme.error : colorScheme.onSurface;
-    final subtitleColor =
-        isDestructive ? colorScheme.error.withValues(alpha: 0.8) : colorScheme.onSurfaceVariant;
+    final titleColor = isDestructive
+        ? colorScheme.error
+        : colorScheme.onSurface;
+    final subtitleColor = isDestructive
+        ? colorScheme.error.withValues(alpha: 0.8)
+        : colorScheme.onSurfaceVariant;
 
     return InkWell(
       onTap: onTap,

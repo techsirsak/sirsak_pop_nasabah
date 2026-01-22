@@ -23,7 +23,7 @@ class LandingPageViewModel extends _$LandingPageViewModel {
   /// Navigate to login page when "Sign in" button is tapped
   Future<void> navigateToSignIn() async {
     state = state.copyWith(isNavigating: true);
-    ref.read(routerProvider) .push(SAppRoutePath.login);
+    ref.read(routerProvider).push(SAppRoutePath.login);
     state = state.copyWith(isNavigating: false);
   }
 

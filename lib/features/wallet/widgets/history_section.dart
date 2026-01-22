@@ -22,10 +22,10 @@ class HistorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final isPointsTab =
-        state.selectedHistoryTab == HistoryTabType.sirsalPoints;
-    final currentHistory =
-        isPointsTab ? state.pointsHistory : state.bankSampahHistory;
+    final isPointsTab = state.selectedHistoryTab == HistoryTabType.sirsalPoints;
+    final currentHistory = isPointsTab
+        ? state.pointsHistory
+        : state.bankSampahHistory;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,9 +108,7 @@ class _TabChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected ? colorScheme.primaryContainer : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
-          border: isSelected
-              ? null
-              : Border.all(color: colorScheme.outline),
+          border: isSelected ? null : Border.all(color: colorScheme.outline),
         ),
         child: Text(
           label,

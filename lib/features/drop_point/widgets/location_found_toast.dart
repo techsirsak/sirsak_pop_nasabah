@@ -40,9 +40,11 @@ class _LocationFoundToastState extends State<LocationFoundToast>
 
     // Auto dismiss after 3 seconds
     _dismissTimer = Timer(const Duration(seconds: 3), () {
-      unawaited(_controller.reverse().then((_) {
-        widget.onDismiss();
-      }));
+      unawaited(
+        _controller.reverse().then((_) {
+          widget.onDismiss();
+        }),
+      );
     });
   }
 

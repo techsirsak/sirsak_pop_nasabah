@@ -288,7 +288,8 @@ class DropPointViewModel extends _$DropPointViewModel {
     final deltaLng =
         (dropPoint.longitude - state.userLocation!.longitude) * pi / 180;
 
-    final a = sin(deltaLat / 2) * sin(deltaLat / 2) +
+    final a =
+        sin(deltaLat / 2) * sin(deltaLat / 2) +
         cos(lat1) * cos(lat2) * sin(deltaLng / 2) * sin(deltaLng / 2);
     final c = 2 * atan2(sqrt(a), sqrt(1 - a));
 

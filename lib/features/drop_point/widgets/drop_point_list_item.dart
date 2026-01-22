@@ -33,8 +33,9 @@ class DropPointListItem extends StatelessWidget {
           color: colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color:
-                isSelected ? colorScheme.primary : colorScheme.outlineVariant,
+            color: isSelected
+                ? colorScheme.primary
+                : colorScheme.outlineVariant,
             width: isSelected ? 2 : 1,
           ),
           boxShadow: [
@@ -102,7 +103,8 @@ class DropPointListItem extends StatelessWidget {
               children: [
                 ...List.generate(5, (index) {
                   final filled = index < dropPoint.rating.floor();
-                  final halfFilled = index == dropPoint.rating.floor() &&
+                  final halfFilled =
+                      index == dropPoint.rating.floor() &&
                       dropPoint.rating % 1 >= 0.5;
                   return Icon(
                     filled || halfFilled
