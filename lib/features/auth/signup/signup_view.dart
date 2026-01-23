@@ -37,12 +37,6 @@ class SignUpView extends ConsumerWidget {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () => context.go(SAppRoutePath.landingPage),
-          ),
-        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

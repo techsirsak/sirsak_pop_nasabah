@@ -45,5 +45,42 @@
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="mailto" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="sms" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="googlegmail" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="superhuman" />
+        </intent>
+         <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="ms-outlook" />
+        </intent>
+         <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="protonmail" />
+        </intent>
+         <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="fastmail" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="ymail" />
+        </intent>
     </queries>
 </manifest>

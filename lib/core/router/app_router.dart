@@ -5,6 +5,7 @@ import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/features/auth/forgot_password/forgot_password_view.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_view.dart';
 import 'package:sirsak_pop_nasabah/features/auth/signup/signup_view.dart';
+import 'package:sirsak_pop_nasabah/features/auth/verify_email/verify_email_view.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_view.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_view.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_view.dart';
@@ -72,6 +73,13 @@ GoRouter router(Ref ref) {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const TutorialView(),
+        ),
+      ),
+      GoRoute(
+        path: SAppRoutePath.verifyEmail,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const VerifyEmailView(),
         ),
       ),
     ],

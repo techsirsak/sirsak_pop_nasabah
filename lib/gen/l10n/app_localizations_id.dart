@@ -206,6 +206,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get ok => 'OK';
 
   @override
+  String get openEmailAppFailure => 'Tidak dapat membuka aplikasi email';
+
+  @override
   String get or => 'atau';
 
   @override
@@ -378,6 +381,19 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tutorialTitle4 => 'Bergabunglah dengan komunitas kami';
+
+  @override
+  String get verifyEmailDescription =>
+      'Kami telah mengirimkan tautan verifikasi ke alamat email Anda. Silakan periksa kotak masuk Anda dan klik tautan untuk memverifikasi akun Anda.';
+
+  @override
+  String get verifyEmailGoToLogin => 'Ke Halaman Masuk';
+
+  @override
+  String get verifyEmailOpenEmail => 'Buka Aplikasi Email';
+
+  @override
+  String get verifyEmailTitle => 'Periksa Email Anda';
 
   @override
   String get walletBalance => 'Saldo Nasabah';

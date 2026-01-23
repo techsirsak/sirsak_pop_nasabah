@@ -452,6 +452,12 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get ok;
 
+  /// No description provided for @openEmailAppFailure.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to open email app'**
+  String get openEmailAppFailure;
+
   /// No description provided for @or.
   ///
   /// In en, this message translates to:
@@ -781,6 +787,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Join our community'**
   String get tutorialTitle4;
+
+  /// No description provided for @verifyEmailDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a verification link to your email address. Please check your inbox and click the link to verify your account.'**
+  String get verifyEmailDescription;
+
+  /// No description provided for @verifyEmailGoToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Login'**
+  String get verifyEmailGoToLogin;
+
+  /// No description provided for @verifyEmailOpenEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Email App'**
+  String get verifyEmailOpenEmail;
+
+  /// No description provided for @verifyEmailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Your Email'**
+  String get verifyEmailTitle;
 
   /// No description provided for @walletBalance.
   ///

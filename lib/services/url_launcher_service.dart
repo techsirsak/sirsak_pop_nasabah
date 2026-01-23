@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/services/toast_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'url_launcher_service.g.dart';
@@ -7,7 +12,10 @@ part 'url_launcher_service.g.dart';
 /// Provider for UrlLauncherService
 @riverpod
 UrlLauncherService urlLauncherService(Ref ref) {
-  return UrlLauncherService(ref.read(loggerServiceProvider));
+  return UrlLauncherService(
+    ref.read(loggerServiceProvider),
+    ref.read(toastServiceProvider),
+  );
 }
 
 /// {@template url_launcher_service}
@@ -44,10 +52,11 @@ UrlLauncherService urlLauncherService(Ref ref) {
 ///
 /// {@endtemplate}
 class UrlLauncherService {
-  /// Creates a UrlLauncherService with the provided logger
-  UrlLauncherService(this._logger);
+  /// Creates a UrlLauncherService with the provided logger and toast service
+  UrlLauncherService(this._logger, this._toastService);
 
   final LoggerService _logger;
+  final ToastService _toastService;
 
   /// Launch email client with the specified [email] address
   ///
@@ -65,6 +74,72 @@ class UrlLauncherService {
       path: email,
     );
     await _launchUri(emailUri);
+  }
+
+  /// Open the default email app on the device
+  ///
+  /// Attempts to open email apps in the following order:
+  /// 1. Gmail (if installed)
+  /// 2. Apple Mail
+  /// 3. Superhuman
+  /// 4. Outlook
+  /// 5. ProtonMail
+  /// 6. Fastmail
+  /// 7. Yahoo Mail
+  ///
+  /// Shows an error toast if no email app can be opened.
+  Future<void> openEmailApp() async {
+    final l10n = _toastService.currentContext?.l10n;
+    try {
+      /// Launch gmail first, if cannot then apple mail
+      final appleMail = Uri.parse('message://');
+      final googlegmail = Uri(scheme: 'googlegmail');
+      final superhuman = Uri(scheme: 'superhuman');
+      final outlook = Uri(scheme: 'ms-outlook');
+      final proton = Uri(scheme: 'protonmail');
+      final fastmail = Uri(scheme: 'fastmail');
+      final ymail = Uri(scheme: 'ymail');
+
+      final hasGmailApp =
+          await LaunchApp.isAppInstalled(
+                androidPackageName: 'com.google.android.gm',
+                iosUrlScheme: 'googlegmail://',
+              )
+              as bool;
+
+      if (hasGmailApp) {
+        unawaited(
+          LaunchApp.openApp(
+            androidPackageName: 'com.google.android.gm',
+            iosUrlScheme: 'googlegmail://',
+            openStore: false,
+          ),
+        );
+      } else if (await canLaunchUrl(googlegmail)) {
+        unawaited(launchUrl(googlegmail));
+      } else if (await canLaunchUrl(appleMail)) {
+        unawaited(launchUrl(appleMail));
+      } else if (await canLaunchUrl(superhuman)) {
+        unawaited(launchUrl(superhuman));
+      } else if (await canLaunchUrl(outlook)) {
+        unawaited(launchUrl(outlook));
+      } else if (await canLaunchUrl(proton)) {
+        unawaited(launchUrl(proton));
+      } else if (await canLaunchUrl(fastmail)) {
+        unawaited(launchUrl(fastmail));
+      } else if (await canLaunchUrl(ymail)) {
+        unawaited(launchUrl(ymail));
+      } else {
+        _toastService.error(title: l10n?.openEmailAppFailure ?? '');
+      }
+    } catch (e, s) {
+      _logger.error(
+        'UrlLauncherService.openEmailApp: Error opening email app',
+        e,
+        s,
+      );
+      _toastService.error(title: l10n?.openEmailAppFailure ?? '');
+    }
   }
 
   /// Launch phone dialer with the specified [phone] number

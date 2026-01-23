@@ -7,6 +7,7 @@ class SAppRoutePath {
   static const signUp = '/signup';
   static const tutorial = '/tutorial';
   static const widgetShowcase = '/widget-showcase';
+  static const verifyEmail = '/verify-email';
 
   // Home feature routes
   static const pointsHistory = '/points-history';

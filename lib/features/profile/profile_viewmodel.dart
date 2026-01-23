@@ -1,5 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
+import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
+import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 
 part 'profile_viewmodel.g.dart';
 
@@ -46,9 +49,8 @@ class ProfileViewModel extends _$ProfileViewModel {
   Future<void> logout() async {
     state = state.copyWith(isLoggingOut: true, errorMessage: null);
     try {
-      // TODO: Call auth service to logout
-      await Future<void>.delayed(const Duration(milliseconds: 500));
-      // TODO: Navigate to login/landing page
+      await ref.read(localStorageServiceProvider).clearAllTokens();
+      ref.read(routerProvider).go(SAppRoutePath.landingPage);
     } catch (e) {
       state = state.copyWith(
         isLoggingOut: false,
@@ -60,7 +62,6 @@ class ProfileViewModel extends _$ProfileViewModel {
   Future<void> loadProfileData() async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      // TODO: Fetch from API
       await Future<void>.delayed(const Duration(milliseconds: 500));
       state = state.copyWith(isLoading: false);
     } catch (e) {

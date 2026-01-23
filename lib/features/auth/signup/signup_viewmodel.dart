@@ -6,7 +6,6 @@ import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/signup/signup_state.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/auth_service.dart';
-import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 import 'package:sirsak_pop_nasabah/shared/helpers/validation_helper.dart';
 
@@ -154,10 +153,6 @@ class SignupViewModel extends _$SignupViewModel {
         termsValid;
   }
 
-  // ============================================
-  // Main Actions
-  // ============================================
-
   Future<void> signUp() async {
     // Clear previous errors
     state = state.copyWith(
@@ -187,15 +182,7 @@ class SignupViewModel extends _$SignupViewModel {
         password: state.password,
       );
 
-      // After successful registration, check if tutorial needed
-      final localStorageService = ref.read(localStorageServiceProvider);
-      final hasSeenTutorial = await localStorageService.hasSeenTutorial();
-
-      if (hasSeenTutorial) {
-        ref.read(routerProvider).go(SAppRoutePath.home);
-      } else {
-        ref.read(routerProvider).go(SAppRoutePath.tutorial);
-      }
+      ref.read(routerProvider).go(SAppRoutePath.verifyEmail);
     } on ApiException catch (e) {
       ref
           .read(loggerServiceProvider)
@@ -246,7 +233,7 @@ class SignupViewModel extends _$SignupViewModel {
   // ============================================
 
   void navigateToLogin() {
-    unawaited(ref.read(routerProvider).push(SAppRoutePath.login));
+    ref.read(routerProvider).go(SAppRoutePath.login);
   }
 
   void navigateToTermsAndConditions() {

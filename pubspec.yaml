@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   dio: ^5.7.0
+  external_app_launcher: ^4.0.3
   flutter:
     sdk: flutter
   flutter_localizations:
