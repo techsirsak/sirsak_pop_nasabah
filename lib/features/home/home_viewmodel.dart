@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_state.dart';
+import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 
 part 'home_viewmodel.g.dart';
 
@@ -12,8 +13,12 @@ part 'home_viewmodel.g.dart';
 class HomeViewModel extends _$HomeViewModel {
   @override
   HomeState build() {
+    final currentUserState = ref.watch(currentUserProvider);
+    final user = currentUserState.user;
+    final firstName = (user?.namaLengkap ?? '').split(' ').first;
+
     return HomeState(
-      userName: 'John',
+      userName: firstName,
       points: 1400,
       impactMetrics: [
         ImpactMetric(

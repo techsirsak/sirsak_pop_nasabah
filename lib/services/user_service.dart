@@ -27,7 +27,7 @@ class UserService {
     _logger.info('[UserService] Fetching current user');
 
     final response = await _apiClient.get(
-      path: '/api/v2/users/me',
+      path: '/users/me',
       fromJson: UserModel.fromJson,
     );
 

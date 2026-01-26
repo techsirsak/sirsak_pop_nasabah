@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
+import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 
 part 'profile_viewmodel.g.dart';
@@ -10,26 +11,16 @@ part 'profile_viewmodel.g.dart';
 class ProfileViewModel extends _$ProfileViewModel {
   @override
   ProfileState build() {
-    return ProfileState(
-      userName: 'John Smith',
-      email: 'johnsmith@gmail.com',
-      phoneNumber: '0812 1234 5678',
-      memberSince: '2024',
-      stats: const ProfileStats(
-        wasteCollected: 12,
-        wasteRecycled: 10,
-        carbonAvoided: 5,
-      ),
-      badges: _getMockBadges(),
-    );
-  }
+    final currentUserState = ref.watch(currentUserProvider);
+    final user = currentUserState.user;
 
-  List<ProfileBadge> _getMockBadges() {
-    return const [
-      ProfileBadge(id: '1', name: 'Bottle Hero', isEarned: true),
-      ProfileBadge(id: '2', name: 'Bottle Hero', isEarned: true),
-      ProfileBadge(id: '3', name: 'Bottle Hero', isEarned: true),
-    ];
+    return ProfileState(
+      userName: user?.namaLengkap ?? '',
+      email: user?.email ?? '',
+      phoneNumber: user?.noHp ?? '',
+      memberSince: user?.createdAt.year.toString() ?? '',
+      isLoading: currentUserState.isLoading,
+    );
   }
 
   void navigateToEditProfile() {}
@@ -50,6 +41,7 @@ class ProfileViewModel extends _$ProfileViewModel {
     state = state.copyWith(isLoggingOut: true, errorMessage: null);
     try {
       await ref.read(localStorageServiceProvider).clearAllTokens();
+      ref.read(currentUserProvider.notifier).clearUser();
       ref.read(routerProvider).go(SAppRoutePath.landingPage);
     } catch (e) {
       state = state.copyWith(
