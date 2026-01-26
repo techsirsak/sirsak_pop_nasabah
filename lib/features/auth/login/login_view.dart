@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -132,6 +134,9 @@ class LoginView extends ConsumerWidget {
               const Gap(8),
               TextField(
                 onChanged: viewModel.setPassword,
+                onSubmitted: (_) {
+                  unawaited(viewModel.login());
+                },
                 obscureText: true,
                 decoration: InputDecoration(
                   filled: true,

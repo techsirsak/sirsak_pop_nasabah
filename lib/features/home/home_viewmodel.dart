@@ -6,6 +6,7 @@ import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_state.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
+import 'package:sirsak_pop_nasabah/shared/navigation/bottom_nav_provider.dart';
 
 part 'home_viewmodel.g.dart';
 
@@ -75,10 +76,6 @@ class HomeViewModel extends _$HomeViewModel {
     unawaited(ref.read(routerProvider).push(SAppRoutePath.rewards));
   }
 
-  void navigateToSetorSampah() {
-    unawaited(ref.read(routerProvider).push(SAppRoutePath.setorSampah));
-  }
-
   void navigateToChallenges() {
     unawaited(ref.read(routerProvider).push(SAppRoutePath.challenges));
   }
@@ -86,4 +83,16 @@ class HomeViewModel extends _$HomeViewModel {
   void registerForEvent(Event event) {
     // TODO(devin): Implement event registration logic
   }
+
+  void navigateToTab(int index) {
+    ref.read(bottomNavProvider.notifier).setTab(index);
+  }
+
+  void navigateToHomeTab() => navigateToTab(0);
+
+  void navigateToDropPointTab() => navigateToTab(1);
+
+  void navigateToWalletTab() => navigateToTab(3);
+
+  void navigateToProfileTab() => navigateToTab(4);
 }

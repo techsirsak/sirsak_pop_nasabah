@@ -34,13 +34,15 @@ class ActionSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              _SetorSampahCard(onTap: viewModel.navigateToSetorSampah),
-              const Gap(12),
-              if (challenge != null)
-                _ChallengeCard(
-                  challenge: challenge!,
-                  onTap: viewModel.navigateToChallenges,
-                ),
+              _SetorSampahCard(onTap: viewModel.navigateToDropPointTab),
+
+              // TODO(devin): implement challenge
+              // const Gap(12),
+              // if (challenge != null)
+              //   _ChallengeCard(
+              //     challenge: challenge!,
+              //     onTap: viewModel.navigateToChallenges,
+              //   ),
             ],
           ),
         ),

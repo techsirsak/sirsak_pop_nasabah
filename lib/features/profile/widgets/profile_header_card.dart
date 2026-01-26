@@ -37,26 +37,26 @@ class ProfileHeaderCard extends StatelessWidget {
             // Avatar and user info row
             Row(
               children: [
-                // Avatar
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerHighest,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.3),
-                      width: 2,
-                    ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '😊',
-                      style: TextStyle(fontSize: 32),
-                    ),
-                  ),
-                ),
-                const Gap(16),
+                // TODO(devin): implement user profile photo
+                // Container(
+                //   width: 60,
+                //   height: 60,
+                //   decoration: BoxDecoration(
+                //     color: colorScheme.surfaceContainerHighest,
+                //     shape: BoxShape.circle,
+                //     border: Border.all(
+                //       color: Colors.white.withValues(alpha: 0.3),
+                //       width: 2,
+                //     ),
+                //   ),
+                //   child: const Center(
+                //     child: Text(
+                //       '😊',
+                //       style: TextStyle(fontSize: 32),
+                //     ),
+                //   ),
+                // ),
+                // const Gap(16),
                 // User info
                 Expanded(
                   child: Column(
@@ -85,10 +85,11 @@ class ProfileHeaderCard extends StatelessWidget {
             const Gap(20),
             // Stats row
             ProfileStatsRow(stats: state.stats),
-            const Gap(20),
             // Badges section
-            if (state.badges.isNotEmpty)
+            if (state.badges.isNotEmpty) ...[
+              const Gap(20),
               ProfileBadgesSection(badges: state.badges),
+            ],
           ],
         ),
       ),
