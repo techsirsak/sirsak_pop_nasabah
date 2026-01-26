@@ -33,6 +33,9 @@ Dio dioClient(Ref ref) {
   // Add logging interceptor
   dio.interceptors.add(LoggingInterceptor());
 
+  // Add retry interceptor for transient failures
+  dio.interceptors.add(RetryInterceptor(dio: dio));
+
   // Add auth interceptor to inject Bearer token
   final localStorage = ref.read(localStorageServiceProvider);
   dio.interceptors.add(AuthInterceptor(localStorage, logger));
@@ -87,6 +90,73 @@ class ApiClient {
   }) async {
     try {
       final response = await _dio.get<Map<String, dynamic>>(
+        path,
+        queryParameters: queryParameters,
+      );
+
+      return fromJson(response.data!);
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e, stackTrace) {
+      _logger.error('[API] Unexpected error', e, stackTrace);
+      throw ApiException.unknown(message: e.toString(), error: e);
+    }
+  }
+
+  /// Execute a PUT request with error handling
+  Future<T> put<T>({
+    required String path,
+    required T Function(Map<String, dynamic> json) fromJson,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final response = await _dio.put<Map<String, dynamic>>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+      );
+
+      return fromJson(response.data!);
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e, stackTrace) {
+      _logger.error('[API] Unexpected error', e, stackTrace);
+      throw ApiException.unknown(message: e.toString(), error: e);
+    }
+  }
+
+  /// Execute a PATCH request with error handling
+  Future<T> patch<T>({
+    required String path,
+    required T Function(Map<String, dynamic> json) fromJson,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final response = await _dio.patch<Map<String, dynamic>>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+      );
+
+      return fromJson(response.data!);
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e, stackTrace) {
+      _logger.error('[API] Unexpected error', e, stackTrace);
+      throw ApiException.unknown(message: e.toString(), error: e);
+    }
+  }
+
+  /// Execute a DELETE request with error handling
+  Future<T> delete<T>({
+    required String path,
+    required T Function(Map<String, dynamic> json) fromJson,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final response = await _dio.delete<Map<String, dynamic>>(
         path,
         queryParameters: queryParameters,
       );
@@ -156,6 +226,81 @@ class ApiClient {
           error: error,
         );
     }
+  }
+}
+
+/// Retry interceptor for transient failures
+class RetryInterceptor extends Interceptor {
+  RetryInterceptor({
+    required this.dio,
+    this.maxRetries = 3,
+    this.retryDelays = const [
+      Duration(seconds: 1),
+      Duration(seconds: 2),
+      Duration(seconds: 4),
+    ],
+  });
+
+  final Dio dio;
+  final int maxRetries;
+  final List<Duration> retryDelays;
+
+  @override
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
+    final attempt = _getAttempt(err.requestOptions);
+
+    if (_shouldRetry(err) && attempt < maxRetries) {
+      final delay = retryDelays[attempt];
+
+      if (kDebugMode) {
+        debugPrint(
+          '[Retry] Attempt ${attempt + 1}/$maxRetries after ${delay.inSeconds}s',
+        );
+      }
+
+      await Future<void>.delayed(delay);
+
+      try {
+        final options = err.requestOptions;
+        options.extra['retry_attempt'] = attempt + 1;
+
+        final response = await dio.fetch<dynamic>(options);
+        return handler.resolve(response);
+      } on DioException catch (e) {
+        return super.onError(e, handler);
+      }
+    }
+
+    return super.onError(err, handler);
+  }
+
+  int _getAttempt(RequestOptions options) {
+    return options.extra['retry_attempt'] as int? ?? 0;
+  }
+
+  bool _shouldRetry(DioException err) {
+    // Retry on connection/timeout issues
+    if (_isRetryableError(err.type)) {
+      return true;
+    }
+
+    // Retry on 5xx server errors
+    final statusCode = err.response?.statusCode;
+    if (statusCode != null && statusCode >= 500) {
+      return true;
+    }
+
+    return false;
+  }
+
+  bool _isRetryableError(DioExceptionType type) {
+    return type == DioExceptionType.connectionTimeout ||
+        type == DioExceptionType.sendTimeout ||
+        type == DioExceptionType.receiveTimeout ||
+        type == DioExceptionType.connectionError;
   }
 }
 

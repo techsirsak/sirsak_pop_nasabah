@@ -9,6 +9,7 @@ import 'package:sirsak_pop_nasabah/services/auth_service.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/services/toast_service.dart';
 import 'package:sirsak_pop_nasabah/shared/helpers/validation_helper.dart';
 
 part 'login_viewmodel.g.dart';
@@ -120,15 +121,16 @@ class LoginViewModel extends _$LoginViewModel {
           unknown: (message, _) => 'Login failed. Please try again.',
         ),
       );
+      ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
     } catch (e, stackTrace) {
       ref
           .read(loggerServiceProvider)
           .error('[LoginViewModel] Unexpected error', e, stackTrace);
-
       state = state.copyWith(
         isLoading: false,
         errorMessage: 'Login failed. Please try again.',
       );
+      ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
     }
   }
 

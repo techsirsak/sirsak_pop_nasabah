@@ -114,79 +114,12 @@ class ToastService {
     int? duration,
     String? customIconPath,
   }) {
-    toastification.showCustom(
+    toastification.show(
       context: currentContext,
       autoCloseDuration: Duration(seconds: duration ?? 5),
-      builder: (context, holder) {
-        final l10n = context.l10n;
-        final theme = Theme.of(context);
-        final textTheme = theme.textTheme;
-        final colorScheme = theme.colorScheme;
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: colorScheme.surface),
-            color: colorScheme.secondaryFixed,
-            boxShadow: [
-              BoxShadow(
-                offset: const Offset(0, 8),
-                blurRadius: 12,
-                color: colorScheme.primary.withValues(alpha: .06),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8,
-            vertical: 12,
-          ),
-          margin: const EdgeInsets.symmetric(
-            horizontal: 28,
-            vertical: 30,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    constraints: const BoxConstraints(maxWidth: 180),
-                    child: Text(message, style: textTheme.bodyMedium),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: toastification.dismissAll,
-                      borderRadius: BorderRadius.circular(50),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary.withValues(alpha: .06),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Text(
-                          l10n.cancel,
-                          style: textTheme.bodySmall?.copyWith(
-                            fontVariations: AppFonts.medium,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
+      type: type.toastificationType,
+      style: ToastificationStyle.fillColored,
+      title: Text(message),
       alignment: Alignment.bottomRight,
       animationDuration: const Duration(milliseconds: 300),
       animationBuilder: (context, animation, alignment, child) {
