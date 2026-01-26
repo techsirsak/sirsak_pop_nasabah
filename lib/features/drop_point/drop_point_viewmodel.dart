@@ -4,7 +4,9 @@ import 'dart:math';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_state.dart';
+import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
 import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
+import 'package:sirsak_pop_nasabah/services/collection_points_cache_provider.dart';
 import 'package:sirsak_pop_nasabah/services/location_service.dart';
 
 part 'drop_point_viewmodel.g.dart';
@@ -13,7 +15,16 @@ part 'drop_point_viewmodel.g.dart';
 class DropPointViewModel extends _$DropPointViewModel {
   @override
   DropPointState build() {
-    unawaited(Future.microtask(_loadMockData));
+    // Load collection points from cache
+    unawaited(Future.microtask(_loadCollectionPoints));
+
+    // Listen for changes to the cache
+    ref.listen(collectionPointsCacheProvider, (prev, next) {
+      if (next.points.isNotEmpty && !next.isLoading) {
+        _updateFromCache(next.points);
+      }
+    });
+
     return const DropPointState();
   }
 
@@ -26,80 +37,37 @@ class DropPointViewModel extends _$DropPointViewModel {
     await _initUserLocation();
   }
 
-  /// Load mock drop point data (to be replaced with API call)
-  void _loadMockData() {
-    final mockDropPoints = [
-      const DropPointModel(
-        id: '1',
-        name: 'Green Recycle Center',
-        address: 'Jl. Sudirman No. 45, Jakarta',
-        latitude: -6.2100,
-        longitude: 106.8450,
-        type: DropPointType.bankSampah,
-        rating: 4.8,
-        reviewCount: 120,
-        openingTime: '08:00',
-        closingTime: '18:00',
-        acceptedWasteTypes: ['plastic', 'paper', 'metal'],
-      ),
-      const DropPointModel(
-        id: '2',
-        name: 'EcoBot RVM Station',
-        address: 'Mall Central Park, Lt. 1',
-        latitude: -6.1780,
-        longitude: 106.7900,
-        type: DropPointType.rvm,
-        rating: 4.5,
-        reviewCount: 85,
-        openingTime: '10:00',
-        closingTime: '22:00',
-        acceptedWasteTypes: ['plastic bottles'],
-      ),
-      const DropPointModel(
-        id: '3',
-        name: 'Bank Sampah Sejahtera',
-        address: 'Jl. Gatot Subroto No. 12, Jakarta',
-        latitude: -6.2350,
-        longitude: 106.8230,
-        type: DropPointType.bankSampah,
-        rating: 4.6,
-        reviewCount: 95,
-        openingTime: '07:00',
-        closingTime: '17:00',
-        acceptedWasteTypes: ['plastic', 'paper', 'glass', 'metal'],
-      ),
-      const DropPointModel(
-        id: '4',
-        name: 'RVM Plaza Indonesia',
-        address: 'Plaza Indonesia, Ground Floor',
-        latitude: -6.1930,
-        longitude: 106.8230,
-        type: DropPointType.rvm,
-        rating: 4.7,
-        reviewCount: 150,
-        openingTime: '10:00',
-        closingTime: '22:00',
-        acceptedWasteTypes: ['plastic bottles', 'cans'],
-      ),
-      const DropPointModel(
-        id: '5',
-        name: 'Bank Sampah Indah',
-        address: 'Jl. Thamrin No. 88, Jakarta',
-        latitude: -6.1950,
-        longitude: 106.8100,
-        type: DropPointType.bankSampah,
-        rating: 4.4,
-        reviewCount: 78,
-        openingTime: '08:00',
-        closingTime: '16:00',
-        acceptedWasteTypes: ['plastic', 'paper'],
-      ),
-    ];
+  /// Load collection points from cache
+  void _loadCollectionPoints() {
+    final cacheState = ref.read(collectionPointsCacheProvider);
+
+    if (cacheState.isLoading) {
+      state = state.copyWith(isLoading: true);
+      return;
+    }
+
+    if (cacheState.points.isNotEmpty) {
+      _updateFromCache(cacheState.points);
+    }
+  }
+
+  /// Update state from cached collection points
+  void _updateFromCache(List<CollectionPointModel> points) {
+    // Filter out points without valid coordinates
+    final validPoints = points
+        .where((p) => p.latitude != null && p.longitude != null)
+        .toList();
 
     state = state.copyWith(
-      dropPoints: mockDropPoints,
-      filteredDropPoints: mockDropPoints,
+      dropPoints: validPoints,
+      filteredDropPoints: validPoints,
+      isLoading: false,
     );
+
+    // Re-apply filters if any were active
+    if (state.searchQuery.isNotEmpty || state.activeFilters.isNotEmpty) {
+      _applyFiltersAndSort();
+    }
   }
 
   /// Check and request location permission
@@ -231,32 +199,21 @@ class DropPointViewModel extends _$DropPointViewModel {
 
   /// Apply filters and sorting to drop points list
   void _applyFiltersAndSort() {
-    var filtered = List<DropPointModel>.from(state.dropPoints);
+    var filtered = List<CollectionPointModel>.from(state.dropPoints);
 
     // Apply search filter
     if (state.searchQuery.isNotEmpty) {
       final query = state.searchQuery.toLowerCase();
       filtered = filtered.where((dp) {
-        return dp.name.toLowerCase().contains(query) ||
-            dp.address.toLowerCase().contains(query);
+        final name = dp.name.toLowerCase();
+        final address = (dp.alamatLengkap ?? '').toLowerCase();
+        return name.contains(query) || address.contains(query);
       }).toList();
     }
 
-    // Apply type filters
-    if (state.activeFilters.isNotEmpty &&
-        !state.activeFilters.contains(DropPointFilterType.all)) {
-      filtered = filtered.where((dp) {
-        if (state.activeFilters.contains(DropPointFilterType.bankSampah) &&
-            dp.type == DropPointType.bankSampah) {
-          return true;
-        }
-        if (state.activeFilters.contains(DropPointFilterType.rvm) &&
-            dp.type == DropPointType.rvm) {
-          return true;
-        }
-        return false;
-      }).toList();
-    }
+    // Note: Type filtering is disabled for now since CollectionPointModel
+    // uses collectionPointTypeId (string) instead of enum type.
+    // TODO(devin): Add type filtering when collection point types are defined
 
     // Apply sorting
     switch (state.sortBy) {
@@ -269,24 +226,27 @@ class DropPointViewModel extends _$DropPointViewModel {
           });
         }
       case DropPointSortBy.rating:
-        filtered.sort((a, b) => b.rating.compareTo(a.rating));
+        // Rating not available in API, sort by name instead
+        filtered.sort((a, b) => a.name.compareTo(b.name));
     }
 
     state = state.copyWith(filteredDropPoints: filtered);
   }
 
   /// Calculate distance between user and drop point using Haversine formula
-  double _calculateDistance(DropPointModel dropPoint) {
+  double _calculateDistance(CollectionPointModel dropPoint) {
     if (state.userLocation == null) return double.infinity;
+    if (dropPoint.latitude == null || dropPoint.longitude == null) {
+      return double.infinity;
+    }
 
     const earthRadius = 6371.0; // km
 
     final lat1 = state.userLocation!.latitude * pi / 180;
-    final lat2 = dropPoint.latitude * pi / 180;
-    final deltaLat =
-        (dropPoint.latitude - state.userLocation!.latitude) * pi / 180;
+    final lat2 = dropPoint.lat * pi / 180;
+    final deltaLat = (dropPoint.lat - state.userLocation!.latitude) * pi / 180;
     final deltaLng =
-        (dropPoint.longitude - state.userLocation!.longitude) * pi / 180;
+        (dropPoint.long - state.userLocation!.longitude) * pi / 180;
 
     final a =
         sin(deltaLat / 2) * sin(deltaLat / 2) +
@@ -297,7 +257,7 @@ class DropPointViewModel extends _$DropPointViewModel {
   }
 
   /// Get distance string for display
-  String getDistanceString(DropPointModel dropPoint) {
+  String getDistanceString(CollectionPointModel dropPoint) {
     final distance = _calculateDistance(dropPoint);
     if (distance == double.infinity) return '-';
     return distance.toStringAsFixed(1);
@@ -334,11 +294,13 @@ class DropPointViewModel extends _$DropPointViewModel {
   }
 
   /// Select a drop point
-  void selectDropPoint(DropPointModel dropPoint) {
+  void selectDropPoint(CollectionPointModel dropPoint) {
+    if (dropPoint.latitude == null || dropPoint.longitude == null) return;
+
     state = state.copyWith(
       selectedDropPoint: dropPoint,
-      mapCenterLat: dropPoint.latitude,
-      mapCenterLng: dropPoint.longitude,
+      mapCenterLat: dropPoint.lat,
+      mapCenterLng: dropPoint.long,
       mapZoom: 15,
     );
   }

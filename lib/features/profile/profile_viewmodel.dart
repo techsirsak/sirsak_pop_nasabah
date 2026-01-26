@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
+import 'package:sirsak_pop_nasabah/services/collection_points_cache_provider.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 
@@ -42,6 +43,7 @@ class ProfileViewModel extends _$ProfileViewModel {
     try {
       await ref.read(localStorageServiceProvider).clearAllTokens();
       ref.read(currentUserProvider.notifier).clearUser();
+      await ref.read(collectionPointsCacheProvider.notifier).clearCache();
       ref.read(routerProvider).go(SAppRoutePath.landingPage);
     } catch (e) {
       state = state.copyWith(

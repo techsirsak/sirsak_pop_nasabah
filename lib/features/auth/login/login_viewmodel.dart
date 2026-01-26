@@ -6,6 +6,7 @@ import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_state.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/auth_service.dart';
+import 'package:sirsak_pop_nasabah/services/collection_points_cache_provider.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
@@ -95,6 +96,13 @@ class LoginViewModel extends _$LoginViewModel {
             );
         // Continue anyway - user can still use the app
       }
+
+      // Fetch collection points in background (non-blocking)
+      unawaited(
+        ref
+            .read(collectionPointsCacheProvider.notifier)
+            .fetchAndCacheCollectionPoints(),
+      );
 
       // Check if tutorial needed and navigate
       final hasSeenTutorial = await localStorageService.hasSeenTutorial();

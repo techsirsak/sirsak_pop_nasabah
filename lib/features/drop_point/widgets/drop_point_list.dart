@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_list_item.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
-import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
+import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
 
 class DropPointList extends StatelessWidget {
   const DropPointList({
@@ -14,10 +14,10 @@ class DropPointList extends StatelessWidget {
     super.key,
   });
 
-  final List<DropPointModel> dropPoints;
-  final DropPointModel? selectedDropPoint;
-  final ValueChanged<DropPointModel> onSelect;
-  final String Function(DropPointModel) getDistance;
+  final List<CollectionPointModel> dropPoints;
+  final CollectionPointModel? selectedDropPoint;
+  final ValueChanged<CollectionPointModel> onSelect;
+  final String Function(CollectionPointModel) getDistance;
 
   @override
   Widget build(BuildContext context) {

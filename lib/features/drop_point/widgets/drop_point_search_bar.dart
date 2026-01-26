@@ -19,15 +19,15 @@ class DropPointSearchBar extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
+    final borderRadius = BorderRadius.circular(16);
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: borderRadius,
       child: Container(
         decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(
-            color: colorScheme.outlineVariant,
-          ),
+          // color: colorScheme.surface,
+          color: Colors.red,
+          borderRadius: borderRadius,
         ),
         child: TextField(
           onChanged: onChanged,
@@ -36,6 +36,7 @@ class DropPointSearchBar extends StatelessWidget {
               TextPosition(offset: value.length),
             ),
           decoration: InputDecoration(
+            fillColor: colorScheme.surface,
             hintText: context.l10n.dropPointSearchPlaceholder,
             hintStyle: textTheme.bodyMedium?.copyWith(
               color: colorScheme.onSurfaceVariant,
@@ -62,7 +63,26 @@ class DropPointSearchBar extends StatelessWidget {
                     onPressed: onClear,
                   )
                 : null,
-            border: InputBorder.none,
+            border: OutlineInputBorder(
+              borderRadius: borderRadius,
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: borderRadius,
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: borderRadius,
+              borderSide: BorderSide(color: colorScheme.primary, width: 2),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: borderRadius,
+              borderSide: BorderSide(color: colorScheme.error),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: borderRadius,
+              borderSide: BorderSide(color: colorScheme.error, width: 2),
+            ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 14,

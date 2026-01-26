@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
 part 'local_storage.g.dart';
@@ -18,6 +21,11 @@ class LocalStorageService {
   static const String _keyHasSeenTutorial = 'has_seen_tutorial';
   static const String _keyAccessToken = 'access_token';
   static const String _keyRefreshToken = 'refresh_token';
+  static const String _keyCollectionPoints = 'collection_points';
+  static const String _keyCollectionPointsCachedAt =
+      'collection_points_cached_at';
+
+  static const Duration _cacheExpiration = Duration(days: 7);
 
   Future<bool> hasSeenTutorial() async {
     try {
@@ -98,6 +106,71 @@ class LocalStorageService {
       _logger.info('All tokens cleared');
     } catch (e, stackTrace) {
       _logger.error('Failed to clear tokens', e, stackTrace);
+    }
+  }
+
+  // Collection points cache methods
+
+  /// Save collection points to cache with timestamp
+  Future<void> saveCollectionPoints(List<CollectionPointModel> points) async {
+    try {
+      final jsonList = points.map((p) => p.toJson()).toList();
+      final jsonString = jsonEncode(jsonList);
+      await _storage.write(key: _keyCollectionPoints, value: jsonString);
+      await _storage.write(
+        key: _keyCollectionPointsCachedAt,
+        value: DateTime.now().toIso8601String(),
+      );
+      _logger.info('[LocalStorage] Saved ${points.length} collection points');
+    } catch (e, stackTrace) {
+      _logger.error('Failed to save collection points', e, stackTrace);
+    }
+  }
+
+  /// Get cached collection points
+  /// Returns null if cache is expired (> 7 days) or not found
+  Future<List<CollectionPointModel>?> getCachedCollectionPoints() async {
+    try {
+      final cachedAtStr = await _storage.read(
+        key: _keyCollectionPointsCachedAt,
+      );
+      if (cachedAtStr == null) return null;
+
+      final cachedAt = DateTime.parse(cachedAtStr);
+      if (DateTime.now().difference(cachedAt) > _cacheExpiration) {
+        _logger.info('[LocalStorage] Collection points cache expired');
+        return null;
+      }
+
+      final jsonString = await _storage.read(key: _keyCollectionPoints);
+      if (jsonString == null) return null;
+
+      final jsonList = jsonDecode(jsonString) as List<dynamic>;
+      final points = jsonList
+          .map(
+            (json) =>
+                CollectionPointModel.fromJson(json as Map<String, dynamic>),
+          )
+          .toList();
+
+      _logger.info(
+        '[LocalStorage] Retrieved ${points.length} cached collection points',
+      );
+      return points;
+    } catch (e, stackTrace) {
+      _logger.error('Failed to read collection points cache', e, stackTrace);
+      return null;
+    }
+  }
+
+  /// Clear collection points cache
+  Future<void> clearCollectionPointsCache() async {
+    try {
+      await _storage.delete(key: _keyCollectionPoints);
+      await _storage.delete(key: _keyCollectionPointsCachedAt);
+      _logger.info('[LocalStorage] Collection points cache cleared');
+    } catch (e, stackTrace) {
+      _logger.error('Failed to clear collection points cache', e, stackTrace);
     }
   }
 }

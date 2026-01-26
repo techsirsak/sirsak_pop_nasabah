@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
 import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
 
 part 'drop_point_state.freezed.dart';
@@ -27,9 +28,9 @@ enum DropPointSortBy {
 @freezed
 abstract class DropPointState with _$DropPointState {
   const factory DropPointState({
-    // Data
-    @Default([]) List<DropPointModel> dropPoints,
-    @Default([]) List<DropPointModel> filteredDropPoints,
+    // Data - using CollectionPointModel from API
+    @Default([]) List<CollectionPointModel> dropPoints,
+    @Default([]) List<CollectionPointModel> filteredDropPoints,
 
     // User location
     UserLocation? userLocation,
@@ -47,7 +48,7 @@ abstract class DropPointState with _$DropPointState {
     @Default(DropPointSortBy.distance) DropPointSortBy sortBy,
 
     // Selection
-    DropPointModel? selectedDropPoint,
+    CollectionPointModel? selectedDropPoint,
 
     // Map state
     @Default(-6.2088) double mapCenterLat,

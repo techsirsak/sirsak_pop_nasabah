@@ -214,7 +214,7 @@ void main() {
           requestOptions: requestOptions,
           response: Response<dynamic>(
             statusCode: 422,
-            data: {'errors': {}},
+            data: {'errors': <dynamic>{}},
             requestOptions: requestOptions,
           ),
         ),

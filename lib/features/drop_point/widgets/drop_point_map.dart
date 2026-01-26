@@ -6,7 +6,7 @@ import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_viewmodel.dart
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/location_found_toast.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/location_permission_banner.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/zoom_control.dart';
-import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
+import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
 
 class DropPointMap extends StatelessWidget {
   const DropPointMap({
@@ -63,10 +63,10 @@ class DropPointMap extends StatelessWidget {
                       ),
                     ],
                   ),
-                // required to used for free
-                const SimpleAttributionWidget(
-                  source: Text('OpenStreetMap'),
-                ),
+                // // required to used for free
+                // const SimpleAttributionWidget(
+                //   source: Text('OpenStreetMap'),
+                // ),
               ],
             ),
             // Zoom controls
@@ -111,12 +111,23 @@ class DropPointMap extends StatelessWidget {
   }
 
   Marker _buildDropPointMarker(
-    DropPointModel dropPoint,
+    CollectionPointModel dropPoint,
     ColorScheme colorScheme,
     bool isSelected,
   ) {
+    // Skip points without valid coordinates
+    if (dropPoint.latitude == null || dropPoint.longitude == null) {
+      print('skip _buildDropPointMarker ${dropPoint.toJson()}');
+      return const Marker(
+        point: LatLng(0, 0),
+        width: 0,
+        height: 0,
+        child: SizedBox.shrink(),
+      );
+    }
+
     return Marker(
-      point: LatLng(dropPoint.latitude, dropPoint.longitude),
+      point: LatLng(dropPoint.lat, dropPoint.long),
       width: isSelected ? 40 : 30,
       height: isSelected ? 40 : 30,
       child: GestureDetector(

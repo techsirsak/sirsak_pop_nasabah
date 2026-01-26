@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
-import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
+import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
 
 class DropPointListItem extends StatelessWidget {
   const DropPointListItem({
@@ -14,7 +14,7 @@ class DropPointListItem extends StatelessWidget {
     super.key,
   });
 
-  final DropPointModel dropPoint;
+  final CollectionPointModel dropPoint;
   final String distance;
   final VoidCallback onTap;
   final bool isSelected;
@@ -69,7 +69,7 @@ class DropPointListItem extends StatelessWidget {
                 const Gap(6),
                 Expanded(
                   child: Text(
-                    dropPoint.address,
+                    dropPoint.alamatLengkap ?? '',
                     style: textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -97,50 +97,26 @@ class DropPointListItem extends StatelessWidget {
                 ),
               ],
             ),
-            const Gap(6),
-            // Rating
-            Row(
-              children: [
-                ...List.generate(5, (index) {
-                  final filled = index < dropPoint.rating.floor();
-                  final halfFilled =
-                      index == dropPoint.rating.floor() &&
-                      dropPoint.rating % 1 >= 0.5;
-                  return Icon(
-                    filled || halfFilled
-                        ? PhosphorIcons.star(PhosphorIconsStyle.fill)
-                        : PhosphorIcons.star(),
+            // Pengurus (manager) info if available
+            if (dropPoint.pengurus != null) ...[
+              const Gap(6),
+              Row(
+                children: [
+                  Icon(
+                    PhosphorIcons.user(),
                     size: 16,
-                    color: colorScheme.secondary,
-                  );
-                }),
-                const Gap(6),
-                Text(
-                  '(${dropPoint.rating})',
-                  style: textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
-                ),
-              ],
-            ),
-            const Gap(6),
-            // Open hours
-            Row(
-              children: [
-                Icon(
-                  PhosphorIcons.clock(),
-                  size: 16,
-                  color: colorScheme.tertiary,
-                ),
-                const Gap(6),
-                Text(
-                  context.l10n.dropPointOpenUntil(dropPoint.closingTime),
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.tertiary,
+                  const Gap(6),
+                  Text(
+                    dropPoint.pengurus!,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ],
         ),
       ),

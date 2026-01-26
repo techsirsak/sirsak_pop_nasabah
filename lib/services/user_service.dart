@@ -34,4 +34,17 @@ class UserService {
     _logger.info('[UserService] User fetched successfully: ${response.email}');
     return response;
   }
+
+  Future<void> updateUserProfile() async {
+    _logger.info('[UserService] Update User Profile');
+
+    final response = await _apiClient.patch(
+      path: '/nasabah/profile',
+      fromJson: UserModel.fromJson,
+    );
+
+    _logger.info(
+      '[UserService] User profile updated successfully: ${response.email}',
+    );
+  }
 }

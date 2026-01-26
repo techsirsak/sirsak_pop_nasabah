@@ -33,32 +33,41 @@ class _DropPointViewState extends ConsumerState<DropPointView> {
 
     return Column(
       children: [
-        const Gap(16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: DropPointSearchBar(
-            value: state.searchQuery,
-            onChanged: viewModel.setSearchQuery,
-            onClear: viewModel.clearSearch,
-          ),
+        Stack(
+          children: [
+            SizedBox(
+              height: 300,
+              child: DropPointMap(
+                state: state,
+                viewModel: viewModel,
+              ),
+            ),
+            Align(
+              alignment: .topCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 6,
+                ),
+                child: DropPointSearchBar(
+                  value: state.searchQuery,
+                  onChanged: viewModel.setSearchQuery,
+                  onClear: viewModel.clearSearch,
+                ),
+              ),
+            ),
+          ],
         ),
-        const Gap(16),
-        SizedBox(
-          height: 250,
-          child: DropPointMap(
-            state: state,
-            viewModel: viewModel,
-          ),
-        ),
-        const Gap(16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: DropPointFilterRow(
-            activeFilters: state.activeFilters,
-            onFilterToggle: viewModel.toggleFilter,
-          ),
-        ),
-        const Gap(16),
+        const Gap(6),
+        // TODO(devin): Implement filter drop point
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16),
+        //   child: DropPointFilterRow(
+        //     activeFilters: state.activeFilters,
+        //     onFilterToggle: viewModel.toggleFilter,
+        //   ),
+        // ),
+        // const Gap(16),
         Expanded(
           child: DropPointList(
             dropPoints: state.filteredDropPoints,
