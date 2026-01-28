@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/widgets/history_section.dart';
-import 'package:sirsak_pop_nasabah/features/wallet/widgets/rewards_section.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/widgets/wallet_balance_card.dart';
 
 class WalletView extends ConsumerWidget {
@@ -21,8 +20,9 @@ class WalletView extends ConsumerWidget {
           const Gap(16),
           WalletBalanceCard(state: state, viewModel: viewModel),
           const Gap(24),
-          RewardsSection(viewModel: viewModel),
-          const Gap(24),
+          // TODO(devin): implement rewards
+          // RewardsSection(viewModel: viewModel),
+          // const Gap(24),
           HistorySection(state: state, viewModel: viewModel),
           const Gap(24),
         ],

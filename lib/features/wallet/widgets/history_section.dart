@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/home/widgets/section_header.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_state.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/models/user/transaction_history_model.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/date_format_extensions.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/string_extensions.dart';
 
 class HistorySection extends StatelessWidget {
   const HistorySection({
@@ -22,7 +24,7 @@ class HistorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final isPointsTab = state.selectedHistoryTab == HistoryTabType.sirsalPoints;
+    final isPointsTab = state.selectedHistoryTab == HistoryTabType.sirsakPoints;
     final currentHistory = isPointsTab
         ? state.pointsHistory
         : state.bankSampahHistory;
@@ -31,34 +33,34 @@ class HistorySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          icon: PhosphorIcons.listBullets(),
+          icon: PhosphorIcons.receipt(),
           title: l10n.walletHistory,
         ),
         const Gap(16),
         // Tab chips
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              _TabChip(
-                label: l10n.walletSirsakPoints,
-                isSelected: isPointsTab,
-                onTap: () => viewModel.selectHistoryTab(
-                  HistoryTabType.sirsalPoints,
-                ),
-              ),
-              const Gap(8),
-              _TabChip(
-                label: l10n.walletBankSampahBalance,
-                isSelected: !isPointsTab,
-                onTap: () => viewModel.selectHistoryTab(
-                  HistoryTabType.bankSampah,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const Gap(16),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16),
+        //   child: Row(
+        //     children: [
+        //       _TabChip(
+        //         label: l10n.walletSirsakPoints,
+        //         isSelected: isPointsTab,
+        //         onTap: () => viewModel.selectHistoryTab(
+        //           HistoryTabType.sirsakPoints,
+        //         ),
+        //       ),
+        //       const Gap(8),
+        //       _TabChip(
+        //         label: l10n.walletBankSampahBalance,
+        //         isSelected: !isPointsTab,
+        //         onTap: () => viewModel.selectHistoryTab(
+        //           HistoryTabType.bankSampah,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // const Gap(16),
         // Transaction list
         if (currentHistory.isEmpty)
           Padding(
@@ -128,35 +130,15 @@ class _HistoryListItem extends StatelessWidget {
     required this.isPoints,
   });
 
-  final TransactionHistory transaction;
+  final TransactionHistoryModel transaction;
   final bool isPoints;
 
-  String _formatAmount(double amount, TransactionType type) {
+  String _formatAmount(int amount, TransactionType type) {
     final prefix = type == TransactionType.credit ? '+ ' : '- ';
     if (isPoints) {
-      return '$prefix${amount.toInt().toString().replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-        (Match m) => '${m[1]},',
-      )}';
+      return '$prefix${amount.toString().formatPoints}';
     } else {
-      return '${prefix}Rp ${amount.toInt().toString().replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-        (Match m) => '${m[1]},',
-      )}';
-    }
-  }
-
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final transactionDate = DateTime(date.year, date.month, date.day);
-
-    if (transactionDate == today) {
-      return 'Today, ${DateFormat('h:mm a').format(date)}';
-    } else if (transactionDate == today.subtract(const Duration(days: 1))) {
-      return 'Yesterday, ${DateFormat('h:mm a').format(date)}';
-    } else {
-      return DateFormat('d MMM yyyy, h:mm a').format(date);
+      return '$prefix${amount.toString().formatRupiah}';
     }
   }
 
@@ -202,22 +184,14 @@ class _HistoryListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  transaction.title,
+                  transaction.description,
                   style: textTheme.titleSmall?.copyWith(
                     fontVariations: AppFonts.semiBold,
                   ),
                 ),
                 const Gap(2),
                 Text(
-                  transaction.description,
-                  style: textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                    fontVariations: AppFonts.regular,
-                  ),
-                ),
-                const Gap(2),
-                Text(
-                  _formatDate(transaction.date),
+                  transaction.createdAt.toDayRelative,
                   style: textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                     fontVariations: AppFonts.regular,

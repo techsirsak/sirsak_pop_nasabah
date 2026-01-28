@@ -27,11 +27,17 @@ class CurrentUserNotifier extends _$CurrentUserNotifier {
     try {
       final userService = ref.read(userServiceProvider);
       final user = await userService.getCurrentUser();
-      final impact = await userService.getImpact();
+
+      // Parallel with Future.wait and records:
+      final (impact, transactionHistory) = await (
+        userService.getImpact(),
+        userService.getTransactionHistory(),
+      ).wait;
 
       state = state.copyWith(
         user: user,
         impact: impact,
+        transactionHistory: transactionHistory,
         isLoading: false,
       );
 

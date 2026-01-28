@@ -4,6 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_state.dart';
+import 'package:sirsak_pop_nasabah/models/user/transaction_history_model.dart';
+import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 
 part 'wallet_viewmodel.g.dart';
 
@@ -11,14 +13,22 @@ part 'wallet_viewmodel.g.dart';
 class WalletViewModel extends _$WalletViewModel {
   @override
   WalletState build() {
+    final currentUserState = ref.watch(currentUserProvider);
+    final user = currentUserState.user;
+    final bankSampahHistory = List<TransactionHistoryModel>.from(
+      currentUserState.transactionHistory ?? [],
+    )..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
     return WalletState(
       sirsalPoints: 1400,
-      bankSampahBalance: 19750,
+      bankSampahBalance: user?.balance ?? 0,
       expiryDate: '31 Dec 2026',
-      monthlyBankSampahEarned: 19750,
+      monthlyBankSampahEarned: calculateMonthlyBankSampahEarned(
+        bankSampahHistory,
+      ),
       monthlyPointsEarned: 1400,
-      pointsHistory: _getMockPointsHistory(),
-      bankSampahHistory: _getMockBankSampahHistory(),
+      pointsHistory: [],
+      bankSampahHistory: bankSampahHistory,
     );
   }
 
@@ -38,67 +48,22 @@ class WalletViewModel extends _$WalletViewModel {
     state = state.copyWith(selectedHistoryTab: tab);
   }
 
-  Future<void> loadWalletData() async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
-    try {
-      // TODO(devin): Fetch from API
-      await Future<void>.delayed(const Duration(milliseconds: 500));
-      state = state.copyWith(isLoading: false);
-    } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: e.toString(),
-      );
-    }
-  }
+  double calculateMonthlyBankSampahEarned(
+    List<TransactionHistoryModel>? history,
+  ) {
+    if (history == null || history.isEmpty) return 0;
 
-  List<TransactionHistory> _getMockPointsHistory() {
-    return [
-      TransactionHistory(
-        id: '1',
-        title: 'Drop Point Visit',
-        description: 'Recycled 5kg plastic bottles',
-        date: DateTime.now(),
-        amount: 10000,
-        type: TransactionType.credit,
-      ),
-      TransactionHistory(
-        id: '2',
-        title: 'Voucher Redemption',
-        description: 'Tokopedia voucher 50k',
-        date: DateTime.now().subtract(const Duration(days: 1)),
-        amount: 5000,
-        type: TransactionType.debit,
-      ),
-      TransactionHistory(
-        id: '3',
-        title: 'Drop Point Visit',
-        description: 'Recycled 3kg paper waste',
-        date: DateTime.now().subtract(const Duration(days: 2)),
-        amount: 6000,
-        type: TransactionType.credit,
-      ),
-    ];
-  }
+    final now = DateTime.now();
+    final currentMonth = now.month;
+    final currentYear = now.year;
 
-  List<TransactionHistory> _getMockBankSampahHistory() {
-    return [
-      TransactionHistory(
-        id: '1',
-        title: 'Bank Sampah Deposit',
-        description: 'Plastic bottles 5kg',
-        date: DateTime.now(),
-        amount: 15000,
-        type: TransactionType.credit,
-      ),
-      TransactionHistory(
-        id: '2',
-        title: 'Withdrawal',
-        description: 'Transfer to GoPay',
-        date: DateTime.now().subtract(const Duration(days: 3)),
-        amount: 10000,
-        type: TransactionType.debit,
-      ),
-    ];
+    return history
+        .where(
+          (transaction) =>
+              transaction.type == TransactionType.credit &&
+              transaction.createdAt.month == currentMonth &&
+              transaction.createdAt.year == currentYear,
+        )
+        .fold(0, (sum, transaction) => sum + transaction.amount);
   }
 }

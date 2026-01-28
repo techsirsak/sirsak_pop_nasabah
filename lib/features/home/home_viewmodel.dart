@@ -22,6 +22,7 @@ class HomeViewModel extends _$HomeViewModel {
     return HomeState(
       userName: firstName,
       points: 1400,
+      balance: user?.balance ?? 0,
       impacts: impact ?? const ImpactModel(),
       challenge: const Challenge(
         title: 'Bottle Hero Badge',
@@ -47,10 +48,6 @@ class HomeViewModel extends _$HomeViewModel {
         ),
       ],
     );
-  }
-
-  void navigateToHistory() {
-    unawaited(ref.read(routerProvider).push(SAppRoutePath.pointsHistory));
   }
 
   void navigateToWithdraw() {

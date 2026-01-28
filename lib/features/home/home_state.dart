@@ -8,6 +8,7 @@ abstract class HomeState with _$HomeState {
   const factory HomeState({
     @Default('') String userName,
     @Default(0) int points,
+    @Default(0) int balance,
     @Default(ImpactModel()) ImpactModel impacts,
     Challenge? challenge,
     @Default([]) List<Event> events,

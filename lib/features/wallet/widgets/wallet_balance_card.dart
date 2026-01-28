@@ -6,6 +6,7 @@ import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_state.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/string_extensions.dart';
 
 class WalletBalanceCard extends StatelessWidget {
   const WalletBalanceCard({
@@ -16,20 +17,6 @@ class WalletBalanceCard extends StatelessWidget {
 
   final WalletState state;
   final WalletViewModel viewModel;
-
-  String _formatNumber(int number) {
-    return number.toString().replaceAllMapped(
-      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-      (Match m) => '${m[1]},',
-    );
-  }
-
-  String _formatCurrency(double amount) {
-    return 'Rp ${amount.toInt().toString().replaceAllMapped(
-      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-      (Match m) => '${m[1]},',
-    )}';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +30,7 @@ class WalletBalanceCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(
           vertical: 12,
-          horizontal: 20,
+          horizontal: 16,
         ),
         decoration: BoxDecoration(
           gradient: colorScheme.pointsCardGradient,
@@ -51,83 +38,90 @@ class WalletBalanceCard extends StatelessWidget {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header: "Saldo Nasabah" + info icon
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Stack(
+              alignment: .center,
               children: [
-                Text(
-                  l10n.walletBalance,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: Colors.white,
-                    fontVariations: AppFonts.medium,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    PhosphorIcons.question(),
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  onPressed: viewModel.showBalanceInfo,
-                ),
-              ],
-            ),
-            const Gap(16),
-            // Main balance: Points
-            Row(
-              children: [
-                Icon(
-                  PhosphorIcons.wallet(),
-                  color: Colors.white,
-                  size: 24,
-                ),
-                const Gap(8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _formatNumber(state.sirsalPoints),
-                      style: textTheme.displayLarge?.copyWith(
+                      l10n.walletBalance,
+                      style: textTheme.bodyLarge?.copyWith(
                         color: Colors.white,
-                        fontVariations: AppFonts.bold,
-                        height: 1,
-                      ),
-                    ),
-                    Text(
-                      l10n.walletSirsakPoints,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontVariations: AppFonts.regular,
+                        fontVariations: AppFonts.medium,
                       ),
                     ),
                   ],
                 ),
+                Align(
+                  alignment: .topRight,
+                  child: IconButton(
+                    icon: Icon(
+                      PhosphorIcons.question(),
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    onPressed: viewModel.showBalanceInfo,
+                  ),
+                ),
               ],
             ),
-            const Gap(12),
+            const Gap(14),
+            // Main balance: Points
+            // Column(
+            //   children: [
+            //     Text(
+            //       state.sirsalPoints.toString().formatPoints,
+            //       style: textTheme.displayLarge?.copyWith(
+            //         color: Colors.white,
+            //         fontVariations: AppFonts.bold,
+            //         height: 1,
+            //       ),
+            //     ),
+            //     Row(
+            //       mainAxisAlignment: .center,
+            //       children: [
+            //         Icon(
+            //           PhosphorIcons.wallet(),
+            //           color: Colors.white,
+            //           size: 16,
+            //         ),
+            //         const Gap(8),
+            //         Text(
+            //           l10n.walletSirsakPoints,
+            //           style: textTheme.bodySmall?.copyWith(
+            //             color: Colors.white.withValues(alpha: 0.9),
+            //             fontVariations: AppFonts.regular,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
+            // const Gap(14),
             // Secondary balance: Bank Sampah
-            Row(
+            Column(
               children: [
-                Icon(
-                  PhosphorIcons.bank(),
-                  color: Colors.white,
-                  size: 24,
+                Text(
+                  state.bankSampahBalance.toInt().toString().formatRupiah,
+                  style: textTheme.titleLarge?.copyWith(
+                    color: Colors.white,
+                    fontVariations: AppFonts.semiBold,
+                  ),
                 ),
-                const Gap(8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: .center,
                   children: [
-                    Text(
-                      _formatCurrency(state.bankSampahBalance),
-                      style: textTheme.titleLarge?.copyWith(
-                        color: Colors.white,
-                        fontVariations: AppFonts.semiBold,
-                      ),
+                    Icon(
+                      PhosphorIcons.bank(),
+                      color: Colors.white,
+                      size: 16,
                     ),
+                    const Gap(8),
                     Text(
                       l10n.walletBankSampahBalance,
                       style: textTheme.bodySmall?.copyWith(
@@ -142,6 +136,7 @@ class WalletBalanceCard extends StatelessWidget {
             const Gap(20),
             // Footer: Expiry date + Monthly stats
             Row(
+              crossAxisAlignment: .start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Left: Expiry date
@@ -176,23 +171,26 @@ class WalletBalanceCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '+${_formatCurrency(state.monthlyBankSampahEarned)}',
+                      '+'
+                      '${state.monthlyBankSampahEarned.toString().formatRupiah}',
                       style: textTheme.bodyMedium?.copyWith(
                         color: Colors.white,
                         fontVariations: AppFonts.medium,
                       ),
                     ),
-                    Text(
-                      '+${_formatNumber(state.monthlyPointsEarned)} points',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.8),
-                        fontVariations: AppFonts.regular,
-                      ),
-                    ),
+                    // Text(
+                    //   '+${state.monthlyPointsEarned.toString().formatPoints}'
+                    //   ' points',
+                    //   style: textTheme.bodySmall?.copyWith(
+                    //     color: Colors.white.withValues(alpha: 0.8),
+                    //     fontVariations: AppFonts.regular,
+                    //   ),
+                    // ),
                   ],
                 ),
               ],
             ),
+            const Gap(6),
           ],
         ),
       ),

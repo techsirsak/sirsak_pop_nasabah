@@ -41,4 +41,18 @@ extension StringX on String {
     final value = split(' ').first;
     return value;
   }
+
+  String get formatPoints {
+    return replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]},',
+    );
+  }
+
+  String get formatRupiah {
+    return 'Rp ${replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]}.',
+    )}';
+  }
 }

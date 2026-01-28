@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
+import 'package:sirsak_pop_nasabah/models/user/transaction_history_model.dart';
 import 'package:sirsak_pop_nasabah/models/user/user_model.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/api/dio_client.dart';
@@ -61,6 +62,23 @@ class UserService {
     );
 
     _logger.info('[UserService] Impact fetched successfully');
+    return response;
+  }
+
+  /// Fetch transaction history from /nasabah/journal
+  ///
+  /// Throws [ApiException] on failure
+  Future<List<TransactionHistoryModel>> getTransactionHistory() async {
+    _logger.info('[UserService] Fetching transaction history');
+
+    final response = await _apiClient.getList(
+      path: '/nasabah/journal',
+      fromJson: TransactionHistoryModel.fromJson,
+    );
+
+    _logger.info(
+      '[UserService] Transaction history fetched: ${response.length} entries',
+    );
     return response;
   }
 }

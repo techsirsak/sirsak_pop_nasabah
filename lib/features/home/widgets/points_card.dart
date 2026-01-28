@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_colors.dart';
@@ -58,6 +59,7 @@ class PointsCard extends StatelessWidget {
                   icon: Icon(
                     PhosphorIcons.wallet(),
                     color: Colors.white,
+                    size: 32,
                   ),
                   onPressed: () {
                     // TODO(devin): Navigate to wallet
@@ -67,33 +69,9 @@ class PointsCard extends StatelessWidget {
             ),
             const Gap(16),
             // Points display
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Flexible(
-                  child: Text(
-                    state.points.toString().replaceAllMapped(
-                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                      (Match m) => '${m[1]},',
-                    ),
-                    style: textTheme.displayLarge?.copyWith(
-                      color: Colors.white,
-                      fontVariations: AppFonts.bold,
-                      height: 1,
-                    ),
-                  ),
-                ),
-                const Gap(8),
-                Text(
-                  l10n.homePoints,
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.9),
-                    fontVariations: AppFonts.regular,
-                  ),
-                ),
-              ],
-            ),
+            // const _PointDisplay(),
+            // const Gap(20),
+            const _SaldoDisplay(),
             const Gap(20),
             // Action buttons
             Row(
@@ -103,41 +81,114 @@ class PointsCard extends StatelessWidget {
                   flex: 5,
                   child: SButton(
                     text: l10n.homeHistory,
-                    onPressed: viewModel.navigateToHistory,
+                    onPressed: viewModel.navigateToWalletTab,
                     variant: ButtonVariant.text,
                     size: ButtonSize.small,
                     icon: PhosphorIcons.clipboardText(),
                     foregroundColor: Colors.white,
                   ),
                 ),
-                Flexible(
-                  flex: 4,
-                  child: SButton(
-                    text: l10n.homeWithdraw,
-                    onPressed: viewModel.navigateToWithdraw,
-                    variant: ButtonVariant.text,
-                    size: ButtonSize.small,
-                    icon: PhosphorIcons.handWithdraw(),
-                    foregroundColor: Colors.white,
-                  ),
-                ),
-                Flexible(
-                  flex: 5,
-                  child: SButton(
-                    text: l10n.homeRewards,
-                    onPressed: viewModel.navigateToRewards,
-                    size: ButtonSize.small,
-                    icon: PhosphorIcons.gift(),
-                    foregroundColor: colorScheme.primary,
-                    backgroundColor: colorScheme.surface,
-                    borderRadius: 25,
-                  ),
-                ),
+                // TODO(devin): implement withdraw
+                // Flexible(
+                //   flex: 4,
+                //   child: SButton(
+                //     text: l10n.homeWithdraw,
+                //     onPressed: viewModel.navigateToWithdraw,
+                //     variant: ButtonVariant.text,
+                //     size: ButtonSize.small,
+                //     icon: PhosphorIcons.handWithdraw(),
+                //     foregroundColor: Colors.white,
+                //   ),
+                // ),
+                // TODO(devin): implement rewards
+                // Flexible(
+                //   flex: 5,
+                //   child: SButton(
+                //     text: l10n.homeRewards,
+                //     onPressed: viewModel.navigateToRewards,
+                //     size: ButtonSize.small,
+                //     icon: PhosphorIcons.gift(),
+                //     foregroundColor: colorScheme.primary,
+                //     backgroundColor: colorScheme.surface,
+                //     borderRadius: 25,
+                //   ),
+                // ),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _PointDisplay extends ConsumerWidget {
+  const _PointDisplay();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(homeViewModelProvider);
+    final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
+    return Row(
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        Flexible(
+          child: Text(
+            state.points.toString().formatPoints,
+            style: textTheme.displayLarge?.copyWith(
+              color: Colors.white,
+              fontVariations: AppFonts.bold,
+              height: 1,
+            ),
+          ),
+        ),
+        const Gap(8),
+        Text(
+          l10n.homePoints,
+          style: textTheme.titleMedium?.copyWith(
+            color: Colors.white.withValues(alpha: 0.9),
+            fontVariations: AppFonts.regular,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SaldoDisplay extends ConsumerWidget {
+  const _SaldoDisplay();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(homeViewModelProvider);
+    final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
+
+    return Row(
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        Flexible(
+          child: FittedBox(
+            child: Text(
+              state.balance.toString().formatRupiah,
+              style: textTheme.displayLarge?.copyWith(
+                color: Colors.white,
+                fontVariations: AppFonts.bold,
+                height: 1,
+              ),
+            ),
+          ),
+        ),
+        const Gap(8),
+        Text(
+          l10n.walletBankSampahBalance,
+          style: textTheme.titleMedium?.copyWith(
+            color: Colors.white.withValues(alpha: 0.9),
+            fontVariations: AppFonts.regular,
+          ),
+        ),
+      ],
     );
   }
 }
