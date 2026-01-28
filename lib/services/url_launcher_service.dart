@@ -73,7 +73,7 @@ class UrlLauncherService {
       scheme: 'mailto',
       path: email,
     );
-    await _launchUri(emailUri);
+    _launchUri(emailUri);
   }
 
   /// Open the default email app on the device
@@ -157,7 +157,7 @@ class UrlLauncherService {
       scheme: 'tel',
       path: phone,
     );
-    await _launchUri(phoneUri);
+    _launchUri(phoneUri);
   }
 
   /// Launch Instagram app or web with the specified [handle]
@@ -173,7 +173,28 @@ class UrlLauncherService {
   /// Throws an exception if Instagram cannot be launched.
   Future<void> launchInstagram(String handle) async {
     final instagramUri = Uri.parse('https://instagram.com/$handle');
-    await _launchUri(instagramUri, mode: LaunchMode.externalApplication);
+    _launchUri(instagramUri, mode: LaunchMode.externalApplication);
+  }
+
+  /// Launch maps app with directions to the collection point
+  Future<void> launchMap({
+    required double lat,
+    required double lng,
+  }) async {
+    // Try Google Maps first, fallback to Apple Maps on iOS
+    final googleMapsUrl = Uri.parse(
+      'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng',
+    );
+
+    try {
+      _launchUri(googleMapsUrl, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      // Fallback to Apple Maps
+      final appleMapsUrl = Uri.parse(
+        'https://maps.apple.com/?daddr=$lat,$lng&dirflg=d',
+      );
+      _launchUri(appleMapsUrl, mode: LaunchMode.externalApplication);
+    }
   }
 
   /// Launch a generic URL

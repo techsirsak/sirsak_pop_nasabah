@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -47,7 +49,6 @@ void main() {
       verify(
         () => mockDio.get<Map<String, dynamic>>(
           '/test',
-          queryParameters: null,
         ),
       ).called(1);
     });
@@ -181,7 +182,6 @@ void main() {
         () => mockDio.post<Map<String, dynamic>>(
           '/test',
           data: requestData,
-          queryParameters: null,
         ),
       ).called(1);
     });
@@ -237,7 +237,6 @@ void main() {
         () => mockDio.put<Map<String, dynamic>>(
           '/test/1',
           data: requestData,
-          queryParameters: null,
         ),
       ).called(1);
     });
@@ -298,43 +297,43 @@ void main() {
         () => mockDio.patch<Map<String, dynamic>>(
           '/test/1',
           data: requestData,
-          queryParameters: null,
         ),
       ).called(1);
     });
   });
 
   group('ApiClient.delete', () {
-    test('should return parsed response on successful DELETE request',
-        () async {
-      final responseData = {'deleted': true};
+    test(
+      'should return parsed response on successful DELETE request',
+      () async {
+        final responseData = {'deleted': true};
 
-      when(
-        () => mockDio.delete<Map<String, dynamic>>(
-          any(),
-          queryParameters: any(named: 'queryParameters'),
-        ),
-      ).thenAnswer(
-        (_) async => Response(
-          data: responseData,
-          statusCode: 200,
-          requestOptions: RequestOptions(path: '/test/1'),
-        ),
-      );
+        when(
+          () => mockDio.delete<Map<String, dynamic>>(
+            any(),
+            queryParameters: any(named: 'queryParameters'),
+          ),
+        ).thenAnswer(
+          (_) async => Response(
+            data: responseData,
+            statusCode: 200,
+            requestOptions: RequestOptions(path: '/test/1'),
+          ),
+        );
 
-      final result = await apiClient.delete(
-        path: '/test/1',
-        fromJson: fromJson,
-      );
+        final result = await apiClient.delete(
+          path: '/test/1',
+          fromJson: fromJson,
+        );
 
-      expect(result, responseData);
-      verify(
-        () => mockDio.delete<Map<String, dynamic>>(
-          '/test/1',
-          queryParameters: null,
-        ),
-      ).called(1);
-    });
+        expect(result, responseData);
+        verify(
+          () => mockDio.delete<Map<String, dynamic>>(
+            '/test/1',
+          ),
+        ).called(1);
+      },
+    );
 
     test('should throw ClientException on 403 response', () async {
       when(
@@ -464,7 +463,6 @@ void main() {
         ),
       ).thenThrow(
         DioException(
-          type: DioExceptionType.unknown,
           requestOptions: RequestOptions(path: '/test'),
           message: 'Something went wrong',
         ),

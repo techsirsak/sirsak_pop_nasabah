@@ -30,6 +30,7 @@ abstract class DropPointState with _$DropPointState {
   const factory DropPointState({
     // Data - using CollectionPointModel from API
     @Default([]) List<CollectionPointModel> dropPoints,
+    @Default([]) List<CollectionPointModel> validDropPoints,
     @Default([]) List<CollectionPointModel> filteredDropPoints,
 
     // User location

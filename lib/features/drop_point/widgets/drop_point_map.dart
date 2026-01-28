@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_state.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_viewmodel.dart';
@@ -8,19 +9,48 @@ import 'package:sirsak_pop_nasabah/features/drop_point/widgets/location_permissi
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/zoom_control.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
 
-class DropPointMap extends StatelessWidget {
-  const DropPointMap({
-    required this.state,
-    required this.viewModel,
-    super.key,
-  });
+class DropPointMap extends ConsumerStatefulWidget {
+  const DropPointMap({super.key});
 
-  final DropPointState state;
-  final DropPointViewModel viewModel;
+  @override
+  ConsumerState<DropPointMap> createState() => _DropPointMapState();
+}
+
+class _DropPointMapState extends ConsumerState<DropPointMap> {
+  late final MapController _mapController;
+
+  @override
+  void initState() {
+    super.initState();
+    _mapController = MapController();
+  }
+
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final state = ref.watch(dropPointViewModelProvider);
+    final viewModel = ref.read(dropPointViewModelProvider.notifier);
+
+    // Listen for zoom/center changes and update map programmatically
+    ref.listen(
+      dropPointViewModelProvider.select(
+        (s) => (s.mapZoom, s.mapCenterLat, s.mapCenterLng),
+      ),
+      (prev, next) {
+        if (prev != next) {
+          _mapController.move(
+            LatLng(next.$2, next.$3),
+            next.$1,
+          );
+        }
+      },
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -29,6 +59,7 @@ class DropPointMap extends StatelessWidget {
         child: Stack(
           children: [
             FlutterMap(
+              mapController: _mapController,
               options: MapOptions(
                 initialCenter: LatLng(state.mapCenterLat, state.mapCenterLng),
                 initialZoom: state.mapZoom,
@@ -44,11 +75,12 @@ class DropPointMap extends StatelessWidget {
                 ),
                 // Drop point markers
                 MarkerLayer(
-                  markers: state.dropPoints.map((dropPoint) {
+                  markers: state.validDropPoints.map((dropPoint) {
                     return _buildDropPointMarker(
                       dropPoint,
                       colorScheme,
                       state.selectedDropPoint?.id == dropPoint.id,
+                      onTap: () => viewModel.selectDropPoint(dropPoint),
                     );
                   }).toList(),
                 ),
@@ -113,11 +145,11 @@ class DropPointMap extends StatelessWidget {
   Marker _buildDropPointMarker(
     CollectionPointModel dropPoint,
     ColorScheme colorScheme,
-    bool isSelected,
-  ) {
+    bool isSelected, {
+    required VoidCallback onTap,
+  }) {
     // Skip points without valid coordinates
     if (dropPoint.latitude == null || dropPoint.longitude == null) {
-      print('skip _buildDropPointMarker ${dropPoint.toJson()}');
       return const Marker(
         point: LatLng(0, 0),
         width: 0,
@@ -131,7 +163,7 @@ class DropPointMap extends StatelessWidget {
       width: isSelected ? 40 : 30,
       height: isSelected ? 40 : 30,
       child: GestureDetector(
-        onTap: () => viewModel.selectDropPoint(dropPoint),
+        onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
             color: Colors.blue,

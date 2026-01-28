@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_viewmodel.dart';
-import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_filter_row.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_list.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_map.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_search_bar.dart';
@@ -35,12 +34,9 @@ class _DropPointViewState extends ConsumerState<DropPointView> {
       children: [
         Stack(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 300,
-              child: DropPointMap(
-                state: state,
-                viewModel: viewModel,
-              ),
+              child: DropPointMap(),
             ),
             Align(
               alignment: .topCenter,

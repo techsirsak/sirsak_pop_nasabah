@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
@@ -25,7 +29,12 @@ class DropPointListItem extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap();
+        unawaited(
+          context.push(SAppRoutePath.dropPointDetail, extra: dropPoint),
+        );
+      },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(16),
@@ -54,6 +63,7 @@ class DropPointListItem extends StatelessWidget {
               dropPoint.name,
               style: textTheme.titleMedium?.copyWith(
                 fontVariations: AppFonts.bold,
+                fontSize: 18,
                 color: colorScheme.primary,
               ),
             ),
@@ -64,15 +74,12 @@ class DropPointListItem extends StatelessWidget {
                 Icon(
                   PhosphorIcons.mapPin(),
                   size: 16,
-                  color: colorScheme.onSurfaceVariant,
                 ),
                 const Gap(6),
                 Expanded(
                   child: Text(
                     dropPoint.alamatLengkap ?? '',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: textTheme.bodyMedium?.copyWith(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -86,37 +93,14 @@ class DropPointListItem extends StatelessWidget {
                 Icon(
                   PhosphorIcons.personSimpleWalk(),
                   size: 16,
-                  color: colorScheme.onSurfaceVariant,
                 ),
                 const Gap(6),
                 Text(
                   context.l10n.dropPointDistance(distance),
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: textTheme.bodyMedium?.copyWith(),
                 ),
               ],
             ),
-            // Pengurus (manager) info if available
-            if (dropPoint.pengurus != null) ...[
-              const Gap(6),
-              Row(
-                children: [
-                  Icon(
-                    PhosphorIcons.user(),
-                    size: 16,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                  const Gap(6),
-                  Text(
-                    dropPoint.pengurus!,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
-            ],
           ],
         ),
       ),

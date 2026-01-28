@@ -19,7 +19,6 @@ void main() {
     mockDio = MockDio();
     interceptor = RetryInterceptor(
       dio: mockDio,
-      maxRetries: 3,
       retryDelays: const [
         Duration(milliseconds: 10),
         Duration(milliseconds: 20),
@@ -255,8 +254,7 @@ void main() {
 
       RequestOptions? capturedOptions;
       when(() => mockDio.fetch<dynamic>(any())).thenAnswer((invocation) async {
-        capturedOptions =
-            invocation.positionalArguments[0] as RequestOptions;
+        capturedOptions = invocation.positionalArguments[0] as RequestOptions;
         return successResponse;
       });
 

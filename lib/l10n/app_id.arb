@@ -3,6 +3,8 @@
   "appName": "Sirsak Pop Nasabah",
   "cancel": "Batal",
   "dropPointBankSampah": "Bank Sampah",
+  "dropPointDetailAcceptedWaste": "Jenis Sampah yang Dapat Diterima",
+  "dropPointDetailGetDirections": "Petunjuk Arah",
   "dropPointDistance": "{distance} km dari Anda",
   "@dropPointDistance": {
     "placeholders": {

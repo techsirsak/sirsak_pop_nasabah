@@ -31,7 +31,7 @@ class CollectionPointsCacheNotifier extends _$CollectionPointsCacheNotifier {
         ref
             .read(loggerServiceProvider)
             .info(
-              '[CollectionPointsCache] Loaded ${cached.length} points from cache',
+              '[CollectionPointsCache] Loaded ${cached.length} points',
             );
         return true;
       }
@@ -64,7 +64,7 @@ class CollectionPointsCacheNotifier extends _$CollectionPointsCacheNotifier {
   Future<bool> _fetchFromApi() async {
     try {
       final service = ref.read(collectionPointServiceProvider);
-      final response = await service.getCollectionPoints(limit: 500);
+      final response = await service.getCollectionPoints();
 
       // Save to cache
       final localStorage = ref.read(localStorageServiceProvider);
@@ -74,8 +74,8 @@ class CollectionPointsCacheNotifier extends _$CollectionPointsCacheNotifier {
       ref
           .read(loggerServiceProvider)
           .info(
-            '[CollectionPointsCache] Fetched and cached ${response.data.length} '
-            'points from API',
+            '[CollectionPointsCache] Fetched and cached ${response.data.length}'
+            ' points from API',
           );
       return true;
     } catch (e, stackTrace) {

@@ -59,8 +59,9 @@ class DropPointViewModel extends _$DropPointViewModel {
         .toList();
 
     state = state.copyWith(
-      dropPoints: validPoints,
-      filteredDropPoints: validPoints,
+      dropPoints: points,
+      validDropPoints: validPoints,
+      filteredDropPoints: points,
       isLoading: false,
     );
 
@@ -211,11 +212,6 @@ class DropPointViewModel extends _$DropPointViewModel {
       }).toList();
     }
 
-    // Note: Type filtering is disabled for now since CollectionPointModel
-    // uses collectionPointTypeId (string) instead of enum type.
-    // TODO(devin): Add type filtering when collection point types are defined
-
-    // Apply sorting
     switch (state.sortBy) {
       case DropPointSortBy.distance:
         if (state.userLocation != null) {
@@ -229,7 +225,6 @@ class DropPointViewModel extends _$DropPointViewModel {
         // Rating not available in API, sort by name instead
         filtered.sort((a, b) => a.name.compareTo(b.name));
     }
-
     state = state.copyWith(filteredDropPoints: filtered);
   }
 

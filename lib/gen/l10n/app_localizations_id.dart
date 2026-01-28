@@ -18,6 +18,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get dropPointBankSampah => 'Bank Sampah';
 
   @override
+  String get dropPointDetailAcceptedWaste => 'Jenis Sampah yang Dapat Diterima';
+
+  @override
+  String get dropPointDetailGetDirections => 'Petunjuk Arah';
+
+  @override
   String dropPointDistance(String distance) {
     return '$distance km dari Anda';
   }

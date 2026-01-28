@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
 import 'package:sirsak_pop_nasabah/models/user/user_model.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/api/dio_client.dart';
@@ -46,5 +47,20 @@ class UserService {
     _logger.info(
       '[UserService] User profile updated successfully: ${response.email}',
     );
+  }
+
+  /// Fetch user impact data from /nasabah/impact
+  ///
+  /// Throws [ApiException] on failure
+  Future<ImpactModel> getImpact() async {
+    _logger.info('[UserService] Fetching user impact');
+
+    final response = await _apiClient.get(
+      path: '/nasabah/impact',
+      fromJson: ImpactModel.fromJson,
+    );
+
+    _logger.info('[UserService] Impact fetched successfully');
+    return response;
   }
 }

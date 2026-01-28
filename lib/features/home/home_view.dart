@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_view.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_content.dart';
-import 'package:sirsak_pop_nasabah/features/home/widgets/notification_bell.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_view.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_view.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
@@ -29,10 +27,11 @@ class HomeView extends ConsumerWidget {
           fit: BoxFit.contain,
           height: 130,
         ),
-        actions: const [
-          NotificationBell(),
-          Gap(8),
-        ],
+        // TODO(devin): implement notification
+        // actions: const [
+        //   NotificationBell(),
+        //   Gap(8),
+        // ],
       ),
       body: IndexedStack(
         index: selectedIndex,

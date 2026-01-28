@@ -170,6 +170,29 @@ class ApiClient {
     }
   }
 
+  /// Execute a GET request that returns a list
+  Future<List<T>> getList<T>({
+    required String path,
+    required T Function(Map<String, dynamic> json) fromJson,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final response = await _dio.get<List<dynamic>>(
+        path,
+        queryParameters: queryParameters,
+      );
+
+      return response.data!
+          .map((item) => fromJson(item as Map<String, dynamic>))
+          .toList();
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e, stackTrace) {
+      _logger.error('[API] Unexpected error', e, stackTrace);
+      throw ApiException.unknown(message: e.toString(), error: e);
+    }
+  }
+
   /// Convert DioException to ApiException
   ApiException _handleDioError(DioException error) {
     switch (error.type) {

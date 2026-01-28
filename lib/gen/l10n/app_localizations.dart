@@ -116,6 +116,18 @@ abstract class AppLocalizations {
   /// **'Bank Sampah'**
   String get dropPointBankSampah;
 
+  /// No description provided for @dropPointDetailAcceptedWaste.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted Waste Types'**
+  String get dropPointDetailAcceptedWaste;
+
+  /// No description provided for @dropPointDetailGetDirections.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Directions'**
+  String get dropPointDetailGetDirections;
+
   /// No description provided for @dropPointDistance.
   ///
   /// In en, this message translates to:
