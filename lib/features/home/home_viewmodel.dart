@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_state.dart';
+import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/shared/navigation/bottom_nav_provider.dart';
 
@@ -16,28 +16,13 @@ class HomeViewModel extends _$HomeViewModel {
   HomeState build() {
     final currentUserState = ref.watch(currentUserProvider);
     final user = currentUserState.user;
+    final impact = currentUserState.impact;
     final firstName = (user?.namaLengkap ?? '').split(' ').first;
 
     return HomeState(
       userName: firstName,
       points: 1400,
-      impactMetrics: [
-        ImpactMetric(
-          label: 'Sampah Terkumpulkan',
-          value: '12 ton',
-          icon: PhosphorIcons.trash(),
-        ),
-        ImpactMetric(
-          label: 'Sampah Terdaur Ulang',
-          value: '10 ton',
-          icon: PhosphorIcons.recycle(),
-        ),
-        ImpactMetric(
-          label: 'Emisi Karbon Terhindari',
-          value: '5 ton CO2eq',
-          icon: PhosphorIcons.globeHemisphereEast(),
-        ),
-      ],
+      impacts: impact ?? const ImpactModel(),
       challenge: const Challenge(
         title: 'Bottle Hero Badge',
         current: 4,

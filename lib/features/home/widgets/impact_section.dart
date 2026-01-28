@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
-import 'package:sirsak_pop_nasabah/features/home/home_state.dart';
 import 'package:sirsak_pop_nasabah/features/home/widgets/section_header.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/impacts_stat_row.dart';
 
 class ImpactSection extends StatelessWidget {
   const ImpactSection({
-    required this.metrics,
+    required this.impacts,
     super.key,
   });
 
-  final List<ImpactMetric> metrics;
+  final ImpactModel impacts;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,61 +42,11 @@ class ImpactSection extends StatelessWidget {
                 ),
               ],
             ),
-            child: Row(
-              children: metrics
-                  .map(
-                    (metric) => Expanded(
-                      child: ImpactMetricWidget(metric: metric),
-                    ),
-                  )
-                  .toList(),
+            child: ImpactsStatRow(
+              impact: impacts,
+              foregroundColor: colorScheme.primary,
             ),
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class ImpactMetricWidget extends StatelessWidget {
-  const ImpactMetricWidget({
-    required this.metric,
-    super.key,
-  });
-
-  final ImpactMetric metric;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    return Column(
-      children: [
-        Icon(
-          metric.icon,
-          color: colorScheme.primary,
-          size: 32,
-        ),
-        const Gap(8),
-        Text(
-          metric.value,
-          style: textTheme.titleMedium?.copyWith(
-            fontVariations: AppFonts.bold,
-            color: colorScheme.onSurface,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const Gap(4),
-        Text(
-          metric.label,
-          style: textTheme.bodySmall?.copyWith(
-            fontVariations: AppFonts.regular,
-            color: colorScheme.onSurfaceVariant,
-          ),
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

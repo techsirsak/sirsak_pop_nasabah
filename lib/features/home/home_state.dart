@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
 
 part 'home_state.freezed.dart';
 
@@ -8,21 +8,12 @@ abstract class HomeState with _$HomeState {
   const factory HomeState({
     @Default('') String userName,
     @Default(0) int points,
-    @Default([]) List<ImpactMetric> impactMetrics,
+    @Default(ImpactModel()) ImpactModel impacts,
     Challenge? challenge,
     @Default([]) List<Event> events,
     @Default(false) bool isLoading,
     String? errorMessage,
   }) = _HomeState;
-}
-
-@freezed
-abstract class ImpactMetric with _$ImpactMetric {
-  const factory ImpactMetric({
-    required String label,
-    required String value,
-    required IconData icon,
-  }) = _ImpactMetric;
 }
 
 @freezed

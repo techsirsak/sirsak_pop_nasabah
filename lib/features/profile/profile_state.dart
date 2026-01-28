@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
 
 part 'profile_state.freezed.dart';
 
@@ -9,21 +10,12 @@ abstract class ProfileState with _$ProfileState {
     @Default('') String email,
     @Default('') String phoneNumber,
     @Default('') String memberSince,
-    @Default(ProfileStats()) ProfileStats stats,
+    @Default(ImpactModel()) ImpactModel impacts,
     @Default([]) List<ProfileBadge> badges,
     @Default(false) bool isLoading,
     @Default(false) bool isLoggingOut,
     String? errorMessage,
   }) = _ProfileState;
-}
-
-@freezed
-abstract class ProfileStats with _$ProfileStats {
-  const factory ProfileStats({
-    @Default(0.0) double wasteCollected,
-    @Default(0.0) double wasteRecycled,
-    @Default(0.0) double carbonAvoided,
-  }) = _ProfileStats;
 }
 
 @freezed

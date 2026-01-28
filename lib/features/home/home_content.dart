@@ -20,7 +20,7 @@ class HomeContent extends ConsumerWidget {
           const Gap(16),
           PointsCard(state: state, viewModel: viewModel),
           const Gap(34),
-          ImpactSection(metrics: state.impactMetrics),
+          ImpactSection(impacts: state.impacts),
           const Gap(34),
           ActionSection(challenge: state.challenge, viewModel: viewModel),
           const Gap(34),

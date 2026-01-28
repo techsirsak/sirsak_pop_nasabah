@@ -151,19 +151,18 @@ class _BSUDetail extends StatelessWidget {
             Positioned(
               top: 8,
               left: 8,
-              child: Material(
-                color: colorScheme.primary,
-                borderRadius: BorderRadius.circular(20),
-                child: InkWell(
-                  onTap: () => context.pop(),
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Icon(
-                      Icons.chevron_left,
-                      color: colorScheme.onPrimary,
-                      size: 24,
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: .circle,
+                  color: colorScheme.primary,
+                ),
+                child: IconButton(
+                  color: colorScheme.primary,
+                  onPressed: () => context.pop(),
+                  icon: Icon(
+                    Icons.chevron_left,
+                    color: colorScheme.onPrimary,
+                    size: 24,
                   ),
                 ),
               ),

@@ -5,8 +5,9 @@ import 'package:sirsak_pop_nasabah/core/theme/app_colors.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
 import 'package:sirsak_pop_nasabah/features/profile/widgets/profile_badges_section.dart';
-import 'package:sirsak_pop_nasabah/features/profile/widgets/profile_stats_row.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/string_extensions.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/impacts_stat_row.dart';
 
 class ProfileHeaderCard extends StatelessWidget {
   const ProfileHeaderCard({
@@ -63,7 +64,7 @@ class ProfileHeaderCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        state.userName,
+                        state.userName.firstWord.capitalize,
                         style: textTheme.titleLarge?.copyWith(
                           color: Colors.white,
                           fontVariations: AppFonts.bold,
@@ -72,7 +73,7 @@ class ProfileHeaderCard extends StatelessWidget {
                       const Gap(2),
                       Text(
                         l10n.profileMemberSince(state.memberSince),
-                        style: textTheme.bodySmall?.copyWith(
+                        style: textTheme.bodyMedium?.copyWith(
                           color: Colors.white.withValues(alpha: 0.8),
                           fontVariations: AppFonts.regular,
                         ),
@@ -84,7 +85,7 @@ class ProfileHeaderCard extends StatelessWidget {
             ),
             const Gap(20),
             // Stats row
-            ProfileStatsRow(stats: state.stats),
+            ImpactsStatRow(impact: state.impacts),
             // Badges section
             if (state.badges.isNotEmpty) ...[
               const Gap(20),

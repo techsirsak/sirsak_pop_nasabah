@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
+import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
 import 'package:sirsak_pop_nasabah/services/collection_points_cache_provider.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
@@ -14,6 +15,7 @@ class ProfileViewModel extends _$ProfileViewModel {
   ProfileState build() {
     final currentUserState = ref.watch(currentUserProvider);
     final user = currentUserState.user;
+    final impact = currentUserState.impact;
 
     return ProfileState(
       userName: user?.namaLengkap ?? '',
@@ -21,6 +23,7 @@ class ProfileViewModel extends _$ProfileViewModel {
       phoneNumber: user?.noHp ?? '',
       memberSince: user?.createdAt.year.toString() ?? '',
       isLoading: currentUserState.isLoading,
+      impacts: impact ?? const ImpactModel(),
     );
   }
 

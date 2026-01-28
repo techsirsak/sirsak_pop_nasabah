@@ -6,6 +6,7 @@ import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_state.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/string_extensions.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 
 class PointsCard extends StatelessWidget {
@@ -46,8 +47,8 @@ class PointsCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    l10n.homeGreeting(state.userName),
-                    style: textTheme.bodyMedium?.copyWith(
+                    l10n.homeGreeting(state.userName.firstWord.capitalize),
+                    style: textTheme.bodyLarge?.copyWith(
                       color: Colors.white,
                       fontVariations: AppFonts.regular,
                     ),

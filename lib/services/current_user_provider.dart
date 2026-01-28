@@ -27,9 +27,11 @@ class CurrentUserNotifier extends _$CurrentUserNotifier {
     try {
       final userService = ref.read(userServiceProvider);
       final user = await userService.getCurrentUser();
+      final impact = await userService.getImpact();
 
       state = state.copyWith(
         user: user,
+        impact: impact,
         isLoading: false,
       );
 
