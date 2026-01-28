@@ -25,7 +25,8 @@ abstract class TransactionHistoryModel with _$TransactionHistoryModel {
 @JsonEnum(valueField: 'value')
 enum TransactionType {
   credit('CREDIT'),
-  debit('DEBIT');
+  debit('DEBIT')
+  ;
 
   const TransactionType(this.value);
   final String value;

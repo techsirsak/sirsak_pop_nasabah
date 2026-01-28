@@ -4,8 +4,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_state.dart';
+import 'package:sirsak_pop_nasabah/features/wallet/widgets/balance_info_dialog.dart';
 import 'package:sirsak_pop_nasabah/models/user/transaction_history_model.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
+import 'package:sirsak_pop_nasabah/services/dialog_service.dart';
 
 part 'wallet_viewmodel.g.dart';
 
@@ -41,7 +43,13 @@ class WalletViewModel extends _$WalletViewModel {
   }
 
   void showBalanceInfo() {
-    // TODO(devin): Show info dialog/modal about balance
+    unawaited(
+      ref
+          .read(dialogServiceProvider)
+          .showCustomDialog<void>(
+            child: const BalanceInfoDialog(),
+          ),
+    );
   }
 
   void selectHistoryTab(HistoryTabType tab) {

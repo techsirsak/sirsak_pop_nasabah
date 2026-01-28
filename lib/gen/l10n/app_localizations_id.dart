@@ -405,6 +405,14 @@ class AppLocalizationsId extends AppLocalizations {
   String get walletBalance => 'Saldo Nasabah';
 
   @override
+  String get walletBalanceInfoBankSampahDesc =>
+      'Dapatkan uang tunai dengan mengumpulkan sampah di bank sampah. Saldo bank sampah juga harus ditarik di bank sampah.';
+
+  @override
+  String get walletBalanceInfoSirsakPointsDesc =>
+      'Dapatkan Sirsak Points dengan membuang sampah di titik pengumpulan SirCle (RVM) dan Wartabak.';
+
+  @override
   String get walletBankSampahBalance => 'Saldo Bank Sampah';
 
   @override

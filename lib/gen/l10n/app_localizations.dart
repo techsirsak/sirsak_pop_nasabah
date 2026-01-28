@@ -830,6 +830,18 @@ abstract class AppLocalizations {
   /// **'Saldo Nasabah'**
   String get walletBalance;
 
+  /// No description provided for @walletBalanceInfoBankSampahDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get cash by collecting waste at waste banks. Waste bank balance must also be withdrawn at the waste bank.'**
+  String get walletBalanceInfoBankSampahDesc;
+
+  /// No description provided for @walletBalanceInfoSirsakPointsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Sirsak Points by disposing waste at SirCle (RVM) and Wartabak collection points.'**
+  String get walletBalanceInfoSirsakPointsDesc;
+
   /// No description provided for @walletBankSampahBalance.
   ///
   /// In en, this message translates to:

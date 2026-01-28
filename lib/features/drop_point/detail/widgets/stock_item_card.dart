@@ -50,7 +50,7 @@ class StockItemCard extends StatelessWidget {
                               color: colorScheme.primary,
                               value: loadingProgress.expectedTotalBytes != null
                                   ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
+                                        loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           ),

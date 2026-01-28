@@ -107,7 +107,7 @@ class WalletBalanceCard extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  state.bankSampahBalance.toInt().toString().formatRupiah,
+                  state.bankSampahBalance.toString().formatRupiah,
                   style: textTheme.titleLarge?.copyWith(
                     color: Colors.white,
                     fontVariations: AppFonts.semiBold,
@@ -135,65 +135,81 @@ class WalletBalanceCard extends StatelessWidget {
             ),
             const Gap(20),
             // Footer: Expiry date + Monthly stats
-            Row(
-              crossAxisAlignment: .start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Left: Expiry date
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.walletExpiry,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.7),
-                        fontVariations: AppFonts.regular,
-                      ),
-                    ),
-                    Text(
-                      state.expiryDate ?? '-',
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.white,
-                        fontVariations: AppFonts.semiBold,
-                      ),
-                    ),
-                  ],
-                ),
-                // Right: Monthly stats
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      l10n.walletMonthly,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.7),
-                        fontVariations: AppFonts.regular,
-                      ),
-                    ),
-                    Text(
-                      '+'
-                      '${state.monthlyBankSampahEarned.toString().formatRupiah}',
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.white,
-                        fontVariations: AppFonts.medium,
-                      ),
-                    ),
-                    // Text(
-                    //   '+${state.monthlyPointsEarned.toString().formatPoints}'
-                    //   ' points',
-                    //   style: textTheme.bodySmall?.copyWith(
-                    //     color: Colors.white.withValues(alpha: 0.8),
-                    //     fontVariations: AppFonts.regular,
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ],
-            ),
+            _FooterInfo(state: state),
             const Gap(6),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _FooterInfo extends StatelessWidget {
+  const _FooterInfo({
+    required this.state,
+  });
+
+  final WalletState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
+
+    return Row(
+      crossAxisAlignment: .start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // Left: Expiry date
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.walletExpiry,
+              style: textTheme.bodySmall?.copyWith(
+                color: Colors.white.withValues(alpha: 0.7),
+                fontVariations: AppFonts.regular,
+              ),
+            ),
+            Text(
+              state.expiryDate ?? '-',
+              style: textTheme.bodyMedium?.copyWith(
+                color: Colors.white,
+                fontVariations: AppFonts.semiBold,
+              ),
+            ),
+          ],
+        ),
+        // Right: Monthly stats
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              l10n.walletMonthly,
+              style: textTheme.bodySmall?.copyWith(
+                color: Colors.white.withValues(alpha: 0.7),
+                fontVariations: AppFonts.regular,
+              ),
+            ),
+            Text(
+              '+'
+              '${state.monthlyBankSampahEarned.toString().formatRupiah}',
+              style: textTheme.bodyMedium?.copyWith(
+                color: Colors.white,
+                fontVariations: AppFonts.medium,
+              ),
+            ),
+            // Text(
+            //   '+${state.monthlyPointsEarned.toString().formatPoints}'
+            //   ' points',
+            //   style: textTheme.bodySmall?.copyWith(
+            //     color: Colors.white.withValues(alpha: 0.8),
+            //     fontVariations: AppFonts.regular,
+            //   ),
+            // ),
+          ],
+        ),
+      ],
     );
   }
 }

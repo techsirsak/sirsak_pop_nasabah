@@ -170,6 +170,8 @@
   "verifyEmailOpenEmail": "Buka Aplikasi Email",
   "verifyEmailTitle": "Periksa Email Anda",
   "walletBalance": "Saldo Nasabah",
+  "walletBalanceInfoBankSampahDesc": "Dapatkan uang tunai dengan mengumpulkan sampah di bank sampah. Saldo bank sampah juga harus ditarik di bank sampah.",
+  "walletBalanceInfoSirsakPointsDesc": "Dapatkan Sirsak Points dengan membuang sampah di titik pengumpulan SirCle (RVM) dan Wartabak.",
   "walletBankSampahBalance": "Saldo Bank Sampah",
   "walletExpiry": "Masa Berlaku",
   "walletGetRewards": "Dapatkan hadiahmu",

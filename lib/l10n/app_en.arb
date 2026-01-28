@@ -170,6 +170,8 @@
   "verifyEmailOpenEmail": "Open Email App",
   "verifyEmailTitle": "Check Your Email",
   "walletBalance": "Saldo Nasabah",
+  "walletBalanceInfoBankSampahDesc": "Get cash by collecting waste at waste banks. Waste bank balance must also be withdrawn at the waste bank.",
+  "walletBalanceInfoSirsakPointsDesc": "Get Sirsak Points by disposing waste at SirCle (RVM) and Wartabak collection points.",
   "walletBankSampahBalance": "Saldo Bank Sampah",
   "walletExpiry": "Masa Berlaku",
   "walletGetRewards": "Get your rewards",
