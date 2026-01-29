@@ -1,4 +1,4 @@
-package com.example.sirsak_pop_nasabah
+package com.sirsak.app
 
 import io.flutter.embedding.android.FlutterActivity
 
