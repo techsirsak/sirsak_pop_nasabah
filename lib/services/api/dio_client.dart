@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -195,6 +196,19 @@ class ApiClient {
 
   /// Convert DioException to ApiException
   ApiException _handleDioError(DioException error) {
+    // Log error details for tracking in release mode
+    final requestPath = error.requestOptions.path;
+    final method = error.requestOptions.method;
+    final statusCode = error.response?.statusCode;
+
+    unawaited(
+      _logger.error(
+        '[API] ${error.type.name}: $method $requestPath (status: $statusCode)',
+        error,
+        error.stackTrace,
+      ),
+    );
+
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:

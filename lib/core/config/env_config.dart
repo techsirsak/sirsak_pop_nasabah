@@ -7,10 +7,12 @@ class EnvConfig {
   const EnvConfig({
     required this.baseApiUrl,
     required this.env,
+    required this.sentryDsn,
   });
 
   final String baseApiUrl;
   final String env;
+  final String sentryDsn;
 }
 
 /// Global variable to hold env config (set during bootstrap)
@@ -21,8 +23,13 @@ EnvConfig? _envConfig;
 void initEnvConfig({
   required String baseApiUrl,
   required String env,
+  required String sentryDsn,
 }) {
-  _envConfig = EnvConfig(baseApiUrl: baseApiUrl, env: env);
+  _envConfig = EnvConfig(
+    baseApiUrl: baseApiUrl,
+    env: env,
+    sentryDsn: sentryDsn,
+  );
 }
 
 /// Provider for accessing environment configuration

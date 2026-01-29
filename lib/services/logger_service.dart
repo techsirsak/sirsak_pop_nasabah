@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'logger_service.g.dart';
 
@@ -58,24 +59,29 @@ class LoggerService {
   /// we will disable any prints from production
   bool get canPrint => kDebugMode;
 
-  // TODO(devin): setup sentry
-  /// Set user data to sentry
-  // void setSentryUser({User? user, String? tokenLast4}) {
-  //   Sentry.configureScope(
-  //     (scope) => scope.setUser(
-  //       SentryUser(
-  //         id: user?.id,
-  //         email: user?.email,
-  //         name: user?.name,
-  //         data: {
-  //           'responsibilities': user?.responsibilities,
-  //           'position': user?.position,
-  //           'token_last_4': tokenLast4,
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
+  /// Set user data to Sentry for better error context
+  Future<void> setSentryUser({
+    String? id,
+    String? email,
+    String? name,
+    Map<String, dynamic>? data,
+  }) async {
+    await Sentry.configureScope(
+      (scope) => scope.setUser(
+        SentryUser(
+          id: id,
+          email: email,
+          name: name,
+          data: data,
+        ),
+      ),
+    );
+  }
+
+  /// Clear Sentry user data (e.g., on logout)
+  Future<void> clearSentryUser() async {
+    await Sentry.configureScope((scope) => scope.setUser(null));
+  }
 
   /// Log [message] with color blue
   void info(String message) {
@@ -89,14 +95,29 @@ class LoggerService {
   }
 
   /// Log [message] with [error] and [stackTrace]
-  void error(String message, dynamic error, [StackTrace? stackTrace]) {
+  Future<void> error(
+    String message,
+    dynamic error, [
+    StackTrace? stackTrace,
+  ]) async {
     if (canPrint) _logger.e(message, error: error, stackTrace: stackTrace);
-    if (error.toString().toLowerCase().contains('location') ||
-        error.toString().toLowerCase().contains('connection') ||
-        error.toString().toLowerCase().contains('timeout')) {
+
+    // Skip sending common transient errors to Sentry
+    final errorString = error.toString().toLowerCase();
+    if (errorString.contains('location') ||
+        errorString.contains('connection') ||
+        errorString.contains('timeout')) {
       return;
     }
-    // Sentry.captureException(error, stackTrace: stackTrace);
+
+    // Send to Sentry in release mode
+    if (!kDebugMode) {
+      await Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+        hint: Hint.withMap({'message': message}),
+      );
+    }
   }
 }
 

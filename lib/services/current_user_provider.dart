@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/models/user/user_model.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
@@ -27,6 +29,14 @@ class CurrentUserNotifier extends _$CurrentUserNotifier {
     try {
       final userService = ref.read(userServiceProvider);
       final user = await userService.getCurrentUser();
+
+      ref
+          .read(loggerServiceProvider)
+          .setSentryUser(
+            id: user.id,
+            email: user.email,
+            name: user.namaLengkap,
+          );
 
       // Parallel with Future.wait and records:
       final (impact, transactionHistory) = await (
@@ -85,6 +95,7 @@ class CurrentUserNotifier extends _$CurrentUserNotifier {
 
   /// Clear user data (on logout)
   void clearUser() {
+    unawaited(ref.read(loggerServiceProvider).clearSentryUser());
     state = const CurrentUserState();
   }
 }

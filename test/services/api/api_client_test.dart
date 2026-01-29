@@ -20,6 +20,11 @@ void main() {
     mockDio = MockDio();
     mockLogger = MockLoggerService();
     apiClient = ApiClient(mockDio, mockLogger);
+
+    // Stub logger.error() for all tests since it returns Future<void>
+    when(
+      () => mockLogger.error(any(), any(), any()),
+    ).thenAnswer((_) async {});
   });
 
   Map<String, dynamic> fromJson(Map<String, dynamic> json) => json;
@@ -481,10 +486,6 @@ void main() {
           queryParameters: any(named: 'queryParameters'),
         ),
       ).thenThrow(Exception('Unexpected'));
-
-      when(
-        () => mockLogger.error(any(), any(), any()),
-      ).thenReturn(null);
 
       expect(
         () => apiClient.get(path: '/test', fromJson: fromJson),

@@ -134,7 +134,7 @@ class _HistoryListItem extends StatelessWidget {
   final bool isPoints;
 
   String _formatAmount(int amount, TransactionType type) {
-    final prefix = type == TransactionType.credit ? '+ ' : '- ';
+    final prefix = type == TransactionType.debit ? '+ ' : '- ';
     if (isPoints) {
       return '$prefix${amount.toString().formatPoints}';
     } else {
@@ -147,8 +147,8 @@ class _HistoryListItem extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final isCredit = transaction.type == TransactionType.credit;
-    final amountColor = isCredit ? colorScheme.primary : Colors.red;
+    final isDebit = transaction.type == TransactionType.debit;
+    final amountColor = isDebit ? colorScheme.primary : Colors.red;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -173,7 +173,7 @@ class _HistoryListItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              isCredit ? PhosphorIcons.coins() : PhosphorIcons.arrowUp(),
+              isDebit ? PhosphorIcons.coins() : PhosphorIcons.arrowUp(),
               size: 24,
               color: colorScheme.primary,
             ),

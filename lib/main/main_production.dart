@@ -7,6 +7,7 @@ void main() {
     bootstrap(
       env: 'PROD',
       baseApiUrl: const String.fromEnvironment('baseApiUrl'),
+      sentryDsn: const String.fromEnvironment('sentryDsn'),
     ),
   );
 }
