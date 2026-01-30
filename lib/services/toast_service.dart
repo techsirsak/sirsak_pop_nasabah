@@ -77,10 +77,24 @@ class ToastService {
   /// Show error toast
   void error({required String title, int? duration}) {
     _displayToast(
-      message: title,
+      message: _translateErrorKey(title),
       type: ToastType.error,
       duration: duration ?? 8,
     );
+  }
+
+  /// Translate common error keys to localized messages
+  String _translateErrorKey(String key) {
+    final l10n = currentContext?.l10n;
+    if (l10n == null) return key;
+
+    return switch (key) {
+      'errorInvalidCredentials' => l10n.errorInvalidCredentials,
+      'errorLoginFailed' => l10n.errorLoginFailed,
+      'errorNetworkConnection' => l10n.errorNetworkConnection,
+      'errorServerError' => l10n.errorServerError,
+      _ => key,
+    };
   }
 
   /// Show custom toast

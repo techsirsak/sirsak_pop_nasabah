@@ -290,6 +290,12 @@ abstract class AppLocalizations {
   /// **'Invalid email format'**
   String get emailInvalid;
 
+  /// No description provided for @errorInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password. Please try again.'**
+  String get errorInvalidCredentials;
+
   /// No description provided for @emailLabel.
   ///
   /// In en, this message translates to:
@@ -307,6 +313,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
+
+  /// No description provided for @errorLoginFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please try again.'**
+  String get errorLoginFailed;
+
+  /// No description provided for @errorNetworkConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please check your connection.'**
+  String get errorNetworkConnection;
+
+  /// No description provided for @errorServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error. Please try again later.'**
+  String get errorServerError;
 
   /// No description provided for @forgotPassword.
   ///

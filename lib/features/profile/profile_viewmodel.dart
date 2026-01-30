@@ -55,7 +55,7 @@ class ProfileViewModel extends _$ProfileViewModel {
     unawaited(urlLauncher.launchInstagram('sirsak.hub'));
   }
 
-   /// Launch email client
+  /// Launch email client
   Future<void> launchEmail(String email) async {
     final urlLauncher = ref.read(urlLauncherServiceProvider);
     await urlLauncher.launchEmail(email);

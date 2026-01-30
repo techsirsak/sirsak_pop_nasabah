@@ -232,6 +232,21 @@ class ApiClient {
         if (data is Map<String, dynamic>) {
           message = data['message'] as String? ?? message;
           errors = data['errors'] as Map<String, dynamic>?;
+
+          // Check for nested auth error with invalid_credentials code
+          final errorData = data['error'] as Map<String, dynamic>?;
+          if (errorData != null) {
+            final details = errorData['details'] as Map<String, dynamic>?;
+            if (details != null) {
+              final isAuthError = details['__isAuthError'] as bool? ?? false;
+              final code = details['code'] as String?;
+              if (isAuthError && code == 'invalid_credentials') {
+                throw const InvalidCredentialsException(
+                  'Invalid email or password',
+                );
+              }
+            }
+          }
         }
 
         if (statusCode >= 500) {

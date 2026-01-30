@@ -100,7 +100,7 @@ class AuthService {
   }) async {
     _logger.info('[AuthService] Updating password for: $email');
 
-    await _apiClient.post(
+    await _apiClient.patch(
       path: '/auth/update-password',
       data: {
         'email': email,

@@ -30,3 +30,13 @@ sealed class ApiException with _$ApiException implements Exception {
     Object? error,
   }) = UnknownException;
 }
+
+/// Invalid credentials error - separate from sealed union
+/// Catch explicitly where needed (e.g., login), other places can ignore it
+class InvalidCredentialsException implements Exception {
+  const InvalidCredentialsException(this.message);
+  final String message;
+
+  @override
+  String toString() => 'InvalidCredentialsException: $message';
+}

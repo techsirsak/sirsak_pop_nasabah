@@ -111,6 +111,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailInvalid => 'Invalid email format';
 
   @override
+  String get errorInvalidCredentials =>
+      'Invalid email or password. Please try again.';
+
+  @override
   String get emailLabel => 'Email';
 
   @override
@@ -118,6 +122,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error => 'Error';
+
+  @override
+  String get errorLoginFailed => 'Login failed. Please try again.';
+
+  @override
+  String get errorNetworkConnection =>
+      'Network error. Please check your connection.';
+
+  @override
+  String get errorServerError => 'Server error. Please try again later.';
 
   @override
   String get forgotPassword => 'Forgot Password?';

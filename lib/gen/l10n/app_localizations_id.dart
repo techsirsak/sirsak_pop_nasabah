@@ -111,6 +111,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get emailInvalid => 'Format email tidak valid';
 
   @override
+  String get errorInvalidCredentials =>
+      'Email atau kata sandi salah. Silakan coba lagi.';
+
+  @override
   String get emailLabel => 'Email';
 
   @override
@@ -118,6 +122,16 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get error => 'Kesalahan';
+
+  @override
+  String get errorLoginFailed => 'Login gagal. Silakan coba lagi.';
+
+  @override
+  String get errorNetworkConnection =>
+      'Kesalahan jaringan. Silakan periksa koneksi Anda.';
+
+  @override
+  String get errorServerError => 'Kesalahan server. Silakan coba lagi nanti.';
 
   @override
   String get forgotPassword => 'Lupa Kata Sandi?';

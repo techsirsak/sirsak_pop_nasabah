@@ -112,6 +112,16 @@ class LoginViewModel extends _$LoginViewModel {
       } else {
         ref.read(routerProvider).go(SAppRoutePath.tutorial);
       }
+    } on InvalidCredentialsException catch (e) {
+      ref
+          .read(loggerServiceProvider)
+          .warning('[LoginViewModel] Invalid credentials: $e');
+
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: 'errorInvalidCredentials',
+      );
+      ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
     } on ApiException catch (e) {
       ref
           .read(loggerServiceProvider)
@@ -120,13 +130,13 @@ class LoginViewModel extends _$LoginViewModel {
       state = state.copyWith(
         isLoading: false,
         errorMessage: e.when(
-          network: (message, _) => message,
-          server: (message, _) => 'Server error. Please try again later.',
-          client: (message, statusCode, errors) {
+          network: (_, _) => 'errorNetworkConnection',
+          server: (_, _) => 'errorServerError',
+          client: (_, _, errors) {
             _handleServerValidationErrors(errors);
-            return message.isNotEmpty ? message : 'Login failed.';
+            return 'errorLoginFailed';
           },
-          unknown: (message, _) => 'Login failed. Please try again.',
+          unknown: (_, _) => 'errorLoginFailed',
         ),
       );
       ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
@@ -136,7 +146,7 @@ class LoginViewModel extends _$LoginViewModel {
           .error('[LoginViewModel] Unexpected error', e, stackTrace);
       state = state.copyWith(
         isLoading: false,
-        errorMessage: 'Login failed. Please try again.',
+        errorMessage: 'errorLoginFailed',
       );
       ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
     }

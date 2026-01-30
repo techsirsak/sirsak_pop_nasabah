@@ -87,9 +87,7 @@ class ChangePasswordViewModel extends _$ChangePasswordViewModel {
             password: state.password,
           );
 
-      ref.read(toastServiceProvider).success(
-            title: 'Password changed successfully',
-          );
+      ref.read(toastServiceProvider).success(title: 'Password changed successfully');
       ref.read(routerProvider).pop();
     } on ApiException catch (e) {
       ref
@@ -101,10 +99,9 @@ class ChangePasswordViewModel extends _$ChangePasswordViewModel {
         errorMessage: e.when(
           network: (message, _) => message,
           server: (message, _) => 'Server error. Please try again later.',
-          client: (message, statusCode, errors) =>
+          client: (message, _, __) =>
               message.isNotEmpty ? message : 'Failed to change password.',
-          unknown: (message, _) =>
-              'Failed to change password. Please try again.',
+          unknown: (message, _) => 'Failed to change password. Please try again.',
         ),
       );
     } catch (e, stackTrace) {
