@@ -14,6 +14,7 @@ abstract class ProfileState with _$ProfileState {
     @Default([]) List<ProfileBadge> badges,
     @Default(false) bool isLoading,
     @Default(false) bool isLoggingOut,
+    @Default(false) bool isDeletingAccount,
     String? errorMessage,
   }) = _ProfileState;
 }

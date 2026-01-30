@@ -1,11 +1,20 @@
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
+import 'package:sirsak_pop_nasabah/features/profile/widgets/delete_account_confirmation_dialog.dart';
 import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
+import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/collection_points_cache_provider.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
+import 'package:sirsak_pop_nasabah/services/dialog_service.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
+import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/services/toast_service.dart';
+import 'package:sirsak_pop_nasabah/services/url_launcher_service.dart';
+import 'package:sirsak_pop_nasabah/services/user_service.dart';
 
 part 'profile_viewmodel.g.dart';
 
@@ -31,15 +40,92 @@ class ProfileViewModel extends _$ProfileViewModel {
 
   void navigateToFaq() {}
 
-  void openWhatsApp() {}
+  void openWhatsApp() {
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    unawaited(urlLauncher.launchWhatsApp('+628 777 0808 578'));
+  }
 
-  void openEmail() {}
+  void openEmail() {
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    unawaited(urlLauncher.launchEmail('hello@sirsak.co'));
+  }
 
-  void openInstagram() {}
+  void openInstagram() {
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    unawaited(urlLauncher.launchInstagram('sirsak.hub'));
+  }
 
-  void navigateToChangePassword() {}
+   /// Launch email client
+  Future<void> launchEmail(String email) async {
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    await urlLauncher.launchEmail(email);
+  }
 
-  void navigateToDeleteAccount() {}
+  /// Launch phone dialer
+  Future<void> launchPhone(String phone) async {
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    await urlLauncher.launchPhone(phone);
+  }
+
+  /// Launch Instagram app or web
+  Future<void> launchInstagram(String handle) async {
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    await urlLauncher.launchInstagram(handle);
+  }
+
+  void navigateToChangePassword() {
+    unawaited(ref.read(routerProvider).push(SAppRoutePath.changePassword));
+  }
+
+  Future<void> navigateToDeleteAccount() async {
+    final confirmed = await ref
+        .read(dialogServiceProvider)
+        .showCustomDialog<bool>(
+          child: const DeleteAccountConfirmationDialog(),
+          barrierDismissible: false,
+        );
+
+    if (confirmed ?? false) {
+      await deleteAccount();
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    state = state.copyWith(isDeletingAccount: true, errorMessage: null);
+
+    try {
+      await ref.read(userServiceProvider).requestDeleteUser();
+      ref
+          .read(toastServiceProvider)
+          .success(title: 'Account deletion requested');
+
+      // Reuse logout cleanup logic
+      await ref.read(localStorageServiceProvider).clearAllTokens();
+      ref.read(currentUserProvider.notifier).clearUser();
+      await ref.read(collectionPointsCacheProvider.notifier).clearCache();
+      ref.read(routerProvider).go(SAppRoutePath.landingPage);
+    } on ApiException catch (e) {
+      state = state.copyWith(
+        isDeletingAccount: false,
+        errorMessage: e.when(
+          network: (message, _) => message,
+          server: (message, _) => 'Server error. Please try again.',
+          client: (message, _, _) => message,
+          unknown: (message, _) => 'Something went wrong. Please try again.',
+        ),
+      );
+      ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
+    } catch (e, stackTrace) {
+      ref
+          .read(loggerServiceProvider)
+          .error('[ProfileViewModel] Delete account error', e, stackTrace);
+      state = state.copyWith(
+        isDeletingAccount: false,
+        errorMessage: 'Something went wrong. Please try again.',
+      );
+      ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
+    }
+  }
 
   Future<void> logout() async {
     state = state.copyWith(isLoggingOut: true, errorMessage: null);

@@ -176,6 +176,24 @@ class UrlLauncherService {
     _launchUri(instagramUri, mode: LaunchMode.externalApplication);
   }
 
+  /// Launch WhatsApp with the specified [phone] number
+  ///
+  /// Opens WhatsApp app with a chat to the specified phone number.
+  /// Phone number should include country code (e.g., '+628123456789').
+  ///
+  /// Example:
+  /// ```dart
+  /// await urlLauncher.launchWhatsApp('+628123456789');
+  /// ```
+  ///
+  /// Throws an exception if WhatsApp cannot be launched.
+  Future<void> launchWhatsApp(String phone) async {
+    // Remove spaces and special characters, keep + and digits
+    final cleanPhone = phone.replaceAll(RegExp(r'[^\d+]'), '');
+    final whatsappUri = Uri.parse('https://wa.me/$cleanPhone');
+    _launchUri(whatsappUri, mode: LaunchMode.externalApplication);
+  }
+
   /// Launch maps app with directions to the collection point
   Future<void> launchMap({
     required double lat,

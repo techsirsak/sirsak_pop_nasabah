@@ -2,7 +2,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/models/auth/auth_token_response.dart';
 import 'package:sirsak_pop_nasabah/models/auth/login_request.dart';
 import 'package:sirsak_pop_nasabah/models/auth/register_request.dart';
-import 'package:sirsak_pop_nasabah/models/auth/register_response.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/api/dio_client.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
@@ -26,7 +25,7 @@ class AuthService {
   /// Register a new nasabah user
   ///
   /// Throws [ApiException] on failure
-  Future<RegisterResponse> register({
+  Future<void> register({
     required String email,
     required String name,
     required String password,
@@ -39,14 +38,13 @@ class AuthService {
       password: password,
     );
 
-    final response = await _apiClient.post(
+    await _apiClient.post(
       path: '/auth/register/nasabah',
       data: request.toJson(),
-      fromJson: RegisterResponse.fromJson,
+      fromJson: (json) {},
     );
 
     _logger.info('[AuthService] Registration successful for: $email');
-    return response;
   }
 
   /// Login a nasabah user
@@ -91,5 +89,26 @@ class AuthService {
 
     _logger.info('[AuthService] Token refresh successful');
     return response;
+  }
+
+  /// Update user password
+  ///
+  /// Throws [ApiException] on failure
+  Future<void> updatePassword({
+    required String email,
+    required String password,
+  }) async {
+    _logger.info('[AuthService] Updating password for: $email');
+
+    await _apiClient.post(
+      path: '/auth/update-password',
+      data: {
+        'email': email,
+        'password': password,
+      },
+      fromJson: (json) {},
+    );
+
+    _logger.info('[AuthService] Password updated successfully for: $email');
   }
 }

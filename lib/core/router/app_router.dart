@@ -9,6 +9,7 @@ import 'package:sirsak_pop_nasabah/features/auth/verify_email/verify_email_view.
 import 'package:sirsak_pop_nasabah/features/drop_point/detail/drop_point_detail_view.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_view.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_view.dart';
+import 'package:sirsak_pop_nasabah/features/profile/change_password/change_password_view.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_view.dart';
 import 'package:sirsak_pop_nasabah/features/tutorial/tutorial_view.dart';
 import 'package:sirsak_pop_nasabah/features/widget_showcase/widget_showcase_view.dart';
@@ -93,6 +94,13 @@ GoRouter router(Ref ref) {
             child: DropPointDetailView(collectionPoint: collectionPoint),
           );
         },
+      ),
+      GoRoute(
+        path: SAppRoutePath.changePassword,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const ChangePasswordView(),
+        ),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

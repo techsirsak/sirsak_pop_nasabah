@@ -19,4 +19,7 @@ class SAppRoutePath {
   // Drop point feature routes
   static const dropPoint = '/drop-point';
   static const dropPointDetail = '/drop-point-detail';
+
+  // Profile feature routes
+  static const changePassword = '/change-password';
 }

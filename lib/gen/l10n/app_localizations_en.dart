@@ -15,6 +15,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get changePasswordButton => 'Change Password';
+
+  @override
+  String get changePasswordConfirmPassword => 'Confirm New Password';
+
+  @override
+  String get changePasswordNewPassword => 'New Password';
+
+  @override
+  String get changePasswordSuccess => 'Password changed successfully';
+
+  @override
+  String get changePasswordTitle => 'Change Password';
+
+  @override
   String get dropPointBankSampah => 'Bank Sampah';
 
   @override
@@ -69,6 +84,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dropPointYourLocation => 'Lokasimu';
+
+  @override
+  String get deleteAccountConfirmButton => 'Delete Account';
+
+  @override
+  String get deleteAccountConfirmationMessage =>
+      'Are you sure you want to delete your account? This action cannot be undone.';
+
+  @override
+  String get deleteAccountConfirmationTitle => 'Delete Account?';
+
+  @override
+  String get deleteAccountSuccess => 'Account deletion requested successfully';
 
   @override
   String get continueWithGoogle => 'Continue with Google';

@@ -15,6 +15,21 @@ class AppLocalizationsId extends AppLocalizations {
   String get cancel => 'Batal';
 
   @override
+  String get changePasswordButton => 'Ubah Kata Sandi';
+
+  @override
+  String get changePasswordConfirmPassword => 'Konfirmasi Kata Sandi Baru';
+
+  @override
+  String get changePasswordNewPassword => 'Kata Sandi Baru';
+
+  @override
+  String get changePasswordSuccess => 'Kata sandi berhasil diubah';
+
+  @override
+  String get changePasswordTitle => 'Ubah Kata Sandi';
+
+  @override
   String get dropPointBankSampah => 'Bank Sampah';
 
   @override
@@ -69,6 +84,19 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get dropPointYourLocation => 'Lokasimu';
+
+  @override
+  String get deleteAccountConfirmButton => 'Hapus Akun';
+
+  @override
+  String get deleteAccountConfirmationMessage =>
+      'Apakah Anda yakin ingin menghapus akun? Tindakan ini tidak dapat dibatalkan.';
+
+  @override
+  String get deleteAccountConfirmationTitle => 'Hapus Akun?';
+
+  @override
+  String get deleteAccountSuccess => 'Permintaan penghapusan akun berhasil';
 
   @override
   String get continueWithGoogle => 'Lanjutkan dengan Google';

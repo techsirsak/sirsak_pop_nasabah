@@ -50,6 +50,20 @@ class UserService {
     );
   }
 
+  /// Fetch current user profile from /api/v2/users/me
+  ///
+  /// Throws [ApiException] on failure
+  Future<void> requestDeleteUser() async {
+    _logger.info('[UserService] Requesting delete current user');
+
+    await _apiClient.delete(
+      path: '/users/me',
+      fromJson: (json) {},
+    );
+
+    _logger.info('[UserService] User delete requested');
+  }
+
   /// Fetch user impact data from /nasabah/impact
   ///
   /// Throws [ApiException] on failure
