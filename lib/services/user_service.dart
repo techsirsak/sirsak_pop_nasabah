@@ -37,16 +37,24 @@ class UserService {
     return response;
   }
 
-  Future<void> updateUserProfile() async {
+  Future<void> updateUserProfile({
+    required String fullName,
+    required String email,
+    String? phoneNumber,
+  }) async {
     _logger.info('[UserService] Update User Profile');
 
-    final response = await _apiClient.patch(
+    await _apiClient.patch(
       path: '/nasabah/profile',
-      fromJson: UserModel.fromJson,
+      data: {
+        'name': fullName,
+        'no_hp': ?phoneNumber,
+      },
+      fromJson: (_) {},
     );
 
     _logger.info(
-      '[UserService] User profile updated successfully: ${response.email}',
+      '[UserService] User profile updated successfully: $email}',
     );
   }
 

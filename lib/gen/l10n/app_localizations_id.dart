@@ -30,6 +30,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get changePasswordTitle => 'Ubah Kata Sandi';
 
   @override
+  String get editProfileSaveButton => 'Simpan Perubahan';
+
+  @override
+  String get editProfileSaveSuccess => 'Profil berhasil diperbarui';
+
+  @override
+  String get editProfileTitle => 'Edit Profil';
+
+  @override
   String get dropPointBankSampah => 'Bank Sampah';
 
   @override

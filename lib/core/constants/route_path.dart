@@ -22,4 +22,5 @@ class SAppRoutePath {
 
   // Profile feature routes
   static const changePassword = '/change-password';
+  static const editProfile = '/edit-profile';
 }

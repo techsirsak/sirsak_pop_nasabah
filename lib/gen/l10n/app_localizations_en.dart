@@ -30,6 +30,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changePasswordTitle => 'Change Password';
 
   @override
+  String get editProfileSaveButton => 'Save Changes';
+
+  @override
+  String get editProfileSaveSuccess => 'Profile updated successfully';
+
+  @override
+  String get editProfileTitle => 'Edit Profile';
+
+  @override
   String get dropPointBankSampah => 'Bank Sampah';
 
   @override

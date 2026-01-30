@@ -140,6 +140,24 @@ abstract class AppLocalizations {
   /// **'Change Password'**
   String get changePasswordTitle;
 
+  /// No description provided for @editProfileSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get editProfileSaveButton;
+
+  /// No description provided for @editProfileSaveSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get editProfileSaveSuccess;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfileTitle;
+
   /// No description provided for @dropPointBankSampah.
   ///
   /// In en, this message translates to:

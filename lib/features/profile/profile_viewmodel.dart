@@ -36,7 +36,9 @@ class ProfileViewModel extends _$ProfileViewModel {
     );
   }
 
-  void navigateToEditProfile() {}
+  void navigateToEditProfile() {
+    unawaited(ref.read(routerProvider).push(SAppRoutePath.editProfile));
+  }
 
   void navigateToFaq() {}
 
