@@ -512,6 +512,12 @@ abstract class AppLocalizations {
   /// **'Get Started'**
   String get landingPageGetStartedButton;
 
+  /// No description provided for @landingPageRegisterWithQrButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Register with QR'**
+  String get landingPageRegisterWithQrButton;
+
   /// No description provided for @landingPageSignInButton.
   ///
   /// In en, this message translates to:
@@ -716,6 +722,30 @@ abstract class AppLocalizations {
   /// **'Sampah\nTerdaur Ulang'**
   String get profileWasteRecycled;
 
+  /// No description provided for @qrScanCameraPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera permission is required to scan QR codes'**
+  String get qrScanCameraPermission;
+
+  /// No description provided for @qrScanError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to scan QR code. Please try again.'**
+  String get qrScanError;
+
+  /// No description provided for @qrScanInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Point your camera at the QR code'**
+  String get qrScanInstruction;
+
+  /// No description provided for @qrScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR Code'**
+  String get qrScanTitle;
+
   /// No description provided for @passwordLabel.
   ///
   /// In en, this message translates to:
@@ -812,6 +842,18 @@ abstract class AppLocalizations {
   /// **'Phone Number'**
   String get signupPhoneNumber;
 
+  /// No description provided for @signupPrivacyPolicyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get signupPrivacyPolicyLink;
+
+  /// No description provided for @signupTermsAnd.
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get signupTermsAnd;
+
   /// No description provided for @signupTermsLink.
   ///
   /// In en, this message translates to:
@@ -827,7 +869,7 @@ abstract class AppLocalizations {
   /// No description provided for @signupTermsRequired.
   ///
   /// In en, this message translates to:
-  /// **'You must accept the terms and conditions'**
+  /// **'You must accept the terms and conditions and privacy policy'**
   String get signupTermsRequired;
 
   /// No description provided for @splashTitle.

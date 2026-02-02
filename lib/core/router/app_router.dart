@@ -11,6 +11,7 @@ import 'package:sirsak_pop_nasabah/features/home/home_view.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_view.dart';
 import 'package:sirsak_pop_nasabah/features/profile/change_password/change_password_view.dart';
 import 'package:sirsak_pop_nasabah/features/profile/edit_profile/edit_profile_view.dart';
+import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_view.dart';
 import 'package:sirsak_pop_nasabah/features/splash/splash_view.dart';
 import 'package:sirsak_pop_nasabah/features/tutorial/tutorial_view.dart';
 import 'package:sirsak_pop_nasabah/features/widget_showcase/widget_showcase_view.dart';
@@ -108,6 +109,13 @@ GoRouter router(Ref ref) {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const EditProfileView(),
+        ),
+      ),
+      GoRoute(
+        path: SAppRoutePath.qrScan,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const QrScanView(),
         ),
       ),
     ],

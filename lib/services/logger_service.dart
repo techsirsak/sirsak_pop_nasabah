@@ -70,8 +70,8 @@ class LoggerService {
       (scope) => scope.setUser(
         SentryUser(
           id: id,
-          email: email,
-          name: name,
+          email: kDebugMode ? email : null,
+          name: kDebugMode ? name : null,
           data: data,
         ),
       ),

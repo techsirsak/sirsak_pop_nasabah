@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/core/constants/app_constants.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 import 'package:sirsak_pop_nasabah/services/toast_service.dart';
@@ -213,6 +214,16 @@ class UrlLauncherService {
       );
       _launchUri(appleMapsUrl, mode: LaunchMode.externalApplication);
     }
+  }
+
+  /// Launch terms and conditions
+  void launchTermsAndConditions() {
+    unawaited(launchGenericUrl(termAndConditionUrl));
+  }
+
+  /// Launch privacy policy
+  void launchPrivacyPolicy() {
+    unawaited(launchGenericUrl(privacyPolicyUrl));
   }
 
   /// Launch a generic URL

@@ -238,6 +238,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get landingPageGetStartedButton => 'Get Started';
 
   @override
+  String get landingPageRegisterWithQrButton => 'Register with QR';
+
+  @override
   String get landingPageSignInButton => 'Sign in';
 
   @override
@@ -342,6 +345,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileWasteRecycled => 'Sampah\nTerdaur Ulang';
 
   @override
+  String get qrScanCameraPermission =>
+      'Camera permission is required to scan QR codes';
+
+  @override
+  String get qrScanError => 'Failed to scan QR code. Please try again.';
+
+  @override
+  String get qrScanInstruction => 'Point your camera at the QR code';
+
+  @override
+  String get qrScanTitle => 'Scan QR Code';
+
+  @override
   String get passwordLabel => 'Password';
 
   @override
@@ -391,13 +407,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signupPhoneNumber => 'Phone Number';
 
   @override
+  String get signupPrivacyPolicyLink => 'Privacy Policy';
+
+  @override
+  String get signupTermsAnd => ' and ';
+
+  @override
   String get signupTermsLink => 'Terms and Conditions';
 
   @override
   String get signupTermsPrefix => 'I agree to the ';
 
   @override
-  String get signupTermsRequired => 'You must accept the terms and conditions';
+  String get signupTermsRequired =>
+      'You must accept the terms and conditions and privacy policy';
 
   @override
   String get splashTitle => 'Welcome';

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/auth/signup/signup_state.dart';
 import 'package:sirsak_pop_nasabah/features/auth/signup/signup_viewmodel.dart';
@@ -35,6 +36,12 @@ class SignUpView extends ConsumerWidget {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(PhosphorIcons.qrCode()),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -42,7 +49,7 @@ class SignUpView extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Gap(20),
+              const Gap(14),
 
               // Logo
               Center(
@@ -54,8 +61,7 @@ class SignUpView extends ConsumerWidget {
                   color: colorScheme.primary,
                 ),
               ),
-
-              const Gap(40),
+              const Gap(16),
 
               // Full Name Field
               _buildFieldLabel(context, context.l10n.signupFullName),
@@ -67,8 +73,7 @@ class SignUpView extends ConsumerWidget {
                 colorScheme: colorScheme,
                 errorText: _mapError(context, state.fullNameError),
               ),
-
-              const Gap(20),
+              const Gap(10),
 
               // Email Address Field
               _buildFieldLabel(context, context.l10n.emailAddress),
@@ -79,8 +84,7 @@ class SignUpView extends ConsumerWidget {
                 colorScheme: colorScheme,
                 errorText: _mapError(context, state.emailError),
               ),
-
-              const Gap(20),
+              const Gap(10),
 
               // Phone Number Field (Optional)
               _buildFieldLabel(
@@ -96,8 +100,7 @@ class SignUpView extends ConsumerWidget {
                 errorText: _mapError(context, state.phoneNumberError),
                 hintText: context.l10n.signupPhoneHint,
               ),
-
-              const Gap(20),
+              const Gap(10),
 
               // Password Field
               _buildFieldLabel(context, context.l10n.passwordLabel),
@@ -108,8 +111,7 @@ class SignUpView extends ConsumerWidget {
                 colorScheme: colorScheme,
                 errorText: _mapError(context, state.passwordError),
               ),
-
-              const Gap(20),
+              const Gap(10),
 
               // Confirm Password Field
               _buildFieldLabel(context, context.l10n.signupConfirmPassword),
@@ -120,17 +122,16 @@ class SignUpView extends ConsumerWidget {
                 colorScheme: colorScheme,
                 errorText: _mapError(context, state.confirmPasswordError),
               ),
-
-              const Gap(20),
+              const Gap(10),
 
               // Terms & Conditions Checkbox
-              // _buildTermsCheckbox(
-              //   context: context,
-              //   state: state,
-              //   viewModel: viewModel,
-              //   colorScheme: colorScheme,
-              //   textTheme: textTheme,
-              // ),
+              _buildTermsCheckbox(
+                context: context,
+                state: state,
+                viewModel: viewModel,
+                colorScheme: colorScheme,
+                textTheme: textTheme,
+              ),
               const Gap(24),
 
               // Sign Up Button
@@ -265,7 +266,6 @@ class SignUpView extends ConsumerWidget {
     );
   }
 
-  // ignore: unused_element
   Widget _buildTermsCheckbox({
     required BuildContext context,
     required SignupState state,
@@ -312,7 +312,17 @@ class SignUpView extends ConsumerWidget {
                           decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = viewModel.navigateToTermsAndConditions,
+                          ..onTap = viewModel.launchTermsAndConditions,
+                      ),
+                      TextSpan(text: context.l10n.signupTermsAnd),
+                      TextSpan(
+                        text: context.l10n.signupPrivacyPolicyLink,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = viewModel.launchPrivacyPolicy,
                       ),
                     ],
                   ),

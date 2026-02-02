@@ -23,4 +23,7 @@ class SAppRoutePath {
   // Profile feature routes
   static const changePassword = '/change-password';
   static const editProfile = '/edit-profile';
+
+  // QR Scan feature routes
+  static const qrScan = '/qr-scan';
 }

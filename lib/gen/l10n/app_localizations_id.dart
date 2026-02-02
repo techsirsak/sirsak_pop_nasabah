@@ -239,6 +239,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get landingPageGetStartedButton => 'Daftar';
 
   @override
+  String get landingPageRegisterWithQrButton => 'Daftar dengan QR';
+
+  @override
   String get landingPageSignInButton => 'Masuk';
 
   @override
@@ -343,6 +346,19 @@ class AppLocalizationsId extends AppLocalizations {
   String get profileWasteRecycled => 'Sampah\nTerdaur Ulang';
 
   @override
+  String get qrScanCameraPermission =>
+      'Izin kamera diperlukan untuk memindai kode QR';
+
+  @override
+  String get qrScanError => 'Gagal memindai kode QR. Silakan coba lagi.';
+
+  @override
+  String get qrScanInstruction => 'Arahkan kamera ke kode QR';
+
+  @override
+  String get qrScanTitle => 'Pindai Kode QR';
+
+  @override
   String get passwordLabel => 'Kata Sandi';
 
   @override
@@ -392,6 +408,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get signupPhoneNumber => 'Nomor Telepon';
 
   @override
+  String get signupPrivacyPolicyLink => 'Kebijakan Privasi';
+
+  @override
+  String get signupTermsAnd => ' dan ';
+
+  @override
   String get signupTermsLink => 'Syarat dan Ketentuan';
 
   @override
@@ -399,7 +421,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get signupTermsRequired =>
-      'Anda harus menyetujui syarat dan ketentuan';
+      'Anda harus menyetujui syarat dan ketentuan serta kebijakan privasi';
 
   @override
   String get splashTitle => 'Selamat Datang';

@@ -7,6 +7,7 @@ import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_viewmodel.
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/shared/helpers/rich_text_helper.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 
 class LandingPageView extends ConsumerWidget {
   const LandingPageView({super.key});
@@ -35,10 +36,10 @@ class LandingPageView extends ConsumerWidget {
                   tag: 'sirsak_logo',
                   child: Image.asset(
                     Assets.images.sirsakMainLogoWhite.path,
-                    height: 140,
+                    height: 120,
                   ),
                 ),
-                const Gap(16),
+                const Gap(12),
 
                 // Main Title
                 RichText(
@@ -59,97 +60,63 @@ class LandingPageView extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const Gap(32),
+                const Gap(24),
 
                 // Feature 1: Search
                 _FeatureItem(
                   icon: PhosphorIcons.mapPin(),
                   text: context.l10n.landingPageFeature1,
                 ),
-                const Gap(20),
+                const Gap(10),
 
                 // Feature 2: Drop
                 _FeatureItem(
                   icon: PhosphorIcons.trash(),
                   text: context.l10n.landingPageFeature2,
                 ),
-                const Gap(20),
+                const Gap(10),
 
                 // Feature 3: Get points
                 _FeatureItem(
                   icon: PhosphorIcons.gift(),
                   text: context.l10n.landingPageFeature3,
                 ),
-                const Gap(30),
+                const Gap(20),
 
                 // Photo Showcase - Three waste bins
                 Image.asset(
                   Assets.images.trashCans.path,
-                  // height: 200,
+                  height: 150,
                   width: double.infinity,
-                  fit: BoxFit.cover,
+                  fit: .cover,
+                  alignment: .topCenter,
                 ),
-                const Gap(40),
+                const Gap(30),
 
                 // Get Started Button
-                Container(
+                SizedBox(
                   width: size.width * 2 / 3,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: .1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ElevatedButton(
+                  child: SButton(
                     onPressed: () => ref
                         .read(landingPageViewModelProvider.notifier)
                         .navigateToGetStarted(),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: colorScheme.primaryContainer,
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: Text(
-                      context.l10n.landingPageGetStartedButton,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: colorScheme.primaryContainer,
-                        fontVariations: AppFonts.bold,
-                      ),
-                    ),
+                    text: context.l10n.landingPageGetStartedButton,
+                    backgroundColor: colorScheme.surface,
+                    foregroundColor: colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const Gap(16),
 
                 // Sign In Button (Outlined)
                 SizedBox(
                   width: size.width * 2 / 3,
-                  child: OutlinedButton(
+                  child: SButton(
                     onPressed: () => ref
                         .read(landingPageViewModelProvider.notifier)
                         .navigateToSignIn(),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.white, width: 2),
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      context.l10n.landingPageSignInButton,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontVariations: AppFonts.bold,
-                      ),
-                    ),
+                    variant: .outlined,
+                    text: context.l10n.landingPageSignInButton,
+                    foregroundColor: colorScheme.surface,
                   ),
                 ),
                 const Gap(30),

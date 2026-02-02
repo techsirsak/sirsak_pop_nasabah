@@ -7,6 +7,7 @@ import 'package:sirsak_pop_nasabah/features/auth/signup/signup_state.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/auth_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/services/url_launcher_service.dart';
 import 'package:sirsak_pop_nasabah/shared/helpers/validation_helper.dart';
 
 part 'signup_viewmodel.g.dart';
@@ -129,10 +130,10 @@ class SignupViewModel extends _$SignupViewModel {
   }
 
   bool _validateTerms() {
-    // if (!state.acceptedTerms) {
-    //   state = state.copyWith(termsError: 'termsRequired');
-    //   return false;
-    // }
+    if (!state.acceptedTerms) {
+      state = state.copyWith(termsError: 'termsRequired');
+      return false;
+    }
     return true;
   }
 
@@ -236,10 +237,16 @@ class SignupViewModel extends _$SignupViewModel {
     ref.read(routerProvider).go(SAppRoutePath.login);
   }
 
-  void navigateToTermsAndConditions() {
-    // TODO(devin): Navigate to Terms & Conditions page
-    // unawaited(
-    //   ref.read(routerProvider).push(SAppRoutePath.termsAndConditions),
-    // );
+  void launchTermsAndConditions() {
+    ref.read(urlLauncherServiceProvider).launchTermsAndConditions();
+  }
+
+  void launchPrivacyPolicy() {
+    ref.read(urlLauncherServiceProvider).launchPrivacyPolicy();
+  }
+
+  /// Navigate to QR scan page when "Register with QR" button is tapped
+  Future<void> navigateToQrScan() async {
+    await ref.read(routerProvider).push(SAppRoutePath.qrScan);
   }
 }
