@@ -63,5 +63,18 @@
 	<string>Sirsak needs access to your photo library to select a profile picture.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Sirsak needs permission to save photos to your photo library.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.sirsak.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.sirsak.app</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
