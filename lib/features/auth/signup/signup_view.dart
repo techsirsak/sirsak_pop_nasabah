@@ -38,9 +38,13 @@ class SignUpView extends ConsumerWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(PhosphorIcons.qrCode()),
+            onPressed: viewModel.navigateToQrScan,
+            icon: Icon(
+              PhosphorIcons.qrCode(),
+              size: 32,
+            ),
           ),
+          const Gap(12),
         ],
       ),
       body: SafeArea(

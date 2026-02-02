@@ -355,6 +355,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qrScanInstruction => 'Point your camera at the QR code';
 
   @override
+  String get qrScanOpenSettings => 'Open Settings';
+
+  @override
+  String get qrScanPermissionDeniedForever =>
+      'Camera permission was permanently denied. Please enable it in settings.';
+
+  @override
   String get qrScanTitle => 'Scan QR Code';
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -5,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_overlay.dart';
+import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 
@@ -26,107 +29,91 @@ class QrScanView extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(
+      appBar: AppBar(
+        backgroundColor: colorScheme.surface,
+        title: Text(
+          context.l10n.qrScanTitle,
+          style: textTheme.titleLarge?.copyWith(),
+        ),
+      ),
+      body: Column(
         children: [
-          // Camera preview
-          if (state.hasPermission)
-            MobileScanner(
-              controller: viewModel.controller,
-              onDetect: viewModel.onDetect,
-              errorBuilder: (context, error, child) {
-                return _buildErrorView(
-                  context,
-                  error.errorCode == MobileScannerErrorCode.permissionDenied
-                      ? context.l10n.qrScanCameraPermission
-                      : context.l10n.qrScanError,
-                  colorScheme,
-                  textTheme,
-                );
-              },
-            )
-          else
-            _buildErrorView(
-              context,
-              context.l10n.qrScanCameraPermission,
-              colorScheme,
-              textTheme,
-            ),
+          Expanded(
+            child: Stack(
+              children: [
+                // Camera preview based on permission status
+                if (state.cameraPermissionStatus ==
+                    CameraPermissionStatus.granted)
+                  MobileScanner(
+                    controller: viewModel.controller,
+                    onDetect: viewModel.onDetect,
+                    errorBuilder: (context, error, child) {
+                      // Ignore controllerAlreadyInitialized - not a real error
+                      if (error.errorCode ==
+                          MobileScannerErrorCode.controllerAlreadyInitialized) {
+                        return const SizedBox.shrink();
+                      }
 
-          // Scan overlay
-          const QrScanOverlay(),
-
-          // Top bar with close button and title
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  // Close button
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.5),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.close, color: Colors.white),
-                      onPressed: () => context.pop(),
-                    ),
+                      final isPermissionError = error.errorCode ==
+                          MobileScannerErrorCode.permissionDenied;
+                      return _QRErrorVIew(
+                        message: isPermissionError
+                            ? context.l10n.qrScanCameraPermission
+                            : context.l10n.qrScanError,
+                      );
+                    },
+                  )
+                else if (state.cameraPermissionStatus ==
+                    CameraPermissionStatus.unknown)
+                  const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  )
+                else if (state.cameraPermissionStatus ==
+                    CameraPermissionStatus.deniedForever)
+                  _QRErrorVIew(
+                    message: context.l10n.qrScanPermissionDeniedForever,
+                    showOpenSettings: true,
+                  )
+                else
+                  _QRErrorVIew(
+                    message: context.l10n.qrScanCameraPermission,
                   ),
-                  const Spacer(),
-                  // Title
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      context.l10n.qrScanTitle,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontVariations: AppFonts.semiBold,
+
+                // Scan overlay
+                const QrScanOverlay(),
+
+                // Instruction text below scan area
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: MediaQuery.of(context).size.height * 0.05,
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        context.l10n.qrScanInstruction,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: Colors.white,
+                          fontVariations: AppFonts.medium,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                  const Spacer(),
-                  // Placeholder for symmetry
-                  const SizedBox(width: 48),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-
-          // Instruction text below scan area
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: MediaQuery.of(context).size.height * 0.25,
-            child: Center(
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.5),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  context.l10n.qrScanInstruction,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: Colors.white,
-                    fontVariations: AppFonts.medium,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
-
           // Bottom controls
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
+          ColoredBox(
+            color: colorScheme.surface,
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(32),
@@ -138,17 +125,10 @@ class QrScanView extends ConsumerWidget {
                       icon: state.isTorchOn
                           ? Icons.flash_on_rounded
                           : Icons.flash_off_rounded,
-                      onPressed:
-                          state.isFrontCamera ? null : viewModel.toggleTorch,
+                      onPressed: state.isFrontCamera
+                          ? null
+                          : viewModel.toggleTorch,
                       isActive: state.isTorchOn,
-                      colorScheme: colorScheme,
-                    ),
-                    const Gap(48),
-                    // Camera switch
-                    _buildControlButton(
-                      icon: Icons.cameraswitch_rounded,
-                      onPressed: viewModel.switchCamera,
-                      isActive: false,
                       colorScheme: colorScheme,
                     ),
                   ],
@@ -171,7 +151,7 @@ class QrScanView extends ConsumerWidget {
       decoration: BoxDecoration(
         color: isActive
             ? colorScheme.primary
-            : Colors.white.withValues(alpha: 0.2),
+            : Colors.black.withValues(alpha: 0.8),
         shape: BoxShape.circle,
       ),
       child: IconButton(
@@ -185,13 +165,21 @@ class QrScanView extends ConsumerWidget {
       ),
     );
   }
+}
 
-  Widget _buildErrorView(
-    BuildContext context,
-    String message,
-    ColorScheme colorScheme,
-    TextTheme textTheme,
-  ) {
+class _QRErrorVIew extends ConsumerWidget {
+  const _QRErrorVIew({
+    required this.message,
+    this.showOpenSettings = false,
+  });
+
+  final String message;
+  final bool showOpenSettings;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -213,16 +201,40 @@ class QrScanView extends ConsumerWidget {
               textAlign: TextAlign.center,
             ),
             const Gap(24),
-            TextButton(
-              onPressed: () => context.pop(),
-              child: Text(
-                context.l10n.cancel,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: colorScheme.primary,
-                  fontVariations: AppFonts.semiBold,
+            if (showOpenSettings)
+              ElevatedButton(
+                onPressed: () {
+                  unawaited(
+                    ref
+                        .read(qrScanViewModelProvider.notifier)
+                        .openCameraSettings(),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorScheme.primary,
+                  foregroundColor: colorScheme.onPrimary,
+                ),
+                child: Text(
+                  context.l10n.qrScanOpenSettings,
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.onPrimary,
+                    fontVariations: AppFonts.semiBold,
+                  ),
+                ),
+              )
+            else
+              TextButton(
+                onPressed: () {
+                  ref.read(qrScanViewModelProvider.notifier).resetScan();
+                },
+                child: Text(
+                  context.l10n.cancel,
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.primary,
+                    fontVariations: AppFonts.semiBold,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),

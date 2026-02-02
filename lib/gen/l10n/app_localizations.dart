@@ -740,6 +740,18 @@ abstract class AppLocalizations {
   /// **'Point your camera at the QR code'**
   String get qrScanInstruction;
 
+  /// No description provided for @qrScanOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get qrScanOpenSettings;
+
+  /// No description provided for @qrScanPermissionDeniedForever.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera permission was permanently denied. Please enable it in settings.'**
+  String get qrScanPermissionDeniedForever;
+
   /// No description provided for @qrScanTitle.
   ///
   /// In en, this message translates to:

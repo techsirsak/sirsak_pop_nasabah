@@ -19,7 +19,7 @@ Future<void> bootstrap({
   required String baseApiUrl,
   required String sentryDsn,
 }) async {
-  WidgetsFlutterBinding.ensureInitialized();
+  SentryWidgetsFlutterBinding.ensureInitialized();
   // Create logger instance for bootstrap (before Riverpod is available)
   final logger = LoggerService();
 
@@ -43,6 +43,9 @@ Future<void> bootstrap({
           ..tracesSampleRate = 1.0
           ..maxBreadcrumbs = 100
           ..debug = kDebugMode;
+
+        options.replay.sessionSampleRate = 1.0;
+        options.replay.onErrorSampleRate = 1.0;
       },
       appRunner: () => _runApp(logger),
     );
@@ -92,14 +95,16 @@ class MainApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     final locale = ref.watch(currentLocaleProvider);
 
-    return ToastificationWrapper(
-      child: MaterialApp.router(
-        theme: AppTheme.lightTheme,
-        routerConfig: router,
-        debugShowCheckedModeBanner: false,
-        locale: locale,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
+    return SentryWidget(
+      child: ToastificationWrapper(
+        child: MaterialApp.router(
+          theme: AppTheme.lightTheme,
+          routerConfig: router,
+          debugShowCheckedModeBanner: false,
+          locale: locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+        ),
       ),
     );
   }

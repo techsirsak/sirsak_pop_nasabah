@@ -155,6 +155,8 @@
   "qrScanCameraPermission": "Camera permission is required to scan QR codes",
   "qrScanError": "Failed to scan QR code. Please try again.",
   "qrScanInstruction": "Point your camera at the QR code",
+  "qrScanOpenSettings": "Open Settings",
+  "qrScanPermissionDeniedForever": "Camera permission was permanently denied. Please enable it in settings.",
   "qrScanTitle": "Scan QR Code",
   "passwordLabel": "Password",
   "passwordMinLength": "Password must be at least 6 characters",

@@ -55,20 +55,22 @@ class _QrScanOverlayState extends State<QrScanOverlay>
     final overlayColor =
         widget.overlayColor ?? Colors.black.withValues(alpha: 0.6);
 
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return CustomPaint(
-          painter: _ScanOverlayPainter(
-            scanAreaSize: widget.scanAreaSize,
-            borderColor: borderColor.withValues(alpha: _animation.value),
-            borderWidth: widget.borderWidth,
-            cornerLength: widget.cornerLength,
-            overlayColor: overlayColor,
-          ),
-          size: Size.infinite,
-        );
-      },
+    return IgnorePointer(
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, child) {
+          return CustomPaint(
+            painter: _ScanOverlayPainter(
+              scanAreaSize: widget.scanAreaSize,
+              borderColor: borderColor.withValues(alpha: _animation.value),
+              borderWidth: widget.borderWidth,
+              cornerLength: widget.cornerLength,
+              overlayColor: overlayColor,
+            ),
+            size: Size.infinite,
+          );
+        },
+      ),
     );
   }
 }

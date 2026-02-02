@@ -350,10 +350,17 @@ class AppLocalizationsId extends AppLocalizations {
       'Izin kamera diperlukan untuk memindai kode QR';
 
   @override
-  String get qrScanError => 'Gagal memindai kode QR. Silakan coba lagi.';
+  String get qrScanError => 'Gagal memindai kode QR.\nSilakan coba lagi.';
 
   @override
   String get qrScanInstruction => 'Arahkan kamera ke kode QR';
+
+  @override
+  String get qrScanOpenSettings => 'Buka Pengaturan';
+
+  @override
+  String get qrScanPermissionDeniedForever =>
+      'Izin kamera ditolak secara permanen. Silakan aktifkan di pengaturan.';
 
   @override
   String get qrScanTitle => 'Pindai Kode QR';
