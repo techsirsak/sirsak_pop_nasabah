@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -116,12 +117,79 @@ class QrScanViewModel extends _$QrScanViewModel {
           .read(loggerServiceProvider)
           .info('[QrScanViewModel] QR Code detected: $rawValue');
 
+      final parsedData = parseQrData(rawValue);
+
       state = state.copyWith(
         scannedData: rawValue,
+        parsedQrData: parsedData,
         isScanning: false,
       );
 
       unawaited(_controller?.stop());
+    }
+  }
+
+  /// Parse QR data from JSON format
+  ///
+  /// Expected JSON format:
+  /// ```json
+  /// {
+  ///   "type": "register-bsu" | "register-nasabah",
+  ///   "data": { ... }
+  /// }
+  /// ```
+  ///
+  /// Returns [ParsedQrData] if valid, null otherwise
+  ParsedQrData? parseQrData(String qrData) {
+    try {
+      final json = jsonDecode(qrData) as Map<String, dynamic>;
+      final typeParam = json['type'] as String?;
+      final data = json['data'] as Map<String, dynamic>?;
+
+      if (typeParam == null || data == null) {
+        ref.read(loggerServiceProvider).warning(
+              '[QrScanViewModel] Missing type or data in QR: $qrData',
+            );
+        return null;
+      }
+
+      final qrType = QrType.fromString(typeParam);
+      switch (qrType) {
+        case QrType.registerBsu:
+          final bsuData = QrBsuData.fromJson(data);
+          ref.read(loggerServiceProvider).info(
+                '[QrScanViewModel] Parsed BSU QR - id: ${bsuData.id}, '
+                'name: ${bsuData.bsuName}',
+              );
+          return ParsedQrData(
+            type: QrType.registerBsu,
+            bsuData: bsuData,
+          );
+
+        case QrType.registerNasabah:
+          final nasabahData = QrNasabahData.fromJson(data);
+          ref.read(loggerServiceProvider).info(
+                '[QrScanViewModel] Parsed Nasabah QR - id: ${nasabahData.id}, '
+                'name: ${nasabahData.name}',
+              );
+          return ParsedQrData(
+            type: QrType.registerNasabah,
+            nasabahData: nasabahData,
+          );
+
+        case QrType.unknown:
+          ref.read(loggerServiceProvider).warning(
+                '[QrScanViewModel] Unknown QR type: $typeParam',
+              );
+          return const ParsedQrData(type: QrType.unknown);
+      }
+    } catch (e, stackTrace) {
+      ref.read(loggerServiceProvider).error(
+            '[QrScanViewModel] Failed to parse QR JSON: $qrData',
+            e,
+            stackTrace,
+          );
+      return null;
     }
   }
 
@@ -150,5 +218,21 @@ class QrScanViewModel extends _$QrScanViewModel {
       errorMessage: message,
       isScanning: false,
     );
+  }
+
+  /// Process deeplink data passed from router
+  ///
+  /// This is called when the app is opened via deeplink with QR parameters
+  void processDeeplink(String deeplinkData) {
+    final parsed = parseQrData(deeplinkData);
+    if (parsed != null) {
+      state = state.copyWith(
+        scannedData: deeplinkData,
+        parsedQrData: parsed,
+        isScanning: false,
+      );
+    } else {
+      setError('Invalid QR code format');
+    }
   }
 }

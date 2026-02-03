@@ -11,19 +11,45 @@ import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 
-class QrScanView extends ConsumerWidget {
-  const QrScanView({super.key});
+class QrScanView extends ConsumerStatefulWidget {
+  const QrScanView({super.key, this.deeplinkData});
+
+  /// Optional deeplink data passed from router when app is opened via deeplink
+  final String? deeplinkData;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<QrScanView> createState() => _QrScanViewState();
+}
+
+class _QrScanViewState extends ConsumerState<QrScanView> {
+  bool _deeplinkProcessed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Process deeplink after first frame if data is provided
+    if (widget.deeplinkData != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_deeplinkProcessed) {
+          _deeplinkProcessed = true;
+          ref
+              .read(qrScanViewModelProvider.notifier)
+              .processDeeplink(widget.deeplinkData!);
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(qrScanViewModelProvider);
     final viewModel = ref.read(qrScanViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     ref.listen(qrScanViewModelProvider, (previous, next) {
-      if (next.scannedData != null && previous?.scannedData == null) {
-        context.pop(next.scannedData);
+      if (next.parsedQrData != null && previous?.parsedQrData == null) {
+        context.pop(next.parsedQrData);
       }
     });
 

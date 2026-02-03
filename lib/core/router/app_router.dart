@@ -113,10 +113,18 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: SAppRoutePath.qrScan,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const QrScanView(),
-        ),
+        pageBuilder: (context, state) {
+          // Check if deeplink has query parameters (type & id)
+          final uri = state.uri;
+          final hasDeeplinkParams = uri.queryParameters.containsKey('type') &&
+              uri.queryParameters.containsKey('id');
+          final deeplinkData = hasDeeplinkParams ? uri.toString() : null;
+
+          return MaterialPage(
+            key: state.pageKey,
+            child: QrScanView(deeplinkData: deeplinkData),
+          );
+        },
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
