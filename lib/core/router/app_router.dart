@@ -114,12 +114,13 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: SAppRoutePath.qrScan,
         pageBuilder: (context, state) {
-          // Check if deeplink has query parameters (type & id)
+          // Check if deeplink has encrypted data parameter
+          // Format: ?data=<encrypted_payload> (URL-encoded)
+          // GoRouter automatically URL-decodes queryParameters values
           final uri = state.uri;
-          final hasDeeplinkParams =
-              uri.queryParameters.containsKey('type') &&
-              uri.queryParameters.containsKey('id');
-          final deeplinkData = hasDeeplinkParams ? uri.toString() : null;
+          final hasDeeplinkData = uri.queryParameters.containsKey('data');
+          final deeplinkData =
+              hasDeeplinkData ? uri.queryParameters['data'] : null;
 
           return MaterialPage(
             key: state.pageKey,

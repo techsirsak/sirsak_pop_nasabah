@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
@@ -8,7 +7,6 @@ import 'package:sirsak_pop_nasabah/features/auth/signup/signup_state.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/auth_service.dart';
-import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 import 'package:sirsak_pop_nasabah/services/url_launcher_service.dart';
 import 'package:sirsak_pop_nasabah/shared/helpers/validation_helper.dart';
