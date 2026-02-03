@@ -350,10 +350,17 @@ class AppLocalizationsId extends AppLocalizations {
       'Izin kamera diperlukan untuk memindai kode QR';
 
   @override
+  String get qrScanDecryptionFailed =>
+      'Tidak dapat membaca kode QR. Silakan coba lagi.';
+
+  @override
   String get qrScanError => 'Gagal memindai kode QR.\nSilakan coba lagi.';
 
   @override
   String get qrScanInstruction => 'Arahkan kamera ke kode QR';
+
+  @override
+  String get qrScanInvalidCode => 'Kode QR ini tidak valid atau telah diubah';
 
   @override
   String get qrScanOpenSettings => 'Buka Pengaturan';
@@ -416,6 +423,9 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get signupPrivacyPolicyLink => 'Kebijakan Privasi';
+
+  @override
+  String get signupRegisteringAt => 'Mendaftar di';
 
   @override
   String get signupTermsAnd => ' dan ';

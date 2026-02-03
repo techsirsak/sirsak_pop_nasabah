@@ -18,13 +18,19 @@ Future<void> bootstrap({
   required String env,
   required String baseApiUrl,
   required String sentryDsn,
+  required String qrEncryptionKey,
 }) async {
   SentryWidgetsFlutterBinding.ensureInitialized();
   // Create logger instance for bootstrap (before Riverpod is available)
   final logger = LoggerService();
 
   // Initialize environment config before ProviderScope
-  initEnvConfig(baseApiUrl: baseApiUrl, env: env, sentryDsn: sentryDsn);
+  initEnvConfig(
+    baseApiUrl: baseApiUrl,
+    env: env,
+    sentryDsn: sentryDsn,
+    qrEncryptionKey: qrEncryptionKey,
+  );
   logger.info('[Bootstrap] Env: $env, API URL: $baseApiUrl');
   await initializeDateFormatting('id_ID');
 

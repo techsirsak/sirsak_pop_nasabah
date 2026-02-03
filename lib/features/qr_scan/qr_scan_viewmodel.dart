@@ -5,6 +5,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
+import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
 part 'qr_scan_viewmodel.g.dart';
@@ -129,9 +130,11 @@ class QrScanViewModel extends _$QrScanViewModel {
     }
   }
 
-  /// Parse QR data from JSON format
+  /// Parse QR data from JSON format (with decryption support)
   ///
-  /// Expected JSON format:
+  /// Handles both encrypted (ENC:v1:...) and legacy plain JSON payloads.
+  ///
+  /// Expected JSON format after decryption:
   /// ```json
   /// {
   ///   "type": "register-bsu" | "register-nasabah",
@@ -141,15 +144,36 @@ class QrScanViewModel extends _$QrScanViewModel {
   ///
   /// Returns [ParsedQrData] if valid, null otherwise
   ParsedQrData? parseQrData(String qrData) {
+    final logger = ref.read(loggerServiceProvider);
+
+    // First, attempt decryption
+    final cryptoService = ref.read(qrCryptoServiceProvider);
+    final decryptResult = cryptoService.decrypt(qrData);
+
+    final String jsonData;
+
+    switch (decryptResult) {
+      case QrDecryptSuccess(:final plaintext):
+        jsonData = plaintext;
+      case QrDecryptLegacy(:final plaintext):
+        // Log for monitoring legacy QR usage
+        logger.info('[QrScanViewModel] Processing legacy unencrypted QR');
+        jsonData = plaintext;
+      case QrDecryptError(:final message):
+        logger.warning('[QrScanViewModel] QR decryption failed: $message');
+        return null;
+    }
+
+    // Continue with JSON parsing
     try {
-      final json = jsonDecode(qrData) as Map<String, dynamic>;
+      final json = jsonDecode(jsonData) as Map<String, dynamic>;
       final typeParam = json['type'] as String?;
       final data = json['data'] as Map<String, dynamic>?;
 
       if (typeParam == null || data == null) {
-        ref.read(loggerServiceProvider).warning(
-              '[QrScanViewModel] Missing type or data in QR: $qrData',
-            );
+        logger.warning(
+          '[QrScanViewModel] Missing type or data in QR: $jsonData',
+        );
         return null;
       }
 
@@ -157,10 +181,10 @@ class QrScanViewModel extends _$QrScanViewModel {
       switch (qrType) {
         case QrType.registerBsu:
           final bsuData = QrBsuData.fromJson(data);
-          ref.read(loggerServiceProvider).info(
-                '[QrScanViewModel] Parsed BSU QR - id: ${bsuData.id}, '
-                'name: ${bsuData.bsuName}',
-              );
+          logger.info(
+            '[QrScanViewModel] Parsed BSU QR - id: ${bsuData.id}, '
+            'name: ${bsuData.bsuName}',
+          );
           return ParsedQrData(
             type: QrType.registerBsu,
             bsuData: bsuData,
@@ -168,27 +192,27 @@ class QrScanViewModel extends _$QrScanViewModel {
 
         case QrType.registerNasabah:
           final nasabahData = QrNasabahData.fromJson(data);
-          ref.read(loggerServiceProvider).info(
-                '[QrScanViewModel] Parsed Nasabah QR - id: ${nasabahData.id}, '
-                'name: ${nasabahData.name}',
-              );
+          logger.info(
+            '[QrScanViewModel] Parsed Nasabah QR - id: ${nasabahData.id}, '
+            'name: ${nasabahData.name}',
+          );
           return ParsedQrData(
             type: QrType.registerNasabah,
             nasabahData: nasabahData,
           );
 
         case QrType.unknown:
-          ref.read(loggerServiceProvider).warning(
-                '[QrScanViewModel] Unknown QR type: $typeParam',
-              );
+          logger.warning('[QrScanViewModel] Unknown QR type: $typeParam');
           return const ParsedQrData(type: QrType.unknown);
       }
     } catch (e, stackTrace) {
-      ref.read(loggerServiceProvider).error(
-            '[QrScanViewModel] Failed to parse QR JSON: $qrData',
-            e,
-            stackTrace,
-          );
+      unawaited(
+        logger.error(
+          '[QrScanViewModel] Failed to parse QR JSON: $jsonData',
+          e,
+          stackTrace,
+        ),
+      );
       return null;
     }
   }

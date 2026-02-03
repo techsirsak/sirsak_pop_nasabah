@@ -728,6 +728,12 @@ abstract class AppLocalizations {
   /// **'Camera permission is required to scan QR codes'**
   String get qrScanCameraPermission;
 
+  /// No description provided for @qrScanDecryptionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to read QR code. Please try again.'**
+  String get qrScanDecryptionFailed;
+
   /// No description provided for @qrScanError.
   ///
   /// In en, this message translates to:
@@ -739,6 +745,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Point your camera at the QR code'**
   String get qrScanInstruction;
+
+  /// No description provided for @qrScanInvalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'This QR code is not valid or has been tampered with'**
+  String get qrScanInvalidCode;
 
   /// No description provided for @qrScanOpenSettings.
   ///
@@ -859,6 +871,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Privacy Policy'**
   String get signupPrivacyPolicyLink;
+
+  /// No description provided for @signupRegisteringAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Registering at'**
+  String get signupRegisteringAt;
 
   /// No description provided for @signupTermsAnd.
   ///

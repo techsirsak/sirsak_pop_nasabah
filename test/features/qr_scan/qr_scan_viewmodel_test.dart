@@ -7,10 +7,15 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_viewmodel.dart';
+import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
 // Mock classes
 class MockLoggerService extends Mock implements LoggerService {}
+
+// Test encryption key (32 bytes, base64 encoded)
+// Generated with: openssl rand -base64 32
+const testEncryptionKey = '9dmkUJx6G/2fZb/DqQmQ0MvG4UiYl6R6r/L4VRyvKks=';
 
 /// Sets up mock method channel for permission_handler
 void setupPermissionHandlerMock() {
@@ -157,6 +162,12 @@ void main() {
       container = ProviderContainer(
         overrides: [
           loggerServiceProvider.overrideWithValue(mockLoggerService),
+          qrCryptoServiceProvider.overrideWithValue(
+            QrCryptoService(
+              encryptionKey: testEncryptionKey,
+              logger: mockLoggerService,
+            ),
+          ),
         ],
       );
     });
@@ -224,12 +235,9 @@ void main() {
         final result = notifier.parseQrData(invalidJson);
 
         expect(result, isNull);
+        // Now the crypto service handles this first, logging a warning
         verify(
-          () => mockLoggerService.error(
-            any<String>(),
-            any<dynamic>(),
-            any<StackTrace?>(),
-          ),
+          () => mockLoggerService.warning(any<String>()),
         ).called(1);
       });
 
@@ -460,6 +468,92 @@ void main() {
         expect(state.scannedData, validBsuQrJson);
         expect(state.parsedQrData, isNotNull);
         expect(state.isScanning, false);
+      });
+    });
+
+    group('parseQrData with encryption', () {
+      test('should parse encrypted BSU QR data', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        final cryptoService = QrCryptoService(
+          encryptionKey: testEncryptionKey,
+          logger: mockLoggerService,
+        );
+
+        // Encrypt the valid BSU QR JSON
+        final encryptedPayload = cryptoService.encrypt(validBsuQrJson);
+
+        final result = notifier.parseQrData(encryptedPayload);
+
+        expect(result, isNotNull);
+        expect(result!.type, QrType.registerBsu);
+        expect(result.bsuData, isNotNull);
+        expect(result.bsuData!.id, 123);
+        expect(result.bsuData!.bsuName, 'Test BSU Name');
+      });
+
+      test('should parse encrypted Nasabah QR data', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        final cryptoService = QrCryptoService(
+          encryptionKey: testEncryptionKey,
+          logger: mockLoggerService,
+        );
+
+        // Encrypt the valid Nasabah QR JSON
+        final encryptedPayload = cryptoService.encrypt(validNasabahQrJsonFull);
+
+        final result = notifier.parseQrData(encryptedPayload);
+
+        expect(result, isNotNull);
+        expect(result!.type, QrType.registerNasabah);
+        expect(result.nasabahData, isNotNull);
+        expect(result.nasabahData!.id, 456);
+        expect(result.nasabahData!.name, 'John Doe');
+        expect(result.nasabahData!.email, 'john@example.com');
+      });
+
+      test('should handle both encrypted and legacy QR in same session', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        final cryptoService = QrCryptoService(
+          encryptionKey: testEncryptionKey,
+          logger: mockLoggerService,
+        );
+
+        // Test legacy (plain JSON)
+        final legacyResult = notifier.parseQrData(validBsuQrJson);
+        expect(legacyResult, isNotNull);
+        expect(legacyResult!.type, QrType.registerBsu);
+
+        // Test encrypted
+        final encryptedPayload = cryptoService.encrypt(validNasabahQrJsonFull);
+        final encryptedResult = notifier.parseQrData(encryptedPayload);
+        expect(encryptedResult, isNotNull);
+        expect(encryptedResult!.type, QrType.registerNasabah);
+      });
+
+      test('should return null for tampered encrypted payload', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        final cryptoService = QrCryptoService(
+          encryptionKey: testEncryptionKey,
+          logger: mockLoggerService,
+        );
+
+        // Create encrypted payload and tamper with it
+        final encryptedPayload = cryptoService.encrypt(validBsuQrJson);
+        final parts = encryptedPayload.split(':');
+        parts[3] = 'YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo='; // Tampered
+        final tamperedPayload = parts.join(':');
+
+        final result = notifier.parseQrData(tamperedPayload);
+
+        expect(result, isNull);
+      });
+
+      test('should return null for invalid encrypted format', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+
+        final result = notifier.parseQrData('ENC:v1:invalid');
+
+        expect(result, isNull);
       });
     });
   });

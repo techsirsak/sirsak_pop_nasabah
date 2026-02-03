@@ -349,10 +349,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Camera permission is required to scan QR codes';
 
   @override
+  String get qrScanDecryptionFailed =>
+      'Unable to read QR code. Please try again.';
+
+  @override
   String get qrScanError => 'Failed to scan QR code. Please try again.';
 
   @override
   String get qrScanInstruction => 'Point your camera at the QR code';
+
+  @override
+  String get qrScanInvalidCode =>
+      'This QR code is not valid or has been tampered with';
 
   @override
   String get qrScanOpenSettings => 'Open Settings';
@@ -415,6 +423,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signupPrivacyPolicyLink => 'Privacy Policy';
+
+  @override
+  String get signupRegisteringAt => 'Registering at';
 
   @override
   String get signupTermsAnd => ' and ';

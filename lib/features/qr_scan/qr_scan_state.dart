@@ -15,7 +15,8 @@ enum CameraPermissionStatus {
 enum QrType {
   registerBsu,
   registerNasabah,
-  unknown;
+  unknown
+  ;
 
   /// Converts a string value from QR JSON to [QrType]
   ///

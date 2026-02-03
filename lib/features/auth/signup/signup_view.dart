@@ -10,15 +10,65 @@ import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 
-class SignUpView extends ConsumerWidget {
+class SignUpView extends ConsumerStatefulWidget {
   const SignUpView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SignUpView> createState() => _SignUpViewState();
+}
+
+class _SignUpViewState extends ConsumerState<SignUpView> {
+  late final TextEditingController _fullNameController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _phoneController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+
+  @override
+  void initState() {
+    super.initState();
+    final state = ref.read(signupViewModelProvider);
+    _fullNameController = TextEditingController(text: state.fullName);
+    _emailController = TextEditingController(text: state.email);
+    _phoneController = TextEditingController(text: state.phoneNumber);
+    _passwordController = TextEditingController(text: state.password);
+    _confirmPasswordController = TextEditingController(
+      text: state.confirmPassword,
+    );
+  }
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(signupViewModelProvider);
     final viewModel = ref.read(signupViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+
+    // Sync controllers when state changes from QR scan
+    ref.listen(signupViewModelProvider, (previous, next) {
+      if (previous?.fullName != next.fullName &&
+          _fullNameController.text != next.fullName) {
+        _fullNameController.text = next.fullName;
+      }
+      if (previous?.email != next.email &&
+          _emailController.text != next.email) {
+        _emailController.text = next.email;
+      }
+      if (previous?.phoneNumber != next.phoneNumber &&
+          _phoneController.text != next.phoneNumber) {
+        _phoneController.text = next.phoneNumber;
+      }
+    });
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -67,10 +117,23 @@ class SignUpView extends ConsumerWidget {
               ),
               const Gap(16),
 
+              // BSU Name Banner (when scanned via QR)
+              if (state.bsuName != null) ...[
+                _buildBsuNameBanner(
+                  context: context,
+                  bsuName: state.bsuName!,
+                  viewModel: viewModel,
+                  colorScheme: colorScheme,
+                  textTheme: textTheme,
+                ),
+                const Gap(16),
+              ],
+
               // Full Name Field
               _buildFieldLabel(context, context.l10n.signupFullName),
               const Gap(8),
               _buildTextField(
+                controller: _fullNameController,
                 onChanged: viewModel.setFullName,
                 keyboardType: TextInputType.name,
                 textCapitalization: TextCapitalization.words,
@@ -83,6 +146,7 @@ class SignUpView extends ConsumerWidget {
               _buildFieldLabel(context, context.l10n.emailAddress),
               const Gap(8),
               _buildTextField(
+                controller: _emailController,
                 onChanged: viewModel.setEmail,
                 keyboardType: TextInputType.emailAddress,
                 colorScheme: colorScheme,
@@ -98,6 +162,7 @@ class SignUpView extends ConsumerWidget {
               ),
               const Gap(8),
               _buildTextField(
+                controller: _phoneController,
                 onChanged: viewModel.setPhoneNumber,
                 keyboardType: TextInputType.phone,
                 colorScheme: colorScheme,
@@ -110,6 +175,7 @@ class SignUpView extends ConsumerWidget {
               _buildFieldLabel(context, context.l10n.passwordLabel),
               const Gap(8),
               _buildTextField(
+                controller: _passwordController,
                 onChanged: viewModel.setPassword,
                 obscureText: true,
                 colorScheme: colorScheme,
@@ -121,6 +187,7 @@ class SignUpView extends ConsumerWidget {
               _buildFieldLabel(context, context.l10n.signupConfirmPassword),
               const Gap(8),
               _buildTextField(
+                controller: _confirmPasswordController,
                 onChanged: viewModel.setConfirmPassword,
                 obscureText: true,
                 colorScheme: colorScheme,
@@ -212,9 +279,72 @@ class SignUpView extends ConsumerWidget {
     );
   }
 
+  Widget _buildBsuNameBanner({
+    required BuildContext context,
+    required String bsuName,
+    required SignupViewModel viewModel,
+    required ColorScheme colorScheme,
+    required TextTheme textTheme,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: colorScheme.primary.withValues(alpha: 0.3),
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            PhosphorIcons.storefront(),
+            color: colorScheme.onPrimaryContainer,
+            size: 32,
+          ),
+          const Gap(12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.l10n.signupRegisteringAt,
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onPrimaryContainer.withValues(
+                      alpha: 0.8,
+                    ),
+                  ),
+                ),
+                const Gap(2),
+                Text(
+                  bsuName,
+                  style: textTheme.titleMedium?.copyWith(
+                    color: colorScheme.onPrimaryContainer,
+                    fontVariations: AppFonts.semiBold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Clear button
+          IconButton(
+            onPressed: viewModel.clearQrData,
+            icon: Icon(
+              PhosphorIcons.x(),
+              color: colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+              size: 20,
+            ),
+            tooltip: context.l10n.cancel,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildTextField({
     required ValueChanged<String> onChanged,
     required ColorScheme colorScheme,
+    TextEditingController? controller,
     TextInputType? keyboardType,
     TextCapitalization textCapitalization = TextCapitalization.none,
     bool obscureText = false,
@@ -222,6 +352,7 @@ class SignUpView extends ConsumerWidget {
     String? hintText,
   }) {
     return TextField(
+      controller: controller,
       onChanged: onChanged,
       keyboardType: keyboardType,
       textCapitalization: textCapitalization,

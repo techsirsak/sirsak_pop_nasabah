@@ -116,7 +116,8 @@ GoRouter router(Ref ref) {
         pageBuilder: (context, state) {
           // Check if deeplink has query parameters (type & id)
           final uri = state.uri;
-          final hasDeeplinkParams = uri.queryParameters.containsKey('type') &&
+          final hasDeeplinkParams =
+              uri.queryParameters.containsKey('type') &&
               uri.queryParameters.containsKey('id');
           final deeplinkData = hasDeeplinkParams ? uri.toString() : null;
 

@@ -80,7 +80,8 @@ class _QrScanViewState extends ConsumerState<QrScanView> {
                         return const SizedBox.shrink();
                       }
 
-                      final isPermissionError = error.errorCode ==
+                      final isPermissionError =
+                          error.errorCode ==
                           MobileScannerErrorCode.permissionDenied;
                       return _QRErrorVIew(
                         message: isPermissionError

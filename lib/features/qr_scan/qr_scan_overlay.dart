@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class QrScanOverlay extends StatefulWidget {
@@ -32,7 +34,7 @@ class _QrScanOverlayState extends State<QrScanOverlay>
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _animationController.repeat(reverse: true);
+    unawaited(_animationController.repeat(reverse: true));
 
     _animation = Tween<double>(begin: 0.8, end: 1).animate(
       CurvedAnimation(

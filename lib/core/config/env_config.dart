@@ -8,11 +8,13 @@ class EnvConfig {
     required this.baseApiUrl,
     required this.env,
     required this.sentryDsn,
+    required this.qrEncryptionKey,
   });
 
   final String baseApiUrl;
   final String env;
   final String sentryDsn;
+  final String qrEncryptionKey;
 }
 
 /// Global variable to hold env config (set during bootstrap)
@@ -24,11 +26,13 @@ void initEnvConfig({
   required String baseApiUrl,
   required String env,
   required String sentryDsn,
+  required String qrEncryptionKey,
 }) {
   _envConfig = EnvConfig(
     baseApiUrl: baseApiUrl,
     env: env,
     sentryDsn: sentryDsn,
+    qrEncryptionKey: qrEncryptionKey,
   );
 }
 

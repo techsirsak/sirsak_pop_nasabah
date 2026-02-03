@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 
 part 'signup_state.freezed.dart';
 
@@ -26,5 +27,18 @@ abstract class SignupState with _$SignupState {
     String? passwordError,
     String? confirmPasswordError,
     String? termsError,
+
+    // QR scan data fields
+    /// BSU ID from QR scan (for registerBsu type)
+    int? bsuId,
+
+    /// BSU name to display in UI (for registerBsu type)
+    String? bsuName,
+
+    /// Nasabah ID from QR scan (for registerNasabah type)
+    int? nasabahId,
+
+    /// QR type that was scanned
+    QrType? qrType,
   }) = _SignupState;
 }

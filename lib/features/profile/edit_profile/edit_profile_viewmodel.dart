@@ -94,16 +94,21 @@ class EditProfileViewModel extends _$EditProfileViewModel {
     state = state.copyWith(isLoading: true);
 
     try {
-      await ref.read(userServiceProvider).updateUserProfile(
+      await ref
+          .read(userServiceProvider)
+          .updateUserProfile(
             fullName: state.fullName.trim(),
             email: state.email.trim(),
-            phoneNumber:
-                state.phoneNumber.trim().isEmpty ? null : state.phoneNumber.trim(),
+            phoneNumber: state.phoneNumber.trim().isEmpty
+                ? null
+                : state.phoneNumber.trim(),
           );
 
       await ref.read(currentUserProvider.notifier).fetchCurrentUser();
 
-      ref.read(toastServiceProvider).success(title: 'Profile updated successfully');
+      ref
+          .read(toastServiceProvider)
+          .success(title: 'Profile updated successfully');
       ref.read(routerProvider).pop();
     } on ApiException catch (e) {
       ref
@@ -117,7 +122,8 @@ class EditProfileViewModel extends _$EditProfileViewModel {
           server: (message, _) => 'Server error. Please try again later.',
           client: (message, _, _) =>
               message.isNotEmpty ? message : 'Failed to update profile.',
-          unknown: (message, _) => 'Failed to update profile. Please try again.',
+          unknown: (message, _) =>
+              'Failed to update profile. Please try again.',
         ),
       );
     } catch (e, stackTrace) {

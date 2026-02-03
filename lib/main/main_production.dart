@@ -8,6 +8,7 @@ void main() {
       env: 'PROD',
       baseApiUrl: const String.fromEnvironment('baseApiUrl'),
       sentryDsn: const String.fromEnvironment('sentryDsn'),
+      qrEncryptionKey: const String.fromEnvironment('qrEncryptionKey'),
     ),
   );
 }
