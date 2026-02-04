@@ -9,6 +9,7 @@ abstract class RegisterRequest with _$RegisterRequest {
     required String email,
     required String name,
     required String password,
+    @JsonKey(name: 'no_hp') String? phoneNumber,
   }) = _RegisterRequest;
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>

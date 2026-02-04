@@ -24,22 +24,40 @@ class AuthService {
 
   /// Register a new nasabah user
   ///
+  /// If [bsuId] is provided, registers via `/auth/register/nasabah/:bsuId`
+  /// If [nasabahId] is provided, syncs via `/auth/register/nasabah/sync/:nasabahId`
+  /// Otherwise, registers via `/auth/register/nasabah`
+  ///
   /// Throws [ApiException] on failure
   Future<void> register({
     required String email,
     required String name,
     required String password,
+    String? phoneNumber,
+    String? bsuId,
+    String? nasabahId,
   }) async {
     _logger.info('[AuthService] Registering user: $email');
 
     final request = RegisterRequest(
       email: email,
       name: name,
+      phoneNumber: phoneNumber,
       password: password,
     );
 
+    // Determine endpoint based on provided IDs (bsuId takes priority)
+    final String path;
+    if (bsuId != null) {
+      path = '/auth/register/nasabah/$bsuId';
+    } else if (nasabahId != null) {
+      path = '/auth/register/nasabah/sync/$nasabahId';
+    } else {
+      path = '/auth/register/nasabah';
+    }
+
     await _apiClient.post(
-      path: '/auth/register/nasabah',
+      path: path,
       data: request.toJson(),
       fromJson: (json) {},
     );

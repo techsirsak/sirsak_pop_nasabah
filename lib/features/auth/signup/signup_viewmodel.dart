@@ -181,7 +181,10 @@ class SignupViewModel extends _$SignupViewModel {
       await authService.register(
         name: state.fullName.trim(),
         email: state.email.trim(),
+        phoneNumber: state.phoneNumber,
         password: state.password,
+        bsuId: state.bsuId?.toString(),
+        nasabahId: state.nasabahId?.toString(),
       );
 
       ref.read(routerProvider).go(SAppRoutePath.verifyEmail);
