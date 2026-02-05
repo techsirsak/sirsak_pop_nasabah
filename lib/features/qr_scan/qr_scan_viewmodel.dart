@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
@@ -108,10 +109,10 @@ class QrScanViewModel extends _$QrScanViewModel {
     await openAppSettings();
   }
 
+  bool _isShowingError = false;
+
   void onDetect(BarcodeCapture capture) {
-    print('MobileScanner ${capture.barcodes.first.rawValue}');
-    print('MobileScanner ${state.scannedData}');
-    if (state.scannedData != null) return;
+    if (state.scannedData != null || _isShowingError) return;
 
     final barcodes = capture.barcodes;
     if (barcodes.isEmpty) return;
@@ -126,14 +127,35 @@ class QrScanViewModel extends _$QrScanViewModel {
 
       final parsedData = parseQrData(rawValue);
 
-      state = state.copyWith(
-        scannedData: rawValue,
-        parsedQrData: parsedData,
-        isScanning: false,
-      );
+      if (parsedData != null) {
+        state = state.copyWith(
+          scannedData: rawValue,
+          parsedQrData: parsedData,
+          isScanning: false,
+        );
 
-      unawaited(controller.stop());
+        unawaited(controller.stop());
+        ref.read(routerProvider).pop(parsedData);
+      } else {
+        _handleInvalidQr();
+      }
     }
+  }
+
+  void _handleInvalidQr() {
+    _isShowingError = true;
+    unawaited(controller.stop());
+    state = state.copyWith(
+      isScanning: false,
+      errorMessage: 'qrScanError',
+    );
+  }
+
+  /// Called from View after error dialog is dismissed to resume scanning
+  void dismissErrorAndRescan() {
+    _isShowingError = false;
+    state = state.copyWith(errorMessage: null);
+    resetScan();
   }
 
   /// Extract QR data from deeplink URL if applicable
@@ -318,8 +340,9 @@ class QrScanViewModel extends _$QrScanViewModel {
         parsedQrData: parsed,
         isScanning: false,
       );
+      ref.read(routerProvider).pop(parsed);
     } else {
-      setError('Invalid QR code format');
+      _handleInvalidQr();
     }
   }
 }

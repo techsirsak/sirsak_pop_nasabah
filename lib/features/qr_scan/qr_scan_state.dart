@@ -38,7 +38,7 @@ enum QrType {
 @freezed
 abstract class QrBsuData with _$QrBsuData {
   const factory QrBsuData({
-    required int id,
+    required String id,
     @JsonKey(name: 'bsu_name') required String bsuName,
   }) = _QrBsuData;
 
@@ -50,7 +50,7 @@ abstract class QrBsuData with _$QrBsuData {
 @freezed
 abstract class QrNasabahData with _$QrNasabahData {
   const factory QrNasabahData({
-    required int id,
+    required String id,
     required String name,
     required String email,
     @JsonKey(name: 'no_hp') String? noHp,

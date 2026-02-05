@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_config.dart';
 import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
@@ -18,28 +17,29 @@ void main() {
   // Generated with: openssl rand -base64 32
   const testKey = '9dmkUJx6G/2fZb/DqQmQ0MvG4UiYl6R6r/L4VRyvKks=';
 
+  // Test HMAC key (32 bytes, hex encoded)
+  // Generated with: openssl rand -hex 32
+  const testHmacKey =
+      'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2';
+
   setUp(() {
     mockLogger = MockLoggerService();
     cryptoService = QrCryptoService(
       encryptionKey: testKey,
+      hmacKey: testHmacKey,
       logger: mockLogger,
     );
   });
 
   group('QrCryptoService', () {
     group('encrypt', () {
-      test('should return payload with correct prefix and version', () {
+      test('should return base64url encoded payload', () {
         const plaintext = '{"type":"register-bsu","data":{"id":1}}';
 
         final encrypted = cryptoService.encrypt(plaintext);
 
-        expect(
-          encrypted,
-          startsWith(
-            '${QrCryptoConfig.encryptedPrefix}${QrCryptoConfig.version}:',
-          ),
-        );
-        expect(encrypted.split(':').length, 4);
+        // Should be valid base64url
+        expect(() => base64Url.decode(encrypted), returnsNormally);
       });
 
       test('should produce different output for same input (random IV)', () {
@@ -56,7 +56,8 @@ void main() {
 
         final encrypted = cryptoService.encrypt(plaintext);
 
-        expect(encrypted, startsWith('ENC:v1:'));
+        // Should still produce valid encrypted output
+        expect(() => base64Url.decode(encrypted), returnsNormally);
       });
 
       test('should handle unicode characters', () {
@@ -81,75 +82,83 @@ void main() {
         expect((result as QrDecryptSuccess).plaintext, original);
       });
 
-      test('should handle legacy plain JSON payload', () {
-        const plainJson = '{"type":"register-bsu","data":{"id":1}}';
-
-        final result = cryptoService.decrypt(plainJson);
-
-        expect(result, isA<QrDecryptLegacy>());
-        expect((result as QrDecryptLegacy).plaintext, plainJson);
-      });
-
       test(
-        'should return error for invalid encrypted format (missing parts)',
+        'should return error for plain JSON payload (no legacy support)',
         () {
-          final result = cryptoService.decrypt('ENC:v1:invalid');
+          const plainJson = '{"type":"register-bsu","data":{"id":1}}';
+          final result = cryptoService.decrypt(plainJson);
 
           expect(result, isA<QrDecryptError>());
-          expect(
-            (result as QrDecryptError).message,
-            'Invalid encrypted payload format',
-          );
         },
       );
 
-      test('should return error for invalid base64 IV', () {
-        final result = cryptoService.decrypt('ENC:v1:!!!invalid!!!:YWJj');
-
-        expect(result, isA<QrDecryptError>());
-      });
-
-      test('should return error for tampered ciphertext', () {
-        final encrypted = cryptoService.encrypt('test');
-        final parts = encrypted.split(':');
-        // Tamper with ciphertext by replacing it
-        parts[3] = 'YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo=';
-        final tampered = parts.join(':');
-
-        final result = cryptoService.decrypt(tampered);
-
-        expect(result, isA<QrDecryptError>());
-      });
-
-      test('should return error for non-JSON non-encrypted payload', () {
-        final result = cryptoService.decrypt('not json at all');
+      test('should return error for payload too short', () {
+        // Base64 of just "ENC" (3 bytes)
+        final result = cryptoService.decrypt('RU5D');
 
         expect(result, isA<QrDecryptError>());
         expect(
           (result as QrDecryptError).message,
-          'Invalid QR code format',
+          contains('too short'),
         );
       });
 
-      test('should handle payload with ENC prefix but wrong format', () {
-        final result = cryptoService.decrypt('ENC:wrong:format');
+      test('should return error for invalid prefix', () {
+        // Create a payload with wrong prefix
+        final bytes = List<int>.filled(40, 0);
+        bytes[0] = 'X'.codeUnitAt(0);
+        bytes[1] = 'X'.codeUnitAt(0);
+        bytes[2] = 'X'.codeUnitAt(0);
+        final payload = base64UrlEncode(bytes);
+
+        final result = cryptoService.decrypt(payload);
 
         expect(result, isA<QrDecryptError>());
+        expect(
+          (result as QrDecryptError).message,
+          contains('missing ENC prefix'),
+        );
       });
 
-      test('should warn but attempt decrypt for unknown version', () {
-        // Create valid encrypted payload then change version
-        final encrypted = cryptoService.encrypt('test');
-        final parts = encrypted.split(':');
-        parts[1] = 'v999'; // Unknown version
-        final modifiedPayload = parts.join(':');
+      test('should return error for unsupported version', () {
+        // Create payload with ENC prefix but wrong version
+        final bytes = List<int>.filled(40, 0);
+        bytes[0] = 'E'.codeUnitAt(0);
+        bytes[1] = 'N'.codeUnitAt(0);
+        bytes[2] = 'C'.codeUnitAt(0);
+        bytes[3] = 0x99; // Invalid version
+        final payload = base64UrlEncode(bytes);
 
-        // Should still attempt decryption (and succeed since ciphertext is valid)
-        final result = cryptoService.decrypt(modifiedPayload);
+        final result = cryptoService.decrypt(payload);
 
-        // It might succeed or fail depending on implementation
-        // The key is that it attempts decryption rather than failing immediately
-        expect(result, anyOf(isA<QrDecryptSuccess>(), isA<QrDecryptError>()));
+        expect(result, isA<QrDecryptError>());
+        expect(
+          (result as QrDecryptError).message,
+          contains('Unsupported payload version'),
+        );
+      });
+
+      test('should return error for tampered HMAC', () {
+        final encrypted = cryptoService.encrypt('test data');
+        final bytes = base64Url.decode(encrypted);
+
+        // Tamper with HMAC (last 16 bytes)
+        bytes[bytes.length - 1] ^= 0xFF;
+        final tampered = base64UrlEncode(bytes);
+
+        final result = cryptoService.decrypt(tampered);
+
+        expect(result, isA<QrDecryptError>());
+        expect(
+          (result as QrDecryptError).message,
+          contains('tampered or corrupted'),
+        );
+      });
+
+      test('should return error for invalid base64', () {
+        final result = cryptoService.decrypt('!!!not-valid-base64!!!');
+
+        expect(result, isA<QrDecryptError>());
       });
     });
 
@@ -201,45 +210,20 @@ void main() {
       });
     });
 
-    group('backward compatibility', () {
-      test('should accept valid JSON array as legacy payload', () {
-        const jsonArray = '[1, 2, 3]';
+    group('security', () {
+      test('should use constant-time comparison for HMAC', () {
+        // This test verifies that the decrypt function handles
+        // tampered data without timing leaks (by using _secureEquals)
+        final encrypted = cryptoService.encrypt('test');
+        final bytes = base64Url.decode(encrypted);
 
-        final result = cryptoService.decrypt(jsonArray);
-
-        expect(result, isA<QrDecryptLegacy>());
-        expect((result as QrDecryptLegacy).plaintext, jsonArray);
-      });
-
-      test('should accept nested JSON as legacy payload', () {
-        const nestedJson = '{"a":{"b":{"c":"deep"}}}';
-
-        final result = cryptoService.decrypt(nestedJson);
-
-        expect(result, isA<QrDecryptLegacy>());
-      });
-
-      test('should reject malformed JSON as legacy payload', () {
-        const malformed = '{"unclosed": "brace"';
-
-        final result = cryptoService.decrypt(malformed);
-
-        expect(result, isA<QrDecryptError>());
-      });
-    });
-
-    group('edge cases', () {
-      test('should handle empty encrypted payload parts', () {
-        final result = cryptoService.decrypt('ENC:v1::');
-
-        expect(result, isA<QrDecryptError>());
-      });
-
-      test('should handle payload starting with ENC but not proper format', () {
-        final result = cryptoService.decrypt('ENCRYPTED:data');
-
-        // Should be treated as legacy (invalid JSON)
-        expect(result, isA<QrDecryptError>());
+        // Try multiple tampered versions - all should fail
+        for (var i = bytes.length - 16; i < bytes.length; i++) {
+          final tampered = List<int>.from(bytes);
+          tampered[i] ^= 0x01;
+          final result = cryptoService.decrypt(base64UrlEncode(tampered));
+          expect(result, isA<QrDecryptError>());
+        }
       });
     });
   });

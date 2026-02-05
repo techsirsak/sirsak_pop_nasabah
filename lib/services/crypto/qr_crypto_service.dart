@@ -127,7 +127,7 @@ class QrCryptoService {
 
       // Extract IV
       final ivBytes = bytes.sublist(offset, offset + _ivLength);
-      final iv = IV(ivBytes);
+      final iv = IV(Uint8List.fromList(ivBytes));
       offset += _ivLength;
 
       // Split payload and HMAC
@@ -148,18 +148,17 @@ class QrCryptoService {
 
       // Decrypt
       final plaintext = _encrypter.decrypt(
-        Encrypted(ciphertext),
+        Encrypted(Uint8List.fromList(ciphertext)),
         iv: iv,
       );
-
-      _logger.info('[QrCryptoService] Decrypted successfully');
+      _logger.info('[QrCryptoService] Decrypted successfully: $plaintext');
 
       return QrDecryptSuccess(plaintext);
     } on FormatException catch (e) {
       _logger.warning('[QrCryptoService] Invalid base64 format: $e');
       return const QrDecryptError('Invalid encrypted data format');
     } on Exception catch (e) {
-      _logger.warning('[QrCryptoService] Decryption failed: $e');
+      print('[QrCryptoService] Decryption failed: $e');
       return const QrDecryptError('Decryption failed - data may be corrupted');
     }
   }

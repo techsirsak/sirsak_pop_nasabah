@@ -3,8 +3,10 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_service.dart';
@@ -13,9 +15,16 @@ import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 // Mock classes
 class MockLoggerService extends Mock implements LoggerService {}
 
+class MockGoRouter extends Mock implements GoRouter {}
+
 // Test encryption key (32 bytes, base64 encoded)
 // Generated with: openssl rand -base64 32
 const testEncryptionKey = '9dmkUJx6G/2fZb/DqQmQ0MvG4UiYl6R6r/L4VRyvKks=';
+
+// Test HMAC key (32 bytes, hex encoded)
+// Generated with: openssl rand -hex 32
+const testHmacKey =
+    'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2';
 
 /// Sets up mock method channel for permission_handler
 void setupPermissionHandlerMock() {
@@ -42,7 +51,7 @@ const validBsuQrJson = '''
 {
   "type": "register-bsu",
   "data": {
-    "id": 123,
+    "id": "123",
     "bsu_name": "Test BSU Name"
   }
 }
@@ -52,7 +61,7 @@ const validNasabahQrJsonFull = '''
 {
   "type": "register-nasabah",
   "data": {
-    "id": 456,
+    "id": "456",
     "name": "John Doe",
     "email": "john@example.com",
     "no_hp": "081234567890"
@@ -64,7 +73,7 @@ const validNasabahQrJsonMinimal = '''
 {
   "type": "register-nasabah",
   "data": {
-    "id": 789,
+    "id": "789",
     "name": "Jane Doe",
     "email": "jane@example.com"
   }
@@ -105,7 +114,7 @@ const bsuMissingNameJson = '''
 {
   "type": "register-bsu",
   "data": {
-    "id": 123
+    "id": "123"
   }
 }
 ''';
@@ -114,7 +123,7 @@ const nasabahMissingFieldsJson = '''
 {
   "type": "register-nasabah",
   "data": {
-    "id": 123
+    "id": "123"
   }
 }
 ''';
@@ -144,9 +153,11 @@ void main() {
   group('QrScanViewModel Tests', () {
     late ProviderContainer container;
     late MockLoggerService mockLoggerService;
+    late MockGoRouter mockRouter;
 
     setUp(() {
       mockLoggerService = MockLoggerService();
+      mockRouter = MockGoRouter();
 
       // Stub logger methods
       when(() => mockLoggerService.info(any<String>())).thenReturn(null);
@@ -159,13 +170,18 @@ void main() {
         ),
       ).thenAnswer((_) async {});
 
+      // Stub router pop
+      when(() => mockRouter.pop(any<Object>())).thenReturn(null);
+
       container = ProviderContainer(
         overrides: [
           loggerServiceProvider.overrideWithValue(mockLoggerService),
+          routerProvider.overrideWithValue(mockRouter),
           qrCryptoServiceProvider.overrideWithValue(
             QrCryptoService(
               encryptionKey: testEncryptionKey,
               logger: mockLoggerService,
+              hmacKey: testHmacKey,
             ),
           ),
         ],
@@ -199,7 +215,7 @@ void main() {
         expect(result, isNotNull);
         expect(result!.type, QrType.registerBsu);
         expect(result.bsuData, isNotNull);
-        expect(result.bsuData!.id, 123);
+        expect(result.bsuData!.id, '123');
         expect(result.bsuData!.bsuName, 'Test BSU Name');
         expect(result.nasabahData, isNull);
       });
@@ -212,7 +228,7 @@ void main() {
         expect(result, isNotNull);
         expect(result!.type, QrType.registerNasabah);
         expect(result.nasabahData, isNotNull);
-        expect(result.nasabahData!.id, 456);
+        expect(result.nasabahData!.id, '456');
         expect(result.nasabahData!.name, 'John Doe');
         expect(result.nasabahData!.email, 'john@example.com');
         expect(result.nasabahData!.noHp, '081234567890');
@@ -362,6 +378,50 @@ void main() {
       });
     });
 
+    group('dismissErrorAndRescan', () {
+      test('should clear errorMessage and allow scanning again', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        // Trigger an invalid QR to set error state
+        const capture = BarcodeCapture(
+          barcodes: [Barcode(rawValue: invalidJson)],
+        );
+        notifier.onDetect(capture);
+
+        // Verify error state is set
+        var state = container.read(qrScanViewModelProvider);
+        expect(state.errorMessage, 'qrScanError');
+
+        // Dismiss error
+        notifier.dismissErrorAndRescan();
+
+        state = container.read(qrScanViewModelProvider);
+        expect(state.errorMessage, isNull);
+      });
+
+      test('should allow new detection after dismissing error', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        // Trigger invalid QR
+        const invalidCapture = BarcodeCapture(
+          barcodes: [Barcode(rawValue: invalidJson)],
+        );
+        notifier.onDetect(invalidCapture);
+
+        // Dismiss error
+        notifier.dismissErrorAndRescan();
+
+        // Now detect a valid QR
+        const validCapture = BarcodeCapture(
+          barcodes: [Barcode(rawValue: validBsuQrJson)],
+        );
+        notifier.onDetect(validCapture);
+
+        final state = container.read(qrScanViewModelProvider);
+        expect(state.parsedQrData, isNotNull);
+        expect(state.parsedQrData!.type, QrType.registerBsu);
+        verify(() => mockRouter.pop(state.parsedQrData)).called(1);
+      });
+    });
+
     group('processDeeplink', () {
       test('should process valid BSU deeplink data', () {
         final notifier = container.read(qrScanViewModelProvider.notifier);
@@ -390,7 +450,7 @@ void main() {
         notifier.processDeeplink(invalidJson);
 
         final state = container.read(qrScanViewModelProvider);
-        expect(state.errorMessage, 'Invalid QR code format');
+        expect(state.errorMessage, 'qrScanError');
         expect(state.isScanning, false);
       });
 
@@ -401,6 +461,32 @@ void main() {
 
         final state = container.read(qrScanViewModelProvider);
         expect(state.isScanning, false);
+      });
+
+      test('should pop with parsed data after valid deeplink', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+
+        notifier.processDeeplink(validBsuQrJson);
+
+        final state = container.read(qrScanViewModelProvider);
+        verify(() => mockRouter.pop(state.parsedQrData)).called(1);
+      });
+
+      test('should not pop when deeplink data is invalid', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+
+        notifier.processDeeplink(invalidJson);
+
+        verifyNever(() => mockRouter.pop(any<Object>()));
+      });
+
+      test('should set errorMessage when deeplink data is invalid', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+
+        notifier.processDeeplink(invalidJson);
+
+        final state = container.read(qrScanViewModelProvider);
+        expect(state.errorMessage, 'qrScanError');
       });
     });
 
@@ -469,6 +555,56 @@ void main() {
         expect(state.parsedQrData, isNotNull);
         expect(state.isScanning, false);
       });
+
+      test('should pop with parsed data after successful detection', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        const capture = BarcodeCapture(
+          barcodes: [Barcode(rawValue: validBsuQrJson)],
+        );
+
+        notifier.onDetect(capture);
+
+        final state = container.read(qrScanViewModelProvider);
+        verify(() => mockRouter.pop(state.parsedQrData)).called(1);
+      });
+
+      test('should not pop when barcode has no valid data', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        const capture = BarcodeCapture(
+          barcodes: [Barcode(rawValue: '')],
+        );
+
+        notifier.onDetect(capture);
+
+        verifyNever(() => mockRouter.pop(any<Object>()));
+      });
+
+      test('should set error and stop scanning when QR format is invalid', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        const capture = BarcodeCapture(
+          barcodes: [Barcode(rawValue: invalidJson)],
+        );
+
+        notifier.onDetect(capture);
+
+        verifyNever(() => mockRouter.pop(any<Object>()));
+        final state = container.read(qrScanViewModelProvider);
+        expect(state.scannedData, isNull);
+        expect(state.errorMessage, 'qrScanError');
+        expect(state.isScanning, false);
+      });
+
+      test('should not set errorMessage when QR format is valid', () {
+        final notifier = container.read(qrScanViewModelProvider.notifier);
+        const capture = BarcodeCapture(
+          barcodes: [Barcode(rawValue: validBsuQrJson)],
+        );
+
+        notifier.onDetect(capture);
+
+        final state = container.read(qrScanViewModelProvider);
+        expect(state.errorMessage, isNull);
+      });
     });
 
     group('parseQrData with encryption', () {
@@ -477,6 +613,7 @@ void main() {
         final cryptoService = QrCryptoService(
           encryptionKey: testEncryptionKey,
           logger: mockLoggerService,
+          hmacKey: testHmacKey,
         );
 
         // Encrypt the valid BSU QR JSON
@@ -487,7 +624,7 @@ void main() {
         expect(result, isNotNull);
         expect(result!.type, QrType.registerBsu);
         expect(result.bsuData, isNotNull);
-        expect(result.bsuData!.id, 123);
+        expect(result.bsuData!.id, '123');
         expect(result.bsuData!.bsuName, 'Test BSU Name');
       });
 
@@ -496,6 +633,7 @@ void main() {
         final cryptoService = QrCryptoService(
           encryptionKey: testEncryptionKey,
           logger: mockLoggerService,
+          hmacKey: testHmacKey,
         );
 
         // Encrypt the valid Nasabah QR JSON
@@ -506,7 +644,7 @@ void main() {
         expect(result, isNotNull);
         expect(result!.type, QrType.registerNasabah);
         expect(result.nasabahData, isNotNull);
-        expect(result.nasabahData!.id, 456);
+        expect(result.nasabahData!.id, '456');
         expect(result.nasabahData!.name, 'John Doe');
         expect(result.nasabahData!.email, 'john@example.com');
       });
@@ -516,6 +654,7 @@ void main() {
         final cryptoService = QrCryptoService(
           encryptionKey: testEncryptionKey,
           logger: mockLoggerService,
+          hmacKey: testHmacKey,
         );
 
         // Test legacy (plain JSON)
@@ -535,6 +674,7 @@ void main() {
         final cryptoService = QrCryptoService(
           encryptionKey: testEncryptionKey,
           logger: mockLoggerService,
+          hmacKey: testHmacKey,
         );
 
         // Create encrypted payload and tamper with it

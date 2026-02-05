@@ -140,6 +140,12 @@ abstract class AppLocalizations {
   /// **'Change Password'**
   String get changePasswordTitle;
 
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
   /// No description provided for @editProfileSaveButton.
   ///
   /// In en, this message translates to:
@@ -733,12 +739,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unable to read QR code. Please try again.'**
   String get qrScanDecryptionFailed;
-
-  /// No description provided for @qrScanError.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to scan QR code. Please try again.'**
-  String get qrScanError;
 
   /// No description provided for @qrScanInstruction.
   ///

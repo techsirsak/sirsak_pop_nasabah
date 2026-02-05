@@ -30,6 +30,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get changePasswordTitle => 'Ubah Kata Sandi';
 
   @override
+  String get close => 'Tutup';
+
+  @override
   String get editProfileSaveButton => 'Simpan Perubahan';
 
   @override
@@ -352,9 +355,6 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get qrScanDecryptionFailed =>
       'Tidak dapat membaca kode QR. Silakan coba lagi.';
-
-  @override
-  String get qrScanError => 'Gagal memindai kode QR.\nSilakan coba lagi.';
 
   @override
   String get qrScanInstruction => 'Arahkan kamera ke kode QR';

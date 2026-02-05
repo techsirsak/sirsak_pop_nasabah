@@ -183,8 +183,8 @@ class SignupViewModel extends _$SignupViewModel {
         email: state.email.trim(),
         phoneNumber: state.phoneNumber,
         password: state.password,
-        bsuId: state.bsuId?.toString(),
-        nasabahId: state.nasabahId?.toString(),
+        bsuId: state.bsuId,
+        nasabahId: state.nasabahId,
       );
 
       ref.read(routerProvider).go(SAppRoutePath.verifyEmail);
@@ -261,6 +261,8 @@ class SignupViewModel extends _$SignupViewModel {
         .push<ParsedQrData>(
           SAppRoutePath.qrScan,
         );
+
+    print('navigateToQrScan result: ${result?.toJson()}');
 
     if (result == null) {
       // User cancelled/back without scanning

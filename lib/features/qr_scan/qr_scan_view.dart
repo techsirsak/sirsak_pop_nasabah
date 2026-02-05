@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_overlay.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/app_dialog.dart';
 
 class QrScanView extends ConsumerStatefulWidget {
   const QrScanView({super.key, this.deeplinkData});
@@ -65,8 +66,17 @@ class _QrScanViewState extends ConsumerState<QrScanView>
     final textTheme = Theme.of(context).textTheme;
 
     ref.listen(qrScanViewModelProvider, (previous, next) {
-      if (next.parsedQrData != null && previous?.parsedQrData == null) {
-        context.pop(next.parsedQrData);
+      // Show error dialog when errorMessage is set
+      if (next.errorMessage != null && previous?.errorMessage == null) {
+        unawaited(
+          showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const _QrFailedDialog(),
+          ).then((_) {
+            ref.read(qrScanViewModelProvider.notifier).dismissErrorAndRescan();
+          }),
+        );
       }
 
       // Start scanner when permission becomes granted
@@ -79,8 +89,6 @@ class _QrScanViewState extends ConsumerState<QrScanView>
         });
       }
     });
-
-    print('MobileScanner state: ${state.toJson()}');
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -104,7 +112,6 @@ class _QrScanViewState extends ConsumerState<QrScanView>
                     controller: viewModel.controller,
                     onDetect: viewModel.onDetect,
                     errorBuilder: (context, error, child) {
-                      print(' MobileScanner error: $error');
                       // Ignore controllerAlreadyInitialized - not a real error
                       if (error.errorCode ==
                           MobileScannerErrorCode.controllerAlreadyInitialized) {
@@ -116,7 +123,7 @@ class _QrScanViewState extends ConsumerState<QrScanView>
                       return _QRErrorVIew(
                         message: isPermissionError
                             ? context.l10n.qrScanCameraPermission
-                            : context.l10n.qrScanError,
+                            : context.l10n.qrScanDecryptionFailed,
                       );
                     },
                   ),
@@ -182,9 +189,7 @@ class _QrScanViewState extends ConsumerState<QrScanView>
                       icon: state.isTorchOn
                           ? Icons.flash_on_rounded
                           : Icons.flash_off_rounded,
-                      onPressed: state.isFrontCamera
-                          ? null
-                          : viewModel.toggleTorch,
+                      onPressed: viewModel.toggleTorch,
                       isActive: state.isTorchOn,
                       colorScheme: colorScheme,
                     ),
@@ -219,6 +224,40 @@ class _QrScanViewState extends ConsumerState<QrScanView>
         ),
         onPressed: onPressed,
         padding: const EdgeInsets.all(16),
+      ),
+    );
+  }
+}
+
+class _QrFailedDialog extends StatelessWidget {
+  const _QrFailedDialog();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppDialog(
+      maxWidth: 400,
+      dialogTitle: context.l10n.qrScanTitle,
+      dialogBody: Column(
+        children: [
+          Icon(
+            PhosphorIcons.warning(),
+            size: 48,
+            color: Theme.of(context).colorScheme.error,
+          ),
+          const Gap(12),
+          Text(
+            context.l10n.qrScanDecryptionFailed,
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      dialogFooter: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(context.l10n.close),
+        ),
       ),
     );
   }
