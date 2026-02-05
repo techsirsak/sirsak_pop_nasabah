@@ -9,12 +9,14 @@ class EnvConfig {
     required this.env,
     required this.sentryDsn,
     required this.qrEncryptionKey,
+    required this.hmacKey,
   });
 
   final String baseApiUrl;
   final String env;
   final String sentryDsn;
   final String qrEncryptionKey;
+  final String hmacKey;
 }
 
 /// Global variable to hold env config (set during bootstrap)
@@ -27,12 +29,14 @@ void initEnvConfig({
   required String env,
   required String sentryDsn,
   required String qrEncryptionKey,
+  required String hmacKey,
 }) {
   _envConfig = EnvConfig(
     baseApiUrl: baseApiUrl,
     env: env,
     sentryDsn: sentryDsn,
     qrEncryptionKey: qrEncryptionKey,
+    hmacKey: hmacKey,
   );
 }
 

@@ -68,12 +68,16 @@ abstract class ParsedQrData with _$ParsedQrData {
     QrBsuData? bsuData,
     QrNasabahData? nasabahData,
   }) = _ParsedQrData;
+
+  factory ParsedQrData.fromJson(Map<String, dynamic> json) =>
+      _$ParsedQrDataFromJson(json);
 }
 
 @freezed
 abstract class QrScanState with _$QrScanState {
   const factory QrScanState({
     @Default(false) bool isScanning,
+    @Default(false) bool isScannerReady,
     @Default(false) bool isTorchOn,
     @Default(false) bool isFrontCamera,
     @Default(CameraPermissionStatus.unknown)
@@ -82,4 +86,7 @@ abstract class QrScanState with _$QrScanState {
     String? errorMessage,
     ParsedQrData? parsedQrData,
   }) = _QrScanState;
+
+  factory QrScanState.fromJson(Map<String, dynamic> json) =>
+      _$QrScanStateFromJson(json);
 }

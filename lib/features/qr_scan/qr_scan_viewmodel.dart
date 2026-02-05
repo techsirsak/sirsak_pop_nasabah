@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,17 +20,6 @@ class QrScanViewModel extends _$QrScanViewModel {
       autoStart: false,
     );
     return _controller!;
-  }
-
-  /// Start the scanner after permission is granted
-  Future<void> startScanner() async {
-    try {
-      await _controller?.start();
-    } catch (e, stackTrace) {
-      ref
-          .read(loggerServiceProvider)
-          .error('[QrScanViewModel] Failed to start scanner', e, stackTrace);
-    }
   }
 
   @override
@@ -51,10 +41,24 @@ class QrScanViewModel extends _$QrScanViewModel {
       return;
     }
 
-    final hasPermission = await _checkAndRequestCameraPermission();
-    if (hasPermission) {
-      state = state.copyWith(isScanning: true);
-      await startScanner();
+    await _checkAndRequestCameraPermission();
+    // Note: startScanner() is called from the View after MobileScanner widget
+    // is in the tree to avoid black screen issue
+  }
+
+  /// Start the scanner after permission is granted
+  Future<void> startScanner() async {
+    try {
+      await controller.start();
+      state = state.copyWith(isScannerReady: true, isScanning: true);
+    } catch (e, stackTrace) {
+      ref
+          .read(loggerServiceProvider)
+          .error('[QrScanViewModel] Failed to start scanner', e, stackTrace);
+      state = state.copyWith(
+        isScannerReady: false,
+        errorMessage: 'Failed to start camera',
+      );
     }
   }
 
@@ -105,6 +109,8 @@ class QrScanViewModel extends _$QrScanViewModel {
   }
 
   void onDetect(BarcodeCapture capture) {
+    print('MobileScanner ${capture.barcodes.first.rawValue}');
+    print('MobileScanner ${state.scannedData}');
     if (state.scannedData != null) return;
 
     final barcodes = capture.barcodes;
@@ -126,13 +132,50 @@ class QrScanViewModel extends _$QrScanViewModel {
         isScanning: false,
       );
 
-      unawaited(_controller?.stop());
+      unawaited(controller.stop());
     }
+  }
+
+  /// Extract QR data from deeplink URL if applicable
+  ///
+  /// If the input is a deeplink URL like `com.sirsak.app://qr-scan?data=...`,
+  /// extracts and URL-decodes the `data` query parameter.
+  /// Otherwise, returns the input unchanged.
+  String _extractQrDataFromDeeplink(String qrData) {
+    // Check if this looks like a deeplink URL
+    if (!qrData.contains('://') || !qrData.contains('?')) {
+      return qrData;
+    }
+
+    try {
+      // Parse as URI to extract query parameters
+      final uri = Uri.parse(qrData);
+      final dataParam = uri.queryParameters['data'];
+
+      if (dataParam != null && dataParam.isNotEmpty) {
+        ref
+            .read(loggerServiceProvider)
+            .info(
+              '[QrScanViewModel] Extracted data from deeplink URL',
+            );
+        return dataParam; // Uri.parse automatically URL-decodes query params
+      }
+    } catch (e) {
+      // If parsing fails, return original data
+      ref
+          .read(loggerServiceProvider)
+          .warning(
+            '[QrScanViewModel] Failed to parse as deeplink URL: $e',
+          );
+    }
+
+    return qrData;
   }
 
   /// Parse QR data from JSON format (with decryption support)
   ///
   /// Handles both encrypted (ENC:v1:...) and legacy plain JSON payloads.
+  /// Also handles deeplink URLs with encoded data in query parameters.
   ///
   /// Expected JSON format after decryption:
   /// ```json
@@ -146,18 +189,18 @@ class QrScanViewModel extends _$QrScanViewModel {
   ParsedQrData? parseQrData(String qrData) {
     final logger = ref.read(loggerServiceProvider);
 
+    // Extract data from deeplink URL if applicable
+    final extractedData = _extractQrDataFromDeeplink(qrData);
+    logger.info('[QrScanViewModel] extractedData: $extractedData');
+
     // First, attempt decryption
     final cryptoService = ref.read(qrCryptoServiceProvider);
-    final decryptResult = cryptoService.decrypt(qrData);
+    final decryptResult = cryptoService.decrypt(extractedData);
 
     final String jsonData;
 
     switch (decryptResult) {
       case QrDecryptSuccess(:final plaintext):
-        jsonData = plaintext;
-      case QrDecryptLegacy(:final plaintext):
-        // Log for monitoring legacy QR usage
-        logger.info('[QrScanViewModel] Processing legacy unencrypted QR');
         jsonData = plaintext;
       case QrDecryptError(:final message):
         logger.warning('[QrScanViewModel] QR decryption failed: $message');
@@ -219,7 +262,7 @@ class QrScanViewModel extends _$QrScanViewModel {
 
   Future<void> toggleTorch() async {
     try {
-      await _controller?.toggleTorch();
+      await controller.toggleTorch();
       state = state.copyWith(isTorchOn: !state.isTorchOn);
     } catch (e, stackTrace) {
       ref
@@ -231,10 +274,11 @@ class QrScanViewModel extends _$QrScanViewModel {
   void resetScan() {
     state = state.copyWith(
       scannedData: null,
-      isScanning: true,
+      isScanning: false,
+      isScannerReady: false,
       errorMessage: null,
     );
-    unawaited(_controller?.start());
+    unawaited(startScanner());
   }
 
   void setError(String message) {
@@ -242,6 +286,25 @@ class QrScanViewModel extends _$QrScanViewModel {
       errorMessage: message,
       isScanning: false,
     );
+  }
+
+  /// Handle app lifecycle changes to pause/resume scanner
+  void handleAppLifecycleChange(AppLifecycleState lifecycleState) {
+    // Don't handle if scanner not ready
+    if (!state.isScannerReady) return;
+
+    switch (lifecycleState) {
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.paused:
+        return;
+      case AppLifecycleState.resumed:
+        // Restart scanner when app is resumed
+        unawaited(controller.start());
+      case AppLifecycleState.inactive:
+        // Stop scanner when app goes inactive
+        unawaited(controller.stop());
+    }
   }
 
   /// Process deeplink data passed from router

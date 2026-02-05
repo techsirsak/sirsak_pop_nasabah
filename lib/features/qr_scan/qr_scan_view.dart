@@ -21,12 +21,23 @@ class QrScanView extends ConsumerStatefulWidget {
   ConsumerState<QrScanView> createState() => _QrScanViewState();
 }
 
-class _QrScanViewState extends ConsumerState<QrScanView> {
+class _QrScanViewState extends ConsumerState<QrScanView>
+    with WidgetsBindingObserver {
   bool _deeplinkProcessed = false;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState appState) {
+    ref
+        .read(qrScanViewModelProvider.notifier)
+        .handleAppLifecycleChange(
+          appState,
+        );
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // Process deeplink after first frame if data is provided
     if (widget.deeplinkData != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -41,6 +52,12 @@ class _QrScanViewState extends ConsumerState<QrScanView> {
   }
 
   @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = ref.watch(qrScanViewModelProvider);
     final viewModel = ref.read(qrScanViewModelProvider.notifier);
@@ -51,7 +68,19 @@ class _QrScanViewState extends ConsumerState<QrScanView> {
       if (next.parsedQrData != null && previous?.parsedQrData == null) {
         context.pop(next.parsedQrData);
       }
+
+      // Start scanner when permission becomes granted
+      // Use postFrameCallback to ensure MobileScanner widget is in the tree
+      if (next.cameraPermissionStatus == CameraPermissionStatus.granted &&
+          previous?.cameraPermissionStatus != CameraPermissionStatus.granted &&
+          !next.isScannerReady) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          unawaited(ref.read(qrScanViewModelProvider.notifier).startScanner());
+        });
+      }
     });
+
+    print('MobileScanner state: ${state.toJson()}');
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -67,19 +96,20 @@ class _QrScanViewState extends ConsumerState<QrScanView> {
           Expanded(
             child: Stack(
               children: [
-                // Camera preview based on permission status
+                // Camera preview - render when permission granted
+                // Scanner is started after widget is in tree via listener
                 if (state.cameraPermissionStatus ==
-                    CameraPermissionStatus.granted)
+                    CameraPermissionStatus.granted) ...[
                   MobileScanner(
                     controller: viewModel.controller,
                     onDetect: viewModel.onDetect,
                     errorBuilder: (context, error, child) {
+                      print(' MobileScanner error: $error');
                       // Ignore controllerAlreadyInitialized - not a real error
                       if (error.errorCode ==
                           MobileScannerErrorCode.controllerAlreadyInitialized) {
                         return const SizedBox.shrink();
                       }
-
                       final isPermissionError =
                           error.errorCode ==
                           MobileScannerErrorCode.permissionDenied;
@@ -89,8 +119,8 @@ class _QrScanViewState extends ConsumerState<QrScanView> {
                             : context.l10n.qrScanError,
                       );
                     },
-                  )
-                else if (state.cameraPermissionStatus ==
+                  ),
+                ] else if (state.cameraPermissionStatus ==
                     CameraPermissionStatus.unknown)
                   const Center(
                     child: CircularProgressIndicator(color: Colors.white),

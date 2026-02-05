@@ -9,6 +9,7 @@ void main() {
       baseApiUrl: const String.fromEnvironment('baseApiUrl'),
       sentryDsn: const String.fromEnvironment('sentryDsn'),
       qrEncryptionKey: const String.fromEnvironment('qrEncryptionKey'),
+      hmacKey: const String.fromEnvironment('hmacKey'),
     ),
   );
 }

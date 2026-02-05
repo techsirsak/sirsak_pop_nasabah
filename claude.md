@@ -3,6 +3,17 @@
 ## Project Overview
 Flutter mobile application using **Riverpod MVVM** architecture with feature-based folder organization.
 
+## Claude Code Instructions
+
+### Build & Test Commands (User Responsibility)
+Claude should NOT run these commands directly. Instead, remind the user to run them:
+
+- **Code generation**: `flutter pub run build_runner build --delete-conflicting-outputs`
+- **Run tests**: `flutter test`
+- **Analyze code**: `flutter analyze`
+
+After making changes to files with `@riverpod` annotations or `@freezed` classes, remind the user to run build_runner.
+
 ## Architecture Decision: Riverpod with Simple MVVM
 
 ### Why Riverpod over Stacked?

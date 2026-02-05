@@ -119,8 +119,9 @@ GoRouter router(Ref ref) {
           // GoRouter automatically URL-decodes queryParameters values
           final uri = state.uri;
           final hasDeeplinkData = uri.queryParameters.containsKey('data');
-          final deeplinkData =
-              hasDeeplinkData ? uri.queryParameters['data'] : null;
+          final deeplinkData = hasDeeplinkData
+              ? uri.queryParameters['data']
+              : null;
 
           return MaterialPage(
             key: state.pageKey,

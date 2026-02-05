@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/config/env_config.dart';
-import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_config.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
 part 'qr_crypto_service.g.dart';
@@ -16,13 +17,6 @@ sealed class QrDecryptResult {
 /// Successful decryption of an encrypted payload.
 class QrDecryptSuccess extends QrDecryptResult {
   const QrDecryptSuccess(this.plaintext);
-
-  final String plaintext;
-}
-
-/// Legacy plain JSON payload (backward compatibility).
-class QrDecryptLegacy extends QrDecryptResult {
-  const QrDecryptLegacy(this.plaintext);
 
   final String plaintext;
 }
@@ -41,103 +35,149 @@ QrCryptoService qrCryptoService(Ref ref) {
   final logger = ref.read(loggerServiceProvider);
   return QrCryptoService(
     encryptionKey: config.qrEncryptionKey,
+    hmacKey: config.hmacKey,
     logger: logger,
   );
 }
 
 /// Service for encrypting and decrypting QR code payloads.
 ///
-/// Uses AES-256-GCM for authenticated encryption.
-/// Supports backward compatibility with plain JSON payloads.
+/// Uses AES-256-GCM for authenticated encryption with HMAC-SHA256 verification.
+///
+/// Encrypted payloads are base64url-encoded binary with the structure:
+/// ```text
+/// | "ENC" (3B) | version 0x02 (1B) | IV (12B) | ciphertext | HMAC (16B) |
+/// ```
+///
+/// The HMAC-SHA256 (truncated to 16 bytes) covers all preceding bytes.
 class QrCryptoService {
   QrCryptoService({
     required String encryptionKey,
+    required String hmacKey,
     required LoggerService logger,
   }) : _logger = logger,
        _encrypter = Encrypter(
          AES(Key.fromBase64(encryptionKey), mode: AESMode.gcm),
-       );
+       ),
+       _hmacKeyHex = hmacKey;
 
   final LoggerService _logger;
   final Encrypter _encrypter;
+  final String _hmacKeyHex;
 
-  /// Encrypt plaintext JSON to QR payload format.
+  static const String _encryptedPrefix = 'ENC';
+  static const int _versionV2 = 0x02;
+  static const int _ivLength = 12;
+  static const int _hmacLength = 16;
+
+  /// Encrypt plaintext to QR payload format.
   ///
-  /// Returns: `ENC:v1:<base64(iv)>:<base64(ciphertext+tag)>`
+  /// Returns base64url-encoded binary payload.
   String encrypt(String plaintext) {
-    // Generate random IV for each encryption
-    final iv = IV.fromSecureRandom(QrCryptoConfig.ivLength);
-
-    // Encrypt with GCM (includes auth tag)
+    final iv = IV.fromSecureRandom(_ivLength);
     final encrypted = _encrypter.encrypt(plaintext, iv: iv);
 
-    // Build payload: ENC:v1:<iv>:<ciphertext>
-    final payload =
-        '${QrCryptoConfig.encryptedPrefix}'
-        '${QrCryptoConfig.version}:'
-        '${iv.base64}:'
-        '${encrypted.base64}';
+    final buffer = BytesBuilder()
+      ..add(utf8.encode(_encryptedPrefix)) // prefix (3 bytes)
+      ..add([_versionV2]) // version byte
+      ..add(iv.bytes) // IV (12 bytes)
+      ..add(encrypted.bytes); // ciphertext
+
+    final hmac = Hmac(
+      sha256,
+      _hmacKeyBytes,
+    ).convert(buffer.toBytes()).bytes.sublist(0, _hmacLength);
+
+    buffer.add(hmac);
 
     _logger.info('[QrCryptoService] Encrypted ${plaintext.length} chars');
 
-    return payload;
+    return base64UrlEncode(buffer.toBytes());
   }
 
-  /// Decrypt QR payload to plaintext JSON.
+  /// Decrypt QR payload to plaintext.
   ///
-  /// Handles both encrypted (ENC:) and legacy plain JSON payloads.
+  /// Only accepts V2 encrypted payloads. Returns error for invalid formats.
   QrDecryptResult decrypt(String payload) {
-    // Check for encrypted prefix
-    if (!payload.startsWith(QrCryptoConfig.encryptedPrefix)) {
-      // Legacy plain JSON - attempt to validate it's JSON
-      return _handleLegacyPayload(payload);
-    }
-
     try {
-      // Parse encrypted payload: ENC:v1:<iv>:<ciphertext>
-      final parts = payload.split(':');
-      if (parts.length != 4) {
-        return const QrDecryptError('Invalid encrypted payload format');
+      final bytes = base64Url.decode(payload);
+
+      // Minimum size: prefix(3) + version(1) + IV(12) + HMAC(16) = 32 bytes
+      if (bytes.length < 32) {
+        return const QrDecryptError('Invalid payload: too short');
       }
 
-      final version = parts[1];
-      final ivBase64 = parts[2];
-      final ciphertextBase64 = parts[3];
+      var offset = 0;
 
-      // Version check for future compatibility
-      if (version != QrCryptoConfig.version) {
+      // Verify prefix
+      final prefix = utf8.decode(bytes.sublist(0, 3));
+      if (prefix != _encryptedPrefix) {
+        return const QrDecryptError('Invalid payload: missing ENC prefix');
+      }
+      offset += 3;
+
+      // Verify version
+      final version = bytes[offset++];
+      if (version != _versionV2) {
         _logger.warning(
-          '[QrCryptoService] Unknown version: $version, attempting decrypt',
+          '[QrCryptoService] Unsupported version: $version',
         );
+        return const QrDecryptError('Unsupported payload version');
       }
 
-      final iv = IV.fromBase64(ivBase64);
-      final encrypted = Encrypted.fromBase64(ciphertextBase64);
+      // Extract IV
+      final ivBytes = bytes.sublist(offset, offset + _ivLength);
+      final iv = IV(ivBytes);
+      offset += _ivLength;
 
-      // Decrypt and verify auth tag
-      final plaintext = _encrypter.decrypt(encrypted, iv: iv);
+      // Split payload and HMAC
+      final hmacStart = bytes.length - _hmacLength;
+      final ciphertext = bytes.sublist(offset, hmacStart);
+      final receivedHmac = bytes.sublist(hmacStart);
+
+      // Verify HMAC
+      final expectedHmac = Hmac(
+        sha256,
+        _hmacKeyBytes,
+      ).convert(bytes.sublist(0, hmacStart)).bytes.sublist(0, _hmacLength);
+
+      if (!_secureEquals(receivedHmac, expectedHmac)) {
+        _logger.warning('[QrCryptoService] HMAC verification failed');
+        return const QrDecryptError('QR payload tampered or corrupted');
+      }
+
+      // Decrypt
+      final plaintext = _encrypter.decrypt(
+        Encrypted(ciphertext),
+        iv: iv,
+      );
 
       _logger.info('[QrCryptoService] Decrypted successfully');
 
       return QrDecryptSuccess(plaintext);
     } on FormatException catch (e) {
-      _logger.warning('[QrCryptoService] Decryption failed: $e');
+      _logger.warning('[QrCryptoService] Invalid base64 format: $e');
       return const QrDecryptError('Invalid encrypted data format');
     } on Exception catch (e) {
-      // GCM auth failure or other crypto error
       _logger.warning('[QrCryptoService] Decryption failed: $e');
       return const QrDecryptError('Decryption failed - data may be corrupted');
     }
   }
 
-  QrDecryptResult _handleLegacyPayload(String payload) {
-    // Validate it looks like JSON
-    try {
-      jsonDecode(payload);
-      _logger.info('[QrCryptoService] Legacy plain JSON payload detected');
-      return QrDecryptLegacy(payload);
-    } catch (e) {
-      return const QrDecryptError('Invalid QR code format');
+  List<int> get _hmacKeyBytes {
+    final bytes = <int>[];
+    for (var i = 0; i < _hmacKeyHex.length; i += 2) {
+      bytes.add(int.parse(_hmacKeyHex.substring(i, i + 2), radix: 16));
     }
+    return bytes;
+  }
+
+  bool _secureEquals(List<int> a, List<int> b) {
+    if (a.length != b.length) return false;
+    var diff = 0;
+    for (var i = 0; i < a.length; i++) {
+      diff |= a[i] ^ b[i];
+    }
+    return diff == 0;
   }
 }
