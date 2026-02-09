@@ -174,50 +174,52 @@ class _HistoryListItem extends StatelessWidget {
           ],
         ),
         child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: colorScheme.onPrimaryContainer.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(12),
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: colorScheme.onPrimaryContainer.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                isDebit ? PhosphorIcons.coins() : PhosphorIcons.arrowUp(),
+                size: 24,
+                color: colorScheme.primary,
+              ),
             ),
-            child: Icon(
-              isDebit ? PhosphorIcons.coins() : PhosphorIcons.arrowUp(),
-              size: 24,
-              color: colorScheme.primary,
-            ),
-          ),
-          const Gap(12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction.description,
-                  style: textTheme.titleSmall?.copyWith(
-                    fontVariations: AppFonts.semiBold,
+            const Gap(12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    transaction.description,
+                    style: textTheme.titleSmall?.copyWith(
+                      fontVariations: AppFonts.semiBold,
+                    ),
                   ),
-                ),
-                const Gap(2),
-                Text(
-                  transaction.createdAt.toDayRelative,
-                  style: textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                    fontVariations: AppFonts.regular,
+                  const Gap(2),
+                  Text(
+                    transaction.createdAt.toDayRelative,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.7,
+                      ),
+                      fontVariations: AppFonts.regular,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Text(
-            _formatAmount(transaction.amount, transaction.type),
-            style: textTheme.titleMedium?.copyWith(
-              color: amountColor,
-              fontVariations: AppFonts.semiBold,
+            Text(
+              _formatAmount(transaction.amount, transaction.type),
+              style: textTheme.titleMedium?.copyWith(
+                color: amountColor,
+                fontVariations: AppFonts.semiBold,
+              ),
             ),
-          ),
-        ],
+          ],
         ),
       ),
     );

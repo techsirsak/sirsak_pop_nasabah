@@ -138,10 +138,10 @@ class LoginView extends ConsumerWidget {
                 onSubmitted: () => unawaited(viewModel.login()),
                 errorText: state.passwordError != null
                     ? (state.passwordError == 'passwordRequired'
-                        ? context.l10n.passwordRequired
-                        : state.passwordError == 'passwordMinLength'
-                            ? context.l10n.passwordMinLength
-                            : state.passwordError)
+                          ? context.l10n.passwordRequired
+                          : state.passwordError == 'passwordMinLength'
+                          ? context.l10n.passwordMinLength
+                          : state.passwordError)
                     : null,
               ),
 
