@@ -157,8 +157,7 @@ class QrCryptoService {
     } on FormatException catch (e) {
       _logger.warning('[QrCryptoService] Invalid base64 format: $e');
       return const QrDecryptError('Invalid encrypted data format');
-    } on Exception catch (e) {
-      print('[QrCryptoService] Decryption failed: $e');
+    } on Exception catch (_) {
       return const QrDecryptError('Decryption failed - data may be corrupted');
     }
   }

@@ -262,8 +262,6 @@ class SignupViewModel extends _$SignupViewModel {
           SAppRoutePath.qrScan,
         );
 
-    print('navigateToQrScan result: ${result?.toJson()}');
-
     if (result == null) {
       // User cancelled/back without scanning
       return;
