@@ -9,6 +9,7 @@ import 'package:sirsak_pop_nasabah/features/auth/signup/signup_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/password_field.dart';
 
 class SignUpView extends ConsumerStatefulWidget {
   const SignUpView({super.key});
@@ -174,11 +175,9 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
               // Password Field
               _buildFieldLabel(context, context.l10n.passwordLabel),
               const Gap(8),
-              _buildTextField(
+              SPasswordField(
                 controller: _passwordController,
                 onChanged: viewModel.setPassword,
-                obscureText: true,
-                colorScheme: colorScheme,
                 errorText: _mapError(context, state.passwordError),
               ),
               const Gap(10),
@@ -186,11 +185,9 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
               // Confirm Password Field
               _buildFieldLabel(context, context.l10n.signupConfirmPassword),
               const Gap(8),
-              _buildTextField(
+              SPasswordField(
                 controller: _confirmPasswordController,
                 onChanged: viewModel.setConfirmPassword,
-                obscureText: true,
-                colorScheme: colorScheme,
                 errorText: _mapError(context, state.confirmPasswordError),
               ),
               const Gap(10),

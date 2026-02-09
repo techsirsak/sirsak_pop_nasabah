@@ -11,6 +11,7 @@ import 'package:sirsak_pop_nasabah/features/auth/login/login_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/password_field.dart';
 
 class LoginView extends ConsumerWidget {
   const LoginView({super.key});
@@ -132,55 +133,16 @@ class LoginView extends ConsumerWidget {
                 ),
               ),
               const Gap(8),
-              TextField(
+              SPasswordField(
                 onChanged: viewModel.setPassword,
-                onSubmitted: (_) {
-                  unawaited(viewModel.login());
-                },
-                obscureText: true,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color(0xFFE8EFF5),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: colorScheme.primary,
-                      width: 2,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: colorScheme.error,
-                    ),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: colorScheme.error,
-                      width: 2,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  errorText: state.passwordError != null
-                      ? (state.passwordError == 'passwordRequired'
-                            ? context.l10n.passwordRequired
-                            : state.passwordError == 'passwordMinLength'
+                onSubmitted: () => unawaited(viewModel.login()),
+                errorText: state.passwordError != null
+                    ? (state.passwordError == 'passwordRequired'
+                        ? context.l10n.passwordRequired
+                        : state.passwordError == 'passwordMinLength'
                             ? context.l10n.passwordMinLength
                             : state.passwordError)
-                      : null,
-                ),
+                    : null,
               ),
 
               const Gap(12),
