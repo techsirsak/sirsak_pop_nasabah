@@ -57,6 +57,11 @@ class WalletViewModel extends _$WalletViewModel {
     state = state.copyWith(selectedHistoryTab: tab);
   }
 
+  /// Refresh wallet data by fetching current user data
+  Future<void> refresh() async {
+    await ref.read(currentUserProvider.notifier).fetchCurrentUser();
+  }
+
   double calculateMonthlyBankSampahEarned(
     List<TransactionHistoryModel>? history,
   ) {

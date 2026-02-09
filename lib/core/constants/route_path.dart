@@ -15,6 +15,7 @@ class SAppRoutePath {
   static const rewards = '/rewards';
   static const setorSampah = '/setor-sampah';
   static const challenges = '/challenges';
+  static const transactionDetail = '/transaction-detail';
 
   // Drop point feature routes
   static const dropPoint = '/drop-point';

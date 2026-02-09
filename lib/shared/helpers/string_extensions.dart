@@ -55,4 +55,16 @@ extension StringX on String {
       (Match m) => '${m[1]}.',
     )}';
   }
+
+  String get formatRupiahDelta {
+    final numValue = (double.tryParse(this) ?? 0).toInt();
+    final isNegative = numValue < 0;
+    final absValue = numValue.abs().toString();
+    final sign = isNegative ? '-' : '+';
+    final formatted = absValue.replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]}.',
+    );
+    return '$sign Rp $formatted';
+  }
 }

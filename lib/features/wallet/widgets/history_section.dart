@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/home/widgets/section_header.dart';
 import 'package:sirsak_pop_nasabah/features/wallet/wallet_state.dart';
@@ -77,6 +79,10 @@ class HistorySection extends StatelessWidget {
                   child: _HistoryListItem(
                     transaction: transaction,
                     isPoints: isPointsTab,
+                    onTap: () => context.push(
+                      SAppRoutePath.transactionDetail,
+                      extra: transaction,
+                    ),
                   ),
                 );
               }).toList(),
@@ -128,10 +134,12 @@ class _HistoryListItem extends StatelessWidget {
   const _HistoryListItem({
     required this.transaction,
     required this.isPoints,
+    this.onTap,
   });
 
   final TransactionHistoryModel transaction;
   final bool isPoints;
+  final VoidCallback? onTap;
 
   String _formatAmount(int amount, TransactionType type) {
     final prefix = type == TransactionType.debit ? '+ ' : '- ';
@@ -150,20 +158,22 @@ class _HistoryListItem extends StatelessWidget {
     final isDebit = transaction.type == TransactionType.debit;
     final amountColor = isDebit ? colorScheme.primary : Colors.red;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
         children: [
           Container(
             width: 48,
@@ -208,6 +218,7 @@ class _HistoryListItem extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

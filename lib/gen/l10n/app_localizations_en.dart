@@ -444,6 +444,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get splashTitle => 'Welcome';
 
   @override
+  String get transactionDetailBarang => 'Item';
+
+  @override
+  String get transactionDetailHarga => 'Price';
+
+  @override
+  String get transactionDetailItems => 'Transaction Items';
+
+  @override
+  String get transactionDetailJumlah => 'Qty';
+
+  @override
+  String get transactionDetailTitle => 'Transaction Detail';
+
+  @override
+  String get transactionDetailTotal => 'Total';
+
+  @override
   String get tutorialDesc1 =>
       'Separate your recyclable waste into the following categories: **plastic wrappers**, **PET bottles**, **paper**, and **other recyclables**.';
 

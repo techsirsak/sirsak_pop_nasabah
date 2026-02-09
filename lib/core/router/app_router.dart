@@ -7,6 +7,7 @@ import 'package:sirsak_pop_nasabah/features/auth/login/login_view.dart';
 import 'package:sirsak_pop_nasabah/features/auth/signup/signup_view.dart';
 import 'package:sirsak_pop_nasabah/features/auth/verify_email/verify_email_view.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/detail/drop_point_detail_view.dart';
+import 'package:sirsak_pop_nasabah/features/transaction_detail/transaction_detail_view.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_view.dart';
 import 'package:sirsak_pop_nasabah/features/landing_page/landing_page_view.dart';
 import 'package:sirsak_pop_nasabah/features/profile/change_password/change_password_view.dart';
@@ -16,6 +17,7 @@ import 'package:sirsak_pop_nasabah/features/splash/splash_view.dart';
 import 'package:sirsak_pop_nasabah/features/tutorial/tutorial_view.dart';
 import 'package:sirsak_pop_nasabah/features/widget_showcase/widget_showcase_view.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
+import 'package:sirsak_pop_nasabah/models/user/transaction_history_model.dart';
 
 part 'app_router.g.dart';
 
@@ -94,6 +96,16 @@ GoRouter router(Ref ref) {
           return MaterialPage(
             key: state.pageKey,
             child: DropPointDetailView(collectionPoint: collectionPoint),
+          );
+        },
+      ),
+      GoRoute(
+        path: SAppRoutePath.transactionDetail,
+        pageBuilder: (context, state) {
+          final transaction = state.extra! as TransactionHistoryModel;
+          return MaterialPage(
+            key: state.pageKey,
+            child: TransactionDetailView(transaction: transaction),
           );
         },
       ),

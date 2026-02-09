@@ -908,6 +908,42 @@ abstract class AppLocalizations {
   /// **'Welcome'**
   String get splashTitle;
 
+  /// No description provided for @transactionDetailBarang.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get transactionDetailBarang;
+
+  /// No description provided for @transactionDetailHarga.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get transactionDetailHarga;
+
+  /// No description provided for @transactionDetailItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Items'**
+  String get transactionDetailItems;
+
+  /// No description provided for @transactionDetailJumlah.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get transactionDetailJumlah;
+
+  /// No description provided for @transactionDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Detail'**
+  String get transactionDetailTitle;
+
+  /// No description provided for @transactionDetailTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get transactionDetailTotal;
+
   /// No description provided for @tutorialDesc1.
   ///
   /// In en, this message translates to:

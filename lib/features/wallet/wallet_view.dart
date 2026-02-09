@@ -12,20 +12,26 @@ class WalletView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(walletViewModelProvider);
     final viewModel = ref.read(walletViewModelProvider.notifier);
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Gap(16),
-          WalletBalanceCard(state: state, viewModel: viewModel),
-          const Gap(24),
-          // TODO(devin): implement rewards
-          // RewardsSection(viewModel: viewModel),
-          // const Gap(24),
-          HistorySection(state: state, viewModel: viewModel),
-          const Gap(24),
-        ],
+    return RefreshIndicator(
+      onRefresh: viewModel.refresh,
+      color: colorScheme.primary,
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Gap(16),
+            WalletBalanceCard(state: state, viewModel: viewModel),
+            const Gap(24),
+            // TODO(devin): implement rewards
+            // RewardsSection(viewModel: viewModel),
+            // const Gap(24),
+            HistorySection(state: state, viewModel: viewModel),
+            const Gap(24),
+          ],
+        ),
       ),
     );
   }

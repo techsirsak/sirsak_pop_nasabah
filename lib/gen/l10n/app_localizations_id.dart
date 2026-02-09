@@ -444,6 +444,24 @@ class AppLocalizationsId extends AppLocalizations {
   String get splashTitle => 'Selamat Datang';
 
   @override
+  String get transactionDetailBarang => 'Barang';
+
+  @override
+  String get transactionDetailHarga => 'Harga';
+
+  @override
+  String get transactionDetailItems => 'Item Transaksi';
+
+  @override
+  String get transactionDetailJumlah => 'Jumlah';
+
+  @override
+  String get transactionDetailTitle => 'Detail Transaksi';
+
+  @override
+  String get transactionDetailTotal => 'Total';
+
+  @override
   String get tutorialDesc1 =>
       '**Pisahkan** sampah daur ulang anda ke dalam kategori berikut: **plastik berlapis**, **botol PET**, **kertas**, dan **sampah daur ulang lainnya**.';
 

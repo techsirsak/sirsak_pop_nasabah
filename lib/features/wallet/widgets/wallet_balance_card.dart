@@ -158,28 +158,28 @@ class _FooterInfo extends StatelessWidget {
 
     return Row(
       crossAxisAlignment: .start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: .end,
       children: [
         // Left: Expiry date
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l10n.walletExpiry,
-              style: textTheme.bodySmall?.copyWith(
-                color: Colors.white.withValues(alpha: 0.7),
-                fontVariations: AppFonts.regular,
-              ),
-            ),
-            Text(
-              state.expiryDate ?? '-',
-              style: textTheme.bodyMedium?.copyWith(
-                color: Colors.white,
-                fontVariations: AppFonts.semiBold,
-              ),
-            ),
-          ],
-        ),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Text(
+        //       l10n.walletExpiry,
+        //       style: textTheme.bodySmall?.copyWith(
+        //         color: Colors.white.withValues(alpha: 0.7),
+        //         fontVariations: AppFonts.regular,
+        //       ),
+        //     ),
+        //     Text(
+        //       state.expiryDate ?? '-',
+        //       style: textTheme.bodyMedium?.copyWith(
+        //         color: Colors.white,
+        //         fontVariations: AppFonts.semiBold,
+        //       ),
+        //     ),
+        //   ],
+        // ),
         // Right: Monthly stats
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -192,8 +192,7 @@ class _FooterInfo extends StatelessWidget {
               ),
             ),
             Text(
-              '+'
-              '${state.monthlyBankSampahEarned.toString().formatRupiah}',
+              state.monthlyBankSampahEarned.toString().formatRupiahDelta,
               style: textTheme.bodyMedium?.copyWith(
                 color: Colors.white,
                 fontVariations: AppFonts.medium,
