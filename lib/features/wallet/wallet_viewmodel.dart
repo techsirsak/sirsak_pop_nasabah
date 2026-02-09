@@ -8,6 +8,7 @@ import 'package:sirsak_pop_nasabah/features/wallet/widgets/balance_info_dialog.d
 import 'package:sirsak_pop_nasabah/models/user/transaction_history_model.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/dialog_service.dart';
+import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
 part 'wallet_viewmodel.g.dart';
 
@@ -22,13 +23,13 @@ class WalletViewModel extends _$WalletViewModel {
     )..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
     return WalletState(
-      sirsalPoints: 1400,
+      sirsakPoints: user?.points ?? 0,
       bankSampahBalance: user?.balance ?? 0,
       expiryDate: '31 Dec 2026',
       monthlyBankSampahEarned: calculateMonthlyBankSampahEarned(
         bankSampahHistory,
       ),
-      monthlyPointsEarned: 1400,
+      // monthlyPointsEarned: 0,
       pointsHistory: [],
       bankSampahHistory: bankSampahHistory,
     );
@@ -59,19 +60,30 @@ class WalletViewModel extends _$WalletViewModel {
   double calculateMonthlyBankSampahEarned(
     List<TransactionHistoryModel>? history,
   ) {
-    if (history == null || history.isEmpty) return 0;
+    final logger = ref.read(loggerServiceProvider);
+    if (history == null || history.isEmpty) {
+      logger.info('Returning 0: history is null or empty');
+      return 0;
+    }
 
     final now = DateTime.now();
     final currentMonth = now.month;
     final currentYear = now.year;
 
-    return history
-        .where(
-          (transaction) =>
-              transaction.type == TransactionType.credit &&
-              transaction.createdAt.month == currentMonth &&
-              transaction.createdAt.year == currentYear,
-        )
-        .fold(0, (sum, transaction) => sum + transaction.amount);
+    final filteredTransactions = history.where(
+      (transaction) =>
+          transaction.createdAt.month == currentMonth &&
+          transaction.createdAt.year == currentYear,
+    );
+
+    final total = filteredTransactions.fold<double>(
+      0,
+      (sum, transaction) => transaction.type == TransactionType.debit
+          ? sum + transaction.amount
+          : sum - transaction.amount,
+    );
+    logger.info('Total monthly saldo earned: $total');
+
+    return total;
   }
 }

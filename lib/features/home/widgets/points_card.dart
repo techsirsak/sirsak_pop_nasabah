@@ -67,12 +67,11 @@ class PointsCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Gap(16),
-            // Points display
+            const Gap(12),
             // const _PointDisplay(),
             // const Gap(20),
             const _SaldoDisplay(),
-            const Gap(20),
+            const Gap(12),
             // Action buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -165,9 +164,19 @@ class _SaldoDisplay extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
 
-    return Row(
+    return Column(
+      mainAxisSize: .min,
+      crossAxisAlignment: .start,
       textBaseline: TextBaseline.alphabetic,
       children: [
+        Text(
+          l10n.walletBankSampahBalance,
+          style: textTheme.titleMedium?.copyWith(
+            color: Colors.white.withValues(alpha: 0.9),
+            fontVariations: AppFonts.regular,
+          ),
+        ),
+        const Gap(8),
         Flexible(
           child: FittedBox(
             child: Text(
@@ -177,15 +186,8 @@ class _SaldoDisplay extends ConsumerWidget {
                 fontVariations: AppFonts.bold,
                 height: 1,
               ),
+              textAlign: .center,
             ),
-          ),
-        ),
-        const Gap(8),
-        Text(
-          l10n.walletBankSampahBalance,
-          style: textTheme.titleMedium?.copyWith(
-            color: Colors.white.withValues(alpha: 0.9),
-            fontVariations: AppFonts.regular,
           ),
         ),
       ],

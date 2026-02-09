@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sirsak_pop_nasabah/models/address/address_model.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/json_parsing_helper.dart';
 
 part 'user_model.freezed.dart';
 part 'user_model.g.dart';
@@ -23,6 +24,7 @@ abstract class UserModel with _$UserModel {
     @JsonKey(name: 'business_name') String? businessName,
     String? name,
     @Default(0) int balance,
+    @Default(0) int points,
     @JsonKey(name: 'bsu_id') String? bsuId,
     String? nik,
     @JsonKey(name: 'tanggal_lahir') String? tanggalLahir,
@@ -51,15 +53,27 @@ abstract class UserModel with _$UserModel {
         rw: json['rw'] as String?,
         alamatLengkap: json['alamat_lengkap'] as String?,
         mapUrl: json['map_url'] as String?,
-        latitude: (json['latitude'] as num?)?.toDouble(),
-        longitude: (json['longitude'] as num?)?.toDouble(),
+        latitude: parseField<double?>(
+          'latitude',
+          json['latitude'],
+          (v) => (v as num?)?.toDouble(),
+        ),
+        longitude: parseField<double?>(
+          'longitude',
+          json['longitude'],
+          (v) => (v as num?)?.toDouble(),
+        ),
       );
     }
 
     return UserModel(
       id: json['id'] as String,
       userId: json['user_id'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt: parseField<DateTime>(
+        'created_at',
+        json['created_at'],
+        (v) => DateTime.parse(v as String),
+      ),
       email: json['email'] as String,
       roleId: json['role_id'] as String?,
       businessTypeId: json['business_type_id'] as String?,
@@ -72,17 +86,36 @@ abstract class UserModel with _$UserModel {
       roleName: json['role_name'] as String?,
       businessName: json['business_name'] as String?,
       name: json['name'] as String?,
-      balance: (json['balance'] as num?)?.toInt() ?? 0,
+      balance: parseField<int>(
+        'balance',
+        json['balance'],
+        (v) => (v as num?)?.toInt() ?? 0,
+      ),
+      points: parseField<int>(
+        'points',
+        json['points'],
+        (v) => (v as num?)?.toInt() ?? 0,
+      ),
       bsuId: json['bsu_id'] as String?,
       nik: json['nik'] as String?,
       tanggalLahir: json['tanggal_lahir'] as String?,
       jenisKelamin: json['jenis_kelamin'] as String?,
       tempatLahir: json['tempat_lahir'] as String?,
-      nasabahBigintId: (json['nasabah_bigint_id'] as num?)?.toInt(),
-      bsuBigintId: (json['bsu_bigint_id'] as num?)?.toInt(),
-      updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'] as String)
-          : null,
+      nasabahBigintId: parseField<int?>(
+        'nasabah_bigint_id',
+        json['nasabah_bigint_id'],
+        (v) => (v as num?)?.toInt(),
+      ),
+      bsuBigintId: parseField<int?>(
+        'bsu_bigint_id',
+        json['bsu_bigint_id'],
+        (v) => (v as num?)?.toInt(),
+      ),
+      updatedAt: parseField<DateTime?>(
+        'updated_at',
+        json['updated_at'],
+        (v) => v != null ? DateTime.parse(v as String) : null,
+      ),
       address: address,
     );
   }

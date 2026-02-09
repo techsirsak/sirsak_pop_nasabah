@@ -14,7 +14,7 @@ abstract class TransactionHistoryModel with _$TransactionHistoryModel {
     required String description,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
-    @JsonKey(name: 'transaction_code') required String transactionCode,
+    @JsonKey(name: 'transaction_code') String? transactionCode,
     @JsonKey(name: 'transaction_id') String? transactionId,
   }) = _TransactionHistoryModel;
 

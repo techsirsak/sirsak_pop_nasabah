@@ -6,7 +6,7 @@ part 'wallet_state.freezed.dart';
 @freezed
 abstract class WalletState with _$WalletState {
   const factory WalletState({
-    @Default(0) int sirsalPoints,
+    @Default(0) int sirsakPoints,
     @Default(0) int bankSampahBalance,
     String? expiryDate,
     @Default(0) double monthlyBankSampahEarned,

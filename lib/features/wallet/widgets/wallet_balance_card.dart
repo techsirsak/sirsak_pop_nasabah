@@ -72,37 +72,37 @@ class WalletBalanceCard extends StatelessWidget {
             ),
             const Gap(14),
             // Main balance: Points
-            // Column(
-            //   children: [
-            //     Text(
-            //       state.sirsalPoints.toString().formatPoints,
-            //       style: textTheme.displayLarge?.copyWith(
-            //         color: Colors.white,
-            //         fontVariations: AppFonts.bold,
-            //         height: 1,
-            //       ),
-            //     ),
-            //     Row(
-            //       mainAxisAlignment: .center,
-            //       children: [
-            //         Icon(
-            //           PhosphorIcons.wallet(),
-            //           color: Colors.white,
-            //           size: 16,
-            //         ),
-            //         const Gap(8),
-            //         Text(
-            //           l10n.walletSirsakPoints,
-            //           style: textTheme.bodySmall?.copyWith(
-            //             color: Colors.white.withValues(alpha: 0.9),
-            //             fontVariations: AppFonts.regular,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
-            // const Gap(14),
+            Column(
+              children: [
+                Text(
+                  state.sirsakPoints.toString().formatPoints,
+                  style: textTheme.displayLarge?.copyWith(
+                    color: Colors.white,
+                    fontVariations: AppFonts.bold,
+                    height: 1,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: .center,
+                  children: [
+                    Icon(
+                      PhosphorIcons.wallet(),
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                    const Gap(8),
+                    Text(
+                      l10n.walletSirsakPoints,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.9),
+                        fontVariations: AppFonts.regular,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const Gap(14),
             // Secondary balance: Bank Sampah
             Column(
               children: [
