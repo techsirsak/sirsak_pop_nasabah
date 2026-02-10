@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/constants/app_constants.dart';
@@ -30,6 +29,16 @@ class DropPointDetailView extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      appBar: AppBar(
+        title: // Name
+        Text(
+          collectionPoint.name,
+          style: textTheme.titleLarge?.copyWith(
+            fontVariations: AppFonts.bold,
+            color: colorScheme.primary,
+          ),
+        ),
+      ),
       backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -123,86 +132,60 @@ class _BSUDetail extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
-        Stack(
-          children: [
-            // Header map
-            SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: IgnorePointer(
-                child: FlutterMap(
-                  options: MapOptions(
-                    initialCenter: LatLng(
-                      collectionPoint.lat,
-                      collectionPoint.long,
-                    ),
-                    initialZoom: 15,
-                  ),
-                  children: [
-                    TileLayer(
-                      urlTemplate: openMapUrlTemplate,
-                      userAgentPackageName: appBundleID,
-                    ),
-                    MarkerLayer(
-                      markers: [
-                        Marker(
-                          point: LatLng(
-                            collectionPoint.lat,
-                            collectionPoint.long,
+        SizedBox(
+          height: 200,
+          width: double.infinity,
+          child: IgnorePointer(
+            child: FlutterMap(
+              options: MapOptions(
+                initialCenter: LatLng(
+                  collectionPoint.lat,
+                  collectionPoint.long,
+                ),
+                initialZoom: 15,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: openMapUrlTemplate,
+                  userAgentPackageName: appBundleID,
+                ),
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      point: LatLng(
+                        collectionPoint.lat,
+                        collectionPoint.long,
+                      ),
+                      width: 40,
+                      height: 40,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 3,
                           ),
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 3,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.3),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.3),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
                             ),
-                            child: const Icon(
-                              Icons.location_on,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                          ),
+                          ],
                         ),
-                      ],
+                        child: const Icon(
+                          Icons.location_on,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
+              ],
             ),
-
-            // Back button
-            Positioned(
-              top: 8,
-              left: 8,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: .circle,
-                  color: colorScheme.primary,
-                ),
-                child: IconButton(
-                  color: colorScheme.primary,
-                  onPressed: () => context.pop(),
-                  icon: Icon(
-                    Icons.chevron_left,
-                    color: colorScheme.onPrimary,
-                    size: 24,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
 
         // Info card
@@ -242,15 +225,25 @@ class _InfoCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Gap(12),
-          // Name
-          Text(
-            collectionPoint.name,
-            style: textTheme.titleLarge?.copyWith(
-              fontVariations: AppFonts.bold,
-              color: colorScheme.primary,
-            ),
+          // Phone number
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                PhosphorIcons.phone(),
+                size: 20,
+              ),
+              const Gap(8),
+              Expanded(
+                child: Text(
+                  collectionPoint.noHp ?? '-',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+            ],
           ),
-
           const Gap(12),
 
           // Address
@@ -258,14 +251,15 @@ class _InfoCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
-                Icons.location_on_outlined,
+                PhosphorIcons.mapPin(),
                 size: 20,
-                color: colorScheme.onSurfaceVariant,
               ),
               const Gap(8),
               Expanded(
                 child: Text(
-                  collectionPoint.alamatLengkap ?? '-',
+                  (collectionPoint.alamatLengkap?.isNotEmpty ?? false)
+                      ? collectionPoint.alamatLengkap!
+                      : '-',
                   style: textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -281,13 +275,14 @@ class _InfoCard extends ConsumerWidget {
             Row(
               children: [
                 Icon(
-                  Icons.directions_walk,
+                  PhosphorIcons.personSimpleWalk(),
                   size: 20,
-                  color: colorScheme.onSurfaceVariant,
                 ),
                 const Gap(8),
                 Text(
-                  '$distance away',
+                  distance.isNotEmpty
+                      ? context.l10n.dropPointDistance(distance)
+                      : '-',
                   style: textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),

@@ -42,8 +42,7 @@ class ProfileViewModel extends _$ProfileViewModel {
   }
 
   void navigateToFaq() {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    unawaited(urlLauncher.launchGenericUrl(faqUrl));
+    ref.read(urlLauncherServiceProvider).launchSirsakFAQ();
   }
 
   void openWhatsApp() {

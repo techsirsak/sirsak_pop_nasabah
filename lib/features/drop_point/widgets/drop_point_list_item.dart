@@ -68,6 +68,24 @@ class DropPointListItem extends StatelessWidget {
               ),
             ),
             const Gap(8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  PhosphorIcons.phone(),
+                  size: 16,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                const Gap(8),
+                Expanded(
+                  child: Text(
+                    dropPoint.noHp ?? '-',
+                    style: textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            ),
+            const Gap(6),
             // Address
             Row(
               children: [
