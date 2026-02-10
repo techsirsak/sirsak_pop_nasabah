@@ -35,6 +35,8 @@
 		<string>fastmail</string>
 		<string>protonmail</string>
 		<string>superhuman</string>
+		<string>comgooglemaps</string>
+		<string>comgooglemapsurl</string>
     </array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
@@ -76,5 +78,7 @@
 			</array>
 		</dict>
 	</array>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 </dict>
 </plist>
