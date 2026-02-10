@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/core/constants/app_constants.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
@@ -40,7 +41,10 @@ class ProfileViewModel extends _$ProfileViewModel {
     unawaited(ref.read(routerProvider).push(SAppRoutePath.editProfile));
   }
 
-  void navigateToFaq() {}
+  void navigateToFaq() {
+    final urlLauncher = ref.read(urlLauncherServiceProvider);
+    unawaited(urlLauncher.launchGenericUrl(faqUrl));
+  }
 
   void openWhatsApp() {
     final urlLauncher = ref.read(urlLauncherServiceProvider);

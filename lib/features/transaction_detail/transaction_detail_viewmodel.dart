@@ -48,7 +48,7 @@ class TransactionDetailViewModel extends _$TransactionDetailViewModel {
 
       // Map TransactionDetailModel to TransactionItemModel
       final items = detail != null
-          ? detail.map((e) => e.toTrxItemModel)
+          ? detail.map((e) => e.toTrxItemModel).toList()
           : <TransactionItemModel>[];
 
       state = state.copyWith(
@@ -61,17 +61,5 @@ class TransactionDetailViewModel extends _$TransactionDetailViewModel {
         errorMessage: e.toString(),
       );
     }
-  }
-
-  /// Map API response to UI model
-  TransactionItemModel _mapToTransactionItem(TransactionDetailModel detail) {
-    return TransactionItemModel(
-      id: detail.id,
-      materialName: detail.material?.materialName ?? '',
-      quantity: detail.weight,
-      unitOfMeasurement: detail.material?.unitOfMeasurement ?? 'kg',
-      unitPrice: detail.pricePerKg,
-      totalPrice: detail.totalPrice,
-    );
   }
 }
