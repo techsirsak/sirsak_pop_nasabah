@@ -27,21 +27,15 @@ class LandingPageViewModel extends _$LandingPageViewModel {
     state = state.copyWith(isNavigating: false);
   }
 
-  /// Launch email client
-  Future<void> launchEmail(String email) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchEmail(email);
+  void openWhatsApp() {
+    ref.read(urlLauncherServiceProvider).contactSirsakWA();
   }
 
-  /// Launch phone dialer
-  Future<void> launchPhone(String phone) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchPhone(phone);
+  void openEmail() {
+    ref.read(urlLauncherServiceProvider).openEmailSirsak();
   }
 
-  /// Launch Instagram app or web
-  Future<void> launchInstagram(String handle) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchInstagram(handle);
+  void openInstagram() {
+    ref.read(urlLauncherServiceProvider).openSirsakInstagram();
   }
 }

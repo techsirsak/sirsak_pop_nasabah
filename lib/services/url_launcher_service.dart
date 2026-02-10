@@ -226,6 +226,28 @@ class UrlLauncherService {
     unawaited(launchGenericUrl(privacyPolicyUrl));
   }
 
+  /// Launch FAQ
+  void launchSirsakFAQ() {
+    unawaited(launchGenericUrl(faqUrl));
+  }
+
+  /// Launch Sirsak Phone
+  void launchSirsakPhoneCP() {
+    unawaited(launchPhone(sirsakPhoneCP));
+  }
+
+  void contactSirsakWA() {
+    unawaited(launchWhatsApp(sirsakPhoneCP));
+  }
+
+  void openEmailSirsak() {
+    unawaited(launchEmail(sirsakEmailCP));
+  }
+
+  void openSirsakInstagram() {
+    unawaited(launchInstagram(sirsakIG));
+  }
+
   /// Launch a generic URL
   ///
   /// Opens any valid URL in the default browser or appropriate app.

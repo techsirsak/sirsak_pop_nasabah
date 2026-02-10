@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sirsak_pop_nasabah/core/constants/app_constants.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
@@ -46,36 +45,15 @@ class ProfileViewModel extends _$ProfileViewModel {
   }
 
   void openWhatsApp() {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    unawaited(urlLauncher.launchWhatsApp('+628 777 0808 578'));
+    ref.read(urlLauncherServiceProvider).contactSirsakWA();
   }
 
   void openEmail() {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    unawaited(urlLauncher.launchEmail('hello@sirsak.co'));
+    ref.read(urlLauncherServiceProvider).openEmailSirsak();
   }
 
   void openInstagram() {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    unawaited(urlLauncher.launchInstagram('sirsak.hub'));
-  }
-
-  /// Launch email client
-  Future<void> launchEmail(String email) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchEmail(email);
-  }
-
-  /// Launch phone dialer
-  Future<void> launchPhone(String phone) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchPhone(phone);
-  }
-
-  /// Launch Instagram app or web
-  Future<void> launchInstagram(String handle) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchInstagram(handle);
+    ref.read(urlLauncherServiceProvider).openSirsakInstagram();
   }
 
   void navigateToChangePassword() {

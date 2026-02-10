@@ -16,10 +16,13 @@ class LandingPageView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
 
     final size = MediaQuery.sizeOf(context);
 
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -29,6 +32,7 @@ class LandingPageView extends ConsumerWidget {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
+            padding: .zero,
             child: Column(
               children: [
                 // Sirsak Logo
@@ -49,14 +53,14 @@ class LandingPageView extends ConsumerWidget {
                       color: Colors.white,
                     ),
                     children: [
-                      TextSpan(text: context.l10n.landingPageTitlePart1),
+                      TextSpan(text: l10n.landingPageTitlePart1),
                       TextSpan(
-                        text: context.l10n.landingPageTitlePart2,
+                        text: l10n.landingPageTitlePart2,
                         style: const TextStyle(
                           fontVariations: AppFonts.extraBold,
                         ),
                       ),
-                      TextSpan(text: context.l10n.landingPageTitlePart3),
+                      TextSpan(text: l10n.landingPageTitlePart3),
                     ],
                   ),
                 ),
@@ -65,21 +69,21 @@ class LandingPageView extends ConsumerWidget {
                 // Feature 1: Search
                 _FeatureItem(
                   icon: PhosphorIcons.mapPin(),
-                  text: context.l10n.landingPageFeature1,
+                  text: l10n.landingPageFeature1,
                 ),
                 const Gap(10),
 
                 // Feature 2: Drop
                 _FeatureItem(
                   icon: PhosphorIcons.trash(),
-                  text: context.l10n.landingPageFeature2,
+                  text: l10n.landingPageFeature2,
                 ),
                 const Gap(10),
 
                 // Feature 3: Get points
                 _FeatureItem(
                   icon: PhosphorIcons.gift(),
-                  text: context.l10n.landingPageFeature3,
+                  text: l10n.landingPageFeature3,
                 ),
                 const Gap(20),
 
@@ -100,7 +104,7 @@ class LandingPageView extends ConsumerWidget {
                     onPressed: () => ref
                         .read(landingPageViewModelProvider.notifier)
                         .navigateToGetStarted(),
-                    text: context.l10n.landingPageGetStartedButton,
+                    text: l10n.landingPageGetStartedButton,
                     backgroundColor: colorScheme.surface,
                     foregroundColor: colorScheme.onSurface,
                   ),
@@ -115,7 +119,7 @@ class LandingPageView extends ConsumerWidget {
                         .read(landingPageViewModelProvider.notifier)
                         .navigateToSignIn(),
                     variant: .outlined,
-                    text: context.l10n.landingPageSignInButton,
+                    text: l10n.landingPageSignInButton,
                     foregroundColor: colorScheme.surface,
                   ),
                 ),
@@ -123,26 +127,24 @@ class LandingPageView extends ConsumerWidget {
                 // Contact Information
                 _ContactLink(
                   icon: PhosphorIcons.envelope(),
-                  text: context.l10n.landingPageContactEmail,
+                  text: l10n.landingPageContactEmail,
                   onTap: () => ref
                       .read(landingPageViewModelProvider.notifier)
-                      .launchEmail(context.l10n.landingPageContactEmail),
+                      .openEmail(),
                 ),
                 _ContactLink(
                   icon: PhosphorIcons.phone(),
-                  text: context.l10n.landingPageContactPhone,
+                  text: l10n.landingPageContactPhone,
                   onTap: () => ref
                       .read(landingPageViewModelProvider.notifier)
-                      .launchPhone('+6287770808578'),
+                      .openWhatsApp(),
                 ),
                 _ContactLink(
                   icon: PhosphorIcons.instagramLogo(),
-                  text: context.l10n.landingPageContactInstagram,
+                  text: l10n.landingPageContactInstagram,
                   onTap: () => ref
                       .read(landingPageViewModelProvider.notifier)
-                      .launchInstagram(
-                        context.l10n.landingPageContactInstagram,
-                      ),
+                      .openInstagram(),
                 ),
                 const Gap(30),
               ],
