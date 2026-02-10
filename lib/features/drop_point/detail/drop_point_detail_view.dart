@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:sirsak_pop_nasabah/core/constants/app_constants.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/detail/drop_point_detail_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/detail/widgets/stock_item_card.dart';
@@ -122,27 +125,59 @@ class _BSUDetail extends StatelessWidget {
       children: [
         Stack(
           children: [
-            // Header image
-            Container(
+            // Header map
+            SizedBox(
               height: 200,
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerHighest,
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/drop_point_placeholder.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withValues(alpha: 0.3),
-                      Colors.transparent,
-                    ],
+              child: IgnorePointer(
+                child: FlutterMap(
+                  options: MapOptions(
+                    initialCenter: LatLng(
+                      collectionPoint.lat,
+                      collectionPoint.long,
+                    ),
+                    initialZoom: 15,
                   ),
+                  children: [
+                    TileLayer(
+                      urlTemplate: openMapUrlTemplate,
+                      userAgentPackageName: appBundleID,
+                    ),
+                    MarkerLayer(
+                      markers: [
+                        Marker(
+                          point: LatLng(
+                            collectionPoint.lat,
+                            collectionPoint.long,
+                          ),
+                          width: 40,
+                          height: 40,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: colorScheme.primary,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 3,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.3),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: const Icon(
+                              Icons.location_on,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
