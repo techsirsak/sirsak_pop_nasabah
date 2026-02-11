@@ -195,7 +195,6 @@ class _FeatureItem extends StatelessWidget {
   }
 }
 
-// sirsak_placeholder_email_1754035278628@gmail.com
 /// Contact link widget with icon and text
 class _ContactLink extends StatelessWidget {
   const _ContactLink({

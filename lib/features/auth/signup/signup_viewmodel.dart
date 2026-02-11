@@ -272,6 +272,9 @@ class SignupViewModel extends _$SignupViewModel {
 
   /// Process the scanned QR data and update state accordingly
   void _handleQrScanResult(ParsedQrData data) {
+    // Clear previous QR data to avoid mixing BSU and Nasabah data
+    clearQrData();
+
     switch (data.type) {
       case QrType.registerBsu:
         _handleBsuQrData(data.bsuData);
@@ -328,10 +331,15 @@ class SignupViewModel extends _$SignupViewModel {
           'name: ${nasabahData.name}, email: ${nasabahData.email}',
         );
 
+    // Skip placeholder emails - keep existing email if placeholder
+    final isPlaceholderEmail = nasabahData.email.contains(
+      'sirsak_placeholder_email',
+    );
+
     state = state.copyWith(
       nasabahId: nasabahData.id,
       fullName: nasabahData.name,
-      email: nasabahData.email,
+      email: isPlaceholderEmail ? state.email : nasabahData.email,
       phoneNumber: nasabahData.noHp ?? '',
       qrType: QrType.registerNasabah,
       // Clear any existing field errors since we're populating from QR
