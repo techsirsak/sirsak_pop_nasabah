@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'Sirsak Pop Nasabah'**
   String get appName;
 
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String appVersion(String version);
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
@@ -146,23 +152,41 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get close;
 
-  /// No description provided for @editProfileSaveButton.
+  /// No description provided for @continueWithGoogle.
   ///
   /// In en, this message translates to:
-  /// **'Save Changes'**
-  String get editProfileSaveButton;
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
 
-  /// No description provided for @editProfileSaveSuccess.
+  /// No description provided for @deleteAccountConfirmButton.
   ///
   /// In en, this message translates to:
-  /// **'Profile updated successfully'**
-  String get editProfileSaveSuccess;
+  /// **'Delete Account'**
+  String get deleteAccountConfirmButton;
 
-  /// No description provided for @editProfileTitle.
+  /// No description provided for @deleteAccountConfirmationMessage.
   ///
   /// In en, this message translates to:
-  /// **'Edit Profile'**
-  String get editProfileTitle;
+  /// **'Are you sure you want to delete your account? This action cannot be undone.'**
+  String get deleteAccountConfirmationMessage;
+
+  /// No description provided for @deleteAccountConfirmationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account?'**
+  String get deleteAccountConfirmationTitle;
+
+  /// No description provided for @deleteAccountSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Account deletion requested successfully'**
+  String get deleteAccountSuccess;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
 
   /// No description provided for @dropPointBankSampah.
   ///
@@ -266,41 +290,23 @@ abstract class AppLocalizations {
   /// **'Lokasimu'**
   String get dropPointYourLocation;
 
-  /// No description provided for @deleteAccountConfirmButton.
+  /// No description provided for @editProfileSaveButton.
   ///
   /// In en, this message translates to:
-  /// **'Delete Account'**
-  String get deleteAccountConfirmButton;
+  /// **'Save Changes'**
+  String get editProfileSaveButton;
 
-  /// No description provided for @deleteAccountConfirmationMessage.
+  /// No description provided for @editProfileSaveSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to delete your account? This action cannot be undone.'**
-  String get deleteAccountConfirmationMessage;
+  /// **'Profile updated successfully'**
+  String get editProfileSaveSuccess;
 
-  /// No description provided for @deleteAccountConfirmationTitle.
+  /// No description provided for @editProfileTitle.
   ///
   /// In en, this message translates to:
-  /// **'Delete Account?'**
-  String get deleteAccountConfirmationTitle;
-
-  /// No description provided for @deleteAccountSuccess.
-  ///
-  /// In en, this message translates to:
-  /// **'Account deletion requested successfully'**
-  String get deleteAccountSuccess;
-
-  /// No description provided for @continueWithGoogle.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue with Google'**
-  String get continueWithGoogle;
-
-  /// No description provided for @dontHaveAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t have an account?'**
-  String get dontHaveAccount;
+  /// **'Edit Profile'**
+  String get editProfileTitle;
 
   /// No description provided for @emailAddress.
   ///
@@ -313,12 +319,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid email format'**
   String get emailInvalid;
-
-  /// No description provided for @errorInvalidCredentials.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid email or password. Please try again.'**
-  String get errorInvalidCredentials;
 
   /// No description provided for @emailLabel.
   ///
@@ -337,6 +337,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
+
+  /// No description provided for @errorInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password. Please try again.'**
+  String get errorInvalidCredentials;
 
   /// No description provided for @errorLoginFailed.
   ///
@@ -368,6 +374,18 @@ abstract class AppLocalizations {
   /// **'Something went wrong'**
   String get generalErrorTitle;
 
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
+
+  /// No description provided for @homeChallengeProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{total} {itemType} collected'**
+  String homeChallengeProgress(int current, int total, String itemType);
+
   /// No description provided for @homeChallenges.
   ///
   /// In en, this message translates to:
@@ -379,12 +397,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Complete challenges and get rewards!'**
   String get homeChallengesDesc;
-
-  /// No description provided for @homeChallengeProgress.
-  ///
-  /// In en, this message translates to:
-  /// **'{current}/{total} {itemType} collected'**
-  String homeChallengeProgress(int current, int total, String itemType);
 
   /// No description provided for @homeEvents.
   ///
@@ -512,12 +524,6 @@ abstract class AppLocalizations {
   /// **'**Get points** and redeem rewards!'**
   String get landingPageFeature3;
 
-  /// No description provided for @landingPageGetStartedButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Get Started'**
-  String get landingPageGetStartedButton;
-
   /// No description provided for @landingPageRegisterWithQrButton.
   ///
   /// In en, this message translates to:
@@ -583,6 +589,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'or'**
   String get or;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
+
+  /// No description provided for @passwordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMinLength;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
 
   /// No description provided for @profileAccountTitle.
   ///
@@ -770,23 +794,11 @@ abstract class AppLocalizations {
   /// **'Scan QR Code'**
   String get qrScanTitle;
 
-  /// No description provided for @passwordLabel.
+  /// No description provided for @register.
   ///
   /// In en, this message translates to:
-  /// **'Password'**
-  String get passwordLabel;
-
-  /// No description provided for @passwordMinLength.
-  ///
-  /// In en, this message translates to:
-  /// **'Password must be at least 6 characters'**
-  String get passwordMinLength;
-
-  /// No description provided for @passwordRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Password is required'**
-  String get passwordRequired;
+  /// **'Register'**
+  String get register;
 
   /// No description provided for @signIn.
   ///

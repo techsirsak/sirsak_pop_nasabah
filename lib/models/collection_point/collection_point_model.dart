@@ -13,6 +13,7 @@ abstract class CollectionPointModel with _$CollectionPointModel {
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
     String? pengurus,
+    @JsonKey(name: 'no_hp') String? noHp,
     @JsonKey(name: 'collection_point_type_id') String? collectionPointTypeId,
     @JsonKey(name: 'address_id') String? addressId,
     @JsonKey(name: 'address_url') String? addressUrl,

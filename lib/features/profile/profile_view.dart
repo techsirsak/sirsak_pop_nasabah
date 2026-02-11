@@ -8,6 +8,7 @@ import 'package:sirsak_pop_nasabah/features/profile/widgets/faq_section.dart';
 import 'package:sirsak_pop_nasabah/features/profile/widgets/personal_info_section.dart';
 import 'package:sirsak_pop_nasabah/features/profile/widgets/profile_header_card.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/app_version_test.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 
 class ProfileView extends ConsumerWidget {
@@ -42,6 +43,12 @@ class ProfileView extends ConsumerWidget {
               size: ButtonSize.large,
               isLoading: state.isLoggingOut,
             ),
+          ),
+          const Gap(24),
+          // App Version
+          const Align(
+            alignment: .bottomCenter,
+            child: AppVersionText(),
           ),
           const Gap(32),
         ],

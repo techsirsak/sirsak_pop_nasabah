@@ -254,7 +254,7 @@ class DropPointViewModel extends _$DropPointViewModel {
   /// Get distance string for display
   String getDistanceString(CollectionPointModel dropPoint) {
     final distance = _calculateDistance(dropPoint);
-    if (distance == double.infinity) return '-';
+    if (distance == double.infinity) return '';
     return distance.toStringAsFixed(1);
   }
 
@@ -292,17 +292,28 @@ class DropPointViewModel extends _$DropPointViewModel {
   void selectDropPoint(CollectionPointModel dropPoint) {
     if (dropPoint.latitude == null || dropPoint.longitude == null) return;
 
+    // Find the index of the drop point in the filtered list
+    final index = state.filteredDropPoints.indexWhere(
+      (dp) => dp.id == dropPoint.id,
+    );
+
     state = state.copyWith(
       selectedDropPoint: dropPoint,
       mapCenterLat: dropPoint.lat,
       mapCenterLng: dropPoint.long,
       mapZoom: 15,
+      scrollToIndex: index >= 0 ? index : null,
     );
   }
 
   /// Clear selected drop point
   void clearSelection() {
     state = state.copyWith(selectedDropPoint: null);
+  }
+
+  /// Clear scroll index after scrolling is complete
+  void clearScrollIndex() {
+    state = state.copyWith(scrollToIndex: null);
   }
 
   /// Dismiss location found toast

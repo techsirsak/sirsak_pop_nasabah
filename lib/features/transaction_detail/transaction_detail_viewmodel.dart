@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/features/transaction_detail/transaction_detail_state.dart';
+import 'package:sirsak_pop_nasabah/models/user/transaction_detail_model.dart';
 import 'package:sirsak_pop_nasabah/models/user/transaction_history_model.dart';
 import 'package:sirsak_pop_nasabah/models/user/transaction_item_model.dart';
+import 'package:sirsak_pop_nasabah/services/user_service.dart';
 
 part 'transaction_detail_viewmodel.g.dart';
 
@@ -26,20 +28,28 @@ class TransactionDetailViewModel extends _$TransactionDetailViewModel {
     return initialState;
   }
 
-  /// Load transaction items
-  /// Currently returns mock data - replace with API call when endpoint is available
+  /// Load transaction items from API
   Future<void> _loadTransactionItems() async {
     state = state.copyWith(isLoading: true, errorMessage: null);
 
     try {
-      // TODO: Replace with actual API call when endpoint is available
-      // final service = ref.read(userServiceProvider);
-      // final items = await service.getTransactionItems(state.transaction.id);
+      final transactionCode = state.transaction.transactionCode;
 
-      // Simulate network delay for mock data
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      // If no transaction code, show empty state
+      if (transactionCode == null) {
+        state = state.copyWith(items: [], isLoading: false);
+        return;
+      }
 
-      final items = _getMockItems();
+      final userService = ref.read(userServiceProvider);
+      final detail = await userService.getTransactionDetail(
+        transactionCode: transactionCode,
+      );
+
+      // Map TransactionDetailModel to TransactionItemModel
+      final items = detail != null
+          ? detail.map((e) => e.toTrxItemModel).toList()
+          : <TransactionItemModel>[];
 
       state = state.copyWith(
         items: items,
@@ -51,35 +61,5 @@ class TransactionDetailViewModel extends _$TransactionDetailViewModel {
         errorMessage: e.toString(),
       );
     }
-  }
-
-  /// Mock data for development
-  List<TransactionItemModel> _getMockItems() {
-    return [
-      const TransactionItemModel(
-        id: '1',
-        materialName: 'Kardus',
-        quantity: 2.0,
-        unitOfMeasurement: 'kg',
-        unitPrice: 800,
-        totalPrice: 1600,
-      ),
-      const TransactionItemModel(
-        id: '2',
-        materialName: 'Plastik',
-        quantity: 1.5,
-        unitOfMeasurement: 'kg',
-        unitPrice: 500,
-        totalPrice: 750,
-      ),
-      const TransactionItemModel(
-        id: '3',
-        materialName: 'Botol PET',
-        quantity: 3,
-        unitOfMeasurement: 'pcs',
-        unitPrice: 200,
-        totalPrice: 600,
-      ),
-    ];
   }
 }

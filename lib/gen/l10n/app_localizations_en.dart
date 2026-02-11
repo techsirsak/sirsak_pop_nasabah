@@ -12,6 +12,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
+  String appVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
   String get cancel => 'Cancel';
 
   @override
@@ -33,13 +38,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get close => 'Close';
 
   @override
-  String get editProfileSaveButton => 'Save Changes';
+  String get continueWithGoogle => 'Continue with Google';
 
   @override
-  String get editProfileSaveSuccess => 'Profile updated successfully';
+  String get deleteAccountConfirmButton => 'Delete Account';
 
   @override
-  String get editProfileTitle => 'Edit Profile';
+  String get deleteAccountConfirmationMessage =>
+      'Are you sure you want to delete your account? This action cannot be undone.';
+
+  @override
+  String get deleteAccountConfirmationTitle => 'Delete Account?';
+
+  @override
+  String get deleteAccountSuccess => 'Account deletion requested successfully';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
 
   @override
   String get dropPointBankSampah => 'Bank Sampah';
@@ -98,33 +113,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dropPointYourLocation => 'Lokasimu';
 
   @override
-  String get deleteAccountConfirmButton => 'Delete Account';
+  String get editProfileSaveButton => 'Save Changes';
 
   @override
-  String get deleteAccountConfirmationMessage =>
-      'Are you sure you want to delete your account? This action cannot be undone.';
+  String get editProfileSaveSuccess => 'Profile updated successfully';
 
   @override
-  String get deleteAccountConfirmationTitle => 'Delete Account?';
-
-  @override
-  String get deleteAccountSuccess => 'Account deletion requested successfully';
-
-  @override
-  String get continueWithGoogle => 'Continue with Google';
-
-  @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get editProfileTitle => 'Edit Profile';
 
   @override
   String get emailAddress => 'Email Address';
 
   @override
   String get emailInvalid => 'Invalid email format';
-
-  @override
-  String get errorInvalidCredentials =>
-      'Invalid email or password. Please try again.';
 
   @override
   String get emailLabel => 'Email';
@@ -134,6 +135,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error => 'Error';
+
+  @override
+  String get errorInvalidCredentials =>
+      'Invalid email or password. Please try again.';
 
   @override
   String get errorLoginFailed => 'Login failed. Please try again.';
@@ -152,15 +157,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get generalErrorTitle => 'Something went wrong';
 
   @override
-  String get homeChallenges => 'Challenges';
-
-  @override
-  String get homeChallengesDesc => 'Complete challenges and get rewards!';
+  String get getStarted => 'Get Started';
 
   @override
   String homeChallengeProgress(int current, int total, String itemType) {
     return '$current/$total $itemType collected';
   }
+
+  @override
+  String get homeChallenges => 'Challenges';
+
+  @override
+  String get homeChallengesDesc => 'Complete challenges and get rewards!';
 
   @override
   String get homeEvents => 'Events';
@@ -238,9 +246,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get landingPageFeature3 => '**Get points** and redeem rewards!';
 
   @override
-  String get landingPageGetStartedButton => 'Get Started';
-
-  @override
   String get landingPageRegisterWithQrButton => 'Register with QR';
 
   @override
@@ -272,6 +277,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get or => 'or';
+
+  @override
+  String get passwordLabel => 'Password';
+
+  @override
+  String get passwordMinLength => 'Password must be at least 6 characters';
+
+  @override
+  String get passwordRequired => 'Password is required';
 
   @override
   String get profileAccountTitle => 'Akun';
@@ -373,13 +387,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qrScanTitle => 'Scan QR Code';
 
   @override
-  String get passwordLabel => 'Password';
-
-  @override
-  String get passwordMinLength => 'Password must be at least 6 characters';
-
-  @override
-  String get passwordRequired => 'Password is required';
+  String get register => 'Register';
 
   @override
   String get signIn => 'Sign In';

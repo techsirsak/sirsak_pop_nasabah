@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Build script for Sirsak PoP - supports Android (AAB/APK) and Web builds
+# Build script for Sirsak PoP - supports Android (AAB/APK), iOS, and Web builds
 # Builds development and/or production flavors for selected platforms
 
 set -e  # Exit on error
@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default values
-BUILD_PLATFORM="both"  # android, web, or both
+BUILD_PLATFORM="all"  # android, ios, web, or all
 BUILD_TYPE="both"  # aab, apk, or both (Android only)
 BUILD_FLAVOR="both"  # dev, prod, or both
 
@@ -21,19 +21,21 @@ BUILD_FLAVOR="both"  # dev, prod, or both
 show_help() {
   echo "Usage: $0 [OPTIONS]"
   echo ""
-  echo "Build application for Android (AAB/APK) and/or Web platforms."
+  echo "Build application for Android (AAB/APK), iOS, and/or Web platforms."
   echo ""
   echo "Options:"
-  echo "  -p, --platform PLATFORM  Build platform: 'android', 'web', or 'both' (default: both)"
+  echo "  -p, --platform PLATFORM  Build platform: 'android', 'ios', 'web', or 'all' (default: all)"
   echo "  -t, --type TYPE          Build type (Android only): 'aab', 'apk', or 'both' (default: both)"
   echo "  -f, --flavor FLAVOR      Build flavor: 'dev', 'prod', or 'both' (default: both)"
   echo "  -h, --help              Show this help message"
   echo ""
   echo "Examples:"
-  echo "  $0                                        # Build everything (Android AAB+APK and Web for both flavors)"
+  echo "  $0                                        # Build everything (Android AAB+APK, iOS, and Web for both flavors)"
   echo "  $0 --platform web                         # Build Web only for both flavors"
+  echo "  $0 --platform ios                         # Build iOS only for both flavors"
   echo "  $0 --platform android --type apk          # Build Android APK only for both flavors"
   echo "  $0 -p android -t aab -f prod              # Build production Android AAB only"
+  echo "  $0 -p ios -f prod                         # Build production iOS only"
   echo "  $0 -p web -f dev                          # Build development Web only"
   echo ""
   exit 0
@@ -44,8 +46,8 @@ while [[ $# -gt 0 ]]; do
   case $1 in
     -p|--platform)
       BUILD_PLATFORM="$2"
-      if [[ ! "$BUILD_PLATFORM" =~ ^(android|web|both)$ ]]; then
-        echo -e "${RED}Error: Invalid platform '$BUILD_PLATFORM'. Must be 'android', 'web', or 'both'${NC}"
+      if [[ ! "$BUILD_PLATFORM" =~ ^(android|ios|web|all)$ ]]; then
+        echo -e "${RED}Error: Invalid platform '$BUILD_PLATFORM'. Must be 'android', 'ios', 'web', or 'all'${NC}"
         exit 1
       fi
       shift 2
@@ -94,6 +96,7 @@ fi
 BUILD_DEV=false
 BUILD_PROD=false
 BUILD_ANDROID=false
+BUILD_IOS=false
 BUILD_WEB=false
 BUILD_AAB=false
 BUILD_APK=false
@@ -106,11 +109,15 @@ if [[ "$BUILD_FLAVOR" == "prod" ]] || [[ "$BUILD_FLAVOR" == "both" ]]; then
   BUILD_PROD=true
 fi
 
-if [[ "$BUILD_PLATFORM" == "android" ]] || [[ "$BUILD_PLATFORM" == "both" ]]; then
+if [[ "$BUILD_PLATFORM" == "android" ]] || [[ "$BUILD_PLATFORM" == "all" ]]; then
   BUILD_ANDROID=true
 fi
 
-if [[ "$BUILD_PLATFORM" == "web" ]] || [[ "$BUILD_PLATFORM" == "both" ]]; then
+if [[ "$BUILD_PLATFORM" == "ios" ]] || [[ "$BUILD_PLATFORM" == "all" ]]; then
+  BUILD_IOS=true
+fi
+
+if [[ "$BUILD_PLATFORM" == "web" ]] || [[ "$BUILD_PLATFORM" == "all" ]]; then
   BUILD_WEB=true
 fi
 
@@ -137,6 +144,12 @@ if [ "$BUILD_ANDROID" = true ]; then
   fi
 fi
 
+# iOS steps
+if [ "$BUILD_IOS" = true ]; then
+  [ "$BUILD_DEV" = true ] && ((TOTAL_STEPS++))
+  [ "$BUILD_PROD" = true ] && ((TOTAL_STEPS++))
+fi
+
 # Web steps
 if [ "$BUILD_WEB" = true ]; then
   [ "$BUILD_DEV" = true ] && ((TOTAL_STEPS++))
@@ -150,7 +163,7 @@ echo "=========================================="
 echo "Building Sirsak POP App"
 echo "=========================================="
 echo -e "${BLUE}Build Configuration:${NC}"
-echo "  Platform: $([ "$BUILD_ANDROID" = true ] && echo -n "Android " || echo -n "")$([ "$BUILD_WEB" = true ] && echo "Web" || echo "")"
+echo "  Platform: $([ "$BUILD_ANDROID" = true ] && echo -n "Android " || echo -n "")$([ "$BUILD_IOS" = true ] && echo -n "iOS " || echo -n "")$([ "$BUILD_WEB" = true ] && echo "Web" || echo "")"
 if [ "$BUILD_ANDROID" = true ]; then
   echo "  Android Type: $([ "$BUILD_AAB" = true ] && echo -n "AAB " || echo -n "")$([ "$BUILD_APK" = true ] && echo "APK" || echo "")"
 fi
@@ -220,6 +233,48 @@ build_apk() {
     BUILT_FILES+=("$output_file")
   else
     echo -e "${RED}✗ $flavor_name Android APK build failed${NC}"
+    exit 1
+  fi
+
+  echo ""
+}
+
+# Function to build iOS
+build_ios() {
+  local flavor=$1
+  local flavor_name=$2
+  local target=$3
+  local dart_defines_file=$4
+
+  ((CURRENT_STEP++))
+  echo -e "${YELLOW}[$CURRENT_STEP/$TOTAL_STEPS] Building $flavor_name iOS...${NC}"
+  echo "Flavor: $flavor"
+  echo "Target: $target"
+  echo "Environment config: $dart_defines_file"
+  echo ""
+
+  fvm flutter build ipa \
+    --flavor "$flavor" \
+    --target "$target" \
+    --release \
+    --dart-define-from-file="$dart_defines_file" \
+    --no-tree-shake-icons
+
+  if [ $? -eq 0 ]; then
+    local output_dir="build/ios/ipa"
+    local flavor_output_dir="build/ios/ipa-${flavor}"
+
+    # Remove old flavor build if exists
+    [ -d "$flavor_output_dir" ] && rm -rf "$flavor_output_dir"
+
+    # Move to flavor-specific directory
+    mv "$output_dir" "$flavor_output_dir"
+
+    echo -e "${GREEN}✓ $flavor_name iOS IPA built successfully${NC}"
+    echo "Location: $flavor_output_dir/"
+    BUILT_FILES+=("$flavor_output_dir/")
+  else
+    echo -e "${RED}✗ $flavor_name iOS build failed${NC}"
     exit 1
   fi
 
@@ -296,6 +351,20 @@ if [ "$BUILD_ANDROID" = true ] && [ "$BUILD_PROD" = true ]; then
     echo "=========================================="
     echo ""
   fi
+fi
+
+# Build iOS Development build
+if [ "$BUILD_IOS" = true ] && [ "$BUILD_DEV" = true ]; then
+  build_ios "development" "Development" "lib/main/main_development.dart" "env.dev.json"
+  echo "=========================================="
+  echo ""
+fi
+
+# Build iOS Production build
+if [ "$BUILD_IOS" = true ] && [ "$BUILD_PROD" = true ]; then
+  build_ios "production" "Production" "lib/main/main_production.dart" "env.prod.json"
+  echo "=========================================="
+  echo ""
 fi
 
 # Build Web Development build

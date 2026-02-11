@@ -12,6 +12,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
+  String appVersion(String version) {
+    return 'Versi $version';
+  }
+
+  @override
   String get cancel => 'Batal';
 
   @override
@@ -33,13 +38,23 @@ class AppLocalizationsId extends AppLocalizations {
   String get close => 'Tutup';
 
   @override
-  String get editProfileSaveButton => 'Simpan Perubahan';
+  String get continueWithGoogle => 'Lanjutkan dengan Google';
 
   @override
-  String get editProfileSaveSuccess => 'Profil berhasil diperbarui';
+  String get deleteAccountConfirmButton => 'Hapus Akun';
 
   @override
-  String get editProfileTitle => 'Edit Profil';
+  String get deleteAccountConfirmationMessage =>
+      'Apakah Anda yakin ingin menghapus akun? Tindakan ini tidak dapat dibatalkan.';
+
+  @override
+  String get deleteAccountConfirmationTitle => 'Hapus Akun?';
+
+  @override
+  String get deleteAccountSuccess => 'Permintaan penghapusan akun berhasil';
+
+  @override
+  String get dontHaveAccount => 'Belum punya akun?';
 
   @override
   String get dropPointBankSampah => 'Bank Sampah';
@@ -98,33 +113,19 @@ class AppLocalizationsId extends AppLocalizations {
   String get dropPointYourLocation => 'Lokasimu';
 
   @override
-  String get deleteAccountConfirmButton => 'Hapus Akun';
+  String get editProfileSaveButton => 'Simpan Perubahan';
 
   @override
-  String get deleteAccountConfirmationMessage =>
-      'Apakah Anda yakin ingin menghapus akun? Tindakan ini tidak dapat dibatalkan.';
+  String get editProfileSaveSuccess => 'Profil berhasil diperbarui';
 
   @override
-  String get deleteAccountConfirmationTitle => 'Hapus Akun?';
-
-  @override
-  String get deleteAccountSuccess => 'Permintaan penghapusan akun berhasil';
-
-  @override
-  String get continueWithGoogle => 'Lanjutkan dengan Google';
-
-  @override
-  String get dontHaveAccount => 'Belum punya akun?';
+  String get editProfileTitle => 'Edit Profil';
 
   @override
   String get emailAddress => 'Alamat Email';
 
   @override
   String get emailInvalid => 'Format email tidak valid';
-
-  @override
-  String get errorInvalidCredentials =>
-      'Email atau kata sandi salah. Silakan coba lagi.';
 
   @override
   String get emailLabel => 'Email';
@@ -134,6 +135,10 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get error => 'Kesalahan';
+
+  @override
+  String get errorInvalidCredentials =>
+      'Email atau kata sandi salah. Silakan coba lagi.';
 
   @override
   String get errorLoginFailed => 'Login gagal. Silakan coba lagi.';
@@ -152,15 +157,18 @@ class AppLocalizationsId extends AppLocalizations {
   String get generalErrorTitle => 'Terjadi kesalahan';
 
   @override
-  String get homeChallenges => 'Tantangan';
-
-  @override
-  String get homeChallengesDesc => 'Selesaikan tantangan, dapatkan hadiahnya!';
+  String get getStarted => 'Mulai';
 
   @override
   String homeChallengeProgress(int current, int total, String itemType) {
     return '$current/$total $itemType terkumpulkan';
   }
+
+  @override
+  String get homeChallenges => 'Tantangan';
+
+  @override
+  String get homeChallengesDesc => 'Selesaikan tantangan, dapatkan hadiahnya!';
 
   @override
   String get homeEvents => 'Acara';
@@ -239,9 +247,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get landingPageFeature3 => '**Dapatkan poin** dan tukarkan hadiah!';
 
   @override
-  String get landingPageGetStartedButton => 'Daftar';
-
-  @override
   String get landingPageRegisterWithQrButton => 'Daftar dengan QR';
 
   @override
@@ -273,6 +278,15 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get or => 'atau';
+
+  @override
+  String get passwordLabel => 'Kata Sandi';
+
+  @override
+  String get passwordMinLength => 'Kata sandi minimal 6 karakter';
+
+  @override
+  String get passwordRequired => 'Kata sandi wajib diisi';
 
   @override
   String get profileAccountTitle => 'Akun';
@@ -373,13 +387,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get qrScanTitle => 'Pindai Kode QR';
 
   @override
-  String get passwordLabel => 'Kata Sandi';
-
-  @override
-  String get passwordMinLength => 'Kata sandi minimal 6 karakter';
-
-  @override
-  String get passwordRequired => 'Kata sandi wajib diisi';
+  String get register => 'Daftar';
 
   @override
   String get signIn => 'Masuk';

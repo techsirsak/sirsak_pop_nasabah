@@ -40,39 +40,20 @@ class ProfileViewModel extends _$ProfileViewModel {
     unawaited(ref.read(routerProvider).push(SAppRoutePath.editProfile));
   }
 
-  void navigateToFaq() {}
+  void navigateToFaq() {
+    ref.read(urlLauncherServiceProvider).launchSirsakFAQ();
+  }
 
   void openWhatsApp() {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    unawaited(urlLauncher.launchWhatsApp('+628 777 0808 578'));
+    ref.read(urlLauncherServiceProvider).contactSirsakWA();
   }
 
   void openEmail() {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    unawaited(urlLauncher.launchEmail('hello@sirsak.co'));
+    ref.read(urlLauncherServiceProvider).openEmailSirsak();
   }
 
   void openInstagram() {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    unawaited(urlLauncher.launchInstagram('sirsak.hub'));
-  }
-
-  /// Launch email client
-  Future<void> launchEmail(String email) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchEmail(email);
-  }
-
-  /// Launch phone dialer
-  Future<void> launchPhone(String phone) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchPhone(phone);
-  }
-
-  /// Launch Instagram app or web
-  Future<void> launchInstagram(String handle) async {
-    final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchInstagram(handle);
+    ref.read(urlLauncherServiceProvider).openSirsakInstagram();
   }
 
   void navigateToChangePassword() {

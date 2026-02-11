@@ -68,6 +68,24 @@ class DropPointListItem extends StatelessWidget {
               ),
             ),
             const Gap(8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  PhosphorIcons.phone(),
+                  size: 16,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                const Gap(8),
+                Expanded(
+                  child: Text(
+                    dropPoint.noHp ?? '-',
+                    style: textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            ),
+            const Gap(6),
             // Address
             Row(
               children: [
@@ -78,8 +96,10 @@ class DropPointListItem extends StatelessWidget {
                 const Gap(6),
                 Expanded(
                   child: Text(
-                    dropPoint.alamatLengkap ?? '',
-                    style: textTheme.bodyMedium?.copyWith(),
+                    (dropPoint.alamatLengkap?.isNotEmpty ?? false)
+                        ? dropPoint.alamatLengkap!
+                        : '-',
+                    style: textTheme.bodyMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -96,8 +116,10 @@ class DropPointListItem extends StatelessWidget {
                 ),
                 const Gap(6),
                 Text(
-                  context.l10n.dropPointDistance(distance),
-                  style: textTheme.bodyMedium?.copyWith(),
+                  distance.isNotEmpty
+                      ? context.l10n.dropPointDistance(distance)
+                      : '-',
+                  style: textTheme.bodyMedium,
                 ),
               ],
             ),

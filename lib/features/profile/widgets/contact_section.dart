@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:sirsak_pop_nasabah/core/constants/app_constants.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
@@ -33,7 +34,7 @@ class ContactSection extends StatelessWidget {
           const Gap(12),
           _ContactItem(
             label: l10n.profileContactEmail,
-            value: 'hello@sirsak.co',
+            value: sirsakEmailCP,
             onTap: viewModel.openEmail,
             colorScheme: colorScheme,
             textTheme: textTheme,
@@ -41,7 +42,7 @@ class ContactSection extends StatelessWidget {
           const Gap(8),
           _ContactItem(
             label: l10n.profileContactPhone,
-            value: '+628 777 0808 578',
+            value: sirsakPhoneCP,
             onTap: viewModel.openWhatsApp,
             colorScheme: colorScheme,
             textTheme: textTheme,
@@ -49,7 +50,7 @@ class ContactSection extends StatelessWidget {
           const Gap(8),
           _ContactItem(
             label: l10n.profileContactInstagram,
-            value: '@sirsak.hub',
+            value: '@$sirsakIG',
             onTap: viewModel.openInstagram,
             colorScheme: colorScheme,
             textTheme: textTheme,

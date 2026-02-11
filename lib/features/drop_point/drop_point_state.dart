@@ -50,6 +50,7 @@ abstract class DropPointState with _$DropPointState {
 
     // Selection
     CollectionPointModel? selectedDropPoint,
+    int? scrollToIndex,
 
     // Map state
     @Default(-6.2088) double mapCenterLat,

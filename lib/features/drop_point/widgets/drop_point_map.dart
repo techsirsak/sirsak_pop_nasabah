@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sirsak_pop_nasabah/core/constants/app_constants.dart';
+import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_state.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/location_found_toast.dart';
@@ -70,8 +73,8 @@ class _DropPointMapState extends ConsumerState<DropPointMap> {
               children: [
                 // OpenStreetMap tile layer
                 TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'com.sirsak.pop_nasabah',
+                  urlTemplate: openMapUrlTemplate,
+                  userAgentPackageName: appBundleID,
                 ),
                 // Drop point markers
                 MarkerLayer(
@@ -160,31 +163,65 @@ class _DropPointMapState extends ConsumerState<DropPointMap> {
 
     return Marker(
       point: LatLng(dropPoint.lat, dropPoint.long),
-      width: isSelected ? 40 : 30,
-      height: isSelected ? 40 : 30,
+      width: 100,
+      height: isSelected ? 65 : 55,
       child: GestureDetector(
         onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white,
-              width: isSelected ? 3 : 2,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: .2),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              constraints: const BoxConstraints(maxWidth: 96),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.9),
+                borderRadius: BorderRadius.circular(4),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 2,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Icon(
-            Icons.location_on,
-            color: Colors.white,
-            size: isSelected ? 24 : 18,
-          ),
+              child: Text(
+                dropPoint.name,
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontVariations: AppFonts.semiBold,
+                  color: Colors.black87,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const Gap(2),
+            Container(
+              width: isSelected ? 40 : 30,
+              height: isSelected ? 40 : 30,
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: isSelected ? 3 : 2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: .2),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.location_on,
+                color: Colors.white,
+                size: isSelected ? 24 : 18,
+              ),
+            ),
+          ],
         ),
       ),
     );

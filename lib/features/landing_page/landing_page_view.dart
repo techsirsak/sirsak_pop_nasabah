@@ -16,140 +16,132 @@ class LandingPageView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
 
     final size = MediaQuery.sizeOf(context);
 
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Assets.images.landingpageBackground.path),
-            fit: BoxFit.cover,
-          ),
+    return Stack(
+      children: [
+        Image.asset(
+          Assets.images.landingpageBackground.path,
+          height: size.height,
+          width: size.width,
+          fit: BoxFit.cover,
         ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // Sirsak Logo
-                Hero(
-                  tag: 'sirsak_logo',
-                  child: Image.asset(
-                    Assets.images.sirsakMainLogoWhite.path,
-                    height: 120,
-                  ),
-                ),
-                const Gap(12),
-
-                // Main Title
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: textTheme.headlineSmall?.copyWith(
-                      color: Colors.white,
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          extendBody: true,
+          extendBodyBehindAppBar: true,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: .zero,
+              child: Column(
+                children: [
+                  // Sirsak Logo
+                  Hero(
+                    tag: 'sirsak_logo',
+                    child: Image.asset(
+                      Assets.images.sirsakMainLogoWhite.path,
+                      height: 120,
                     ),
-                    children: [
-                      TextSpan(text: context.l10n.landingPageTitlePart1),
-                      TextSpan(
-                        text: context.l10n.landingPageTitlePart2,
-                        style: const TextStyle(
-                          fontVariations: AppFonts.extraBold,
+                  ),
+                  const Gap(12),
+
+                  // Main Title
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: textTheme.headlineSmall?.copyWith(
+                        color: Colors.white,
+                      ),
+                      children: [
+                        TextSpan(text: l10n.landingPageTitlePart1),
+                        TextSpan(
+                          text: l10n.landingPageTitlePart2,
+                          style: const TextStyle(
+                            fontVariations: AppFonts.extraBold,
+                          ),
                         ),
-                      ),
-                      TextSpan(text: context.l10n.landingPageTitlePart3),
-                    ],
+                        TextSpan(text: l10n.landingPageTitlePart3),
+                      ],
+                    ),
                   ),
-                ),
-                const Gap(24),
+                  const Gap(24),
 
-                // Feature 1: Search
-                _FeatureItem(
-                  icon: PhosphorIcons.mapPin(),
-                  text: context.l10n.landingPageFeature1,
-                ),
-                const Gap(10),
+                  // Feature 1: Search
+                  _FeatureItem(
+                    icon: PhosphorIcons.mapPin(),
+                    text: l10n.landingPageFeature1,
+                  ),
+                  const Gap(10),
 
-                // Feature 2: Drop
-                _FeatureItem(
-                  icon: PhosphorIcons.trash(),
-                  text: context.l10n.landingPageFeature2,
-                ),
-                const Gap(10),
+                  // Feature 2: Drop
+                  _FeatureItem(
+                    icon: PhosphorIcons.trash(),
+                    text: l10n.landingPageFeature2,
+                  ),
+                  const Gap(10),
 
-                // Feature 3: Get points
-                _FeatureItem(
-                  icon: PhosphorIcons.gift(),
-                  text: context.l10n.landingPageFeature3,
-                ),
-                const Gap(20),
+                  // Feature 3: Get points
+                  _FeatureItem(
+                    icon: PhosphorIcons.gift(),
+                    text: l10n.landingPageFeature3,
+                  ),
+                  const Gap(20),
 
-                // Photo Showcase - Three waste bins
-                Image.asset(
-                  Assets.images.trashCans.path,
-                  height: 150,
-                  width: double.infinity,
-                  fit: .cover,
-                  alignment: .topCenter,
-                ),
-                const Gap(30),
+                  // Photo Showcase - Three waste bins
+                  Image.asset(
+                    Assets.images.trashCans.path,
+                    height: 150,
+                    width: double.infinity,
+                    fit: .cover,
+                    alignment: .topCenter,
+                  ),
+                  const Gap(30),
 
-                // Get Started Button
-                SizedBox(
-                  width: size.width * 2 / 3,
-                  child: SButton(
-                    onPressed: () => ref
+                  // Get Started Button
+                  SizedBox(
+                    width: size.width * 2 / 3,
+                    child: SButton(
+                      onPressed: () => ref
+                          .read(landingPageViewModelProvider.notifier)
+                          .navigateToSignIn(),
+                      text: l10n.getStarted,
+                      backgroundColor: colorScheme.surface,
+                      foregroundColor: colorScheme.onSurface,
+                    ),
+                  ),
+                  const Gap(30),
+
+                  // Contact Information
+                  _ContactLink(
+                    icon: PhosphorIcons.envelope(),
+                    text: l10n.landingPageContactEmail,
+                    onTap: () => ref
                         .read(landingPageViewModelProvider.notifier)
-                        .navigateToGetStarted(),
-                    text: context.l10n.landingPageGetStartedButton,
-                    backgroundColor: colorScheme.surface,
-                    foregroundColor: colorScheme.onSurface,
+                        .openEmail(),
                   ),
-                ),
-                const Gap(16),
-
-                // Sign In Button (Outlined)
-                SizedBox(
-                  width: size.width * 2 / 3,
-                  child: SButton(
-                    onPressed: () => ref
+                  _ContactLink(
+                    icon: PhosphorIcons.phone(),
+                    text: l10n.landingPageContactPhone,
+                    onTap: () => ref
                         .read(landingPageViewModelProvider.notifier)
-                        .navigateToSignIn(),
-                    variant: .outlined,
-                    text: context.l10n.landingPageSignInButton,
-                    foregroundColor: colorScheme.surface,
+                        .openWhatsApp(),
                   ),
-                ),
-                const Gap(30),
-                // Contact Information
-                _ContactLink(
-                  icon: PhosphorIcons.envelope(),
-                  text: context.l10n.landingPageContactEmail,
-                  onTap: () => ref
-                      .read(landingPageViewModelProvider.notifier)
-                      .launchEmail(context.l10n.landingPageContactEmail),
-                ),
-                _ContactLink(
-                  icon: PhosphorIcons.phone(),
-                  text: context.l10n.landingPageContactPhone,
-                  onTap: () => ref
-                      .read(landingPageViewModelProvider.notifier)
-                      .launchPhone('+6287770808578'),
-                ),
-                _ContactLink(
-                  icon: PhosphorIcons.instagramLogo(),
-                  text: context.l10n.landingPageContactInstagram,
-                  onTap: () => ref
-                      .read(landingPageViewModelProvider.notifier)
-                      .launchInstagram(
-                        context.l10n.landingPageContactInstagram,
-                      ),
-                ),
-                const Gap(30),
-              ],
+                  _ContactLink(
+                    icon: PhosphorIcons.instagramLogo(),
+                    text: l10n.landingPageContactInstagram,
+                    onTap: () => ref
+                        .read(landingPageViewModelProvider.notifier)
+                        .openInstagram(),
+                  ),
+                  const Gap(30),
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -171,6 +163,7 @@ class _FeatureItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
+        mainAxisSize: .min,
         children: [
           // Icon container
           Icon(
@@ -180,7 +173,7 @@ class _FeatureItem extends StatelessWidget {
           ),
           const SizedBox(width: 16),
 
-          Expanded(
+          Flexible(
             child: RichText(
               text: TextSpan(
                 children: parseRichText(
@@ -217,12 +210,12 @@ class _ContactLink extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(8),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
+          mainAxisSize: .min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(

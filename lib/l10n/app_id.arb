@@ -1,228 +1,237 @@
 {
-  "@@locale": "id",
-  "appName": "Sirsak Pop Nasabah",
-  "cancel": "Batal",
-  "changePasswordButton": "Ubah Kata Sandi",
-  "changePasswordConfirmPassword": "Konfirmasi Kata Sandi Baru",
-  "changePasswordNewPassword": "Kata Sandi Baru",
-  "changePasswordSuccess": "Kata sandi berhasil diubah",
-  "changePasswordTitle": "Ubah Kata Sandi",
-  "close": "Tutup",
-  "editProfileSaveButton": "Simpan Perubahan",
-  "editProfileSaveSuccess": "Profil berhasil diperbarui",
-  "editProfileTitle": "Edit Profil",
-  "dropPointBankSampah": "Bank Sampah",
-  "dropPointDetailAcceptedWaste": "Jenis Sampah yang Dapat Diterima",
-  "dropPointDetailGetDirections": "Petunjuk Arah",
-  "dropPointDistance": "{distance} km dari Anda",
-  "@dropPointDistance": {
-    "placeholders": {
-      "distance": {
-        "type": "String"
-      }
-    }
-  },
-  "dropPointDropPoint": "Drop Point",
-  "dropPointFilter": "Filter",
-  "dropPointLocationFound": "Lokasi ditemukan",
-  "dropPointLocationPermissionMessage": "Aktifkan lokasi untuk melihat posisi Anda",
-  "dropPointNoResults": "Tidak ada drop point ditemukan",
-  "dropPointNoResultsHint": "Coba ubah pencarian atau filter Anda",
-  "dropPointOpenSettings": "Buka Pengaturan",
-  "dropPointOpenUntil": "Buka sampai {time}",
-  "@dropPointOpenUntil": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "dropPointRvm": "RVM",
-  "dropPointSearchPlaceholder": "Ketik nama daerahmu di sini...",
-  "dropPointSortBy": "Urutkan",
-  "dropPointTitle": "Drop Point",
-  "dropPointYourLocation": "Lokasimu",
-  "deleteAccountConfirmButton": "Hapus Akun",
-  "deleteAccountConfirmationMessage": "Apakah Anda yakin ingin menghapus akun? Tindakan ini tidak dapat dibatalkan.",
-  "deleteAccountConfirmationTitle": "Hapus Akun?",
-  "deleteAccountSuccess": "Permintaan penghapusan akun berhasil",
-  "continueWithGoogle": "Lanjutkan dengan Google",
-  "dontHaveAccount": "Belum punya akun?",
-  "emailAddress": "Alamat Email",
-  "emailInvalid": "Format email tidak valid",
-  "errorInvalidCredentials": "Email atau kata sandi salah. Silakan coba lagi.",
-  "emailLabel": "Email",
-  "emailRequired": "Email wajib diisi",
-  "error": "Kesalahan",
-  "errorLoginFailed": "Login gagal. Silakan coba lagi.",
-  "errorNetworkConnection": "Kesalahan jaringan. Silakan periksa koneksi Anda.",
-  "errorServerError": "Kesalahan server. Silakan coba lagi nanti.",
-  "forgotPassword": "Lupa Kata Sandi?",
-  "generalErrorTitle": "Terjadi kesalahan",
-  "homeChallenges": "Tantangan",
-  "homeChallengesDesc": "Selesaikan tantangan, dapatkan hadiahnya!",
-  "homeChallengeProgress": "{current}/{total} {itemType} terkumpulkan",
-  "@homeChallengeProgress": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      },
-      "itemType": {
-        "type": "String"
-      }
-    }
-  },
-  "homeEvents": "Acara",
-  "homeGreeting": "Selamat datang kembali, {userName}!",
-  "@homeGreeting": {
-    "placeholders": {
-      "userName": {
-        "type": "String"
-      }
-    }
-  },
-  "homeHistory": "Riwayat",
-  "homeImpactCarbonLabel": "Emisi Karbon Terhindari",
-  "homeImpactRecycledLabel": "Sampah Terdaur Ulang",
-  "homeImpactWasteLabel": "Sampah Terkumpulkan",
-  "homePoints": "poin Sirsak",
-  "homeRegisterNow": "Daftar sekarang",
-  "homeRewards": "Hadiah",
-  "homeSetorSampah": "Setor Sampah",
-  "homeSetorSampahDesc": "Temukan Drop Point sampah terdekat!",
-  "homeTakeAction": "Ambil Aksi",
-  "homeWithdraw": "Tarik",
-  "homeYourImpact": "Dampak Anda",
-  "itemCount": "{count, plural, =0{Tidak ada item} =1{1 item} other{{count} item}}",
-  "@itemCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "landingPageContactEmail": "hello@sirsak.com",
-  "landingPageContactInstagram": "sirsak.hub",
-  "landingPageContactPhone": "+628 777 0808 578",
-  "landingPageFeature1": "**Temukan** titik pengumpulan sampah terdekat Anda",
-  "landingPageFeature2": "**Buanglah** sampah daur ulang yang sudah dipilah",
-  "landingPageFeature3": "**Dapatkan poin** dan tukarkan hadiah!",
-  "landingPageGetStartedButton": "Daftar",
-  "landingPageRegisterWithQrButton": "Daftar dengan QR",
-  "landingPageSignInButton": "Masuk",
-  "landingPageTitlePart1": "Membangun jaringan ",
-  "landingPageTitlePart2": "terbesar\ndan tertelusur",
-  "landingPageTitlePart3": " untuk limbah Indonesia",
-  "loading": "Memuat...",
-  "loginButton": "Masuk",
-  "loginTitle": "Masuk",
-  "ok": "OK",
-  "openEmailAppFailure": "Tidak dapat membuka aplikasi email",
-  "or": "atau",
-  "profileAccountTitle": "Akun",
-  "profileBadgesTitle": "Lencana Kamu",
-  "profileCarbonAvoided": "Emisi Karbon\nTerhindari",
-  "profileChangePassword": "Ubah Kata Sandi",
-  "profileChangePasswordDesc": "Ubah kata sandi akun anda",
-  "profileContactEmail": "Email",
-  "profileContactInstagram": "Instagram",
-  "profileContactPhone": "Telpon (Whatsapp chat):",
-  "profileContactUs": "Hubungi Kami:",
-  "profileDeleteAccount": "Hapus Akun",
-  "profileDeleteAccountDesc": "Hapus akun anda secara permanen",
-  "profileEdit": "Edit",
-  "profileEmailLabel": "Email",
-  "profileFaqLinkPre": "Lihat halaman FAQ ",
-  "profileFaqLinkText": "di sini",
-  "profileFaqQuestion": "Punya pertanyaan?",
-  "profileFaqTitle": "FAQ",
-  "profileLogout": "Keluar",
-  "profileMemberSince": "Member sejak {year}",
-  "@profileMemberSince": {
-    "placeholders": {
-      "year": {
-        "type": "String"
-      }
-    }
-  },
-  "profileNameLabel": "Nama",
-  "profilePersonalInfo": "Informasi Pribadi",
-  "profilePhoneLabel": "Nomor Telpon",
-  "profileWasteCollected": "Sampah\nTerkumpul",
-  "profileWasteRecycled": "Sampah\nTerdaur Ulang",
-  "qrScanCameraPermission": "Izin kamera diperlukan untuk memindai kode QR",
-  "qrScanDecryptionFailed": "Tidak dapat membaca kode QR. Silakan coba lagi.",
-  "qrScanInstruction": "Arahkan kamera ke kode QR",
-  "qrScanInvalidCode": "Kode QR ini tidak valid atau telah diubah",
-  "qrScanOpenSettings": "Buka Pengaturan",
-  "qrScanPermissionDeniedForever": "Izin kamera ditolak secara permanen. Silakan aktifkan di pengaturan.",
-  "qrScanTitle": "Pindai Kode QR",
-  "passwordLabel": "Kata Sandi",
-  "passwordMinLength": "Kata sandi minimal 6 karakter",
-  "passwordRequired": "Kata sandi wajib diisi",
-  "signIn": "Masuk",
-  "signUp": "Daftar",
-  "signupAlreadyHaveAccount": "Sudah punya akun?",
-  "signupConfirmPassword": "Konfirmasi Kata Sandi",
-  "signupConfirmPasswordRequired": "Silakan konfirmasi kata sandi Anda",
-  "signupFullName": "Nama Lengkap",
-  "signupFullNameRequired": "Nama lengkap wajib diisi",
-  "signupFullNameTooShort": "Nama lengkap minimal 2 karakter",
-  "signupOptional": "opsional",
-  "signupPasswordsDoNotMatch": "Kata sandi tidak cocok",
-  "signupPhoneHint": "+62 812 3456 7890",
-  "signupPhoneInvalid": "Format nomor telepon tidak valid",
-  "signupPhoneNumber": "Nomor Telepon",
-  "signupPrivacyPolicyLink": "Kebijakan Privasi",
-  "signupRegisteringAt": "Mendaftar di",
-  "signupTermsAnd": " dan ",
-  "signupTermsLink": "Syarat dan Ketentuan",
-  "signupTermsPrefix": "Saya menyetujui ",
-  "signupTermsRequired": "Anda harus menyetujui syarat dan ketentuan serta kebijakan privasi",
-  "splashTitle": "Selamat Datang",
-  "transactionDetailBarang": "Barang",
-  "transactionDetailHarga": "Harga",
-  "transactionDetailItems": "Item Transaksi",
-  "transactionDetailJumlah": "Jumlah",
-  "transactionDetailTitle": "Detail Transaksi",
-  "transactionDetailTotal": "Total",
-  "tutorialDesc1": "**Pisahkan** sampah daur ulang anda ke dalam kategori berikut: **plastik berlapis**, **botol PET**, **kertas**, dan **sampah daur ulang lainnya**.",
-  "tutorialDesc2": "**Bawa** dan buang sampah di **bank sampah dan titik pengumpulan lainnya** yang terdaftar dalam komunitas Sirsak.",
-  "tutorialDesc3": "**Dapatkan poin** untuk setiap sampah yang dikembalikan ke titik pengumpulan. Tukarkan dengan **voucher**, **diskon**, dan **hadiah** lainnya.",
-  "tutorialDesc4": "Kami memastikan semua sampah yang dikirim ke titik pengumpulan akan **ditangani secara bertanggung jawab** untuk **meminimalkan dampak lingkungan**.",
-  "tutorialSkip": "Lewatkan",
-  "tutorialStartButton": "Mulai Sekarang!",
-  "tutorialTitle1": "Pilah sampahmu",
-  "tutorialTitle2": "Buang sampah di titik pengumpulan terdekat Anda",
-  "tutorialTitle3": "Dapatkan hadiah eksklusif",
-  "tutorialTitle4": "Bergabunglah dengan komunitas kami",
-  "verifyEmailDescription": "Kami telah mengirimkan tautan verifikasi ke alamat email Anda. Silakan periksa kotak masuk Anda dan klik tautan untuk memverifikasi akun Anda.",
-  "verifyEmailGoToLogin": "Ke Halaman Masuk",
-  "verifyEmailOpenEmail": "Buka Aplikasi Email",
-  "verifyEmailTitle": "Periksa Email Anda",
-  "walletBalance": "Saldo Nasabah",
-  "walletBalanceInfoBankSampahDesc": "Dapatkan uang tunai dengan mengumpulkan sampah di bank sampah. Saldo bank sampah juga harus ditarik di bank sampah.",
-  "walletBalanceInfoSirsakPointsDesc": "Dapatkan Sirsak Points dengan membuang sampah di titik pengumpulan SirCle (RVM) dan Wartabak.",
-  "walletBankSampahBalance": "Saldo Bank Sampah",
-  "walletExpiry": "Masa Berlaku",
-  "walletGetRewards": "Dapatkan hadiahmu",
-  "walletHistory": "Riwayat",
-  "walletMonthly": "Bulan Ini",
-  "walletRewards": "Hadiah",
-  "walletRewardsDesc": "Tukarkan poin dengan voucher, diskon, dan produk eksklusif.",
-  "walletSirsakPoints": "Poin Sirsak",
-  "walletTitle": "Dompet",
-  "walletWithdraw": "Tarik",
-  "walletWithdrawDesc": "Ubah poin menjadi uang tunai dan transfer ke e-wallet.",
-  "welcomeUser": "Selamat datang, {userName}!",
-  "@welcomeUser": {
-    "placeholders": {
-      "userName": {
-        "type": "String"
-      }
-    }
-  }
+	"@@locale": "id",
+	"@dropPointDistance": {
+		"placeholders": {
+			"distance": {
+				"type": "String"
+			}
+		}
+	},
+	"@dropPointOpenUntil": {
+		"placeholders": {
+			"time": {
+				"type": "String"
+			}
+		}
+	},
+	"@homeChallengeProgress": {
+		"placeholders": {
+			"current": {
+				"type": "int"
+			},
+			"total": {
+				"type": "int"
+			},
+			"itemType": {
+				"type": "String"
+			}
+		}
+	},
+	"@homeGreeting": {
+		"placeholders": {
+			"userName": {
+				"type": "String"
+			}
+		}
+	},
+	"@itemCount": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"@profileMemberSince": {
+		"placeholders": {
+			"year": {
+				"type": "String"
+			}
+		}
+	},
+	"@welcomeUser": {
+		"placeholders": {
+			"userName": {
+				"type": "String"
+			}
+		}
+	},
+	"appName": "Sirsak Pop Nasabah",
+	"appVersion": "Versi {version}",
+	"@appVersion": {
+		"placeholders": {
+			"version": {
+				"type": "String"
+			}
+		}
+	},
+	"cancel": "Batal",
+	"changePasswordButton": "Ubah Kata Sandi",
+	"changePasswordConfirmPassword": "Konfirmasi Kata Sandi Baru",
+	"changePasswordNewPassword": "Kata Sandi Baru",
+	"changePasswordSuccess": "Kata sandi berhasil diubah",
+	"changePasswordTitle": "Ubah Kata Sandi",
+	"close": "Tutup",
+	"continueWithGoogle": "Lanjutkan dengan Google",
+	"deleteAccountConfirmButton": "Hapus Akun",
+	"deleteAccountConfirmationMessage": "Apakah Anda yakin ingin menghapus akun? Tindakan ini tidak dapat dibatalkan.",
+	"deleteAccountConfirmationTitle": "Hapus Akun?",
+	"deleteAccountSuccess": "Permintaan penghapusan akun berhasil",
+	"dontHaveAccount": "Belum punya akun?",
+	"dropPointBankSampah": "Bank Sampah",
+	"dropPointDetailAcceptedWaste": "Jenis Sampah yang Dapat Diterima",
+	"dropPointDetailGetDirections": "Petunjuk Arah",
+	"dropPointDistance": "{distance} km dari Anda",
+	"dropPointDropPoint": "Drop Point",
+	"dropPointFilter": "Filter",
+	"dropPointLocationFound": "Lokasi ditemukan",
+	"dropPointLocationPermissionMessage": "Aktifkan lokasi untuk melihat posisi Anda",
+	"dropPointNoResults": "Tidak ada drop point ditemukan",
+	"dropPointNoResultsHint": "Coba ubah pencarian atau filter Anda",
+	"dropPointOpenSettings": "Buka Pengaturan",
+	"dropPointOpenUntil": "Buka sampai {time}",
+	"dropPointRvm": "RVM",
+	"dropPointSearchPlaceholder": "Ketik nama daerahmu di sini...",
+	"dropPointSortBy": "Urutkan",
+	"dropPointTitle": "Drop Point",
+	"dropPointYourLocation": "Lokasimu",
+	"editProfileSaveButton": "Simpan Perubahan",
+	"editProfileSaveSuccess": "Profil berhasil diperbarui",
+	"editProfileTitle": "Edit Profil",
+	"emailAddress": "Alamat Email",
+	"emailInvalid": "Format email tidak valid",
+	"emailLabel": "Email",
+	"emailRequired": "Email wajib diisi",
+	"error": "Kesalahan",
+	"errorInvalidCredentials": "Email atau kata sandi salah. Silakan coba lagi.",
+	"errorLoginFailed": "Login gagal. Silakan coba lagi.",
+	"errorNetworkConnection": "Kesalahan jaringan. Silakan periksa koneksi Anda.",
+	"errorServerError": "Kesalahan server. Silakan coba lagi nanti.",
+	"forgotPassword": "Lupa Kata Sandi?",
+	"generalErrorTitle": "Terjadi kesalahan",
+	"getStarted": "Mulai",
+	"homeChallengeProgress": "{current}/{total} {itemType} terkumpulkan",
+	"homeChallenges": "Tantangan",
+	"homeChallengesDesc": "Selesaikan tantangan, dapatkan hadiahnya!",
+	"homeEvents": "Acara",
+	"homeGreeting": "Selamat datang kembali, {userName}!",
+	"homeHistory": "Riwayat",
+	"homeImpactCarbonLabel": "Emisi Karbon Terhindari",
+	"homeImpactRecycledLabel": "Sampah Terdaur Ulang",
+	"homeImpactWasteLabel": "Sampah Terkumpulkan",
+	"homePoints": "poin Sirsak",
+	"homeRegisterNow": "Daftar sekarang",
+	"homeRewards": "Hadiah",
+	"homeSetorSampah": "Setor Sampah",
+	"homeSetorSampahDesc": "Temukan Drop Point sampah terdekat!",
+	"homeTakeAction": "Ambil Aksi",
+	"homeWithdraw": "Tarik",
+	"homeYourImpact": "Dampak Anda",
+	"itemCount": "{count, plural, =0{Tidak ada item} =1{1 item} other{{count} item}}",
+	"landingPageContactEmail": "hello@sirsak.com",
+	"landingPageContactInstagram": "sirsak.hub",
+	"landingPageContactPhone": "+628 777 0808 578",
+	"landingPageFeature1": "**Temukan** titik pengumpulan sampah terdekat Anda",
+	"landingPageFeature2": "**Buanglah** sampah daur ulang yang sudah dipilah",
+	"landingPageFeature3": "**Dapatkan poin** dan tukarkan hadiah!",
+	"landingPageRegisterWithQrButton": "Daftar dengan QR",
+	"landingPageSignInButton": "Masuk",
+	"landingPageTitlePart1": "Membangun jaringan ",
+	"landingPageTitlePart2": "terbesar\ndan tertelusur",
+	"landingPageTitlePart3": " untuk limbah Indonesia",
+	"loading": "Memuat...",
+	"loginButton": "Masuk",
+	"loginTitle": "Masuk",
+	"ok": "OK",
+	"openEmailAppFailure": "Tidak dapat membuka aplikasi email",
+	"or": "atau",
+	"passwordLabel": "Kata Sandi",
+	"passwordMinLength": "Kata sandi minimal 6 karakter",
+	"passwordRequired": "Kata sandi wajib diisi",
+	"profileAccountTitle": "Akun",
+	"profileBadgesTitle": "Lencana Kamu",
+	"profileCarbonAvoided": "Emisi Karbon\nTerhindari",
+	"profileChangePassword": "Ubah Kata Sandi",
+	"profileChangePasswordDesc": "Ubah kata sandi akun anda",
+	"profileContactEmail": "Email",
+	"profileContactInstagram": "Instagram",
+	"profileContactPhone": "Telpon (Whatsapp chat):",
+	"profileContactUs": "Hubungi Kami:",
+	"profileDeleteAccount": "Hapus Akun",
+	"profileDeleteAccountDesc": "Hapus akun anda secara permanen",
+	"profileEdit": "Edit",
+	"profileEmailLabel": "Email",
+	"profileFaqLinkPre": "Lihat halaman FAQ ",
+	"profileFaqLinkText": "di sini",
+	"profileFaqQuestion": "Punya pertanyaan?",
+	"profileFaqTitle": "FAQ",
+	"profileLogout": "Keluar",
+	"profileMemberSince": "Member sejak {year}",
+	"profileNameLabel": "Nama",
+	"profilePersonalInfo": "Informasi Pribadi",
+	"profilePhoneLabel": "Nomor Telpon",
+	"profileWasteCollected": "Sampah\nTerkumpul",
+	"profileWasteRecycled": "Sampah\nTerdaur Ulang",
+	"qrScanCameraPermission": "Izin kamera diperlukan untuk memindai kode QR",
+	"qrScanDecryptionFailed": "Tidak dapat membaca kode QR. Silakan coba lagi.",
+	"qrScanInstruction": "Arahkan kamera ke kode QR",
+	"qrScanInvalidCode": "Kode QR ini tidak valid atau telah diubah",
+	"qrScanOpenSettings": "Buka Pengaturan",
+	"qrScanPermissionDeniedForever": "Izin kamera ditolak secara permanen. Silakan aktifkan di pengaturan.",
+	"qrScanTitle": "Pindai Kode QR",
+	"register": "Daftar",
+	"signIn": "Masuk",
+	"signUp": "Daftar",
+	"signupAlreadyHaveAccount": "Sudah punya akun?",
+	"signupConfirmPassword": "Konfirmasi Kata Sandi",
+	"signupConfirmPasswordRequired": "Silakan konfirmasi kata sandi Anda",
+	"signupFullName": "Nama Lengkap",
+	"signupFullNameRequired": "Nama lengkap wajib diisi",
+	"signupFullNameTooShort": "Nama lengkap minimal 2 karakter",
+	"signupOptional": "opsional",
+	"signupPasswordsDoNotMatch": "Kata sandi tidak cocok",
+	"signupPhoneHint": "+62 812 3456 7890",
+	"signupPhoneInvalid": "Format nomor telepon tidak valid",
+	"signupPhoneNumber": "Nomor Telepon",
+	"signupPrivacyPolicyLink": "Kebijakan Privasi",
+	"signupRegisteringAt": "Mendaftar di",
+	"signupTermsAnd": " dan ",
+	"signupTermsLink": "Syarat dan Ketentuan",
+	"signupTermsPrefix": "Saya menyetujui ",
+	"signupTermsRequired": "Anda harus menyetujui syarat dan ketentuan serta kebijakan privasi",
+	"splashTitle": "Selamat Datang",
+	"transactionDetailBarang": "Barang",
+	"transactionDetailHarga": "Harga",
+	"transactionDetailItems": "Item Transaksi",
+	"transactionDetailJumlah": "Jumlah",
+	"transactionDetailTitle": "Detail Transaksi",
+	"transactionDetailTotal": "Total",
+	"tutorialDesc1": "**Pisahkan** sampah daur ulang anda ke dalam kategori berikut: **plastik berlapis**, **botol PET**, **kertas**, dan **sampah daur ulang lainnya**.",
+	"tutorialDesc2": "**Bawa** dan buang sampah di **bank sampah dan titik pengumpulan lainnya** yang terdaftar dalam komunitas Sirsak.",
+	"tutorialDesc3": "**Dapatkan poin** untuk setiap sampah yang dikembalikan ke titik pengumpulan. Tukarkan dengan **voucher**, **diskon**, dan **hadiah** lainnya.",
+	"tutorialDesc4": "Kami memastikan semua sampah yang dikirim ke titik pengumpulan akan **ditangani secara bertanggung jawab** untuk **meminimalkan dampak lingkungan**.",
+	"tutorialSkip": "Lewatkan",
+	"tutorialStartButton": "Mulai Sekarang!",
+	"tutorialTitle1": "Pilah sampahmu",
+	"tutorialTitle2": "Buang sampah di titik pengumpulan terdekat Anda",
+	"tutorialTitle3": "Dapatkan hadiah eksklusif",
+	"tutorialTitle4": "Bergabunglah dengan komunitas kami",
+	"verifyEmailDescription": "Kami telah mengirimkan tautan verifikasi ke alamat email Anda. Silakan periksa kotak masuk Anda dan klik tautan untuk memverifikasi akun Anda.",
+	"verifyEmailGoToLogin": "Ke Halaman Masuk",
+	"verifyEmailOpenEmail": "Buka Aplikasi Email",
+	"verifyEmailTitle": "Periksa Email Anda",
+	"walletBalance": "Saldo Nasabah",
+	"walletBalanceInfoBankSampahDesc": "Dapatkan uang tunai dengan mengumpulkan sampah di bank sampah. Saldo bank sampah juga harus ditarik di bank sampah.",
+	"walletBalanceInfoSirsakPointsDesc": "Dapatkan Sirsak Points dengan membuang sampah di titik pengumpulan SirCle (RVM) dan Wartabak.",
+	"walletBankSampahBalance": "Saldo Bank Sampah",
+	"walletExpiry": "Masa Berlaku",
+	"walletGetRewards": "Dapatkan hadiahmu",
+	"walletHistory": "Riwayat",
+	"walletMonthly": "Bulan Ini",
+	"walletRewards": "Hadiah",
+	"walletRewardsDesc": "Tukarkan poin dengan voucher, diskon, dan produk eksklusif.",
+	"walletSirsakPoints": "Poin Sirsak",
+	"walletTitle": "Dompet",
+	"walletWithdraw": "Tarik",
+	"walletWithdrawDesc": "Ubah poin menjadi uang tunai dan transfer ke e-wallet.",
+	"welcomeUser": "Selamat datang, {userName}!"
 }

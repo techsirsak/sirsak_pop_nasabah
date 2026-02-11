@@ -175,4 +175,10 @@ class LoginViewModel extends _$LoginViewModel {
   void navigateToSignUp() {
     unawaited(ref.read(routerProvider).push(SAppRoutePath.signUp));
   }
+
+  void registerWithQR() {
+    unawaited(
+      ref.read(routerProvider).push('${SAppRoutePath.signUp}?openQr=true'),
+    );
+  }
 }

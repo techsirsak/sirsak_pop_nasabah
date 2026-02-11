@@ -19,60 +19,98 @@ class SplashViewModel extends _$SplashViewModel {
   }
 
   Future<void> initializeSplash() async {
+    final logger = ref.read(loggerServiceProvider)
+      ..info('[SplashViewModel] initializeSplash started');
     state = true; // Set loading state
 
     // Simulate initialization delay (2 seconds)
     await Future<void>.delayed(const Duration(seconds: 2));
+    logger.info('[SplashViewModel] delay completed');
 
     final localStorageService = ref.read(localStorageServiceProvider);
+    logger.info('[SplashViewModel] getting access token...');
     final accessToken = await localStorageService.getAccessToken();
+    logger.info(
+      '[SplashViewModel] accessToken exist: ${accessToken != null}',
+    );
 
     if (accessToken == null) {
       // No token, go to landing page
+      logger.info(
+        '[SplashViewModel] no access token, navigating to landing page',
+      );
       ref.read(routerProvider).go(SAppRoutePath.landingPage);
       return;
     }
 
     // Try to refresh token to validate session
+    logger.info('[SplashViewModel] getting refresh token...');
     final refreshToken = await localStorageService.getRefreshToken();
+    logger.info(
+      '[SplashViewModel] refreshToken exist: ${refreshToken != null}',
+    );
 
     if (refreshToken == null) {
       // No refresh token, clear and go to landing page
+      logger.info(
+        '[SplashViewModel] no refresh token, '
+        'clearing and navigating to landing page',
+      );
       await localStorageService.clearAllTokens();
       ref.read(routerProvider).go(SAppRoutePath.landingPage);
       return;
     }
 
     // Attempt to refresh the token
+    logger.info('[SplashViewModel] attempting to refresh token...');
     final isValid = await _refreshAccessToken(refreshToken);
+    logger.info('[SplashViewModel] token refresh result: $isValid');
 
     if (isValid) {
       // Fetch user data after successful token refresh
+      logger.info('[SplashViewModel] fetching current user...');
       final userFetched = await ref
           .read(currentUserProvider.notifier)
           .fetchCurrentUser();
+      logger.info('[SplashViewModel] user fetched: $userFetched');
 
       if (!userFetched) {
-        ref
-            .read(loggerServiceProvider)
-            .warning(
-              '[SplashViewModel] Failed to fetch user data on startup',
-            );
+        logger.warning(
+          '[SplashViewModel] Failed to fetch user data on startup',
+        );
         // Continue anyway - user can still use the app
       }
 
       // Fetch collection points in background (non-blocking)
+      logger.info(
+        '[SplashViewModel] starting collection points fetch in background',
+      );
       unawaited(
         ref
             .read(collectionPointsCacheProvider.notifier)
             .fetchAndCacheCollectionPoints(),
       );
 
+      logger.info('[SplashViewModel] navigating to home');
       ref.read(routerProvider).go(SAppRoutePath.home);
     } else {
       // Token refresh failed, clear tokens and go to landing page
+      logger.info(
+        '[SplashViewModel] token refresh failed, '
+        'clearing and navigating to landing page',
+      );
       await localStorageService.clearAllTokens();
-      ref.read(routerProvider).go(SAppRoutePath.landingPage);
+
+      // Check if tutorial needed and navigate
+      final hasSeenTutorial = await localStorageService.hasSeenTutorial();
+      logger.info('[SplashViewModel] hasSeenTutorial: $hasSeenTutorial');
+      if (hasSeenTutorial) {
+        logger.info('[SplashViewModel] navigating to login page');
+        ref.read(routerProvider).go(SAppRoutePath.login);
+      } else {
+        logger.info('[SplashViewModel] navigating to landing page');
+        ref.read(routerProvider).go(SAppRoutePath.landingPage);
+      }
     }
   }
 

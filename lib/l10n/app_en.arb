@@ -1,228 +1,237 @@
 {
-  "@@locale": "en",
-  "appName": "Sirsak Pop Nasabah",
-  "cancel": "Cancel",
-  "changePasswordButton": "Change Password",
-  "changePasswordConfirmPassword": "Confirm New Password",
-  "changePasswordNewPassword": "New Password",
-  "changePasswordSuccess": "Password changed successfully",
-  "changePasswordTitle": "Change Password",
-  "close": "Close",
-  "editProfileSaveButton": "Save Changes",
-  "editProfileSaveSuccess": "Profile updated successfully",
-  "editProfileTitle": "Edit Profile",
-  "dropPointBankSampah": "Bank Sampah",
-  "dropPointDetailAcceptedWaste": "Accepted Waste Types",
-  "dropPointDetailGetDirections": "Get Directions",
-  "dropPointDistance": "{distance} km away",
-  "@dropPointDistance": {
-    "placeholders": {
-      "distance": {
-        "type": "String"
-      }
-    }
-  },
-  "dropPointDropPoint": "Drop Point",
-  "dropPointFilter": "Filter",
-  "dropPointLocationFound": "Location found",
-  "dropPointLocationPermissionMessage": "Enable location to see your position",
-  "dropPointNoResults": "No drop points found",
-  "dropPointNoResultsHint": "Try adjusting your search or filters",
-  "dropPointOpenSettings": "Open Settings",
-  "dropPointOpenUntil": "Open until {time}",
-  "@dropPointOpenUntil": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "dropPointRvm": "RVM",
-  "dropPointSearchPlaceholder": "Ketik nama daerahmu di sini...",
-  "dropPointSortBy": "Sort By",
-  "dropPointTitle": "Drop Point",
-  "dropPointYourLocation": "Lokasimu",
-  "deleteAccountConfirmButton": "Delete Account",
-  "deleteAccountConfirmationMessage": "Are you sure you want to delete your account? This action cannot be undone.",
-  "deleteAccountConfirmationTitle": "Delete Account?",
-  "deleteAccountSuccess": "Account deletion requested successfully",
-  "continueWithGoogle": "Continue with Google",
-  "dontHaveAccount": "Don't have an account?",
-  "emailAddress": "Email Address",
-  "emailInvalid": "Invalid email format",
-  "errorInvalidCredentials": "Invalid email or password. Please try again.",
-  "emailLabel": "Email",
-  "emailRequired": "Email is required",
-  "error": "Error",
-  "errorLoginFailed": "Login failed. Please try again.",
-  "errorNetworkConnection": "Network error. Please check your connection.",
-  "errorServerError": "Server error. Please try again later.",
-  "forgotPassword": "Forgot Password?",
-  "generalErrorTitle": "Something went wrong",
-  "homeChallenges": "Challenges",
-  "homeChallengesDesc": "Complete challenges and get rewards!",
-  "homeChallengeProgress": "{current}/{total} {itemType} collected",
-  "@homeChallengeProgress": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      },
-      "itemType": {
-        "type": "String"
-      }
-    }
-  },
-  "homeEvents": "Events",
-  "homeGreeting": "Welcome back, {userName}!",
-  "@homeGreeting": {
-    "placeholders": {
-      "userName": {
-        "type": "String"
-      }
-    }
-  },
-  "homeHistory": "History",
-  "homeImpactCarbonLabel": "Avoided Carbon Emissions",
-  "homeImpactRecycledLabel": "Recycled Waste",
-  "homeImpactWasteLabel": "Waste Collected",
-  "homePoints": "Sirsak points",
-  "homeRegisterNow": "Register now",
-  "homeRewards": "Rewards",
-  "homeSetorSampah": "Setor Sampah",
-  "homeSetorSampahDesc": "Find your nearest drop point!",
-  "homeTakeAction": "Take Action",
-  "homeWithdraw": "Withdraw",
-  "homeYourImpact": "Your Impact",
-  "itemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
-  "@itemCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "landingPageContactEmail": "hello@sirsak.com",
-  "landingPageContactInstagram": "sirsak.hub",
-  "landingPageContactPhone": "+628 777 0808 578",
-  "landingPageFeature1": "**Search** for your nearest waste collection points",
-  "landingPageFeature2": "**Drop** your separated recyclable waste",
-  "landingPageFeature3": "**Get points** and redeem rewards!",
-  "landingPageGetStartedButton": "Get Started",
-  "landingPageRegisterWithQrButton": "Register with QR",
-  "landingPageSignInButton": "Sign in",
-  "landingPageTitlePart1": "Building Indonesia's ",
-  "landingPageTitlePart2": "largest,\ntraceable",
-  "landingPageTitlePart3": " waste value chain network",
-  "loading": "Loading...",
-  "loginButton": "Login",
-  "loginTitle": "Login",
-  "ok": "OK",
-  "openEmailAppFailure": "Unable to open email app",
-  "or": "or",
-  "profileAccountTitle": "Akun",
-  "profileBadgesTitle": "Your Badges",
-  "profileCarbonAvoided": "Emisi Karbon\nTerhindari",
-  "profileChangePassword": "Ubah Kata Sandi",
-  "profileChangePasswordDesc": "Ubah kata sandi akun anda",
-  "profileContactEmail": "Email",
-  "profileContactInstagram": "Instagram",
-  "profileContactPhone": "Telpon (Whatsapp chat):",
-  "profileContactUs": "Hubungi Kami:",
-  "profileDeleteAccount": "Hapus Akun",
-  "profileDeleteAccountDesc": "Hapus akun anda secara permanen",
-  "profileEdit": "Edit",
-  "profileEmailLabel": "Email",
-  "profileFaqLinkPre": "Lihat halaman FAQ ",
-  "profileFaqLinkText": "di sini",
-  "profileFaqQuestion": "Punya pertanyaan?",
-  "profileFaqTitle": "FAQ",
-  "profileLogout": "Log out",
-  "profileMemberSince": "Member sejak {year}",
-  "@profileMemberSince": {
-    "placeholders": {
-      "year": {
-        "type": "String"
-      }
-    }
-  },
-  "profileNameLabel": "Nama",
-  "profilePersonalInfo": "Informasi Pribadi",
-  "profilePhoneLabel": "Nomor Telpon",
-  "profileWasteCollected": "Sampah\nTerkumpul",
-  "profileWasteRecycled": "Sampah\nTerdaur Ulang",
-  "qrScanCameraPermission": "Camera permission is required to scan QR codes",
-  "qrScanDecryptionFailed": "Unable to read QR code. Please try again.",
-  "qrScanInstruction": "Point your camera at the QR code",
-  "qrScanInvalidCode": "This QR code is not valid or has been tampered with",
-  "qrScanOpenSettings": "Open Settings",
-  "qrScanPermissionDeniedForever": "Camera permission was permanently denied. Please enable it in settings.",
-  "qrScanTitle": "Scan QR Code",
-  "passwordLabel": "Password",
-  "passwordMinLength": "Password must be at least 6 characters",
-  "passwordRequired": "Password is required",
-  "signIn": "Sign In",
-  "signUp": "Sign Up",
-  "signupAlreadyHaveAccount": "Already have an account?",
-  "signupConfirmPassword": "Confirm Password",
-  "signupConfirmPasswordRequired": "Please confirm your password",
-  "signupFullName": "Full Name",
-  "signupFullNameRequired": "Full name is required",
-  "signupFullNameTooShort": "Full name must be at least 2 characters",
-  "signupOptional": "optional",
-  "signupPasswordsDoNotMatch": "Passwords do not match",
-  "signupPhoneHint": "+62 812 3456 7890",
-  "signupPhoneInvalid": "Invalid phone number format",
-  "signupPhoneNumber": "Phone Number",
-  "signupPrivacyPolicyLink": "Privacy Policy",
-  "signupRegisteringAt": "Registering at",
-  "signupTermsAnd": " and ",
-  "signupTermsLink": "Terms and Conditions",
-  "signupTermsPrefix": "I agree to the ",
-  "signupTermsRequired": "You must accept the terms and conditions and privacy policy",
-  "splashTitle": "Welcome",
-  "transactionDetailBarang": "Item",
-  "transactionDetailHarga": "Price",
-  "transactionDetailItems": "Transaction Items",
-  "transactionDetailJumlah": "Qty",
-  "transactionDetailTitle": "Transaction Detail",
-  "transactionDetailTotal": "Total",
-  "tutorialDesc1": "Separate your recyclable waste into the following categories: **plastic wrappers**, **PET bottles**, **paper**, and **other recyclables**.",
-  "tutorialDesc2": "Bring and dispose waste at **waste banks** and **other collection points** registered in the Sirsak community.",
-  "tutorialDesc3": "Earn points for every waste returned to collection points. Exchange with **vouchers**, **discounts**, and other **rewards**.",
-  "tutorialDesc4": "We ensure all waste sent to collection points will be **handled responsibly** to **minimize environmental impact**.",
-  "tutorialSkip": "Skip",
-  "tutorialStartButton": "Start Now!",
-  "tutorialTitle1": "Sort your waste",
-  "tutorialTitle2": "Dispose at nearby collection points",
-  "tutorialTitle3": "Get exclusive rewards",
-  "tutorialTitle4": "Join our community",
-  "verifyEmailDescription": "We've sent a verification link to your email address. Please check your inbox and click the link to verify your account.",
-  "verifyEmailGoToLogin": "Go to Login",
-  "verifyEmailOpenEmail": "Open Email App",
-  "verifyEmailTitle": "Check Your Email",
-  "walletBalance": "Saldo Nasabah",
-  "walletBalanceInfoBankSampahDesc": "Get cash by collecting waste at waste banks. Waste bank balance must also be withdrawn at the waste bank.",
-  "walletBalanceInfoSirsakPointsDesc": "Get Sirsak Points by disposing waste at SirCle (RVM) and Wartabak collection points.",
-  "walletBankSampahBalance": "Saldo Bank Sampah",
-  "walletExpiry": "Masa Berlaku",
-  "walletGetRewards": "Get your rewards",
-  "walletHistory": "History",
-  "walletMonthly": "Bulan Ini",
-  "walletRewards": "Rewards",
-  "walletRewardsDesc": "Tukarkan poin dengan voucher, diskon, dan produk eksklusif.",
-  "walletSirsakPoints": "Sirsak Points",
-  "walletTitle": "Wallet",
-  "walletWithdraw": "Withdraw",
-  "walletWithdrawDesc": "Ubah poin menjadi uang tunai dan transfer ke e-wallet.",
-  "welcomeUser": "Welcome, {userName}!",
-  "@welcomeUser": {
-    "placeholders": {
-      "userName": {
-        "type": "String"
-      }
-    }
-  }
+	"@@locale": "en",
+	"@dropPointDistance": {
+		"placeholders": {
+			"distance": {
+				"type": "String"
+			}
+		}
+	},
+	"@dropPointOpenUntil": {
+		"placeholders": {
+			"time": {
+				"type": "String"
+			}
+		}
+	},
+	"@homeChallengeProgress": {
+		"placeholders": {
+			"current": {
+				"type": "int"
+			},
+			"total": {
+				"type": "int"
+			},
+			"itemType": {
+				"type": "String"
+			}
+		}
+	},
+	"@homeGreeting": {
+		"placeholders": {
+			"userName": {
+				"type": "String"
+			}
+		}
+	},
+	"@itemCount": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"@profileMemberSince": {
+		"placeholders": {
+			"year": {
+				"type": "String"
+			}
+		}
+	},
+	"@welcomeUser": {
+		"placeholders": {
+			"userName": {
+				"type": "String"
+			}
+		}
+	},
+	"appName": "Sirsak Pop Nasabah",
+	"appVersion": "Version {version}",
+	"@appVersion": {
+		"placeholders": {
+			"version": {
+				"type": "String"
+			}
+		}
+	},
+	"cancel": "Cancel",
+	"changePasswordButton": "Change Password",
+	"changePasswordConfirmPassword": "Confirm New Password",
+	"changePasswordNewPassword": "New Password",
+	"changePasswordSuccess": "Password changed successfully",
+	"changePasswordTitle": "Change Password",
+	"close": "Close",
+	"continueWithGoogle": "Continue with Google",
+	"deleteAccountConfirmButton": "Delete Account",
+	"deleteAccountConfirmationMessage": "Are you sure you want to delete your account? This action cannot be undone.",
+	"deleteAccountConfirmationTitle": "Delete Account?",
+	"deleteAccountSuccess": "Account deletion requested successfully",
+	"dontHaveAccount": "Don't have an account?",
+	"dropPointBankSampah": "Bank Sampah",
+	"dropPointDetailAcceptedWaste": "Accepted Waste Types",
+	"dropPointDetailGetDirections": "Get Directions",
+	"dropPointDistance": "{distance} km away",
+	"dropPointDropPoint": "Drop Point",
+	"dropPointFilter": "Filter",
+	"dropPointLocationFound": "Location found",
+	"dropPointLocationPermissionMessage": "Enable location to see your position",
+	"dropPointNoResults": "No drop points found",
+	"dropPointNoResultsHint": "Try adjusting your search or filters",
+	"dropPointOpenSettings": "Open Settings",
+	"dropPointOpenUntil": "Open until {time}",
+	"dropPointRvm": "RVM",
+	"dropPointSearchPlaceholder": "Ketik nama daerahmu di sini...",
+	"dropPointSortBy": "Sort By",
+	"dropPointTitle": "Drop Point",
+	"dropPointYourLocation": "Lokasimu",
+	"editProfileSaveButton": "Save Changes",
+	"editProfileSaveSuccess": "Profile updated successfully",
+	"editProfileTitle": "Edit Profile",
+	"emailAddress": "Email Address",
+	"emailInvalid": "Invalid email format",
+	"emailLabel": "Email",
+	"emailRequired": "Email is required",
+	"error": "Error",
+	"errorInvalidCredentials": "Invalid email or password. Please try again.",
+	"errorLoginFailed": "Login failed. Please try again.",
+	"errorNetworkConnection": "Network error. Please check your connection.",
+	"errorServerError": "Server error. Please try again later.",
+	"forgotPassword": "Forgot Password?",
+	"generalErrorTitle": "Something went wrong",
+	"getStarted": "Get Started",
+	"homeChallengeProgress": "{current}/{total} {itemType} collected",
+	"homeChallenges": "Challenges",
+	"homeChallengesDesc": "Complete challenges and get rewards!",
+	"homeEvents": "Events",
+	"homeGreeting": "Welcome back, {userName}!",
+	"homeHistory": "History",
+	"homeImpactCarbonLabel": "Avoided Carbon Emissions",
+	"homeImpactRecycledLabel": "Recycled Waste",
+	"homeImpactWasteLabel": "Waste Collected",
+	"homePoints": "Sirsak points",
+	"homeRegisterNow": "Register now",
+	"homeRewards": "Rewards",
+	"homeSetorSampah": "Setor Sampah",
+	"homeSetorSampahDesc": "Find your nearest drop point!",
+	"homeTakeAction": "Take Action",
+	"homeWithdraw": "Withdraw",
+	"homeYourImpact": "Your Impact",
+	"itemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
+	"landingPageContactEmail": "hello@sirsak.com",
+	"landingPageContactInstagram": "sirsak.hub",
+	"landingPageContactPhone": "+628 777 0808 578",
+	"landingPageFeature1": "**Search** for your nearest waste collection points",
+	"landingPageFeature2": "**Drop** your separated recyclable waste",
+	"landingPageFeature3": "**Get points** and redeem rewards!",
+	"landingPageRegisterWithQrButton": "Register with QR",
+	"landingPageSignInButton": "Sign in",
+	"landingPageTitlePart1": "Building Indonesia's ",
+	"landingPageTitlePart2": "largest,\ntraceable",
+	"landingPageTitlePart3": " waste value chain network",
+	"loading": "Loading...",
+	"loginButton": "Login",
+	"loginTitle": "Login",
+	"ok": "OK",
+	"openEmailAppFailure": "Unable to open email app",
+	"or": "or",
+	"passwordLabel": "Password",
+	"passwordMinLength": "Password must be at least 6 characters",
+	"passwordRequired": "Password is required",
+	"profileAccountTitle": "Akun",
+	"profileBadgesTitle": "Your Badges",
+	"profileCarbonAvoided": "Emisi Karbon\nTerhindari",
+	"profileChangePassword": "Ubah Kata Sandi",
+	"profileChangePasswordDesc": "Ubah kata sandi akun anda",
+	"profileContactEmail": "Email",
+	"profileContactInstagram": "Instagram",
+	"profileContactPhone": "Telpon (Whatsapp chat):",
+	"profileContactUs": "Hubungi Kami:",
+	"profileDeleteAccount": "Hapus Akun",
+	"profileDeleteAccountDesc": "Hapus akun anda secara permanen",
+	"profileEdit": "Edit",
+	"profileEmailLabel": "Email",
+	"profileFaqLinkPre": "Lihat halaman FAQ ",
+	"profileFaqLinkText": "di sini",
+	"profileFaqQuestion": "Punya pertanyaan?",
+	"profileFaqTitle": "FAQ",
+	"profileLogout": "Log out",
+	"profileMemberSince": "Member sejak {year}",
+	"profileNameLabel": "Nama",
+	"profilePersonalInfo": "Informasi Pribadi",
+	"profilePhoneLabel": "Nomor Telpon",
+	"profileWasteCollected": "Sampah\nTerkumpul",
+	"profileWasteRecycled": "Sampah\nTerdaur Ulang",
+	"qrScanCameraPermission": "Camera permission is required to scan QR codes",
+	"qrScanDecryptionFailed": "Unable to read QR code. Please try again.",
+	"qrScanInstruction": "Point your camera at the QR code",
+	"qrScanInvalidCode": "This QR code is not valid or has been tampered with",
+	"qrScanOpenSettings": "Open Settings",
+	"qrScanPermissionDeniedForever": "Camera permission was permanently denied. Please enable it in settings.",
+	"qrScanTitle": "Scan QR Code",
+	"register": "Register",
+	"signIn": "Sign In",
+	"signUp": "Sign Up",
+	"signupAlreadyHaveAccount": "Already have an account?",
+	"signupConfirmPassword": "Confirm Password",
+	"signupConfirmPasswordRequired": "Please confirm your password",
+	"signupFullName": "Full Name",
+	"signupFullNameRequired": "Full name is required",
+	"signupFullNameTooShort": "Full name must be at least 2 characters",
+	"signupOptional": "optional",
+	"signupPasswordsDoNotMatch": "Passwords do not match",
+	"signupPhoneHint": "+62 812 3456 7890",
+	"signupPhoneInvalid": "Invalid phone number format",
+	"signupPhoneNumber": "Phone Number",
+	"signupPrivacyPolicyLink": "Privacy Policy",
+	"signupRegisteringAt": "Registering at",
+	"signupTermsAnd": " and ",
+	"signupTermsLink": "Terms and Conditions",
+	"signupTermsPrefix": "I agree to the ",
+	"signupTermsRequired": "You must accept the terms and conditions and privacy policy",
+	"splashTitle": "Welcome",
+	"transactionDetailBarang": "Item",
+	"transactionDetailHarga": "Price",
+	"transactionDetailItems": "Transaction Items",
+	"transactionDetailJumlah": "Qty",
+	"transactionDetailTitle": "Transaction Detail",
+	"transactionDetailTotal": "Total",
+	"tutorialDesc1": "Separate your recyclable waste into the following categories: **plastic wrappers**, **PET bottles**, **paper**, and **other recyclables**.",
+	"tutorialDesc2": "Bring and dispose waste at **waste banks** and **other collection points** registered in the Sirsak community.",
+	"tutorialDesc3": "Earn points for every waste returned to collection points. Exchange with **vouchers**, **discounts**, and other **rewards**.",
+	"tutorialDesc4": "We ensure all waste sent to collection points will be **handled responsibly** to **minimize environmental impact**.",
+	"tutorialSkip": "Skip",
+	"tutorialStartButton": "Start Now!",
+	"tutorialTitle1": "Sort your waste",
+	"tutorialTitle2": "Dispose at nearby collection points",
+	"tutorialTitle3": "Get exclusive rewards",
+	"tutorialTitle4": "Join our community",
+	"verifyEmailDescription": "We've sent a verification link to your email address. Please check your inbox and click the link to verify your account.",
+	"verifyEmailGoToLogin": "Go to Login",
+	"verifyEmailOpenEmail": "Open Email App",
+	"verifyEmailTitle": "Check Your Email",
+	"walletBalance": "Saldo Nasabah",
+	"walletBalanceInfoBankSampahDesc": "Get cash by collecting waste at waste banks. Waste bank balance must also be withdrawn at the waste bank.",
+	"walletBalanceInfoSirsakPointsDesc": "Get Sirsak Points by disposing waste at SirCle (RVM) and Wartabak collection points.",
+	"walletBankSampahBalance": "Saldo Bank Sampah",
+	"walletExpiry": "Masa Berlaku",
+	"walletGetRewards": "Get your rewards",
+	"walletHistory": "History",
+	"walletMonthly": "Bulan Ini",
+	"walletRewards": "Rewards",
+	"walletRewardsDesc": "Tukarkan poin dengan voucher, diskon, dan produk eksklusif.",
+	"walletSirsakPoints": "Sirsak Points",
+	"walletTitle": "Wallet",
+	"walletWithdraw": "Withdraw",
+	"walletWithdrawDesc": "Ubah poin menjadi uang tunai dan transfer ke e-wallet.",
+	"welcomeUser": "Welcome, {userName}!"
 }

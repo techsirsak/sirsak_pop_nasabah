@@ -200,19 +200,18 @@ class UrlLauncherService {
     required double lat,
     required double lng,
   }) async {
-    // Try Google Maps first, fallback to Apple Maps on iOS
     final googleMapsUrl = Uri.parse(
-      'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng',
+      'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
     );
 
     try {
-      _launchUri(googleMapsUrl, mode: LaunchMode.externalApplication);
+      await _launchUri(googleMapsUrl, mode: LaunchMode.externalApplication);
     } catch (e) {
       // Fallback to Apple Maps
       final appleMapsUrl = Uri.parse(
-        'https://maps.apple.com/?daddr=$lat,$lng&dirflg=d',
+        'https://maps.apple.com/?ll=$lat,$lng&q=$lat,$lng',
       );
-      _launchUri(appleMapsUrl, mode: LaunchMode.externalApplication);
+      await _launchUri(appleMapsUrl, mode: LaunchMode.externalApplication);
     }
   }
 
@@ -224,6 +223,28 @@ class UrlLauncherService {
   /// Launch privacy policy
   void launchPrivacyPolicy() {
     unawaited(launchGenericUrl(privacyPolicyUrl));
+  }
+
+  /// Launch FAQ
+  void launchSirsakFAQ() {
+    unawaited(launchGenericUrl(faqUrl));
+  }
+
+  /// Launch Sirsak Phone
+  void launchSirsakPhoneCP() {
+    unawaited(launchPhone(sirsakPhoneCP));
+  }
+
+  void contactSirsakWA() {
+    unawaited(launchWhatsApp(sirsakPhoneCP));
+  }
+
+  void openEmailSirsak() {
+    unawaited(launchEmail(sirsakEmailCP));
+  }
+
+  void openSirsakInstagram() {
+    unawaited(launchInstagram(sirsakIG));
   }
 
   /// Launch a generic URL

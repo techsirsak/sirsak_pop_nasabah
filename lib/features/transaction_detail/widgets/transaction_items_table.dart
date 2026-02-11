@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/models/user/transaction_item_model.dart';
