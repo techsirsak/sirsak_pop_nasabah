@@ -95,10 +95,21 @@ class SplashViewModel extends _$SplashViewModel {
     } else {
       // Token refresh failed, clear tokens and go to landing page
       logger.info(
-        '[SplashViewModel] token refresh failed, clearing and navigating to landing page',
+        '[SplashViewModel] token refresh failed, '
+        'clearing and navigating to landing page',
       );
       await localStorageService.clearAllTokens();
-      ref.read(routerProvider).go(SAppRoutePath.landingPage);
+
+      // Check if tutorial needed and navigate
+      final hasSeenTutorial = await localStorageService.hasSeenTutorial();
+      logger.info('[SplashViewModel] hasSeenTutorial: $hasSeenTutorial');
+      if (hasSeenTutorial) {
+        logger.info('[SplashViewModel] navigating to login page');
+        ref.read(routerProvider).go(SAppRoutePath.login);
+      } else {
+        logger.info('[SplashViewModel] navigating to landing page');
+        ref.read(routerProvider).go(SAppRoutePath.landingPage);
+      }
     }
   }
 
