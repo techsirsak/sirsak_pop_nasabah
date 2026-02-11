@@ -163,6 +163,7 @@ class _FeatureItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
+        mainAxisSize: .min,
         children: [
           // Icon container
           Icon(
@@ -172,7 +173,7 @@ class _FeatureItem extends StatelessWidget {
           ),
           const SizedBox(width: 16),
 
-          Expanded(
+          Flexible(
             child: RichText(
               text: TextSpan(
                 children: parseRichText(
