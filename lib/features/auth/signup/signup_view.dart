@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +14,11 @@ import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/password_field.dart';
 
 class SignUpView extends ConsumerStatefulWidget {
-  const SignUpView({super.key});
+  const SignUpView({super.key, this.openQrOnLoad = false});
+
+  /// When true, automatically opens QR scanner after the view is built.
+  /// Used when navigating from "Register with QR" on login screen.
+  final bool openQrOnLoad;
 
   @override
   ConsumerState<SignUpView> createState() => _SignUpViewState();
@@ -36,6 +42,15 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
     _confirmPasswordController = TextEditingController(
       text: state.confirmPassword,
     );
+
+    // Auto-open QR scanner if requested (from "Register with QR" on login)
+    if (widget.openQrOnLoad) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        unawaited(
+          ref.read(signupViewModelProvider.notifier).navigateToQrScan(),
+        );
+      });
+    }
   }
 
   @override

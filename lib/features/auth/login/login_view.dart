@@ -39,12 +39,13 @@ class LoginView extends ConsumerWidget {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () => context.go(SAppRoutePath.landingPage),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.chevron_left,
+            size: 32,
           ),
-        ],
+          onPressed: () => context.go(SAppRoutePath.landingPage),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -169,7 +170,7 @@ class LoginView extends ConsumerWidget {
                 isLoading: state.isLoading,
               ),
 
-              const Gap(24),
+              // const Gap(12),
 
               // TODO(devin): enabled when implement sign in with google
               // // Divider with "or" text
@@ -199,16 +200,16 @@ class LoginView extends ConsumerWidget {
               //   ],
               // ),
 
-              // const Gap(24),
+              // const Gap(12),
 
               // // Continue with Google Button (Disabled)
               // SButton(
+              //   icon: PhosphorIcons.googleLogo(),
               //   text: context.l10n.continueWithGoogle,
               //   variant: ButtonVariant.outlined,
               //   size: ButtonSize.large,
               // ),
-
-              // const Gap(24),
+              const Gap(24),
 
               // Don't have account? Sign Up
               Center(
@@ -227,6 +228,26 @@ class LoginView extends ConsumerWidget {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = viewModel.navigateToSignUp,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const Gap(12),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurface,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: context.l10n.landingPageRegisterWithQrButton,
+                        style: textTheme.titleSmall?.copyWith(
+                          color: colorScheme.tertiary,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = viewModel.registerWithQR,
                       ),
                     ],
                   ),

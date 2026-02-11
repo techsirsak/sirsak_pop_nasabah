@@ -70,10 +70,13 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: SAppRoutePath.signUp,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const SignUpView(),
-        ),
+        pageBuilder: (context, state) {
+          final openQr = state.uri.queryParameters['openQr'] == 'true';
+          return MaterialPage(
+            key: state.pageKey,
+            child: SignUpView(openQrOnLoad: openQr),
+          );
+        },
       ),
       GoRoute(
         path: SAppRoutePath.tutorial,

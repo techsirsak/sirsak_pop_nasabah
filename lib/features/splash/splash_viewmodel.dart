@@ -19,8 +19,8 @@ class SplashViewModel extends _$SplashViewModel {
   }
 
   Future<void> initializeSplash() async {
-    final logger = ref.read(loggerServiceProvider);
-    logger.info('[SplashViewModel] initializeSplash started');
+    final logger = ref.read(loggerServiceProvider)
+      ..info('[SplashViewModel] initializeSplash started');
     state = true; // Set loading state
 
     // Simulate initialization delay (2 seconds)
@@ -31,7 +31,7 @@ class SplashViewModel extends _$SplashViewModel {
     logger.info('[SplashViewModel] getting access token...');
     final accessToken = await localStorageService.getAccessToken();
     logger.info(
-      '[SplashViewModel] accessToken: ${accessToken != null ? "exists" : "null"}',
+      '[SplashViewModel] accessToken exist: ${accessToken != null}',
     );
 
     if (accessToken == null) {
@@ -47,13 +47,14 @@ class SplashViewModel extends _$SplashViewModel {
     logger.info('[SplashViewModel] getting refresh token...');
     final refreshToken = await localStorageService.getRefreshToken();
     logger.info(
-      '[SplashViewModel] refreshToken: ${refreshToken != null ? "exists" : "null"}',
+      '[SplashViewModel] refreshToken exist: ${refreshToken != null}',
     );
 
     if (refreshToken == null) {
       // No refresh token, clear and go to landing page
       logger.info(
-        '[SplashViewModel] no refresh token, clearing and navigating to landing page',
+        '[SplashViewModel] no refresh token, '
+        'clearing and navigating to landing page',
       );
       await localStorageService.clearAllTokens();
       ref.read(routerProvider).go(SAppRoutePath.landingPage);
