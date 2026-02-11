@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default values
-BUILD_PLATFORM="all"  # android, ios, web, or all
+BUILD_PLATFORM="all"  # android, ios, web, mobile, or all
 BUILD_TYPE="both"  # aab, apk, or both (Android only)
 BUILD_FLAVOR="both"  # dev, prod, or both
 
@@ -24,13 +24,16 @@ show_help() {
   echo "Build application for Android (AAB/APK), iOS, and/or Web platforms."
   echo ""
   echo "Options:"
-  echo "  -p, --platform PLATFORM  Build platform: 'android', 'ios', 'web', or 'all' (default: all)"
+  echo "  -p, --platform PLATFORM  Build platform: 'android', 'ios', 'web', 'mobile', or 'all' (default: all)"
+  echo "                           'mobile' builds Android AAB + iOS IPA (store releases)"
   echo "  -t, --type TYPE          Build type (Android only): 'aab', 'apk', or 'both' (default: both)"
   echo "  -f, --flavor FLAVOR      Build flavor: 'dev', 'prod', or 'both' (default: both)"
   echo "  -h, --help              Show this help message"
   echo ""
   echo "Examples:"
   echo "  $0                                        # Build everything (Android AAB+APK, iOS, and Web for both flavors)"
+  echo "  $0 --platform mobile                      # Build mobile only (Android AAB + iOS IPA) for both flavors"
+  echo "  $0 --platform mobile -f prod              # Build production mobile only (Android AAB + iOS IPA)"
   echo "  $0 --platform web                         # Build Web only for both flavors"
   echo "  $0 --platform ios                         # Build iOS only for both flavors"
   echo "  $0 --platform android --type apk          # Build Android APK only for both flavors"
@@ -46,8 +49,8 @@ while [[ $# -gt 0 ]]; do
   case $1 in
     -p|--platform)
       BUILD_PLATFORM="$2"
-      if [[ ! "$BUILD_PLATFORM" =~ ^(android|ios|web|all)$ ]]; then
-        echo -e "${RED}Error: Invalid platform '$BUILD_PLATFORM'. Must be 'android', 'ios', 'web', or 'all'${NC}"
+      if [[ ! "$BUILD_PLATFORM" =~ ^(android|ios|web|mobile|all)$ ]]; then
+        echo -e "${RED}Error: Invalid platform '$BUILD_PLATFORM'. Must be 'android', 'ios', 'web', 'mobile', or 'all'${NC}"
         exit 1
       fi
       shift 2
@@ -109,11 +112,11 @@ if [[ "$BUILD_FLAVOR" == "prod" ]] || [[ "$BUILD_FLAVOR" == "both" ]]; then
   BUILD_PROD=true
 fi
 
-if [[ "$BUILD_PLATFORM" == "android" ]] || [[ "$BUILD_PLATFORM" == "all" ]]; then
+if [[ "$BUILD_PLATFORM" == "android" ]] || [[ "$BUILD_PLATFORM" == "mobile" ]] || [[ "$BUILD_PLATFORM" == "all" ]]; then
   BUILD_ANDROID=true
 fi
 
-if [[ "$BUILD_PLATFORM" == "ios" ]] || [[ "$BUILD_PLATFORM" == "all" ]]; then
+if [[ "$BUILD_PLATFORM" == "ios" ]] || [[ "$BUILD_PLATFORM" == "mobile" ]] || [[ "$BUILD_PLATFORM" == "all" ]]; then
   BUILD_IOS=true
 fi
 
@@ -121,12 +124,18 @@ if [[ "$BUILD_PLATFORM" == "web" ]] || [[ "$BUILD_PLATFORM" == "all" ]]; then
   BUILD_WEB=true
 fi
 
-if [[ "$BUILD_TYPE" == "aab" ]] || [[ "$BUILD_TYPE" == "both" ]]; then
+# For mobile platform, only build AAB (not APK) - store releases only
+if [[ "$BUILD_PLATFORM" == "mobile" ]]; then
+  BUILD_AAB=true
+  BUILD_APK=false
+elif [[ "$BUILD_TYPE" == "aab" ]] || [[ "$BUILD_TYPE" == "both" ]]; then
   BUILD_AAB=true
 fi
 
-if [[ "$BUILD_TYPE" == "apk" ]] || [[ "$BUILD_TYPE" == "both" ]]; then
-  BUILD_APK=true
+if [[ "$BUILD_PLATFORM" != "mobile" ]]; then
+  if [[ "$BUILD_TYPE" == "apk" ]] || [[ "$BUILD_TYPE" == "both" ]]; then
+    BUILD_APK=true
+  fi
 fi
 
 # Calculate total steps
@@ -262,7 +271,11 @@ build_ios() {
 
   if [ $? -eq 0 ]; then
     local output_dir="build/ios/ipa"
-    local flavor_output_dir="build/ios/ipa-${flavor}"
+    local ios_output_base="build/app/outputs/ios"
+    local flavor_output_dir="${ios_output_base}/${flavor}Release"
+
+    # Create output directory if it doesn't exist
+    mkdir -p "$ios_output_base"
 
     # Remove old flavor build if exists
     [ -d "$flavor_output_dir" ] && rm -rf "$flavor_output_dir"
