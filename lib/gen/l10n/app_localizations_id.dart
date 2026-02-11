@@ -12,6 +12,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
+  String appVersion(String version) {
+    return 'Versi $version';
+  }
+
+  @override
   String get cancel => 'Batal';
 
   @override

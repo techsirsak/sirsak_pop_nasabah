@@ -12,6 +12,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
+  String appVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
   String get cancel => 'Cancel';
 
   @override

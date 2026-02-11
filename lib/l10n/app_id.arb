@@ -56,6 +56,14 @@
 		}
 	},
 	"appName": "Sirsak Pop Nasabah",
+	"appVersion": "Versi {version}",
+	"@appVersion": {
+		"placeholders": {
+			"version": {
+				"type": "String"
+			}
+		}
+	},
 	"cancel": "Batal",
 	"changePasswordButton": "Ubah Kata Sandi",
 	"changePasswordConfirmPassword": "Konfirmasi Kata Sandi Baru",

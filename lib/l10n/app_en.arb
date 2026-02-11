@@ -56,6 +56,14 @@
 		}
 	},
 	"appName": "Sirsak Pop Nasabah",
+	"appVersion": "Version {version}",
+	"@appVersion": {
+		"placeholders": {
+			"version": {
+				"type": "String"
+			}
+		}
+	},
 	"cancel": "Cancel",
 	"changePasswordButton": "Change Password",
 	"changePasswordConfirmPassword": "Confirm New Password",

@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'Sirsak Pop Nasabah'**
   String get appName;
 
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String appVersion(String version);
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
