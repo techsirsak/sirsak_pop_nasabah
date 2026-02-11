@@ -160,7 +160,8 @@ class _FeatureItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Padding(
+    return Container(
+      width: 400,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisSize: .min,
@@ -194,6 +195,7 @@ class _FeatureItem extends StatelessWidget {
   }
 }
 
+// sirsak_placeholder_email_1754035278628@gmail.com
 /// Contact link widget with icon and text
 class _ContactLink extends StatelessWidget {
   const _ContactLink({
