@@ -66,16 +66,26 @@ class CollectionPointsCacheNotifier extends _$CollectionPointsCacheNotifier {
       final service = ref.read(collectionPointServiceProvider);
       final response = await service.getCollectionPoints();
 
+      // Filter out collection points without address or coordinates
+      final validPoints = response.data.where((point) {
+        final hasAddress =
+            point.alamatLengkap != null &&
+            point.alamatLengkap!.trim().isNotEmpty;
+        final hasCoordinates =
+            point.latitude != null && point.longitude != null;
+        return hasAddress || hasCoordinates;
+      }).toList();
+
       // Save to cache
       final localStorage = ref.read(localStorageServiceProvider);
-      await localStorage.saveCollectionPoints(response.data);
+      await localStorage.saveCollectionPoints(validPoints);
 
-      state = state.copyWith(points: response.data, isLoading: false);
+      state = state.copyWith(points: validPoints, isLoading: false);
       ref
           .read(loggerServiceProvider)
           .info(
-            '[CollectionPointsCache] Fetched and cached ${response.data.length}'
-            ' points from API',
+            '[CollectionPointsCache] Fetched ${response.data.length} points, '
+            'cached ${validPoints.length} valid points from API',
           );
       return true;
     } catch (e, stackTrace) {

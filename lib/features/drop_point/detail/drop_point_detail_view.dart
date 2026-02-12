@@ -224,54 +224,55 @@ class _InfoCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Gap(12),
           // Phone number
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                PhosphorIcons.phone(),
-                size: 20,
-              ),
-              const Gap(8),
-              Expanded(
-                child: Text(
-                  collectionPoint.noHp ?? '-',
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
+          if (collectionPoint.noHp?.isNotEmpty ?? false) ...[
+            const Gap(12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  PhosphorIcons.phone(),
+                  size: 20,
+                ),
+                const Gap(8),
+                Expanded(
+                  child: Text(
+                    collectionPoint.noHp!,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const Gap(12),
+              ],
+            ),
+          ],
 
           // Address
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                PhosphorIcons.mapPin(),
-                size: 20,
-              ),
-              const Gap(8),
-              Expanded(
-                child: Text(
-                  (collectionPoint.alamatLengkap?.isNotEmpty ?? false)
-                      ? collectionPoint.alamatLengkap!
-                      : '-',
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
+          if (collectionPoint.alamatLengkap?.isNotEmpty ?? false) ...[
+            const Gap(12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  PhosphorIcons.mapPin(),
+                  size: 20,
+                ),
+                const Gap(8),
+                Expanded(
+                  child: Text(
+                    collectionPoint.alamatLengkap!,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-
-          const Gap(8),
+              ],
+            ),
+          ],
 
           // Distance
-          if (distance != null)
+          if (distance != null && distance.isNotEmpty) ...[
+            const Gap(8),
             Row(
               children: [
                 Icon(
@@ -280,9 +281,7 @@ class _InfoCard extends ConsumerWidget {
                 ),
                 const Gap(8),
                 Text(
-                  distance.isNotEmpty
-                      ? context.l10n.dropPointDistance(distance)
-                      : '-',
+                  context.l10n.dropPointDistance(distance),
                   style: textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -290,34 +289,35 @@ class _InfoCard extends ConsumerWidget {
               ],
             ),
 
-          const Gap(12),
+            const Gap(12),
 
-          // Get Directions button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton.icon(
-                onPressed: () => ref
-                    .read(
-                      dropPointDetailViewModelProvider(
-                        collectionPoint,
-                      ).notifier,
-                    )
-                    .getDirections(),
-                icon: Icon(
-                  PhosphorIcons.navigationArrow(),
-                  color: colorScheme.primary,
-                ),
-                label: Text(
-                  context.l10n.dropPointDetailGetDirections,
-                  style: textTheme.labelLarge?.copyWith(
-                    fontVariations: AppFonts.semiBold,
+            // Get Directions button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton.icon(
+                  onPressed: () => ref
+                      .read(
+                        dropPointDetailViewModelProvider(
+                          collectionPoint,
+                        ).notifier,
+                      )
+                      .getDirections(),
+                  icon: Icon(
+                    PhosphorIcons.navigationArrow(),
                     color: colorScheme.primary,
                   ),
+                  label: Text(
+                    context.l10n.dropPointDetailGetDirections,
+                    style: textTheme.labelLarge?.copyWith(
+                      fontVariations: AppFonts.semiBold,
+                      color: colorScheme.primary,
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
           const Gap(8),
         ],
       ),

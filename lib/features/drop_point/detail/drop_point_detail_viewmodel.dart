@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/detail/drop_point_detail_state.dart';
@@ -47,36 +46,15 @@ class DropPointDetailViewModel extends _$DropPointDetailViewModel {
           latitude: position.latitude,
           longitude: position.longitude,
         );
-        final distance = _calculateDistanceKm(userLocation, collectionPoint);
-        state = state.copyWith(distance: '${distance.toStringAsFixed(1)} km');
+        state = state.copyWith(
+          distance: collectionPoint.getDistanceString(
+            userLocation,
+          ),
+        );
       }
     } catch (_) {
       // Location not available, leave distance as null
     }
-  }
-
-  /// Calculate distance using Haversine formula
-  double _calculateDistanceKm(
-    UserLocation userLocation,
-    CollectionPointModel dropPoint,
-  ) {
-    if (dropPoint.latitude == null || dropPoint.longitude == null) {
-      return double.infinity;
-    }
-
-    const earthRadius = 6371.0; // km
-
-    final lat1 = userLocation.latitude * pi / 180;
-    final lat2 = dropPoint.lat * pi / 180;
-    final deltaLat = (dropPoint.lat - userLocation.latitude) * pi / 180;
-    final deltaLng = (dropPoint.long - userLocation.longitude) * pi / 180;
-
-    final a =
-        sin(deltaLat / 2) * sin(deltaLat / 2) +
-        cos(lat1) * cos(lat2) * sin(deltaLng / 2) * sin(deltaLng / 2);
-    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
-
-    return earthRadius * c;
   }
 
   /// Load stock items for the collection point
