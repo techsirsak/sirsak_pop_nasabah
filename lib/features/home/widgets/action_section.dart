@@ -119,6 +119,7 @@ class _SetorSampahCard extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _ChallengeCard extends StatelessWidget {
   const _ChallengeCard({
     required this.challenge,

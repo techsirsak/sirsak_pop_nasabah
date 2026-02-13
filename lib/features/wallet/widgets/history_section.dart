@@ -93,6 +93,7 @@ class HistorySection extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _TabChip extends StatelessWidget {
   const _TabChip({
     required this.label,
