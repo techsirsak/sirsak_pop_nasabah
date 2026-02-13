@@ -222,8 +222,8 @@ class QrScanViewModel extends _$QrScanViewModel {
     final String jsonData;
 
     switch (decryptResult) {
-      case QrDecryptSuccess(:final plaintext):
-        jsonData = plaintext;
+      case QrDecryptSuccess(:final decryptedText):
+        jsonData = decryptedText;
       case QrDecryptError(:final message):
         logger.warning('[QrScanViewModel] QR decryption failed: $message');
         return null;

@@ -16,9 +16,9 @@ sealed class QrDecryptResult {
 
 /// Successful decryption of an encrypted payload.
 class QrDecryptSuccess extends QrDecryptResult {
-  const QrDecryptSuccess(this.plaintext);
+  const QrDecryptSuccess(this.decryptedText);
 
-  final String plaintext;
+  final String decryptedText;
 }
 
 /// Decryption failed with an error message.
@@ -70,12 +70,12 @@ class QrCryptoService {
   static const int _ivLength = 12;
   static const int _hmacLength = 16;
 
-  /// Encrypt plaintext to QR payload format.
+  /// Encrypt text to QR payload format.
   ///
   /// Returns base64url-encoded binary payload.
-  String encrypt(String plaintext) {
+  String encrypt(String text) {
     final iv = IV.fromSecureRandom(_ivLength);
-    final encrypted = _encrypter.encrypt(plaintext, iv: iv);
+    final encrypted = _encrypter.encrypt(text, iv: iv);
 
     final buffer = BytesBuilder()
       ..add(utf8.encode(_encryptedPrefix)) // prefix (3 bytes)
@@ -90,12 +90,12 @@ class QrCryptoService {
 
     buffer.add(hmac);
 
-    _logger.info('[QrCryptoService] Encrypted ${plaintext.length} chars');
+    _logger.info('[QrCryptoService] Encrypted ${text.length} chars');
 
     return base64UrlEncode(buffer.toBytes());
   }
 
-  /// Decrypt QR payload to plaintext.
+  /// Decrypt QR payload to text.
   ///
   /// Only accepts V2 encrypted payloads. Returns error for invalid formats.
   QrDecryptResult decrypt(String payload) {
@@ -147,13 +147,13 @@ class QrCryptoService {
       }
 
       // Decrypt
-      final plaintext = _encrypter.decrypt(
+      final decrypted = _encrypter.decrypt(
         Encrypted(Uint8List.fromList(ciphertext)),
         iv: iv,
       );
-      _logger.info('[QrCryptoService] Decrypted successfully: $plaintext');
+      _logger.info('[QrCryptoService] Decrypted successfully: $decrypted');
 
-      return QrDecryptSuccess(plaintext);
+      return QrDecryptSuccess(decrypted);
     } on FormatException catch (e) {
       _logger.warning('[QrCryptoService] Invalid base64 format: $e');
       return const QrDecryptError('Invalid encrypted data format');

@@ -157,7 +157,7 @@ void main() {
     late QrCryptoService cryptoService;
 
     /// Helper to encrypt test data for tests
-    String encrypt(String plaintext) => cryptoService.encrypt(plaintext);
+    String encrypt(String mockText) => cryptoService.encrypt(mockText);
 
     setUp(() {
       mockLoggerService = MockLoggerService();

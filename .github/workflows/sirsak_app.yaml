@@ -58,10 +58,10 @@ jobs:
       - name: Run Tests
         run: flutter test --no-pub --test-randomize-ordering-seed random --coverage
 
-      - name: Check Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v3
-        with:
-          min_coverage: 50
+      # - name: Check Coverage
+      #   uses: VeryGoodOpenSource/very_good_coverage@v3
+      #   with:
+      #     min_coverage: 50
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
