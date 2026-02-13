@@ -554,10 +554,10 @@ void main() {
 
         // Verify icon comes before text
         final rowWidget = tester.widget<Row>(row);
-        expect(rowWidget.children.length, 3); // Icon, Gap, Text
+        expect(rowWidget.children.length, 3); // Icon, Gap, Flexible(Text)
         expect(rowWidget.children[0], isA<Icon>());
         expect(rowWidget.children[1], isA<Gap>());
-        expect(rowWidget.children[2], isA<Text>());
+        expect(rowWidget.children[2], isA<Flexible>());
       });
 
       testWidgets('no icon when icon parameter is null', (tester) async {
@@ -689,9 +689,10 @@ void main() {
         expect(find.byType(CircularProgressIndicator), findsNWidgets(3));
 
         // Verify that loading indicators have different sizes
-        // Small button: 40 * 0.6 = 24
-        // Medium button: 50 * 0.6 = 30
-        // Large button: 56 * 0.6 = 33.6
+        // Based on iconSize in _ButtonSizeConfig:
+        // Small button: iconSize = 18
+        // Medium button: iconSize = 20
+        // Large button: iconSize = 24
         final indicatorSizes = tester
             .widgetList<SizedBox>(find.byType(SizedBox))
             .where(
@@ -705,9 +706,9 @@ void main() {
 
         // Should have 3 different indicator sizes
         expect(indicatorSizes.length, 3);
+        expect(indicatorSizes, contains(18.0));
+        expect(indicatorSizes, contains(20.0));
         expect(indicatorSizes, contains(24.0));
-        expect(indicatorSizes, contains(30.0));
-        expect(indicatorSizes, contains(33.6));
       });
     });
 
