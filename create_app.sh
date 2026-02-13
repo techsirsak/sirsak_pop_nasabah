@@ -194,7 +194,7 @@ build_aab() {
   echo "Environment config: $dart_defines_file"
   echo ""
 
-  fvm flutter build appbundle \
+  flutter build appbundle \
     --flavor "$flavor" \
     --target "$target" \
     --release \
@@ -228,7 +228,7 @@ build_apk() {
   echo "Environment config: $dart_defines_file"
   echo ""
 
-  fvm flutter build apk \
+  flutter build apk \
     --flavor "$flavor" \
     --target "$target" \
     --release \
@@ -262,7 +262,7 @@ build_ios() {
   echo "Environment config: $dart_defines_file"
   echo ""
 
-  fvm flutter build ipa \
+  flutter build ipa \
     --flavor "$flavor" \
     --target "$target" \
     --release \
@@ -308,7 +308,7 @@ build_web() {
   echo "Environment config: $dart_defines_file"
   echo ""
 
-  fvm flutter build web \
+  flutter build web \
     --target "$target" \
     --release \
     --dart-define-from-file="$dart_defines_file" \

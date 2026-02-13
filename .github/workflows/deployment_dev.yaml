@@ -1,0 +1,95 @@
+name: deployment_dev
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: "3.38.3"
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Create env.dev.json
+        run: echo '${{ secrets.ENV_DEV_JSON }}' > env.dev.json
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Generate Code
+        run: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+
+      - name: Build Android (Dev)
+        run: |
+          chmod +x create_app.sh
+          ./create_app.sh --platform android --type both --flavor dev
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk-dev
+          path: build/app/outputs/flutter-apk/app-development-release.apk
+
+      - name: Upload AAB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aab-dev
+          path: build/app/outputs/bundle/developmentRelease/app-development-release.aab
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Create env.dev.json
+        run: echo '${{ secrets.ENV_DEV_JSON }}' > env.dev.json
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Generate Code
+        run: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+
+      # TODO: Add code signing setup before running create_app.sh
+      # - name: Setup Code Signing
+      #   ...
+
+      - name: Build iOS (Dev)
+        run: |
+          chmod +x create_app.sh
+          ./create_app.sh --platform ios --flavor dev
+
+      - name: Upload iOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa-dev
+          path: build/app/outputs/ios/developmentRelease/
