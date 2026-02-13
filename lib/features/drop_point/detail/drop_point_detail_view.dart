@@ -122,70 +122,110 @@ class DropPointDetailView extends ConsumerWidget {
   }
 }
 
-class _BSUDetail extends StatelessWidget {
+class _BSUDetail extends ConsumerWidget {
   const _BSUDetail({required this.collectionPoint});
 
   final CollectionPointModel collectionPoint;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final state = ref.watch(dropPointDetailViewModelProvider(collectionPoint));
+
+    // Determine effective coordinates (original or geocoded)
+    final hasOriginalCoords = collectionPoint.hasValidCoordinates;
+    final hasGeocodedCoords =
+        state.geocodedLat != null && state.geocodedLng != null;
+    final hasValidCoords = hasOriginalCoords || hasGeocodedCoords;
+
+    final effectiveLat = hasOriginalCoords
+        ? collectionPoint.lat
+        : (state.geocodedLat ?? 0.0);
+    final effectiveLng = hasOriginalCoords
+        ? collectionPoint.long
+        : (state.geocodedLng ?? 0.0);
+
     return Column(
       children: [
         SizedBox(
           height: 200,
           width: double.infinity,
-          child: IgnorePointer(
-            child: FlutterMap(
-              options: MapOptions(
-                initialCenter: LatLng(
-                  collectionPoint.lat,
-                  collectionPoint.long,
-                ),
-                initialZoom: 15,
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: openMapUrlTemplate,
-                  userAgentPackageName: appBundleID,
-                ),
-                MarkerLayer(
-                  markers: [
-                    Marker(
-                      point: LatLng(
-                        collectionPoint.lat,
-                        collectionPoint.long,
-                      ),
-                      width: 40,
-                      height: 40,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 3,
+          child: state.isGeocodingAddress
+              // Show loading while geocoding
+              ? ColoredBox(
+                  color: colorScheme.surfaceContainerHighest,
+                  child: const Center(child: CircularProgressIndicator()),
+                )
+              : hasValidCoords
+                  // Show map if we have valid coordinates
+                  ? IgnorePointer(
+                      child: FlutterMap(
+                        options: MapOptions(
+                          initialCenter: LatLng(effectiveLat, effectiveLng),
+                          initialZoom: 15,
+                        ),
+                        children: [
+                          TileLayer(
+                            urlTemplate: openMapUrlTemplate,
+                            userAgentPackageName: appBundleID,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.3),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
+                          MarkerLayer(
+                            markers: [
+                              Marker(
+                                point: LatLng(effectiveLat, effectiveLng),
+                                width: 40,
+                                height: 40,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: colorScheme.primary,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 3,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color:
+                                            Colors.black.withValues(alpha: 0.3),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: const Icon(
+                                    Icons.location_on,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  // Show placeholder if no coordinates available
+                  : ColoredBox(
+                      color: colorScheme.surfaceContainerHighest,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            PhosphorIcons.mapPinLine(),
+                            size: 48,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                          const Gap(12),
+                          Text(
+                            context.l10n.dropPointDetailMapUnavailable,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
                             ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.location_on,
-                          color: Colors.white,
-                          size: 24,
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ),
         ),
 
         // Info card

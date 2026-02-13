@@ -23,6 +23,10 @@ abstract class CollectionPointModel with _$CollectionPointModel {
     @JsonKey(name: 'next_scheduled_weighing') DateTime? nextScheduledWeighing,
     @JsonKey(name: 'alamat_lengkap') String? alamatLengkap,
     @JsonKey(name: 'map_url') String? mapUrl,
+    String? provinsi,
+    String? kota,
+    String? kecamatan,
+    String? kelurahan,
     String? latitude,
     String? longitude,
   }) = _CollectionPointModel;
@@ -34,6 +38,9 @@ abstract class CollectionPointModel with _$CollectionPointModel {
 extension CollectionPointModelX on CollectionPointModel {
   double get lat => double.tryParse(latitude ?? '0') ?? 0.0;
   double get long => double.tryParse(longitude ?? '0') ?? 0.0;
+
+  /// Returns true if the collection point has valid latitude and longitude
+  bool get hasValidCoordinates => latitude != null && longitude != null;
 
   /// Calculate distance between user and drop point using Haversine formula
   double calculateDistanceInKM(
@@ -66,5 +73,13 @@ extension CollectionPointModelX on CollectionPointModel {
     final distance = calculateDistanceInKM(userLocation);
     if (distance == double.infinity) return '';
     return distance.toStringAsFixed(1);
+  }
+
+  String get addressForCoordinates {
+    if (kelurahan != null && kelurahan!.isNotEmpty) return kelurahan!;
+    if (kecamatan != null && kecamatan!.isNotEmpty) return kecamatan!;
+    if (kota != null && kota!.isNotEmpty) return kota!;
+    if (provinsi != null && provinsi!.isNotEmpty) return provinsi!;
+    return '';
   }
 }

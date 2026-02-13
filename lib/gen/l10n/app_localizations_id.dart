@@ -66,6 +66,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get dropPointDetailGetDirections => 'Petunjuk Arah';
 
   @override
+  String get dropPointDetailMapUnavailable => 'Lokasi peta tidak tersedia';
+
+  @override
   String dropPointDistance(String distance) {
     return '$distance km dari Anda';
   }

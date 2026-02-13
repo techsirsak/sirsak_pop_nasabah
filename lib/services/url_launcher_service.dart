@@ -215,6 +215,27 @@ class UrlLauncherService {
     }
   }
 
+  /// Launch maps app with address search
+  ///
+  /// Uses Google Maps search API with the provided address string.
+  /// Falls back to Apple Maps if Google Maps cannot be launched.
+  Future<void> launchMapWithAddress({required String address}) async {
+    final encodedAddress = Uri.encodeComponent(address);
+    final googleMapsUrl = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=$encodedAddress',
+    );
+
+    try {
+      await _launchUri(googleMapsUrl, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      // Fallback to Apple Maps
+      final appleMapsUrl = Uri.parse(
+        'https://maps.apple.com/?q=$encodedAddress',
+      );
+      await _launchUri(appleMapsUrl, mode: LaunchMode.externalApplication);
+    }
+  }
+
   /// Launch terms and conditions
   void launchTermsAndConditions() {
     unawaited(launchGenericUrl(termAndConditionUrl));

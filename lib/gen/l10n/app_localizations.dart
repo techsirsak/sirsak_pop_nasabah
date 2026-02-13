@@ -206,6 +206,12 @@ abstract class AppLocalizations {
   /// **'Get Directions'**
   String get dropPointDetailGetDirections;
 
+  /// No description provided for @dropPointDetailMapUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Map location not available'**
+  String get dropPointDetailMapUnavailable;
+
   /// No description provided for @dropPointDistance.
   ///
   /// In en, this message translates to:

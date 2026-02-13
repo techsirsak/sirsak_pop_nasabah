@@ -80,6 +80,7 @@
 	"dropPointBankSampah": "Bank Sampah",
 	"dropPointDetailAcceptedWaste": "Accepted Waste Types",
 	"dropPointDetailGetDirections": "Get Directions",
+	"dropPointDetailMapUnavailable": "Map location not available",
 	"dropPointDistance": "{distance} km away",
 	"dropPointDropPoint": "Drop Point",
 	"dropPointFilter": "Filter",
