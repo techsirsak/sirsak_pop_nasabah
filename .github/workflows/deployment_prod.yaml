@@ -1,0 +1,125 @@
+name: deployment_prod
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: "3.38.3"
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Create env.prod.json
+        run: echo '${{ secrets.ENV_PROD_JSON }}' > env.prod.json
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Generate Code
+        run: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+
+      - name: Build Android (Prod)
+        run: |
+          chmod +x create_app.sh
+          ./create_app.sh --platform android --type both --flavor prod
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk-prod
+          path: build/app/outputs/flutter-apk/app-production-release.apk
+
+      - name: Upload AAB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aab-prod
+          path: build/app/outputs/bundle/productionRelease/app-production-release.aab
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Create env.prod.json
+        run: echo '${{ secrets.ENV_PROD_JSON }}' > env.prod.json
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Generate Code
+        run: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+
+      # TODO: Add code signing setup before running create_app.sh
+      # - name: Setup Code Signing
+      #   ...
+
+      - name: Build iOS (Prod)
+        run: |
+          chmod +x create_app.sh
+          ./create_app.sh --platform ios --flavor prod
+
+      - name: Upload iOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa-prod
+          path: build/app/outputs/ios/productionRelease/
+
+  create-release:
+    needs: [build-android, build-ios]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Android APK
+        uses: actions/download-artifact@v4
+        with:
+          name: android-apk-prod
+          path: artifacts/
+
+      - name: Download Android AAB
+        uses: actions/download-artifact@v4
+        with:
+          name: android-aab-prod
+          path: artifacts/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/app-production-release.apk
+            artifacts/app-production-release.aab
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

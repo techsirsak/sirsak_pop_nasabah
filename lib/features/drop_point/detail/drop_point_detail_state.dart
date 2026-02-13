@@ -11,7 +11,10 @@ abstract class DropPointDetailState with _$DropPointDetailState {
     @Default([]) List<CollectionPointStockModel> stockItems,
     @Default(false) bool isLoading,
     @Default(false) bool isLoadingStock,
+    @Default(false) bool isGeocodingAddress,
     String? errorMessage,
     String? distance,
+    double? geocodedLat,
+    double? geocodedLng,
   }) = _DropPointDetailState;
 }

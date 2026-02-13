@@ -66,6 +66,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dropPointDetailGetDirections => 'Get Directions';
 
   @override
+  String get dropPointDetailMapUnavailable => 'Map location not available';
+
+  @override
   String dropPointDistance(String distance) {
     return '$distance km away';
   }
@@ -75,6 +78,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dropPointFilter => 'Filter';
+
+  @override
+  String dropPointNextWeighing(String date) {
+    return 'Next Weighing: $date';
+  }
 
   @override
   String get dropPointLocationFound => 'Location found';

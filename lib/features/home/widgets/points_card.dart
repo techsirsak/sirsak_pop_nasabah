@@ -121,6 +121,7 @@ class PointsCard extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _PointDisplay extends ConsumerWidget {
   const _PointDisplay();
 

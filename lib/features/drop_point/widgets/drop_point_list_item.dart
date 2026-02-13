@@ -8,6 +8,7 @@ import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/date_format_extensions.dart';
 
 class DropPointListItem extends StatelessWidget {
   const DropPointListItem({
@@ -67,62 +68,87 @@ class DropPointListItem extends StatelessWidget {
                 color: colorScheme.primary,
               ),
             ),
-            const Gap(8),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  PhosphorIcons.phone(),
-                  size: 16,
-                  color: colorScheme.onSurfaceVariant,
-                ),
-                const Gap(8),
-                Expanded(
-                  child: Text(
-                    dropPoint.noHp ?? '-',
-                    style: textTheme.bodyMedium,
+            // Phone
+            if (dropPoint.noHp?.isNotEmpty ?? false) ...[
+              const Gap(8),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    PhosphorIcons.phone(),
+                    size: 16,
+                    color: colorScheme.onSurfaceVariant,
                   ),
-                ),
-              ],
-            ),
-            const Gap(6),
+                  const Gap(8),
+                  Expanded(
+                    child: Text(
+                      dropPoint.noHp!,
+                      style: textTheme.bodyMedium,
+                    ),
+                  ),
+                ],
+              ),
+            ],
             // Address
-            Row(
-              children: [
-                Icon(
-                  PhosphorIcons.mapPin(),
-                  size: 16,
-                ),
-                const Gap(6),
-                Expanded(
-                  child: Text(
-                    (dropPoint.alamatLengkap?.isNotEmpty ?? false)
-                        ? dropPoint.alamatLengkap!
-                        : '-',
-                    style: textTheme.bodyMedium,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+            if (dropPoint.alamatLengkap?.isNotEmpty ?? false) ...[
+              const Gap(6),
+              Row(
+                children: [
+                  Icon(
+                    PhosphorIcons.mapPin(),
+                    size: 16,
                   ),
-                ),
-              ],
-            ),
-            const Gap(6),
+                  const Gap(6),
+                  Expanded(
+                    child: Text(
+                      dropPoint.alamatLengkap!,
+                      style: textTheme.bodyMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+
+            // Next schedule
+            if (dropPoint.nextScheduledWeighing != null &&
+                dropPoint.nextScheduledWeighing!.isAfter(DateTime.now())) ...[
+              const Gap(6),
+              Row(
+                children: [
+                  Icon(
+                    PhosphorIcons.calendarStar(),
+                    size: 16,
+                  ),
+                  const Gap(6),
+                  Text(
+                    context.l10n.dropPointNextWeighing(
+                      dropPoint.nextScheduledWeighing!.toScheduleRelative,
+                    ),
+                    style: textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ],
+
             // Distance
-            Row(
-              children: [
-                Icon(
-                  PhosphorIcons.personSimpleWalk(),
-                  size: 16,
-                ),
-                const Gap(6),
-                Text(
-                  distance.isNotEmpty
-                      ? context.l10n.dropPointDistance(distance)
-                      : '-',
-                  style: textTheme.bodyMedium,
-                ),
-              ],
-            ),
+            if (distance.isNotEmpty) ...[
+              const Gap(6),
+              Row(
+                children: [
+                  Icon(
+                    PhosphorIcons.personSimpleWalk(),
+                    size: 16,
+                  ),
+                  const Gap(6),
+                  Text(
+                    context.l10n.dropPointDistance(distance),
+                    style: textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ],
           ],
         ),
       ),

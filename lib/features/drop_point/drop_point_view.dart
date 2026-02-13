@@ -69,7 +69,7 @@ class _DropPointViewState extends ConsumerState<DropPointView> {
             dropPoints: state.filteredDropPoints,
             selectedDropPoint: state.selectedDropPoint,
             onSelect: viewModel.selectDropPoint,
-            getDistance: viewModel.getDistanceString,
+            userLocation: state.userLocation,
             scrollToIndex: state.scrollToIndex,
             onScrollComplete: viewModel.clearScrollIndex,
           ),

@@ -6,25 +6,25 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_list_item.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
+import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
 
 class DropPointList extends StatefulWidget {
   const DropPointList({
     required this.dropPoints,
     required this.onSelect,
-    required this.getDistance,
     this.selectedDropPoint,
     this.scrollToIndex,
     this.onScrollComplete,
+    this.userLocation,
     super.key,
   });
 
   final List<CollectionPointModel> dropPoints;
   final CollectionPointModel? selectedDropPoint;
   final ValueChanged<CollectionPointModel> onSelect;
-  final String Function(CollectionPointModel) getDistance;
   final int? scrollToIndex;
   final VoidCallback? onScrollComplete;
-
+  final UserLocation? userLocation;
   @override
   State<DropPointList> createState() => _DropPointListState();
 }
@@ -85,7 +85,7 @@ class _DropPointListState extends State<DropPointList> {
         final dropPoint = widget.dropPoints[index];
         return DropPointListItem(
           dropPoint: dropPoint,
-          distance: widget.getDistance(dropPoint),
+          distance: dropPoint.getDistanceString(widget.userLocation),
           isSelected: widget.selectedDropPoint?.id == dropPoint.id,
           onTap: () => widget.onSelect(dropPoint),
         );

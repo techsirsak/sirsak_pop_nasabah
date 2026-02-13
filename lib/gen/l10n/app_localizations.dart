@@ -206,6 +206,12 @@ abstract class AppLocalizations {
   /// **'Get Directions'**
   String get dropPointDetailGetDirections;
 
+  /// No description provided for @dropPointDetailMapUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Map location not available'**
+  String get dropPointDetailMapUnavailable;
+
   /// No description provided for @dropPointDistance.
   ///
   /// In en, this message translates to:
@@ -223,6 +229,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Filter'**
   String get dropPointFilter;
+
+  /// No description provided for @dropPointNextWeighing.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Weighing: {date}'**
+  String dropPointNextWeighing(String date);
 
   /// No description provided for @dropPointLocationFound.
   ///

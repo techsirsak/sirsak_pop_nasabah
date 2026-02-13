@@ -66,6 +66,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get dropPointDetailGetDirections => 'Petunjuk Arah';
 
   @override
+  String get dropPointDetailMapUnavailable => 'Lokasi peta tidak tersedia';
+
+  @override
   String dropPointDistance(String distance) {
     return '$distance km dari Anda';
   }
@@ -75,6 +78,11 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get dropPointFilter => 'Filter';
+
+  @override
+  String dropPointNextWeighing(String date) {
+    return 'Penimbangan Selanjutnya: $date';
+  }
 
   @override
   String get dropPointLocationFound => 'Lokasi ditemukan';

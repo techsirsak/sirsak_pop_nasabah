@@ -34,40 +34,40 @@ void main() {
   group('QrCryptoService', () {
     group('encrypt', () {
       test('should return base64url encoded payload', () {
-        const plaintext = '{"type":"register-bsu","data":{"id":1}}';
+        const mockText = '{"type":"register-bsu","data":{"id":1}}';
 
-        final encrypted = cryptoService.encrypt(plaintext);
+        final encrypted = cryptoService.encrypt(mockText);
 
         // Should be valid base64url
         expect(() => base64Url.decode(encrypted), returnsNormally);
       });
 
       test('should produce different output for same input (random IV)', () {
-        const plaintext = '{"type":"register-bsu","data":{"id":1}}';
+        const mockText = '{"type":"register-bsu","data":{"id":1}}';
 
-        final encrypted1 = cryptoService.encrypt(plaintext);
-        final encrypted2 = cryptoService.encrypt(plaintext);
+        final encrypted1 = cryptoService.encrypt(mockText);
+        final encrypted2 = cryptoService.encrypt(mockText);
 
         expect(encrypted1, isNot(equals(encrypted2)));
       });
 
       test('should handle empty string', () {
-        const plaintext = '';
+        const mockText = '';
 
-        final encrypted = cryptoService.encrypt(plaintext);
+        final encrypted = cryptoService.encrypt(mockText);
 
         // Should still produce valid encrypted output
         expect(() => base64Url.decode(encrypted), returnsNormally);
       });
 
       test('should handle unicode characters', () {
-        const plaintext = '{"name":"日本語テスト","emoji":"🎉"}';
+        const mockText = '{"name":"日本語テスト","emoji":"🎉"}';
 
-        final encrypted = cryptoService.encrypt(plaintext);
+        final encrypted = cryptoService.encrypt(mockText);
         final result = cryptoService.decrypt(encrypted);
 
         expect(result, isA<QrDecryptSuccess>());
-        expect((result as QrDecryptSuccess).plaintext, plaintext);
+        expect((result as QrDecryptSuccess).decryptedText, mockText);
       });
     });
 
@@ -79,7 +79,7 @@ void main() {
         final result = cryptoService.decrypt(encrypted);
 
         expect(result, isA<QrDecryptSuccess>());
-        expect((result as QrDecryptSuccess).plaintext, original);
+        expect((result as QrDecryptSuccess).decryptedText, original);
       });
 
       test(
@@ -179,7 +179,7 @@ void main() {
           // Verify JSON equivalence
           final originalJson = jsonDecode(original);
           final decryptedJson = jsonDecode(
-            (result as QrDecryptSuccess).plaintext,
+            (result as QrDecryptSuccess).decryptedText,
           );
           expect(decryptedJson, originalJson);
         }
@@ -196,7 +196,7 @@ void main() {
         final result = cryptoService.decrypt(encrypted);
 
         expect(result, isA<QrDecryptSuccess>());
-        expect((result as QrDecryptSuccess).plaintext, original);
+        expect((result as QrDecryptSuccess).decryptedText, original);
       });
 
       test('should handle special characters in payload', () {
@@ -206,7 +206,7 @@ void main() {
         final result = cryptoService.decrypt(encrypted);
 
         expect(result, isA<QrDecryptSuccess>());
-        expect((result as QrDecryptSuccess).plaintext, original);
+        expect((result as QrDecryptSuccess).decryptedText, original);
       });
     });
 

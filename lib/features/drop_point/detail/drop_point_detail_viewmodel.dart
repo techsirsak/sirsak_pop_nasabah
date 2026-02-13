@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/detail/drop_point_detail_state.dart';
@@ -7,6 +6,7 @@ import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_mode
 import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/collection_point_service.dart';
+import 'package:sirsak_pop_nasabah/services/geocoding_service.dart';
 import 'package:sirsak_pop_nasabah/services/location_service.dart';
 import 'package:sirsak_pop_nasabah/services/url_launcher_service.dart';
 
@@ -25,13 +25,51 @@ class DropPointDetailViewModel extends _$DropPointDetailViewModel {
     // Load data asynchronously after build
     unawaited(
       Future.microtask(() async {
+        await Future.wait([
+          _geocodeAddress(),
+          _loadStockItems(collectionPoint.id),
+        ]);
         await _calculateDistance();
-        await _loadStockItems(collectionPoint.id);
+
         state = state.copyWith(isLoading: false);
       }),
     );
 
     return initialState;
+  }
+
+  /// Geocode the address to get coordinates
+  Future<void> _geocodeAddress() async {
+    final collectionPoint = state.collectionPoint;
+    // If coordinates are missing, try to geocode the address
+    if (collectionPoint.hasValidCoordinates) {
+      _calculateDistance();
+      return;
+    }
+    final addressForCoordinates = collectionPoint.addressForCoordinates;
+    if (addressForCoordinates.isEmpty) return;
+
+    state = state.copyWith(isGeocodingAddress: true);
+
+    try {
+      final geocodingService = ref.read(geocodingServiceProvider);
+      final coordinates = await geocodingService.getCoordinatesFromAddress(
+        addressForCoordinates,
+      );
+
+      if (coordinates != null) {
+        state = state.copyWith(
+          geocodedLat: coordinates.lat,
+          geocodedLng: coordinates.lng,
+          isGeocodingAddress: false,
+        );
+        _calculateDistance();
+      } else {
+        state = state.copyWith(isGeocodingAddress: false);
+      }
+    } catch (_) {
+      state = state.copyWith(isGeocodingAddress: false);
+    }
   }
 
   /// Calculate distance from user location to collection point
@@ -47,36 +85,15 @@ class DropPointDetailViewModel extends _$DropPointDetailViewModel {
           latitude: position.latitude,
           longitude: position.longitude,
         );
-        final distance = _calculateDistanceKm(userLocation, collectionPoint);
-        state = state.copyWith(distance: '${distance.toStringAsFixed(1)} km');
+        state = state.copyWith(
+          distance: collectionPoint.getDistanceString(
+            userLocation,
+          ),
+        );
       }
     } catch (_) {
       // Location not available, leave distance as null
     }
-  }
-
-  /// Calculate distance using Haversine formula
-  double _calculateDistanceKm(
-    UserLocation userLocation,
-    CollectionPointModel dropPoint,
-  ) {
-    if (dropPoint.latitude == null || dropPoint.longitude == null) {
-      return double.infinity;
-    }
-
-    const earthRadius = 6371.0; // km
-
-    final lat1 = userLocation.latitude * pi / 180;
-    final lat2 = dropPoint.lat * pi / 180;
-    final deltaLat = (dropPoint.lat - userLocation.latitude) * pi / 180;
-    final deltaLng = (dropPoint.long - userLocation.longitude) * pi / 180;
-
-    final a =
-        sin(deltaLat / 2) * sin(deltaLat / 2) +
-        cos(lat1) * cos(lat2) * sin(deltaLng / 2) * sin(deltaLng / 2);
-    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
-
-    return earthRadius * c;
   }
 
   /// Load stock items for the collection point
@@ -110,12 +127,34 @@ class DropPointDetailViewModel extends _$DropPointDetailViewModel {
   }
 
   /// Launch maps app with directions to the collection point
+  ///
+  /// Uses original coordinates if available, otherwise uses geocoded
+  /// coordinates, and falls back to address search if neither is available.
   Future<void> getDirections() async {
     final collectionPoint = state.collectionPoint;
-    final lat = collectionPoint.lat;
-    final lng = collectionPoint.long;
-
     final urlLauncher = ref.read(urlLauncherServiceProvider);
-    await urlLauncher.launchMap(lat: lat, lng: lng);
+
+    // Use original coordinates if available
+    if (collectionPoint.hasValidCoordinates) {
+      await urlLauncher.launchMap(
+        lat: collectionPoint.lat,
+        lng: collectionPoint.long,
+      );
+      return;
+    }
+
+    // Use geocoded coordinates if available
+    final geocodedLat = state.geocodedLat;
+    final geocodedLng = state.geocodedLng;
+    if (geocodedLat != null && geocodedLng != null) {
+      await urlLauncher.launchMap(lat: geocodedLat, lng: geocodedLng);
+      return;
+    }
+
+    // Fall back to address search
+    final address = collectionPoint.alamatLengkap;
+    if (address != null && address.isNotEmpty) {
+      await urlLauncher.launchMapWithAddress(address: address);
+    }
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -216,8 +215,8 @@ class DropPointViewModel extends _$DropPointViewModel {
       case DropPointSortBy.distance:
         if (state.userLocation != null) {
           filtered.sort((a, b) {
-            final distA = _calculateDistance(a);
-            final distB = _calculateDistance(b);
+            final distA = a.calculateDistanceInKM(state.userLocation);
+            final distB = b.calculateDistanceInKM(state.userLocation);
             return distA.compareTo(distB);
           });
         }
@@ -226,36 +225,6 @@ class DropPointViewModel extends _$DropPointViewModel {
         filtered.sort((a, b) => a.name.compareTo(b.name));
     }
     state = state.copyWith(filteredDropPoints: filtered);
-  }
-
-  /// Calculate distance between user and drop point using Haversine formula
-  double _calculateDistance(CollectionPointModel dropPoint) {
-    if (state.userLocation == null) return double.infinity;
-    if (dropPoint.latitude == null || dropPoint.longitude == null) {
-      return double.infinity;
-    }
-
-    const earthRadius = 6371.0; // km
-
-    final lat1 = state.userLocation!.latitude * pi / 180;
-    final lat2 = dropPoint.lat * pi / 180;
-    final deltaLat = (dropPoint.lat - state.userLocation!.latitude) * pi / 180;
-    final deltaLng =
-        (dropPoint.long - state.userLocation!.longitude) * pi / 180;
-
-    final a =
-        sin(deltaLat / 2) * sin(deltaLat / 2) +
-        cos(lat1) * cos(lat2) * sin(deltaLng / 2) * sin(deltaLng / 2);
-    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
-
-    return earthRadius * c;
-  }
-
-  /// Get distance string for display
-  String getDistanceString(CollectionPointModel dropPoint) {
-    final distance = _calculateDistance(dropPoint);
-    if (distance == double.infinity) return '';
-    return distance.toStringAsFixed(1);
   }
 
   /// Zoom in on map

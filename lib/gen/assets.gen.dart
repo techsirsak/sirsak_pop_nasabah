@@ -33,6 +33,10 @@ class $AssetsImagesGen {
   AssetGenImage get sirsakAppIcon =>
       const AssetGenImage('assets/images/sirsak_app_icon.png');
 
+  /// File path: assets/images/sirsak_logo_transparent.png
+  AssetGenImage get sirsakLogoTransparent =>
+      const AssetGenImage('assets/images/sirsak_logo_transparent.png');
+
   /// File path: assets/images/sirsak_logo_white.png
   AssetGenImage get sirsakLogoWhite =>
       const AssetGenImage('assets/images/sirsak_logo_white.png');
@@ -72,6 +76,7 @@ class $AssetsImagesGen {
     mlp,
     setorSampah,
     sirsakAppIcon,
+    sirsakLogoTransparent,
     sirsakLogoWhite,
     sirsakMainLogoGreen,
     sirsakMainLogoWhite,

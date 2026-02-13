@@ -80,9 +80,18 @@
 	"dropPointBankSampah": "Bank Sampah",
 	"dropPointDetailAcceptedWaste": "Jenis Sampah yang Dapat Diterima",
 	"dropPointDetailGetDirections": "Petunjuk Arah",
+	"dropPointDetailMapUnavailable": "Lokasi peta tidak tersedia",
 	"dropPointDistance": "{distance} km dari Anda",
 	"dropPointDropPoint": "Drop Point",
 	"dropPointFilter": "Filter",
+	"dropPointNextWeighing": "Penimbangan Selanjutnya: {date}",
+	"@dropPointNextWeighing": {
+		"placeholders": {
+			"date": {
+				"type": "String"
+			}
+		}
+	},
 	"dropPointLocationFound": "Lokasi ditemukan",
 	"dropPointLocationPermissionMessage": "Aktifkan lokasi untuk melihat posisi Anda",
 	"dropPointNoResults": "Tidak ada drop point ditemukan",
