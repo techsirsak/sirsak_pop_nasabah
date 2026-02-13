@@ -1105,18 +1105,32 @@ packages:
     dependency: transitive
     description:
       name: sentry
+<<<<<<< HEAD
       sha256: "605ad1f6f1ae5b72018cbe8fc20f490fa3bd53e58882e5579566776030d8c8c1"
       url: "https://pub.dev"
     source: hosted
     version: "9.14.0"
+=======
+      sha256: e57e57123968b673c8ca19892eecf93113b4811b8e5cd5d165749ca7f7319fdb
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.13.0"
+>>>>>>> a893d3b (chore(deps): bump sentry_flutter from 9.12.0 to 9.13.0)
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
+<<<<<<< HEAD
       sha256: "7fd0fb80050c1f6a77ae185bda997a76d384326d6777cf5137a6c38952c4ac7d"
       url: "https://pub.dev"
     source: hosted
     version: "9.14.0"
+=======
+      sha256: c8f5b805c0346cd0c93b09e584675af7ed8c3ef36c3589181ad19b4adce35954
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.13.0"
+>>>>>>> a893d3b (chore(deps): bump sentry_flutter from 9.12.0 to 9.13.0)
   shelf:
     dependency: transitive
     description:
