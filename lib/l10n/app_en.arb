@@ -84,6 +84,14 @@
 	"dropPointDistance": "{distance} km away",
 	"dropPointDropPoint": "Drop Point",
 	"dropPointFilter": "Filter",
+	"dropPointNextWeighing": "Next Weighing: {date}",
+	"@dropPointNextWeighing": {
+		"placeholders": {
+			"date": {
+				"type": "String"
+			}
+		}
+	},
 	"dropPointLocationFound": "Location found",
 	"dropPointLocationPermissionMessage": "Enable location to see your position",
 	"dropPointNoResults": "No drop points found",

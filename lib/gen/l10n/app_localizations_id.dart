@@ -80,6 +80,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get dropPointFilter => 'Filter';
 
   @override
+  String dropPointNextWeighing(String date) {
+    return 'Penimbangan Selanjutnya: $date';
+  }
+
+  @override
   String get dropPointLocationFound => 'Lokasi ditemukan';
 
   @override

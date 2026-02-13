@@ -8,6 +8,7 @@ import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/date_format_extensions.dart';
 
 class DropPointListItem extends StatelessWidget {
   const DropPointListItem({
@@ -109,6 +110,28 @@ class DropPointListItem extends StatelessWidget {
                 ],
               ),
             ],
+
+            // Next schedule
+            if (dropPoint.nextScheduledWeighing != null &&
+                dropPoint.nextScheduledWeighing!.isAfter(DateTime.now())) ...[
+              const Gap(6),
+              Row(
+                children: [
+                  Icon(
+                    PhosphorIcons.calendarStar(),
+                    size: 16,
+                  ),
+                  const Gap(6),
+                  Text(
+                    context.l10n.dropPointNextWeighing(
+                      dropPoint.nextScheduledWeighing!.toScheduleRelative,
+                    ),
+                    style: textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ],
+
             // Distance
             if (distance.isNotEmpty) ...[
               const Gap(6),

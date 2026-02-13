@@ -230,6 +230,12 @@ abstract class AppLocalizations {
   /// **'Filter'**
   String get dropPointFilter;
 
+  /// No description provided for @dropPointNextWeighing.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Weighing: {date}'**
+  String dropPointNextWeighing(String date);
+
   /// No description provided for @dropPointLocationFound.
   ///
   /// In en, this message translates to:

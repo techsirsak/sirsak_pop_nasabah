@@ -84,6 +84,14 @@
 	"dropPointDistance": "{distance} km dari Anda",
 	"dropPointDropPoint": "Drop Point",
 	"dropPointFilter": "Filter",
+	"dropPointNextWeighing": "Penimbangan Selanjutnya: {date}",
+	"@dropPointNextWeighing": {
+		"placeholders": {
+			"date": {
+				"type": "String"
+			}
+		}
+	},
 	"dropPointLocationFound": "Lokasi ditemukan",
 	"dropPointLocationPermissionMessage": "Aktifkan lokasi untuk melihat posisi Anda",
 	"dropPointNoResults": "Tidak ada drop point ditemukan",

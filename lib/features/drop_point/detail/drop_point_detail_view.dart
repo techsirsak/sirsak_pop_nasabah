@@ -10,6 +10,7 @@ import 'package:sirsak_pop_nasabah/features/drop_point/detail/drop_point_detail_
 import 'package:sirsak_pop_nasabah/features/drop_point/detail/widgets/stock_item_card.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/date_format_extensions.dart';
 
 class DropPointDetailView extends ConsumerWidget {
   const DropPointDetailView({
@@ -158,74 +159,73 @@ class _BSUDetail extends ConsumerWidget {
                   child: const Center(child: CircularProgressIndicator()),
                 )
               : hasValidCoords
-                  // Show map if we have valid coordinates
-                  ? IgnorePointer(
-                      child: FlutterMap(
-                        options: MapOptions(
-                          initialCenter: LatLng(effectiveLat, effectiveLng),
-                          initialZoom: 15,
-                        ),
-                        children: [
-                          TileLayer(
-                            urlTemplate: openMapUrlTemplate,
-                            userAgentPackageName: appBundleID,
-                          ),
-                          MarkerLayer(
-                            markers: [
-                              Marker(
-                                point: LatLng(effectiveLat, effectiveLng),
-                                width: 40,
-                                height: 40,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.primary,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 3,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            Colors.black.withValues(alpha: 0.3),
-                                        blurRadius: 4,
-                                        offset: const Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: const Icon(
-                                    Icons.location_on,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+              // Show map if we have valid coordinates
+              ? IgnorePointer(
+                  child: FlutterMap(
+                    options: MapOptions(
+                      initialCenter: LatLng(effectiveLat, effectiveLng),
+                      initialZoom: 15,
+                    ),
+                    children: [
+                      TileLayer(
+                        urlTemplate: openMapUrlTemplate,
+                        userAgentPackageName: appBundleID,
                       ),
-                    )
-                  // Show placeholder if no coordinates available
-                  : ColoredBox(
-                      color: colorScheme.surfaceContainerHighest,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            PhosphorIcons.mapPinLine(),
-                            size: 48,
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                          const Gap(12),
-                          Text(
-                            context.l10n.dropPointDetailMapUnavailable,
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
+                      MarkerLayer(
+                        markers: [
+                          Marker(
+                            point: LatLng(effectiveLat, effectiveLng),
+                            width: 40,
+                            height: 40,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: colorScheme.primary,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 3,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.3),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: const Icon(
+                                Icons.location_on,
+                                color: Colors.white,
+                                size: 24,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    ),
+                    ],
+                  ),
+                )
+              // Show placeholder if no coordinates available
+              : ColoredBox(
+                  color: colorScheme.surfaceContainerHighest,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        PhosphorIcons.mapPinLine(),
+                        size: 48,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      const Gap(12),
+                      Text(
+                        context.l10n.dropPointDetailMapUnavailable,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
         ),
 
         // Info card
@@ -305,6 +305,28 @@ class _InfoCard extends ConsumerWidget {
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
+                ),
+              ],
+            ),
+          ],
+          // Next schedule
+          if (collectionPoint.nextScheduledWeighing != null &&
+              collectionPoint.nextScheduledWeighing!.isAfter(
+                DateTime.now(),
+              )) ...[
+            const Gap(6),
+            Row(
+              children: [
+                Icon(
+                  PhosphorIcons.calendarStar(),
+                  size: 16,
+                ),
+                const Gap(6),
+                Text(
+                  context.l10n.dropPointNextWeighing(
+                    collectionPoint.nextScheduledWeighing!.toScheduleRelative,
+                  ),
+                  style: textTheme.bodyMedium,
                 ),
               ],
             ),
