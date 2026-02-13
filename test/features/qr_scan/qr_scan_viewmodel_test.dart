@@ -194,9 +194,6 @@ void main() {
     });
 
     tearDown(() async {
-      // Allow pending microtasks (initCameraPermission, startScanner) to complete
-      // before disposing container to avoid "Ref disposed" errors.
-      // Multiple delays to handle chained async operations.
       await Future<void>.delayed(const Duration(milliseconds: 50));
       container.dispose();
     });
@@ -614,7 +611,7 @@ void main() {
         final encryptedPayload = encrypt(validBsuQrJson);
 
         // Tamper with payload by modifying some bytes in the middle
-        // The payload is base64url encoded binary, so we decode, modify, re-encode
+        // we decode, modify, re-encode
         final bytes = encryptedPayload.codeUnits.toList();
         if (bytes.length > 20) {
           bytes[15] = (bytes[15] + 1) % 256; // Flip a byte
