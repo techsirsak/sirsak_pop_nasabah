@@ -395,6 +395,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qrScanTitle => 'Scan QR Code';
 
   @override
+  String get setorQrScanErrorApi =>
+      'Failed to start deposit session. Please try again.';
+
+  @override
+  String get setorQrScanErrorInvalidQr =>
+      'This QR code is not valid for waste deposit';
+
+  @override
+  String get setorQrScanInstruction => 'Scan QR code at the RVM machine';
+
+  @override
+  String get setorQrScanRetry => 'Scan Again';
+
+  @override
+  String get setorQrScanSubmitting => 'Starting deposit session...';
+
+  @override
+  String get setorQrScanSuccess => 'Deposit Session Started!';
+
+  @override
+  String get setorQrScanSuccessMessage =>
+      'Your waste deposit session has started. Please proceed to deposit your waste.';
+
+  @override
+  String get setorQrScanTitle => 'Setor Sampah';
+
+  @override
   String get register => 'Register';
 
   @override

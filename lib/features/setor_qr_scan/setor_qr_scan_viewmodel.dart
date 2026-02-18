@@ -5,15 +5,17 @@ import 'package:flutter/widgets.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
+import 'package:sirsak_pop_nasabah/features/setor_qr_scan/setor_qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/services/setor_service.dart';
+import 'package:sirsak_pop_nasabah/shared/navigation/bottom_nav_provider.dart';
 
-part 'qr_scan_viewmodel.g.dart';
+part 'setor_qr_scan_viewmodel.g.dart';
 
 @riverpod
-class QrScanViewModel extends _$QrScanViewModel {
+class SetorQrScanViewModel extends _$SetorQrScanViewModel {
   MobileScannerController? _controller;
 
   MobileScannerController get controller {
@@ -24,7 +26,14 @@ class QrScanViewModel extends _$QrScanViewModel {
   }
 
   @override
-  QrScanState build() {
+  SetorQrScanState build() {
+    // Watch for tab changes to reset state when QR tab is selected
+    ref.listen(bottomNavProvider, (previous, next) {
+      if (next.selectedIndex == 2 && previous?.selectedIndex != 2) {
+        _resetForNewScan();
+      }
+    });
+
     ref.onDispose(() {
       unawaited(_controller?.dispose());
     });
@@ -32,19 +41,16 @@ class QrScanViewModel extends _$QrScanViewModel {
     // Initialize camera permission on build
     unawaited(Future.microtask(initCameraPermission));
 
-    return const QrScanState();
+    return const SetorQrScanState();
   }
 
   /// Initialize camera permission - checks and requests if needed
   Future<void> initCameraPermission() async {
-    // Prevent multiple calls if already initialized
     if (state.cameraPermissionStatus != CameraPermissionStatus.unknown) {
       return;
     }
 
     await _checkAndRequestCameraPermission();
-    // Note: startScanner() is called from the View after MobileScanner widget
-    // is in the tree to avoid black screen issue
   }
 
   /// Start the scanner after permission is granted
@@ -55,7 +61,11 @@ class QrScanViewModel extends _$QrScanViewModel {
     } catch (e, stackTrace) {
       ref
           .read(loggerServiceProvider)
-          .error('[QrScanViewModel] Failed to start scanner', e, stackTrace);
+          .error(
+            '[SetorQrScanViewModel] Failed to start scanner',
+            e,
+            stackTrace,
+          );
       state = state.copyWith(
         isScannerReady: false,
         errorMessage: 'Failed to start camera',
@@ -81,7 +91,6 @@ class QrScanViewModel extends _$QrScanViewModel {
       return false;
     }
 
-    // Request permission
     final result = await Permission.camera.request();
 
     if (result.isGranted) {
@@ -112,7 +121,9 @@ class QrScanViewModel extends _$QrScanViewModel {
   bool _isShowingError = false;
 
   void onDetect(BarcodeCapture capture) {
-    if (state.scannedData != null || _isShowingError) return;
+    if (state.scannedData != null || _isShowingError || state.isSubmitting) {
+      return;
+    }
 
     final barcodes = capture.barcodes;
     if (barcodes.isEmpty) return;
@@ -123,19 +134,17 @@ class QrScanViewModel extends _$QrScanViewModel {
     if (rawValue != null && rawValue.isNotEmpty) {
       ref
           .read(loggerServiceProvider)
-          .info('[QrScanViewModel] QR Code detected: $rawValue');
+          .info('[SetorQrScanViewModel] QR Code detected: $rawValue');
 
-      final parsedData = parseQrData(rawValue);
+      final parsedData = _parseQrData(rawValue);
 
-      if (parsedData != null) {
+      if (parsedData != null && parsedData.type == QrType.setorRvm) {
         state = state.copyWith(
-          scannedData: rawValue,
-          parsedQrData: parsedData,
+          scannedData: parsedData,
           isScanning: false,
         );
-
         unawaited(controller.stop());
-        ref.read(routerProvider).pop(parsedData);
+        unawaited(_submitDeposit(parsedData));
       } else {
         _handleInvalidQr();
       }
@@ -147,75 +156,51 @@ class QrScanViewModel extends _$QrScanViewModel {
     unawaited(controller.stop());
     state = state.copyWith(
       isScanning: false,
-      errorMessage: 'qrScanError',
+      errorMessage: 'setorQrScanErrorInvalidQr',
     );
   }
 
   /// Called from View after error dialog is dismissed to resume scanning
   void dismissErrorAndRescan() {
     _isShowingError = false;
-    state = state.copyWith(errorMessage: null);
-    resetScan();
+    state = state.copyWith(errorMessage: null, isSuccess: false);
+    _resetForNewScan();
   }
 
   /// Extract QR data from deeplink URL if applicable
-  ///
-  /// If the input is a deeplink URL like `com.sirsak.app://qr-scan?data=...`,
-  /// extracts and URL-decodes the `data` query parameter.
-  /// Otherwise, returns the input unchanged.
   String _extractQrDataFromDeeplink(String qrData) {
-    // Check if this looks like a deeplink URL
     if (!qrData.contains('://') || !qrData.contains('?')) {
       return qrData;
     }
 
     try {
-      // Parse as URI to extract query parameters
       final uri = Uri.parse(qrData);
       final dataParam = uri.queryParameters['data'];
 
       if (dataParam != null && dataParam.isNotEmpty) {
         ref
             .read(loggerServiceProvider)
-            .info(
-              '[QrScanViewModel] Extracted data from deeplink URL',
-            );
-        return dataParam; // Uri.parse automatically URL-decodes query params
+            .info('[SetorQrScanViewModel] Extracted data from deeplink URL');
+        return dataParam;
       }
     } catch (e) {
-      // If parsing fails, return original data
       ref
           .read(loggerServiceProvider)
           .warning(
-            '[QrScanViewModel] Failed to parse as deeplink URL: $e',
+            '[SetorQrScanViewModel] Failed to parse as deeplink URL: $e',
           );
     }
 
     return qrData;
   }
 
-  /// Parse QR data from JSON format (with decryption support)
-  ///
-  /// Handles both encrypted (ENC:v1:...) and legacy plain JSON payloads.
-  /// Also handles deeplink URLs with encoded data in query parameters.
-  ///
-  /// Expected JSON format after decryption:
-  /// ```json
-  /// {
-  ///   "type": "register-bsu" | "register-nasabah",
-  ///   "data": { ... }
-  /// }
-  /// ```
-  ///
-  /// Returns [ParsedQrData] if valid, null otherwise
-  ParsedQrData? parseQrData(String qrData) {
+  /// Parse QR data - only accepts setor-rvm type
+  ParsedQrData? _parseQrData(String qrData) {
     final logger = ref.read(loggerServiceProvider);
 
-    // Extract data from deeplink URL if applicable
     final extractedData = _extractQrDataFromDeeplink(qrData);
-    logger.info('[QrScanViewModel] extractedData: $extractedData');
+    logger.info('[SetorQrScanViewModel] extractedData: $extractedData');
 
-    // First, attempt decryption
     final cryptoService = ref.read(qrCryptoServiceProvider);
     final decryptResult = cryptoService.decrypt(extractedData);
 
@@ -225,11 +210,10 @@ class QrScanViewModel extends _$QrScanViewModel {
       case QrDecryptSuccess(:final decryptedText):
         jsonData = decryptedText;
       case QrDecryptError(:final message):
-        logger.warning('[QrScanViewModel] QR decryption failed: $message');
+        logger.warning('[SetorQrScanViewModel] QR decryption failed: $message');
         return null;
     }
 
-    // Continue with JSON parsing
     try {
       final json = jsonDecode(jsonData) as Map<String, dynamic>;
       final typeParam = json['type'] as String?;
@@ -237,59 +221,67 @@ class QrScanViewModel extends _$QrScanViewModel {
 
       if (typeParam == null || data == null) {
         logger.warning(
-          '[QrScanViewModel] Missing type or data in QR: $jsonData',
+          '[SetorQrScanViewModel] Missing type or data in QR: $jsonData',
         );
         return null;
       }
 
       final qrType = QrType.fromString(typeParam);
-      switch (qrType) {
-        case QrType.registerBsu:
-          final bsuData = QrBsuData.fromJson(data);
-          logger.info(
-            '[QrScanViewModel] Parsed BSU QR - id: ${bsuData.id}, '
-            'name: ${bsuData.bsuName}',
-          );
-          return ParsedQrData(
-            type: QrType.registerBsu,
-            bsuData: bsuData,
-          );
 
-        case QrType.registerNasabah:
-          final nasabahData = QrNasabahData.fromJson(data);
-          logger.info(
-            '[QrScanViewModel] Parsed Nasabah QR - id: ${nasabahData.id}, '
-            'name: ${nasabahData.name}',
-          );
-          return ParsedQrData(
-            type: QrType.registerNasabah,
-            nasabahData: nasabahData,
-          );
-
-        case QrType.setorRvm:
-          final setorRvmData = QrSetorRvmData.fromJson(data);
-          logger.info(
-            '[QrScanViewModel] Parsed Setor RVM QR - id: ${setorRvmData.id}, '
-            'name: ${setorRvmData.rvmName}',
-          );
-          return ParsedQrData(
-            type: QrType.setorRvm,
-            setorRvmData: setorRvmData,
-          );
-
-        case QrType.unknown:
-          logger.warning('[QrScanViewModel] Unknown QR type: $typeParam');
-          return const ParsedQrData(type: QrType.unknown);
+      if (qrType != QrType.setorRvm) {
+        logger.warning(
+          '[SetorQrScanViewModel] Invalid QR type for setor: $typeParam',
+        );
+        return null;
       }
+
+      final setorRvmData = QrSetorRvmData.fromJson(data);
+      logger.info(
+        '[SetorQrScanViewModel] Parsed Setor RVM QR - id: ${setorRvmData.id}, '
+        'name: ${setorRvmData.rvmName}',
+      );
+      return ParsedQrData(
+        type: QrType.setorRvm,
+        setorRvmData: setorRvmData,
+      );
     } catch (e, stackTrace) {
       unawaited(
         logger.error(
-          '[QrScanViewModel] Failed to parse QR JSON: $jsonData',
+          '[SetorQrScanViewModel] Failed to parse QR JSON: $jsonData',
           e,
           stackTrace,
         ),
       );
       return null;
+    }
+  }
+
+  /// Submit deposit session to API immediately after scan
+  Future<void> _submitDeposit(ParsedQrData parsedData) async {
+    final logger = ref.read(loggerServiceProvider);
+    final setorService = ref.read(setorServiceProvider);
+
+    state = state.copyWith(isSubmitting: true, errorMessage: null);
+
+    try {
+      final setorRvmData = parsedData.setorRvmData!;
+      await setorService.initiateSession(
+        rvmId: setorRvmData.id,
+        sessionId: setorRvmData.sessionId,
+      );
+
+      logger.info('[SetorQrScanViewModel] Deposit session initiated');
+      state = state.copyWith(isSubmitting: false, isSuccess: true);
+    } catch (e, stackTrace) {
+      logger.error(
+        '[SetorQrScanViewModel] Failed to initiate deposit session',
+        e,
+        stackTrace,
+      );
+      state = state.copyWith(
+        isSubmitting: false,
+        errorMessage: 'setorQrScanErrorApi',
+      );
     }
   }
 
@@ -300,30 +292,26 @@ class QrScanViewModel extends _$QrScanViewModel {
     } catch (e, stackTrace) {
       ref
           .read(loggerServiceProvider)
-          .error('[QrScanViewModel] Failed to toggle torch', e, stackTrace);
+          .error(
+            '[SetorQrScanViewModel] Failed to toggle torch',
+            e,
+            stackTrace,
+          );
     }
   }
 
-  void resetScan() {
-    state = state.copyWith(
-      scannedData: null,
-      isScanning: false,
-      isScannerReady: false,
-      errorMessage: null,
-    );
-    unawaited(startScanner());
-  }
-
-  void setError(String message) {
-    state = state.copyWith(
-      errorMessage: message,
-      isScanning: false,
-    );
+  void _resetForNewScan() {
+    state = const SetorQrScanState();
+    unawaited(Future.microtask(() async {
+      await initCameraPermission();
+      if (state.cameraPermissionStatus == CameraPermissionStatus.granted) {
+        await startScanner();
+      }
+    }));
   }
 
   /// Handle app lifecycle changes to pause/resume scanner
   void handleAppLifecycleChange(AppLifecycleState lifecycleState) {
-    // Don't handle if scanner not ready
     if (!state.isScannerReady) return;
 
     switch (lifecycleState) {
@@ -332,28 +320,9 @@ class QrScanViewModel extends _$QrScanViewModel {
       case AppLifecycleState.paused:
         return;
       case AppLifecycleState.resumed:
-        // Restart scanner when app is resumed
         unawaited(controller.start());
       case AppLifecycleState.inactive:
-        // Stop scanner when app goes inactive
         unawaited(controller.stop());
-    }
-  }
-
-  /// Process deeplink data passed from router
-  ///
-  /// This is called when the app is opened via deeplink with QR parameters
-  void processDeeplink(String deeplinkData) {
-    final parsed = parseQrData(deeplinkData);
-    if (parsed != null) {
-      state = state.copyWith(
-        scannedData: deeplinkData,
-        parsedQrData: parsed,
-        isScanning: false,
-      );
-      ref.read(routerProvider).pop(parsed);
-    } else {
-      _handleInvalidQr();
     }
   }
 }

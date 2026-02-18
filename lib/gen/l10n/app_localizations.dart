@@ -806,6 +806,54 @@ abstract class AppLocalizations {
   /// **'Scan QR Code'**
   String get qrScanTitle;
 
+  /// No description provided for @setorQrScanErrorApi.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to start deposit session. Please try again.'**
+  String get setorQrScanErrorApi;
+
+  /// No description provided for @setorQrScanErrorInvalidQr.
+  ///
+  /// In en, this message translates to:
+  /// **'This QR code is not valid for waste deposit'**
+  String get setorQrScanErrorInvalidQr;
+
+  /// No description provided for @setorQrScanInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR code at the RVM machine'**
+  String get setorQrScanInstruction;
+
+  /// No description provided for @setorQrScanRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Again'**
+  String get setorQrScanRetry;
+
+  /// No description provided for @setorQrScanSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting deposit session...'**
+  String get setorQrScanSubmitting;
+
+  /// No description provided for @setorQrScanSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit Session Started!'**
+  String get setorQrScanSuccess;
+
+  /// No description provided for @setorQrScanSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your waste deposit session has started. Please proceed to deposit your waste.'**
+  String get setorQrScanSuccessMessage;
+
+  /// No description provided for @setorQrScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Setor Sampah'**
+  String get setorQrScanTitle;
+
   /// No description provided for @register.
   ///
   /// In en, this message translates to:

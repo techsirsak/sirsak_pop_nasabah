@@ -395,6 +395,33 @@ class AppLocalizationsId extends AppLocalizations {
   String get qrScanTitle => 'Pindai Kode QR';
 
   @override
+  String get setorQrScanErrorApi =>
+      'Gagal memulai sesi setor. Silakan coba lagi.';
+
+  @override
+  String get setorQrScanErrorInvalidQr =>
+      'Kode QR ini tidak valid untuk setor sampah';
+
+  @override
+  String get setorQrScanInstruction => 'Pindai kode QR di mesin RVM';
+
+  @override
+  String get setorQrScanRetry => 'Pindai Lagi';
+
+  @override
+  String get setorQrScanSubmitting => 'Memulai sesi setor...';
+
+  @override
+  String get setorQrScanSuccess => 'Sesi Setor Dimulai!';
+
+  @override
+  String get setorQrScanSuccessMessage =>
+      'Sesi setor sampah Anda telah dimulai. Silakan lanjutkan untuk menyetor sampah Anda.';
+
+  @override
+  String get setorQrScanTitle => 'Setor Sampah';
+
+  @override
   String get register => 'Daftar';
 
   @override

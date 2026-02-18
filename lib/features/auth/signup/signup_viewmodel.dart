@@ -280,8 +280,9 @@ class SignupViewModel extends _$SignupViewModel {
         _handleBsuQrData(data.bsuData);
       case QrType.registerNasabah:
         _handleNasabahQrData(data.nasabahData);
+      case QrType.setorRvm:
       case QrType.unknown:
-        // Show an error for unknown QR type
+        // Show an error for invalid QR type during signup
         state = state.copyWith(
           errorMessage: 'Invalid QR code type',
         );
