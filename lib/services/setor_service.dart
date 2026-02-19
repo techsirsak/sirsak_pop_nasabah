@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/models/setor/setor_session_response.dart';
+import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/api/dio_client.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
@@ -33,7 +34,7 @@ class SetorService {
       path: '/setor/session',
       data: {
         'rvm_id': rvmId,
-        if (sessionId != null) 'session_id': sessionId,
+        'session_id': ?sessionId,
       },
       fromJson: SetorSessionResponse.fromJson,
     );
@@ -42,5 +43,26 @@ class SetorService {
       '[SetorService] Session created: ${response.sessionId}',
     );
     return response;
+  }
+
+  /// Process a QR transaction at an RVM
+  ///
+  /// [encryptedPayload] - Pre-encrypted payload string from RVM QR code
+  ///
+  /// Returns true on success
+  /// Throws [ApiException] on failure
+  Future<bool> qrTransaction(String encryptedPayload) async {
+    _logger.info(
+      '[SetorService] Processing QR transaction with encrypted payload',
+    );
+
+    await _apiClient.post(
+      path: '/rvm/qr-transaction',
+      data: {'encrypted_payload': encryptedPayload},
+      fromJson: (_) {},
+    );
+
+    _logger.info('[SetorService] QR transaction completed successfully');
+    return true;
   }
 }

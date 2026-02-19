@@ -1,4 +1,4 @@
-const termAndConditionUrl = 'https://sirsak.co/terms-and-condition';
+const termAndConditionUrl = 'https://sirsak.co/terms-of-condition';
 const privacyPolicyUrl = 'https://sirsak.co/privacy-policy';
 const faqUrl = 'https://www.sirsak.co/#faq';
 const sirsakPhoneCP = '+62 8777 0808 578';

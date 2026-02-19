@@ -110,7 +110,8 @@ class _SetorQrScanViewState extends ConsumerState<SetorQrScanView>
                           MobileScannerErrorCode.controllerAlreadyInitialized) {
                         return const SizedBox.shrink();
                       }
-                      final isPermissionError = error.errorCode ==
+                      final isPermissionError =
+                          error.errorCode ==
                           MobileScannerErrorCode.permissionDenied;
                       return _SetorErrorView(
                         message: isPermissionError
@@ -206,8 +207,9 @@ class _SetorQrScanViewState extends ConsumerState<SetorQrScanView>
                       icon: state.isTorchOn
                           ? Icons.flash_on_rounded
                           : Icons.flash_off_rounded,
-                      onPressed:
-                          state.isSubmitting ? null : viewModel.toggleTorch,
+                      onPressed: state.isSubmitting
+                          ? null
+                          : viewModel.toggleTorch,
                       isActive: state.isTorchOn,
                       colorScheme: colorScheme,
                     ),
@@ -309,8 +311,8 @@ class _SetorSuccessDialog extends StatelessWidget {
           Text(
             l10n.setorQrScanSuccess,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontVariations: AppFonts.semiBold,
-                ),
+              fontVariations: AppFonts.semiBold,
+            ),
             textAlign: TextAlign.center,
           ),
           const Gap(8),

@@ -28,18 +28,21 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
   @override
   SetorQrScanState build() {
     // Watch for tab changes to reset state when QR tab is selected
-    ref.listen(bottomNavProvider, (previous, next) {
-      if (next.selectedIndex == 2 && previous?.selectedIndex != 2) {
-        _resetForNewScan();
-      }
-    });
+    ref
+      ..listen(bottomNavProvider, (previous, next) {
+        if (next.selectedIndex == 2 && previous?.selectedIndex != 2) {
+          _resetForNewScan();
+        }
+      })
+      ..onDispose(() {
+        unawaited(_controller?.dispose());
+      });
 
-    ref.onDispose(() {
-      unawaited(_controller?.dispose());
-    });
-
-    // Initialize camera permission on build
-    unawaited(Future.microtask(initCameraPermission));
+    // Only init if already on QR tab when provider first accessed
+    final currentTab = ref.read(bottomNavProvider).selectedIndex;
+    if (currentTab == 2) {
+      unawaited(Future.microtask(_resetForNewScan));
+    }
 
     return const SetorQrScanState();
   }
@@ -51,6 +54,11 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
     }
 
     await _checkAndRequestCameraPermission();
+  }
+
+  /// Called when the page opens to initialize/reset state
+  Future<void> onPageOpen() async {
+    _resetForNewScan();
   }
 
   /// Start the scanner after permission is granted
@@ -302,12 +310,14 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
 
   void _resetForNewScan() {
     state = const SetorQrScanState();
-    unawaited(Future.microtask(() async {
-      await initCameraPermission();
-      if (state.cameraPermissionStatus == CameraPermissionStatus.granted) {
-        await startScanner();
-      }
-    }));
+    unawaited(
+      Future.microtask(() async {
+        await initCameraPermission();
+        if (state.cameraPermissionStatus == CameraPermissionStatus.granted) {
+          await startScanner();
+        }
+      }),
+    );
   }
 
   /// Handle app lifecycle changes to pause/resume scanner
