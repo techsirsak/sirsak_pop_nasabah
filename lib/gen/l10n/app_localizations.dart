@@ -839,13 +839,13 @@ abstract class AppLocalizations {
   /// No description provided for @setorQrScanSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Deposit Session Started!'**
+  /// **'Scan Successful!'**
   String get setorQrScanSuccess;
 
   /// No description provided for @setorQrScanSuccessMessage.
   ///
   /// In en, this message translates to:
-  /// **'Your waste deposit session has started. Please proceed to deposit your waste.'**
+  /// **'Points have been updated.'**
   String get setorQrScanSuccessMessage;
 
   /// No description provided for @setorQrScanTitle.

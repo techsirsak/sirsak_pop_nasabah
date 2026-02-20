@@ -10,7 +10,6 @@ import 'package:sirsak_pop_nasabah/features/setor_qr_scan/setor_qr_scan_state.da
 import 'package:sirsak_pop_nasabah/services/crypto/qr_crypto_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 import 'package:sirsak_pop_nasabah/services/setor_service.dart';
-import 'package:sirsak_pop_nasabah/shared/navigation/bottom_nav_provider.dart';
 
 part 'setor_qr_scan_viewmodel.g.dart';
 
@@ -27,22 +26,12 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
 
   @override
   SetorQrScanState build() {
-    // Watch for tab changes to reset state when QR tab is selected
-    ref
-      ..listen(bottomNavProvider, (previous, next) {
-        if (next.selectedIndex == 2 && previous?.selectedIndex != 2) {
-          _resetForNewScan();
-        }
-      })
-      ..onDispose(() {
-        unawaited(_controller?.dispose());
-      });
+    ref.onDispose(() {
+      unawaited(_controller?.dispose());
+    });
 
-    // Only init if already on QR tab when provider first accessed
-    final currentTab = ref.read(bottomNavProvider).selectedIndex;
-    if (currentTab == 2) {
-      unawaited(Future.microtask(_resetForNewScan));
-    }
+    // Initialize camera when provider is first accessed
+    unawaited(Future.microtask(_resetForNewScan));
 
     return const SetorQrScanState();
   }

@@ -34,16 +34,17 @@ class HomeView extends ConsumerWidget {
         //   Gap(8),
         // ],
       ),
-      body: IndexedStack(
-        index: selectedIndex,
-        children: const [
-          HomeContent(), // 0 - Home
-          DropPointView(), // 1 - Drop Point
-          SetorQrScanView(), // 2 - Setor Sampah QR Scan
-          WalletView(), // 3 - Wallet
-          ProfileView(), // 4 - Profile
-        ],
-      ),
+      body: selectedIndex == 2
+          ? const SetorQrScanView()
+          : IndexedStack(
+              index: selectedIndex > 2 ? selectedIndex - 1 : selectedIndex,
+              children: const [
+                HomeContent(), // 0 - Home
+                DropPointView(), // 1 - Drop Point
+                WalletView(), // 2 (was 3) - Wallet
+                ProfileView(), // 3 (was 4) - Profile
+              ],
+            ),
       bottomNavigationBar: const AppBottomNavBar(),
     );
   }

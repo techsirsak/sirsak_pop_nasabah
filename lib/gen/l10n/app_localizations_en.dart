@@ -412,11 +412,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setorQrScanSubmitting => 'Starting deposit session...';
 
   @override
-  String get setorQrScanSuccess => 'Deposit Session Started!';
+  String get setorQrScanSuccess => 'Scan Successful!';
 
   @override
-  String get setorQrScanSuccessMessage =>
-      'Your waste deposit session has started. Please proceed to deposit your waste.';
+  String get setorQrScanSuccessMessage => 'Points have been updated.';
 
   @override
   String get setorQrScanTitle => 'Setor Sampah';

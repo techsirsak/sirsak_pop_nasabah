@@ -412,11 +412,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get setorQrScanSubmitting => 'Memulai sesi setor...';
 
   @override
-  String get setorQrScanSuccess => 'Sesi Setor Dimulai!';
+  String get setorQrScanSuccess => 'Scan Berhasil!';
 
   @override
-  String get setorQrScanSuccessMessage =>
-      'Sesi setor sampah Anda telah dimulai. Silakan lanjutkan untuk menyetor sampah Anda.';
+  String get setorQrScanSuccessMessage => 'Poin telah diperbarui.';
 
   @override
   String get setorQrScanTitle => 'Setor Sampah';
