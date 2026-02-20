@@ -66,12 +66,14 @@ class ApiClient {
     required T Function(Map<String, dynamic> json) fromJson,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
   }) async {
     try {
       final response = await _dio.post<Map<String, dynamic>>(
         path,
         data: data,
         queryParameters: queryParameters,
+        options: headers != null ? Options(headers: headers) : null,
       );
 
       return fromJson(response.data!);
