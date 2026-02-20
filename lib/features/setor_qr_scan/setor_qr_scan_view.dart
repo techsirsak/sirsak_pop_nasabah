@@ -140,57 +140,38 @@ class _SetorQrScanViewState extends ConsumerState<SetorQrScanView>
                   ),
 
                 // Scan overlay
-                const QrScanOverlay(),
+                if (state.cameraPermissionStatus !=
+                    CameraPermissionStatus.deniedForever) ...[
+                  const QrScanOverlay(),
 
-                // Submitting overlay
-                if (state.isSubmitting)
-                  ColoredBox(
-                    color: Colors.black.withValues(alpha: 0.7),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const CircularProgressIndicator(color: Colors.white),
-                          const Gap(16),
-                          Text(
-                            context.l10n.setorQrScanSubmitting,
-                            style: textTheme.bodyLarge?.copyWith(
+                  // Instruction text below scan area
+                  if (!state.isSubmitting)
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: MediaQuery.of(context).size.height * 0.05,
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            context.l10n.setorQrScanInstruction,
+                            style: textTheme.bodyMedium?.copyWith(
                               color: Colors.white,
                               fontVariations: AppFonts.medium,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                // Instruction text below scan area
-                if (!state.isSubmitting)
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: MediaQuery.of(context).size.height * 0.05,
-                    child: Center(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          context.l10n.setorQrScanInstruction,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: Colors.white,
-                            fontVariations: AppFonts.medium,
-                          ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  ),
+                ],
               ],
             ),
           ),
@@ -352,7 +333,7 @@ class _SetorErrorView extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

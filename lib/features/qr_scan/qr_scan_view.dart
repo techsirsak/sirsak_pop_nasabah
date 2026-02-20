@@ -143,35 +143,39 @@ class _QrScanViewState extends ConsumerState<QrScanView>
                     message: context.l10n.qrScanCameraPermission,
                   ),
 
-                // Scan overlay
-                const QrScanOverlay(),
+                if (state.cameraPermissionStatus !=
+                    CameraPermissionStatus.deniedForever) ...[
+                  const QrScanOverlay(),
 
-                // Instruction text below scan area
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: MediaQuery.of(context).size.height * 0.05,
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.5),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        context.l10n.qrScanInstruction,
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: Colors.white,
-                          fontVariations: AppFonts.medium,
+                  // Instruction text below scan area
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: MediaQuery.of(context).size.height * 0.05,
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
                         ),
-                        textAlign: TextAlign.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          context.l10n.qrScanInstruction,
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: Colors.white,
+                            fontVariations: AppFonts.medium,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
+
+                // Scan overlay
               ],
             ),
           ),
