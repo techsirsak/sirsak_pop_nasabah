@@ -16,6 +16,8 @@ class DropPointView extends ConsumerStatefulWidget {
 }
 
 class _DropPointViewState extends ConsumerState<DropPointView> {
+  bool _isSearchFocused = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,14 +31,14 @@ class _DropPointViewState extends ConsumerState<DropPointView> {
   Widget build(BuildContext context) {
     final state = ref.watch(dropPointViewModelProvider);
     final viewModel = ref.read(dropPointViewModelProvider.notifier);
-
     return Column(
       children: [
         Stack(
           children: [
-            const SizedBox(
-              height: 300,
-              child: DropPointMap(),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: _isSearchFocused ? 100 : 300,
+              child: const DropPointMap(),
             ),
             Align(
               alignment: .topCenter,
@@ -49,6 +51,8 @@ class _DropPointViewState extends ConsumerState<DropPointView> {
                   value: state.searchQuery,
                   onChanged: viewModel.setSearchQuery,
                   onClear: viewModel.clearSearch,
+                  onFocusChanged: (focused) =>
+                      setState(() => _isSearchFocused = focused),
                 ),
               ),
             ),

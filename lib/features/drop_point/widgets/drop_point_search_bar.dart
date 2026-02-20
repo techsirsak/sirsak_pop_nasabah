@@ -7,12 +7,14 @@ class DropPointSearchBar extends StatelessWidget {
     required this.value,
     required this.onChanged,
     required this.onClear,
+    this.onFocusChanged,
     super.key,
   });
 
   final String value;
   final ValueChanged<String> onChanged;
   final VoidCallback onClear;
+  final ValueChanged<bool>? onFocusChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,9 @@ class DropPointSearchBar extends StatelessWidget {
           color: Colors.red,
           borderRadius: borderRadius,
         ),
-        child: TextField(
+        child: Focus(
+          onFocusChange: onFocusChanged,
+          child: TextField(
           onChanged: onChanged,
           controller: TextEditingController(text: value)
             ..selection = TextSelection.fromPosition(
@@ -89,6 +93,7 @@ class DropPointSearchBar extends StatelessWidget {
             ),
           ),
           style: textTheme.bodyMedium,
+        ),
         ),
       ),
     );
