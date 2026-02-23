@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -18,32 +16,18 @@ class WalletView extends ConsumerStatefulWidget {
 }
 
 class _WalletViewState extends ConsumerState<WalletView> {
-  bool _hasShownBottomSheet = false;
-
   @override
   Widget build(BuildContext context) {
     final isAuthenticated = ref.watch(isAuthenticatedProvider);
 
     // Show login prompt for unauthenticated users
     if (!isAuthenticated) {
-      // Show bottom sheet on first build
-      if (!_hasShownBottomSheet) {
-        _hasShownBottomSheet = true;
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) {
-            unawaited(showLoginRequiredBottomSheet(context, ref));
-          }
-        });
-      }
-
       return AuthGuardPlaceholder(
         onTap: () => showLoginRequiredBottomSheet(context, ref),
       );
     }
 
     // Reset flag when authenticated (for logout scenario)
-    _hasShownBottomSheet = false;
-
     final state = ref.watch(walletViewModelProvider);
     final viewModel = ref.read(walletViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;

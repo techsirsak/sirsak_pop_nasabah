@@ -59,8 +59,7 @@
 	"authGuardLoginButton": "Log In",
 	"authGuardLoginMessage": "Please log in to access this feature",
 	"authGuardLoginRequired": "Login Required",
-	"authGuardRegisterButton": "Register",
-	"authGuardTapToLogin": "Tap anywhere to log in",
+	"authGuardRegisterButton": "Create Account",
 	"appVersion": "Version {version}",
 	"@appVersion": {
 		"placeholders": {
@@ -123,12 +122,8 @@
 	"forgotPassword": "Forgot Password?",
 	"generalErrorTitle": "Something went wrong",
 	"getStarted": "Get Started",
-	"guestProfileBenefit1": "Track your recycling impact",
-	"guestProfileBenefit2": "Earn points and redeem rewards",
-	"guestProfileBenefit3": "View your transaction history",
 	"guestProfileLoginButton": "Log In",
 	"guestProfileMessage": "Sign in to access your profile, track your recycling impact, and earn rewards",
-	"guestProfileRegisterButton": "Create Account",
 	"guestProfileTitle": "Welcome to Sirsak",
 	"homeChallengeProgress": "{current}/{total} {itemType} collected",
 	"homeChallenges": "Challenges",

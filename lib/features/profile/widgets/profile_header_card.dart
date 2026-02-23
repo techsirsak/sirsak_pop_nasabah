@@ -151,7 +151,7 @@ class _GuestCard extends ConsumerWidget {
             const Gap(12),
             // Register button
             SButton(
-              text: l10n.guestProfileRegisterButton,
+              text: l10n.authGuardRegisterButton,
               onPressed: () {
                 unawaited(ref.read(routerProvider).push(SAppRoutePath.signUp));
               },

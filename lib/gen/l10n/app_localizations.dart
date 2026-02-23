@@ -125,14 +125,8 @@ abstract class AppLocalizations {
   /// No description provided for @authGuardRegisterButton.
   ///
   /// In en, this message translates to:
-  /// **'Register'**
+  /// **'Create Account'**
   String get authGuardRegisterButton;
-
-  /// No description provided for @authGuardTapToLogin.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap anywhere to log in'**
-  String get authGuardTapToLogin;
 
   /// No description provided for @appVersion.
   ///
@@ -422,24 +416,6 @@ abstract class AppLocalizations {
   /// **'Get Started'**
   String get getStarted;
 
-  /// No description provided for @guestProfileBenefit1.
-  ///
-  /// In en, this message translates to:
-  /// **'Track your recycling impact'**
-  String get guestProfileBenefit1;
-
-  /// No description provided for @guestProfileBenefit2.
-  ///
-  /// In en, this message translates to:
-  /// **'Earn points and redeem rewards'**
-  String get guestProfileBenefit2;
-
-  /// No description provided for @guestProfileBenefit3.
-  ///
-  /// In en, this message translates to:
-  /// **'View your transaction history'**
-  String get guestProfileBenefit3;
-
   /// No description provided for @guestProfileLoginButton.
   ///
   /// In en, this message translates to:
@@ -451,12 +427,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in to access your profile, track your recycling impact, and earn rewards'**
   String get guestProfileMessage;
-
-  /// No description provided for @guestProfileRegisterButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Create Account'**
-  String get guestProfileRegisterButton;
 
   /// No description provided for @guestProfileTitle.
   ///

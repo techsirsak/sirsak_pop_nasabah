@@ -59,7 +59,7 @@ class AuthGuardPlaceholder extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 48),
                 child: Text(
-                  l10n.authGuardTapToLogin,
+                  l10n.authGuardLoginMessage,
                   style: textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),

@@ -21,10 +21,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get authGuardLoginRequired => 'Perlu Masuk';
 
   @override
-  String get authGuardRegisterButton => 'Daftar';
-
-  @override
-  String get authGuardTapToLogin => 'Tap anywhere to log in';
+  String get authGuardRegisterButton => 'Buat Akun';
 
   @override
   String appVersion(String version) {
@@ -183,23 +180,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get getStarted => 'Mulai';
 
   @override
-  String get guestProfileBenefit1 => 'Lacak dampak daur ulang Anda';
-
-  @override
-  String get guestProfileBenefit2 => 'Dapatkan poin dan tukarkan hadiah';
-
-  @override
-  String get guestProfileBenefit3 => 'Lihat riwayat transaksi Anda';
-
-  @override
   String get guestProfileLoginButton => 'Masuk';
 
   @override
   String get guestProfileMessage =>
       'Masuk untuk mengakses profil Anda, melacak dampak daur ulang, dan mendapatkan hadiah';
-
-  @override
-  String get guestProfileRegisterButton => 'Buat Akun';
 
   @override
   String get guestProfileTitle => 'Selamat Datang di Sirsak';

@@ -4,8 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/auth/login/login_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
@@ -42,13 +40,6 @@ class LoginView extends ConsumerWidget {
             ),
           ),
           centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.chevron_left,
-              size: 32,
-            ),
-            onPressed: () => context.go(SAppRoutePath.landingPage),
-          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -227,7 +218,7 @@ class LoginView extends ConsumerWidget {
                         TextSpan(
                           text: context.l10n.signUp,
                           style: textTheme.titleSmall?.copyWith(
-                            color: colorScheme.tertiary,
+                            color: colorScheme.primary,
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = viewModel.navigateToSignUp,
@@ -247,7 +238,7 @@ class LoginView extends ConsumerWidget {
                         TextSpan(
                           text: context.l10n.landingPageRegisterWithQrButton,
                           style: textTheme.titleSmall?.copyWith(
-                            color: colorScheme.tertiary,
+                            color: colorScheme.primary,
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = viewModel.registerWithQR,
