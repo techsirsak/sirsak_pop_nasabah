@@ -6,6 +6,7 @@ import 'package:sirsak_pop_nasabah/features/home/widgets/action_section.dart';
 import 'package:sirsak_pop_nasabah/features/home/widgets/impact_section.dart';
 import 'package:sirsak_pop_nasabah/features/home/widgets/points_card.dart';
 import 'package:sirsak_pop_nasabah/services/auth_state_provider.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/guest_card.dart';
 
 class HomeContent extends ConsumerWidget {
   const HomeContent({super.key});
@@ -20,7 +21,10 @@ class HomeContent extends ConsumerWidget {
       child: Column(
         children: [
           const Gap(16),
-          PointsCard(state: state, viewModel: viewModel),
+          if (isAuthenticated)
+            PointsCard(state: state, viewModel: viewModel)
+          else
+            const GuestCard(),
           const Gap(34),
           if (isAuthenticated) ...[
             ImpactSection(impacts: state.impacts),

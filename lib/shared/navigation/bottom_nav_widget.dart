@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:sirsak_pop_nasabah/services/auth_state_provider.dart';
 import 'package:sirsak_pop_nasabah/shared/navigation/bottom_nav_provider.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/login_required_bottom_sheet.dart';
 
 class AppBottomNavBar extends ConsumerWidget {
   const AppBottomNavBar({super.key});
@@ -10,7 +12,17 @@ class AppBottomNavBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = ref.watch(bottomNavProvider).selectedIndex;
     final notifier = ref.read(bottomNavProvider.notifier);
+    final isAuthenticated = ref.watch(isAuthenticatedProvider);
     final colorScheme = Theme.of(context).colorScheme;
+
+    // Protected tabs that require authentication (QR Scan = 2, Wallet = 3)
+    void onProtectedTabTap(int index) {
+      if (isAuthenticated) {
+        notifier.setTab(index);
+      } else {
+        showLoginRequiredBottomSheet(context, ref);
+      }
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -48,7 +60,7 @@ class AppBottomNavBar extends ConsumerWidget {
               // Center QR Scan button
               _QRScanButton(
                 isSelected: selectedIndex == 2,
-                onTap: () => notifier.setTab(2),
+                onTap: () => onProtectedTabTap(2),
                 colorScheme: colorScheme,
               ),
               _NavBarItem(
@@ -56,7 +68,7 @@ class AppBottomNavBar extends ConsumerWidget {
                 iconFilled: PhosphorIcons.wallet(PhosphorIconsStyle.fill),
                 label: 'Wallet',
                 isSelected: selectedIndex == 3,
-                onTap: () => notifier.setTab(3),
+                onTap: () => onProtectedTabTap(3),
                 colorScheme: colorScheme,
               ),
               _NavBarItem(

@@ -1,0 +1,107 @@
+# Release Notes - Sirsak Pop Nasabah
+
+## v0.1.5+10 - Initial Release
+
+**Release Date**: February 2026
+**Build Version**: 0.1.5+10
+
+---
+
+### What is Sirsak Pop Nasabah?
+
+Turn your waste into rewards while making a real environmental impact. Sirsak Pop Nasabah connects you to Indonesia's waste value chain network, allowing you to:
+
+- Find nearby Bank Sampah and RVM (Reverse Vending Machine) locations
+- Drop off recyclable waste and earn Sirsak Points
+- Track your environmental impact and contributions
+
+---
+
+### Key Features
+
+#### Authentication & Account
+- Secure login with email and password
+- Multi-step registration with optional QR code scan for Bank Sampah linkage
+- Password recovery via email
+- Email verification for new accounts
+
+#### Home Dashboard
+- View your Sirsak Points balance at a glance
+- Track environmental impact metrics (waste collected, recycled, carbon footprint reduced)
+- See available challenges and badges to earn
+- Discover upcoming events in your area
+
+#### Wallet & Transactions
+- Dual wallet system: Sirsak Points and Bank Sampah Balance
+- Complete transaction history with detailed breakdown
+- Monthly earnings tracking
+- Filter transactions by type (Points vs Bank Sampah)
+
+#### Collection Points Discovery
+- GPS-powered search for nearby Bank Sampah and RVM locations
+- Interactive map with collection point markers
+- List view with distance calculation
+- Search and filter by name or type
+- View stock availability at each location (plastic bottles, aluminum cans, etc.)
+- Access directions via map integration
+
+#### QR Code Scanning
+- Scan QR codes at collection points
+- Secure encrypted data handling
+- Register with Bank Sampah via QR scan
+- Deeplink support for seamless integration
+
+#### User Profile
+- View and edit personal information
+- Change password securely
+- Track your environmental achievements and badges
+- Delete account option with confirmation
+- Quick access to support contacts (WhatsApp, Email, Instagram)
+- FAQ access
+
+#### Localization
+- Available in English and Bahasa Indonesia
+- Switch languages anytime from settings
+
+---
+
+### Technical Highlights
+
+- Built with Flutter 3.29.0
+- Riverpod MVVM architecture for robust state management
+- Secure token-based authentication
+- Real-time GPS location services
+- AES-256 encryption for QR code payloads
+- Sentry integration for crash reporting
+
+---
+
+### Supported Platforms
+
+- iOS 12.0+
+- Android 5.0+ (API level 21)
+
+---
+
+### Known Limitations
+
+- RVM (Reverse Vending Machine) features are in early stages
+- Map requires active internet connection
+- Some features require location permissions to function
+
+---
+
+### Coming Soon
+
+- Enhanced RVM scanning experience
+- More detailed impact analytics
+- Community features and social sharing
+- Reward redemption marketplace
+
+---
+
+### Feedback & Support
+
+- **WhatsApp**: Contact via in-app profile section
+- **Email**: Available via in-app contact
+- **Instagram**: Follow us for updates

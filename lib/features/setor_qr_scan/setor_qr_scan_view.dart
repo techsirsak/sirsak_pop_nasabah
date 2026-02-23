@@ -24,8 +24,6 @@ class SetorQrScanView extends ConsumerStatefulWidget {
 
 class _SetorQrScanViewState extends ConsumerState<SetorQrScanView>
     with WidgetsBindingObserver {
-  bool _hasShownBottomSheet = false;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState appState) {
     // Only handle lifecycle changes when authenticated
@@ -55,23 +53,10 @@ class _SetorQrScanViewState extends ConsumerState<SetorQrScanView>
 
     // Show login prompt for unauthenticated users
     if (!isAuthenticated) {
-      // Show bottom sheet on first build
-      if (!_hasShownBottomSheet) {
-        _hasShownBottomSheet = true;
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) {
-            unawaited(showLoginRequiredBottomSheet(context, ref));
-          }
-        });
-      }
-
       return AuthGuardPlaceholder(
         onTap: () => showLoginRequiredBottomSheet(context, ref),
       );
     }
-
-    // Reset flag when authenticated (for logout scenario)
-    _hasShownBottomSheet = false;
 
     final state = ref.watch(setorQrScanViewModelProvider);
     final viewModel = ref.read(setorQrScanViewModelProvider.notifier);
