@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sirsak_pop_nasabah/core/config/env_config.dart';
 
 part 'logger_service.g.dart';
 
@@ -111,7 +112,7 @@ class LoggerService {
     }
 
     // Send to Sentry in release mode
-    if (!kDebugMode) {
+    if (!kDebugMode && isProduction) {
       await Sentry.captureException(
         error,
         stackTrace: stackTrace,

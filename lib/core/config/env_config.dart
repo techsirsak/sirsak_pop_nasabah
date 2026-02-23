@@ -25,6 +25,9 @@ class EnvConfig {
 /// This is necessary because bootstrap runs before ProviderScope
 EnvConfig? _envConfig;
 
+/// Check if current environment is production
+bool get isProduction => _envConfig?.env == 'PROD';
+
 /// Initialize environment config (called from bootstrap)
 void initEnvConfig({
   required String baseApiUrl,
