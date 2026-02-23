@@ -8,7 +8,6 @@ import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
-import 'package:sirsak_pop_nasabah/shared/navigation/bottom_nav_provider.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 
 /// Shows a bottom sheet prompting the user to log in to access a protected
@@ -46,16 +45,19 @@ class _LoginRequiredBottomSheet extends StatelessWidget {
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Handle indicator
+              const Gap(12),
+              // Handle indicator and close button
               Container(
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                  color: colorScheme.onSurfaceVariant.withValues(
+                    alpha: 0.4,
+                  ),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -119,18 +121,6 @@ class _LoginRequiredBottomSheet extends StatelessWidget {
                 },
                 variant: ButtonVariant.outlined,
                 size: ButtonSize.large,
-              ),
-              const Gap(12),
-
-              // Cancel button
-              SButton(
-                text: l10n.cancel,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  // Return to Home tab when dismissing
-                  ref.read(bottomNavProvider.notifier).setTab(0);
-                },
-                variant: ButtonVariant.text,
               ),
             ],
           ),
