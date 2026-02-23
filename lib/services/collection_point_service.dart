@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sirsak_pop_nasabah/core/config/env_config.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_stock_model.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_points_response.dart';
 import 'package:sirsak_pop_nasabah/services/api/dio_client.dart';
@@ -11,14 +12,16 @@ CollectionPointService collectionPointService(Ref ref) {
   return CollectionPointService(
     ref.read(apiClientProvider),
     ref.read(loggerServiceProvider),
+    ref.read(envConfigProvider),
   );
 }
 
 class CollectionPointService {
-  CollectionPointService(this._apiClient, this._logger);
+  CollectionPointService(this._apiClient, this._logger, this._envConfig);
 
   final ApiClient _apiClient;
   final LoggerService _logger;
+  final EnvConfig _envConfig;
 
   /// Fetch collection points from /nasabah/collection-points
   ///
@@ -32,6 +35,7 @@ class CollectionPointService {
       path: '/nasabah/collection-points',
       queryParameters: {'limit': limit},
       fromJson: CollectionPointsResponse.fromJson,
+      headers: {'x-api-key': _envConfig.rvmApiKey},
     );
 
     _logger.info(
@@ -50,6 +54,7 @@ class CollectionPointService {
     final response = await _apiClient.getList(
       path: '/nasabah/collection-points/stock/$bsuId',
       fromJson: CollectionPointStockModel.fromJson,
+      headers: {'x-api-key': _envConfig.rvmApiKey},
     );
 
     _logger.info(

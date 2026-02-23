@@ -90,11 +90,13 @@ class ApiClient {
     required String path,
     required T Function(Map<String, dynamic> json) fromJson,
     Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
   }) async {
     try {
       final response = await _dio.get<Map<String, dynamic>>(
         path,
         queryParameters: queryParameters,
+        options: headers != null ? Options(headers: headers) : null,
       );
 
       return fromJson(response.data!);
@@ -178,11 +180,13 @@ class ApiClient {
     required String path,
     required T Function(Map<String, dynamic> json) fromJson,
     Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
   }) async {
     try {
       final response = await _dio.get<List<dynamic>>(
         path,
         queryParameters: queryParameters,
+        options: headers != null ? Options(headers: headers) : null,
       );
 
       return response.data!
