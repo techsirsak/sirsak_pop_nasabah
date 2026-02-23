@@ -105,8 +105,21 @@ class LandingPageView extends ConsumerWidget {
                     child: SButton(
                       onPressed: () => ref
                           .read(landingPageViewModelProvider.notifier)
-                          .navigateToSignIn(),
+                          .navigateToGetStarted(),
                       text: l10n.getStarted,
+                      backgroundColor: colorScheme.surface,
+                      foregroundColor: colorScheme.onSurface,
+                    ),
+                  ),
+                  const Gap(12),
+                  // Get Started Button
+                  SizedBox(
+                    width: size.width * 2 / 3,
+                    child: SButton(
+                      onPressed: () => ref
+                          .read(landingPageViewModelProvider.notifier)
+                          .navigateToSignIn(),
+                      text: l10n.loginButton,
                       backgroundColor: colorScheme.surface,
                       foregroundColor: colorScheme.onSurface,
                     ),

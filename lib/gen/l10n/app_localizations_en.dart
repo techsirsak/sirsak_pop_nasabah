@@ -12,6 +12,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
+  String get authGuardLoginButton => 'Log In';
+
+  @override
+  String get authGuardLoginMessage => 'Please log in to access this feature';
+
+  @override
+  String get authGuardLoginRequired => 'Login Required';
+
+  @override
+  String get authGuardRegisterButton => 'Register';
+
+  @override
+  String get authGuardTapToLogin => 'Tap anywhere to log in';
+
+  @override
   String appVersion(String version) {
     return 'Version $version';
   }
@@ -166,6 +181,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get getStarted => 'Get Started';
+
+  @override
+  String get guestProfileBenefit1 => 'Track your recycling impact';
+
+  @override
+  String get guestProfileBenefit2 => 'Earn points and redeem rewards';
+
+  @override
+  String get guestProfileBenefit3 => 'View your transaction history';
+
+  @override
+  String get guestProfileLoginButton => 'Log In';
+
+  @override
+  String get guestProfileMessage =>
+      'Sign in to access your profile, track your recycling impact, and earn rewards';
+
+  @override
+  String get guestProfileRegisterButton => 'Create Account';
+
+  @override
+  String get guestProfileTitle => 'Welcome to Sirsak';
 
   @override
   String homeChallengeProgress(int current, int total, String itemType) {

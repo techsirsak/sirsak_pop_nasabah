@@ -15,6 +15,7 @@ import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 import 'package:sirsak_pop_nasabah/services/toast_service.dart';
 import 'package:sirsak_pop_nasabah/services/url_launcher_service.dart';
 import 'package:sirsak_pop_nasabah/services/user_service.dart';
+import 'package:sirsak_pop_nasabah/shared/navigation/bottom_nav_provider.dart';
 
 part 'profile_viewmodel.g.dart';
 
@@ -116,7 +117,10 @@ class ProfileViewModel extends _$ProfileViewModel {
       await ref.read(localStorageServiceProvider).clearAllTokens();
       ref.read(currentUserProvider.notifier).clearUser();
       await ref.read(collectionPointsCacheProvider.notifier).clearCache();
-      ref.read(routerProvider).go(SAppRoutePath.landingPage);
+
+      // Stay on Home tab after logout (Apple Guideline 5.1.1 compliance)
+      // Users can continue using public features without being logged in
+      ref.read(bottomNavProvider.notifier).setTab(0);
     } catch (e) {
       state = state.copyWith(
         isLoggingOut: false,

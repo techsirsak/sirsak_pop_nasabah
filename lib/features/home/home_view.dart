@@ -19,6 +19,7 @@ class HomeView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: colorScheme.surface,
         elevation: 0,
         centerTitle: false,

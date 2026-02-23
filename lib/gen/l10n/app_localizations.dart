@@ -104,6 +104,36 @@ abstract class AppLocalizations {
   /// **'Sirsak Pop Nasabah'**
   String get appName;
 
+  /// No description provided for @authGuardLoginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In'**
+  String get authGuardLoginButton;
+
+  /// No description provided for @authGuardLoginMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please log in to access this feature'**
+  String get authGuardLoginMessage;
+
+  /// No description provided for @authGuardLoginRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Required'**
+  String get authGuardLoginRequired;
+
+  /// No description provided for @authGuardRegisterButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get authGuardRegisterButton;
+
+  /// No description provided for @authGuardTapToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap anywhere to log in'**
+  String get authGuardTapToLogin;
+
   /// No description provided for @appVersion.
   ///
   /// In en, this message translates to:
@@ -391,6 +421,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get getStarted;
+
+  /// No description provided for @guestProfileBenefit1.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your recycling impact'**
+  String get guestProfileBenefit1;
+
+  /// No description provided for @guestProfileBenefit2.
+  ///
+  /// In en, this message translates to:
+  /// **'Earn points and redeem rewards'**
+  String get guestProfileBenefit2;
+
+  /// No description provided for @guestProfileBenefit3.
+  ///
+  /// In en, this message translates to:
+  /// **'View your transaction history'**
+  String get guestProfileBenefit3;
+
+  /// No description provided for @guestProfileLoginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In'**
+  String get guestProfileLoginButton;
+
+  /// No description provided for @guestProfileMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to access your profile, track your recycling impact, and earn rewards'**
+  String get guestProfileMessage;
+
+  /// No description provided for @guestProfileRegisterButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get guestProfileRegisterButton;
+
+  /// No description provided for @guestProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Sirsak'**
+  String get guestProfileTitle;
 
   /// No description provided for @homeChallengeProgress.
   ///

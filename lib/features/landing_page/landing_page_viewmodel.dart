@@ -16,7 +16,7 @@ class LandingPageViewModel extends _$LandingPageViewModel {
   /// Navigate to login page when "Get Started" button is tapped
   Future<void> navigateToGetStarted() async {
     state = state.copyWith(isNavigating: true);
-    ref.read(routerProvider).push(SAppRoutePath.signUp);
+    ref.read(routerProvider).push(SAppRoutePath.home);
     state = state.copyWith(isNavigating: false);
   }
 

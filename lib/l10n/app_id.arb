@@ -56,6 +56,10 @@
 		}
 	},
 	"appName": "Sirsak Pop Nasabah",
+	"authGuardLoginButton": "Masuk",
+	"authGuardLoginMessage": "Silakan masuk untuk mengakses fitur ini",
+	"authGuardLoginRequired": "Perlu Masuk",
+	"authGuardRegisterButton": "Daftar",
 	"appVersion": "Versi {version}",
 	"@appVersion": {
 		"placeholders": {
@@ -118,6 +122,13 @@
 	"forgotPassword": "Lupa Kata Sandi?",
 	"generalErrorTitle": "Terjadi kesalahan",
 	"getStarted": "Mulai",
+	"guestProfileBenefit1": "Lacak dampak daur ulang Anda",
+	"guestProfileBenefit2": "Dapatkan poin dan tukarkan hadiah",
+	"guestProfileBenefit3": "Lihat riwayat transaksi Anda",
+	"guestProfileLoginButton": "Masuk",
+	"guestProfileMessage": "Masuk untuk mengakses profil Anda, melacak dampak daur ulang, dan mendapatkan hadiah",
+	"guestProfileRegisterButton": "Buat Akun",
+	"guestProfileTitle": "Selamat Datang di Sirsak",
 	"homeChallengeProgress": "{current}/{total} {itemType} terkumpulkan",
 	"homeChallenges": "Tantangan",
 	"homeChallengesDesc": "Selesaikan tantangan, dapatkan hadiahnya!",
