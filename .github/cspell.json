@@ -29,7 +29,8 @@
     "**/*.freezed.dart",
     "**/.vscode/**",
     "**/.dart_tool/**",
-    "pubspec.lock"
+    "pubspec.lock",
+    "**/*.md"
   ],
   "words": [
     "alamat",

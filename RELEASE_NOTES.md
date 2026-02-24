@@ -1,5 +1,44 @@
 # Release Notes - Sirsak Pop Nasabah
 
+## v0.1.6+11 - RVM QR Scan & Guest Mode
+
+**Release Date**: February 2026
+**Build Version**: 0.1.6+11
+
+---
+
+### New Features
+
+#### RVM QR Code Scanning
+- Scan QR codes at RVM (Reverse Vending Machine) locations
+- New dedicated RVM scan UI with improved user experience
+- Secure encrypted payload handling for RVM transactions
+
+#### Guest Mode
+- Browse the app without creating an account
+- View home content and explore collection points as a guest
+- Landing page and profile sections now accessible without authentication
+- Easy sign-up prompts when guest users want to access full features
+
+### Improvements
+
+#### Collection Points Map
+- Resizable map view when searching for collection points, providing more space for the list
+- New "Center to user location" button for quick navigation
+- Waste items now grouped by category for better organization
+
+#### UI Enhancements
+- Updated bottom sheet design
+- Improved denied permission UI
+- Various visual refinements throughout the app
+
+### Bug Fixes
+- Fixed QR scan opening issue
+- Sentry error reporting now only active in production builds
+- Updated collection point API to use x-api-key header
+
+---
+
 ## v0.1.5+10 - Initial Release
 
 **Release Date**: February 2026
@@ -85,7 +124,6 @@ Turn your waste into rewards while making a real environmental impact. Sirsak Po
 
 ### Known Limitations
 
-- RVM (Reverse Vending Machine) features are in early stages
 - Map requires active internet connection
 - Some features require location permissions to function
 
@@ -93,7 +131,6 @@ Turn your waste into rewards while making a real environmental impact. Sirsak Po
 
 ### Coming Soon
 
-- Enhanced RVM scanning experience
 - More detailed impact analytics
 - Community features and social sharing
 - Reward redemption marketplace
