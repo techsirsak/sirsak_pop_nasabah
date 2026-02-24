@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -20,7 +22,7 @@ class AppBottomNavBar extends ConsumerWidget {
       if (isAuthenticated) {
         notifier.setTab(index);
       } else {
-        showLoginRequiredBottomSheet(context, ref);
+        unawaited(showLoginRequiredBottomSheet(context, ref));
       }
     }
 

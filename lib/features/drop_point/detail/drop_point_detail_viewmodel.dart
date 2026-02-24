@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/detail/drop_point_detail_state.dart';
 import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_model.dart';
+import 'package:sirsak_pop_nasabah/models/collection_point/collection_point_stock_model.dart';
 import 'package:sirsak_pop_nasabah/models/drop_point_model.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/collection_point_service.dart';
@@ -124,6 +125,23 @@ class DropPointDetailViewModel extends _$DropPointDetailViewModel {
         errorMessage: e.toString(),
       );
     }
+  }
+
+  /// Launch maps app with directions to the collection point
+  ///
+  /// Uses original coordinates if available, otherwise uses geocoded
+  /// coordinates, and falls back to address search if neither is available.
+  /// Get stock items grouped by category (trimmed)
+  Map<String, List<CollectionPointStockModel>> get groupedStockItems {
+    final grouped = <String, List<CollectionPointStockModel>>{};
+    for (final item in state.stockItems) {
+      final category = item.category.trim();
+      grouped.putIfAbsent(category, () => []).add(item);
+    }
+    // Sort alphabetically by category name
+    return Map.fromEntries(
+      grouped.entries.toList()..sort((a, b) => a.key.compareTo(b.key)),
+    );
   }
 
   /// Launch maps app with directions to the collection point
