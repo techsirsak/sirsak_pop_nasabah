@@ -196,7 +196,7 @@
 	"qrScanTitle": "Pindai Kode QR",
 	"setorQrScanErrorApi": "Gagal memulai sesi setor. Silakan coba lagi.",
 	"setorQrScanErrorInvalidQr": "Kode QR ini tidak valid untuk setor sampah",
-	"setorQrScanInstruction": "Pindai kode QR di mesin RVM",
+	"setorQrScanInstruction": "Pindai kode QR di Sircle",
 	"setorQrScanRetry": "Pindai Lagi",
 	"setorQrScanSubmitting": "Memulai sesi setor...",
 	"setorQrScanSuccess": "Scan Berhasil!",

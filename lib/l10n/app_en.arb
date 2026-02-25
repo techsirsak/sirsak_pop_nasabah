@@ -196,7 +196,7 @@
 	"qrScanTitle": "Scan QR Code",
 	"setorQrScanErrorApi": "Failed to start deposit session. Please try again.",
 	"setorQrScanErrorInvalidQr": "This QR code is not valid for waste deposit",
-	"setorQrScanInstruction": "Scan QR code at the RVM machine",
+	"setorQrScanInstruction": "Scan QR code at Sircle",
 	"setorQrScanRetry": "Scan Again",
 	"setorQrScanSubmitting": "Starting deposit session...",
 	"setorQrScanSuccess": "Scan Successful!",

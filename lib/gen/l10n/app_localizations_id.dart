@@ -425,7 +425,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Kode QR ini tidak valid untuk setor sampah';
 
   @override
-  String get setorQrScanInstruction => 'Pindai kode QR di mesin RVM';
+  String get setorQrScanInstruction => 'Pindai kode QR di Sircle';
 
   @override
   String get setorQrScanRetry => 'Pindai Lagi';

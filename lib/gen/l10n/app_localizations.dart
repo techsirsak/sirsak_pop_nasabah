@@ -863,7 +863,7 @@ abstract class AppLocalizations {
   /// No description provided for @setorQrScanInstruction.
   ///
   /// In en, this message translates to:
-  /// **'Scan QR code at the RVM machine'**
+  /// **'Scan QR code at Sircle'**
   String get setorQrScanInstruction;
 
   /// No description provided for @setorQrScanRetry.

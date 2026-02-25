@@ -425,7 +425,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'This QR code is not valid for waste deposit';
 
   @override
-  String get setorQrScanInstruction => 'Scan QR code at the RVM machine';
+  String get setorQrScanInstruction => 'Scan QR code at Sircle';
 
   @override
   String get setorQrScanRetry => 'Scan Again';
