@@ -1,12 +1,11 @@
 # Release Notes - Sirsak Pop Nasabah
 
-## v0.1.6+11 - RVM QR Scan & Guest Mode
+## v1.0.1+13 - RVM QR Scan & Guest Mode
 
 **Release Date**: February 2026
-**Build Version**: 0.1.6+11
+**Build Version**: 1.0.1+13
 
 ---
-
 ### New Features
 
 #### RVM QR Code Scanning
@@ -36,6 +35,8 @@
 - Fixed QR scan opening issue
 - Sentry error reporting now only active in production builds
 - Updated collection point API to use x-api-key header
+- Fixed collection points not loading in guest mode
+- Updated QR scan text for better clarity
 
 ---
 
