@@ -10,6 +10,7 @@ void main() {
       sentryDsn: const String.fromEnvironment('sentryDsn'),
       qrEncryptionKey: const String.fromEnvironment('qrEncryptionKey'),
       hmacKey: const String.fromEnvironment('hmacKey'),
+      rvmApiKey: const String.fromEnvironment('rvmApiKey'),
     ),
   );
 }

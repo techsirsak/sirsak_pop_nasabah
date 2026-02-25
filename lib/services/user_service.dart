@@ -131,4 +131,17 @@ class UserService {
 
     return response.data;
   }
+
+  /// Apply for a BSU (Bank Sampah Unit)
+  ///
+  /// Throws [ApiException] on failure
+  Future<void> applyBSU({required String bsuId}) async {
+    _logger.info('[UserService] Applying for BSU: $bsuId');
+
+    await _apiClient.post<void>(
+      path: '/nasabah/apply/bsu/$bsuId',
+    );
+
+    _logger.info('[UserService] BSU application submitted successfully');
+  }
 }

@@ -7,7 +7,6 @@ import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
 import 'package:sirsak_pop_nasabah/features/profile/widgets/delete_account_confirmation_dialog.dart';
 import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
-import 'package:sirsak_pop_nasabah/services/collection_points_cache_provider.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/dialog_service.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
@@ -85,7 +84,6 @@ class ProfileViewModel extends _$ProfileViewModel {
       // Reuse logout cleanup logic
       await ref.read(localStorageServiceProvider).clearAllTokens();
       ref.read(currentUserProvider.notifier).clearUser();
-      await ref.read(collectionPointsCacheProvider.notifier).clearCache();
       ref.read(routerProvider).go(SAppRoutePath.landingPage);
     } on ApiException catch (e) {
       state = state.copyWith(
@@ -115,7 +113,7 @@ class ProfileViewModel extends _$ProfileViewModel {
     try {
       await ref.read(localStorageServiceProvider).clearAllTokens();
       ref.read(currentUserProvider.notifier).clearUser();
-      await ref.read(collectionPointsCacheProvider.notifier).clearCache();
+      // Users can continue using public features without being logged in
       ref.read(routerProvider).go(SAppRoutePath.landingPage);
     } catch (e) {
       state = state.copyWith(

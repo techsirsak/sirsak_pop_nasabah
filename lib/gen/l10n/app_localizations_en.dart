@@ -12,6 +12,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
+  String get authGuardLoginButton => 'Log In';
+
+  @override
+  String get authGuardLoginMessage => 'Please log in to access this feature';
+
+  @override
+  String get authGuardLoginRequired => 'Login Required';
+
+  @override
+  String get authGuardRegisterButton => 'Create Account';
+
+  @override
   String appVersion(String version) {
     return 'Version $version';
   }
@@ -166,6 +178,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get getStarted => 'Get Started';
+
+  @override
+  String get guestProfileLoginButton => 'Log In';
+
+  @override
+  String get guestProfileMessage =>
+      'Sign in to access your profile, track your recycling impact, and earn rewards';
+
+  @override
+  String get guestProfileTitle => 'Welcome to Sirsak';
 
   @override
   String homeChallengeProgress(int current, int total, String itemType) {
@@ -393,6 +415,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qrScanTitle => 'Scan QR Code';
+
+  @override
+  String get setorQrScanErrorApi =>
+      'Failed to start deposit session. Please try again.';
+
+  @override
+  String get setorQrScanErrorInvalidQr =>
+      'This QR code is not valid for waste deposit';
+
+  @override
+  String get setorQrScanInstruction => 'Scan QR code at Sircle';
+
+  @override
+  String get setorQrScanRetry => 'Scan Again';
+
+  @override
+  String get setorQrScanSubmitting => 'Starting deposit session...';
+
+  @override
+  String get setorQrScanSuccess => 'Scan Successful!';
+
+  @override
+  String get setorQrScanSuccessMessage => 'Points have been updated.';
+
+  @override
+  String get setorQrScanTitle => 'Setor Sampah';
 
   @override
   String get register => 'Register';

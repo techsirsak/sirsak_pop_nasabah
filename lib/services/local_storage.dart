@@ -24,8 +24,10 @@ class LocalStorageService {
   static const String _keyCollectionPoints = 'collection_points';
   static const String _keyCollectionPointsCachedAt =
       'collection_points_cached_at';
+  static const String _keyTokensSavedAt = 'tokens_saved_at';
 
-  static const Duration _cacheExpiration = Duration(days: 7);
+  static const Duration _collectionPointExpiration = Duration(days: 2);
+  static const Duration _tokenExpiration = Duration(days: 7);
 
   Future<bool> hasSeenTutorial() async {
     try {
@@ -62,14 +64,31 @@ class LocalStorageService {
   Future<void> saveAccessToken(String token) async {
     try {
       await _storage.write(key: _keyAccessToken, value: token);
+      await _storage.write(
+        key: _keyTokensSavedAt,
+        value: DateTime.now().toIso8601String(),
+      );
       _logger.info('Access token saved');
     } catch (e, stackTrace) {
       _logger.error('Failed to save access token', e, stackTrace);
     }
   }
 
+  /// Get access token
+  /// Returns null if token is expired (> 7 days) or not found
   Future<String?> getAccessToken() async {
     try {
+      // Check token expiration
+      final savedAtStr = await _storage.read(key: _keyTokensSavedAt);
+      if (savedAtStr != null) {
+        final savedAt = DateTime.parse(savedAtStr);
+        if (DateTime.now().difference(savedAt) > _tokenExpiration) {
+          _logger.info('[LocalStorage] Tokens expired, clearing...');
+          await clearAllTokens();
+          return null;
+        }
+      }
+
       final token = await _storage.read(key: _keyAccessToken);
       _logger.info('Access token retrieved: ${token != null}');
       return token;
@@ -88,8 +107,21 @@ class LocalStorageService {
     }
   }
 
+  /// Get refresh token
+  /// Returns null if token is expired (> 7 days) or not found
   Future<String?> getRefreshToken() async {
     try {
+      // Check token expiration
+      final savedAtStr = await _storage.read(key: _keyTokensSavedAt);
+      if (savedAtStr != null) {
+        final savedAt = DateTime.parse(savedAtStr);
+        if (DateTime.now().difference(savedAt) > _tokenExpiration) {
+          _logger.info('[LocalStorage] Tokens expired, clearing...');
+          await clearAllTokens();
+          return null;
+        }
+      }
+
       final token = await _storage.read(key: _keyRefreshToken);
       _logger.info('Refresh token retrieved: ${token != null}');
       return token;
@@ -103,6 +135,7 @@ class LocalStorageService {
     try {
       await _storage.delete(key: _keyAccessToken);
       await _storage.delete(key: _keyRefreshToken);
+      await _storage.delete(key: _keyTokensSavedAt);
       _logger.info('All tokens cleared');
     } catch (e, stackTrace) {
       _logger.error('Failed to clear tokens', e, stackTrace);
@@ -128,7 +161,7 @@ class LocalStorageService {
   }
 
   /// Get cached collection points
-  /// Returns null if cache is expired (> 7 days) or not found
+  /// Returns null if cache is expired (> 1 day) or not found
   Future<List<CollectionPointModel>?> getCachedCollectionPoints() async {
     try {
       final cachedAtStr = await _storage.read(
@@ -137,7 +170,7 @@ class LocalStorageService {
       if (cachedAtStr == null) return null;
 
       final cachedAt = DateTime.parse(cachedAtStr);
-      if (DateTime.now().difference(cachedAt) > _cacheExpiration) {
+      if (DateTime.now().difference(cachedAt) > _collectionPointExpiration) {
         _logger.info('[LocalStorage] Collection points cache expired');
         return null;
       }

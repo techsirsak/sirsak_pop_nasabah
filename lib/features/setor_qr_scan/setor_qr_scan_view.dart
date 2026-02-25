@@ -8,48 +8,37 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_overlay.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
-import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_viewmodel.dart';
+import 'package:sirsak_pop_nasabah/features/setor_qr_scan/setor_qr_scan_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/services/auth_state_provider.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/app_dialog.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/auth_guard_placeholder.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/login_required_bottom_sheet.dart';
 
-class QrScanView extends ConsumerStatefulWidget {
-  const QrScanView({super.key, this.deeplinkData});
-
-  /// Optional deeplink data passed from router when app is opened via deeplink
-  final String? deeplinkData;
+class SetorQrScanView extends ConsumerStatefulWidget {
+  const SetorQrScanView({super.key});
 
   @override
-  ConsumerState<QrScanView> createState() => _QrScanViewState();
+  ConsumerState<SetorQrScanView> createState() => _SetorQrScanViewState();
 }
 
-class _QrScanViewState extends ConsumerState<QrScanView>
+class _SetorQrScanViewState extends ConsumerState<SetorQrScanView>
     with WidgetsBindingObserver {
-  bool _deeplinkProcessed = false;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState appState) {
-    ref
-        .read(qrScanViewModelProvider.notifier)
-        .handleAppLifecycleChange(
-          appState,
-        );
+    // Only handle lifecycle changes when authenticated
+    final isAuthenticated = ref.read(isAuthenticatedProvider);
+    if (isAuthenticated) {
+      ref
+          .read(setorQrScanViewModelProvider.notifier)
+          .handleAppLifecycleChange(appState);
+    }
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // Process deeplink after first frame if data is provided
-    if (widget.deeplinkData != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!_deeplinkProcessed) {
-          _deeplinkProcessed = true;
-          ref
-              .read(qrScanViewModelProvider.notifier)
-              .processDeeplink(widget.deeplinkData!);
-        }
-      });
-    }
   }
 
   @override
@@ -60,59 +49,79 @@ class _QrScanViewState extends ConsumerState<QrScanView>
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(qrScanViewModelProvider);
-    final viewModel = ref.read(qrScanViewModelProvider.notifier);
+    final isAuthenticated = ref.watch(isAuthenticatedProvider);
+
+    // Show login prompt for unauthenticated users
+    if (!isAuthenticated) {
+      return AuthGuardPlaceholder(
+        onTap: () => showLoginRequiredBottomSheet(context, ref),
+      );
+    }
+
+    final state = ref.watch(setorQrScanViewModelProvider);
+    final viewModel = ref.read(setorQrScanViewModelProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    ref.listen(qrScanViewModelProvider, (previous, next) {
+    ref.listen(setorQrScanViewModelProvider, (previous, next) {
       // Show error dialog when errorMessage is set
       if (next.errorMessage != null && previous?.errorMessage == null) {
         unawaited(
           showDialog<void>(
             context: context,
             barrierDismissible: false,
-            builder: (_) => const _QrFailedDialog(),
+            builder: (_) => _SetorFailedDialog(
+              errorKey: next.errorMessage!,
+            ),
           ).then((_) {
-            ref.read(qrScanViewModelProvider.notifier).dismissErrorAndRescan();
+            ref
+                .read(setorQrScanViewModelProvider.notifier)
+                .dismissErrorAndRescan();
+          }),
+        );
+      }
+
+      // Show success dialog
+      if (next.isSuccess && !previous!.isSuccess) {
+        unawaited(
+          showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const _SetorSuccessDialog(),
+          ).then((_) {
+            ref
+                .read(setorQrScanViewModelProvider.notifier)
+                .dismissErrorAndRescan();
           }),
         );
       }
 
       // Start scanner when permission becomes granted
-      // Use postFrameCallback to ensure MobileScanner widget is in the tree
       if (next.cameraPermissionStatus == CameraPermissionStatus.granted &&
           previous?.cameraPermissionStatus != CameraPermissionStatus.granted &&
           !next.isScannerReady) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          unawaited(ref.read(qrScanViewModelProvider.notifier).startScanner());
+          unawaited(
+            ref.read(setorQrScanViewModelProvider.notifier).startScanner(),
+          );
         });
       }
     });
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: colorScheme.surface,
-        title: Text(
-          context.l10n.qrScanTitle,
-          style: textTheme.titleLarge?.copyWith(),
-        ),
-      ),
-      body: Column(
+    return ColoredBox(
+      color: Colors.black,
+      child: Column(
         children: [
           Expanded(
             child: Stack(
               children: [
-                // Camera preview - render when permission granted
-                // Scanner is started after widget is in tree via listener
+                // Camera preview
                 if (state.cameraPermissionStatus ==
                     CameraPermissionStatus.granted) ...[
                   MobileScanner(
                     controller: viewModel.controller,
                     onDetect: viewModel.onDetect,
                     errorBuilder: (context, error, child) {
-                      // Ignore controllerAlreadyInitialized - not a real error
                       if (error.errorCode ==
                           MobileScannerErrorCode.controllerAlreadyInitialized) {
                         return const SizedBox.shrink();
@@ -120,10 +129,11 @@ class _QrScanViewState extends ConsumerState<QrScanView>
                       final isPermissionError =
                           error.errorCode ==
                           MobileScannerErrorCode.permissionDenied;
-                      return _QRErrorVIew(
+                      return _SetorErrorView(
                         message: isPermissionError
                             ? context.l10n.qrScanCameraPermission
                             : context.l10n.qrScanDecryptionFailed,
+                        viewModel: viewModel,
                       );
                     },
                   ),
@@ -134,48 +144,50 @@ class _QrScanViewState extends ConsumerState<QrScanView>
                   )
                 else if (state.cameraPermissionStatus ==
                     CameraPermissionStatus.deniedForever)
-                  _QRErrorVIew(
+                  _SetorErrorView(
                     message: context.l10n.qrScanPermissionDeniedForever,
                     showOpenSettings: true,
+                    viewModel: viewModel,
                   )
                 else
-                  _QRErrorVIew(
+                  _SetorErrorView(
                     message: context.l10n.qrScanCameraPermission,
+                    viewModel: viewModel,
                   ),
 
+                // Scan overlay
                 if (state.cameraPermissionStatus !=
                     CameraPermissionStatus.deniedForever) ...[
                   const QrScanOverlay(),
 
                   // Instruction text below scan area
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: MediaQuery.of(context).size.height * 0.05,
-                    child: Center(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          context.l10n.qrScanInstruction,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: Colors.white,
-                            fontVariations: AppFonts.medium,
+                  if (!state.isSubmitting)
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: MediaQuery.of(context).size.height * 0.05,
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
                           ),
-                          textAlign: TextAlign.center,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            context.l10n.setorQrScanInstruction,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: Colors.white,
+                              fontVariations: AppFonts.medium,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ),
-                  ),
                 ],
-
-                // Scan overlay
               ],
             ),
           ),
@@ -188,12 +200,13 @@ class _QrScanViewState extends ConsumerState<QrScanView>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // Torch toggle
                     _buildControlButton(
                       icon: state.isTorchOn
                           ? Icons.flash_on_rounded
                           : Icons.flash_off_rounded,
-                      onPressed: viewModel.toggleTorch,
+                      onPressed: state.isSubmitting
+                          ? null
+                          : viewModel.toggleTorch,
                       isActive: state.isTorchOn,
                       colorScheme: colorScheme,
                     ),
@@ -233,14 +246,21 @@ class _QrScanViewState extends ConsumerState<QrScanView>
   }
 }
 
-class _QrFailedDialog extends StatelessWidget {
-  const _QrFailedDialog();
+class _SetorFailedDialog extends StatelessWidget {
+  const _SetorFailedDialog({required this.errorKey});
+
+  final String errorKey;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final errorMessage = errorKey == 'setorQrScanErrorInvalidQr'
+        ? l10n.setorQrScanErrorInvalidQr
+        : l10n.setorQrScanErrorApi;
+
     return AppDialog(
       maxWidth: 400,
-      dialogTitle: context.l10n.qrScanTitle,
+      dialogTitle: l10n.setorQrScanTitle,
       dialogBody: Column(
         children: [
           Icon(
@@ -250,7 +270,7 @@ class _QrFailedDialog extends StatelessWidget {
           ),
           const Gap(12),
           Text(
-            context.l10n.qrScanDecryptionFailed,
+            errorMessage,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -260,29 +280,76 @@ class _QrFailedDialog extends StatelessWidget {
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(context.l10n.close),
+          child: Text(l10n.setorQrScanRetry),
         ),
       ),
     );
   }
 }
 
-class _QRErrorVIew extends ConsumerWidget {
-  const _QRErrorVIew({
+class _SetorSuccessDialog extends StatelessWidget {
+  const _SetorSuccessDialog();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return AppDialog(
+      maxWidth: 400,
+      dialogTitle: l10n.setorQrScanTitle,
+      dialogBody: Column(
+        children: [
+          Icon(
+            PhosphorIcons.checkCircle(),
+            size: 48,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          const Gap(12),
+          Text(
+            l10n.setorQrScanSuccess,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontVariations: AppFonts.semiBold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const Gap(8),
+          Text(
+            l10n.setorQrScanSuccessMessage,
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      dialogFooter: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.close),
+        ),
+      ),
+    );
+  }
+}
+
+class _SetorErrorView extends StatelessWidget {
+  const _SetorErrorView({
     required this.message,
+    required this.viewModel,
     this.showOpenSettings = false,
   });
 
   final String message;
   final bool showOpenSettings;
+  final SetorQrScanViewModel viewModel;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -304,11 +371,7 @@ class _QRErrorVIew extends ConsumerWidget {
             if (showOpenSettings)
               ElevatedButton(
                 onPressed: () {
-                  unawaited(
-                    ref
-                        .read(qrScanViewModelProvider.notifier)
-                        .openCameraSettings(),
-                  );
+                  unawaited(viewModel.openCameraSettings());
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colorScheme.primary,
@@ -318,19 +381,6 @@ class _QRErrorVIew extends ConsumerWidget {
                   context.l10n.qrScanOpenSettings,
                   style: textTheme.bodyLarge?.copyWith(
                     color: colorScheme.onPrimary,
-                    fontVariations: AppFonts.semiBold,
-                  ),
-                ),
-              )
-            else
-              TextButton(
-                onPressed: () {
-                  ref.read(qrScanViewModelProvider.notifier).resetScan();
-                },
-                child: Text(
-                  context.l10n.cancel,
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: colorScheme.primary,
                     fontVariations: AppFonts.semiBold,
                   ),
                 ),

@@ -11,16 +11,17 @@ enum CameraPermissionStatus {
   deniedForever,
 }
 
-/// QR code type for registration flows
+/// QR code type for registration and setor flows
 enum QrType {
   registerBsu,
   registerNasabah,
+  setorRvm,
   unknown
   ;
 
   /// Converts a string value from QR JSON to [QrType]
   ///
-  /// Expected values: 'register-bsu', 'register-nasabah'
+  /// Expected values: 'register-bsu', 'register-nasabah', 'setor-rvm'
   /// Returns [QrType.unknown] for unrecognized values
   static QrType fromString(String value) {
     switch (value) {
@@ -28,6 +29,8 @@ enum QrType {
         return QrType.registerBsu;
       case 'register-nasabah':
         return QrType.registerNasabah;
+      case 'setor-rvm':
+        return QrType.setorRvm;
       default:
         return QrType.unknown;
     }
@@ -60,6 +63,19 @@ abstract class QrNasabahData with _$QrNasabahData {
       _$QrNasabahDataFromJson(json);
 }
 
+/// RVM setor data from QR code
+@freezed
+abstract class QrSetorRvmData with _$QrSetorRvmData {
+  const factory QrSetorRvmData({
+    required String id,
+    @JsonKey(name: 'rvm_name') String? rvmName,
+    @JsonKey(name: 'session_id') String? sessionId,
+  }) = _QrSetorRvmData;
+
+  factory QrSetorRvmData.fromJson(Map<String, dynamic> json) =>
+      _$QrSetorRvmDataFromJson(json);
+}
+
 /// Parsed QR data containing type and typed data
 @freezed
 abstract class ParsedQrData with _$ParsedQrData {
@@ -67,6 +83,7 @@ abstract class ParsedQrData with _$ParsedQrData {
     required QrType type,
     QrBsuData? bsuData,
     QrNasabahData? nasabahData,
+    QrSetorRvmData? setorRvmData,
   }) = _ParsedQrData;
 
   factory ParsedQrData.fromJson(Map<String, dynamic> json) =>

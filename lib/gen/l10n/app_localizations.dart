@@ -104,6 +104,30 @@ abstract class AppLocalizations {
   /// **'Sirsak Pop Nasabah'**
   String get appName;
 
+  /// No description provided for @authGuardLoginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In'**
+  String get authGuardLoginButton;
+
+  /// No description provided for @authGuardLoginMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please log in to access this feature'**
+  String get authGuardLoginMessage;
+
+  /// No description provided for @authGuardLoginRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Required'**
+  String get authGuardLoginRequired;
+
+  /// No description provided for @authGuardRegisterButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get authGuardRegisterButton;
+
   /// No description provided for @appVersion.
   ///
   /// In en, this message translates to:
@@ -391,6 +415,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get getStarted;
+
+  /// No description provided for @guestProfileLoginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In'**
+  String get guestProfileLoginButton;
+
+  /// No description provided for @guestProfileMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to access your profile, track your recycling impact, and earn rewards'**
+  String get guestProfileMessage;
+
+  /// No description provided for @guestProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Sirsak'**
+  String get guestProfileTitle;
 
   /// No description provided for @homeChallengeProgress.
   ///
@@ -805,6 +847,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scan QR Code'**
   String get qrScanTitle;
+
+  /// No description provided for @setorQrScanErrorApi.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to start deposit session. Please try again.'**
+  String get setorQrScanErrorApi;
+
+  /// No description provided for @setorQrScanErrorInvalidQr.
+  ///
+  /// In en, this message translates to:
+  /// **'This QR code is not valid for waste deposit'**
+  String get setorQrScanErrorInvalidQr;
+
+  /// No description provided for @setorQrScanInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR code at Sircle'**
+  String get setorQrScanInstruction;
+
+  /// No description provided for @setorQrScanRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Again'**
+  String get setorQrScanRetry;
+
+  /// No description provided for @setorQrScanSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting deposit session...'**
+  String get setorQrScanSubmitting;
+
+  /// No description provided for @setorQrScanSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Successful!'**
+  String get setorQrScanSuccess;
+
+  /// No description provided for @setorQrScanSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Points have been updated.'**
+  String get setorQrScanSuccessMessage;
+
+  /// No description provided for @setorQrScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Setor Sampah'**
+  String get setorQrScanTitle;
 
   /// No description provided for @register.
   ///

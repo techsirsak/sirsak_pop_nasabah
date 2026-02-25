@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/constants/app_constants.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_state.dart';
@@ -104,7 +105,7 @@ class _DropPointMapState extends ConsumerState<DropPointMap> {
                 // ),
               ],
             ),
-            // Zoom controls
+            // Map controls (my location + zoom)
             Positioned(
               top: 8,
               left: 8,
@@ -112,11 +113,30 @@ class _DropPointMapState extends ConsumerState<DropPointMap> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  const Gap(8),
                   ZoomControl(
                     onZoomIn: viewModel.zoomIn,
                     onZoomOut: viewModel.zoomOut,
                   ),
                 ],
+              ),
+            ),
+            Positioned(
+              bottom: 8,
+              right: 8,
+              child: _MyLocationButton(
+                onTap: () {
+                  if (state.userLocation != null) {
+                    _mapController.move(
+                      LatLng(
+                        state.userLocation!.latitude,
+                        state.userLocation!.longitude,
+                      ),
+                      state.mapZoom,
+                    );
+                  }
+                },
+                isEnabled: state.userLocation != null,
               ),
             ),
             // Location found toast
@@ -251,6 +271,50 @@ class _DropPointMapState extends ConsumerState<DropPointMap> {
               spreadRadius: 2,
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MyLocationButton extends StatelessWidget {
+  const _MyLocationButton({
+    required this.onTap,
+    required this.isEnabled,
+  });
+
+  final VoidCallback onTap;
+  final bool isEnabled;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Opacity(
+      opacity: isEnabled ? 1.0 : 0.5,
+      child: Container(
+        decoration: BoxDecoration(
+          color: colorScheme.surface.withValues(alpha: .9),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: .1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: InkWell(
+          onTap: isEnabled ? onTap : null,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Icon(
+              PhosphorIcons.gpsFix(),
+              size: 20,
+              color: colorScheme.onSurface,
+            ),
+          ),
         ),
       ),
     );

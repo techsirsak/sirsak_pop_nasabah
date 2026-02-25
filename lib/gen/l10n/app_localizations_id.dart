@@ -12,6 +12,18 @@ class AppLocalizationsId extends AppLocalizations {
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
+  String get authGuardLoginButton => 'Masuk';
+
+  @override
+  String get authGuardLoginMessage => 'Silakan masuk untuk mengakses fitur ini';
+
+  @override
+  String get authGuardLoginRequired => 'Perlu Masuk';
+
+  @override
+  String get authGuardRegisterButton => 'Buat Akun';
+
+  @override
   String appVersion(String version) {
     return 'Versi $version';
   }
@@ -166,6 +178,16 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get getStarted => 'Mulai';
+
+  @override
+  String get guestProfileLoginButton => 'Masuk';
+
+  @override
+  String get guestProfileMessage =>
+      'Masuk untuk mengakses profil Anda, melacak dampak daur ulang, dan mendapatkan hadiah';
+
+  @override
+  String get guestProfileTitle => 'Selamat Datang di Sirsak';
 
   @override
   String homeChallengeProgress(int current, int total, String itemType) {
@@ -393,6 +415,32 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get qrScanTitle => 'Pindai Kode QR';
+
+  @override
+  String get setorQrScanErrorApi =>
+      'Gagal memulai sesi setor. Silakan coba lagi.';
+
+  @override
+  String get setorQrScanErrorInvalidQr =>
+      'Kode QR ini tidak valid untuk setor sampah';
+
+  @override
+  String get setorQrScanInstruction => 'Pindai kode QR di Sircle';
+
+  @override
+  String get setorQrScanRetry => 'Pindai Lagi';
+
+  @override
+  String get setorQrScanSubmitting => 'Memulai sesi setor...';
+
+  @override
+  String get setorQrScanSuccess => 'Scan Berhasil!';
+
+  @override
+  String get setorQrScanSuccessMessage => 'Poin telah diperbarui.';
+
+  @override
+  String get setorQrScanTitle => 'Setor Sampah';
 
   @override
   String get register => 'Daftar';

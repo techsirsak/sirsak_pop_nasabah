@@ -23,9 +23,14 @@ class SplashViewModel extends _$SplashViewModel {
       ..info('[SplashViewModel] initializeSplash started');
     state = true; // Set loading state
 
-    // Simulate initialization delay (2 seconds)
-    await Future<void>.delayed(const Duration(seconds: 2));
-    logger.info('[SplashViewModel] delay completed');
+    // Fetch collection points in background
+    // (for both guest and authenticated users)
+    logger.info(
+      '[SplashViewModel] starting collection points fetch in background',
+    );
+    await ref
+        .read(collectionPointsCacheProvider.notifier)
+        .fetchAndCacheCollectionPoints();
 
     final localStorageService = ref.read(localStorageServiceProvider);
     logger.info('[SplashViewModel] getting access token...');
@@ -80,16 +85,6 @@ class SplashViewModel extends _$SplashViewModel {
         );
         // Continue anyway - user can still use the app
       }
-
-      // Fetch collection points in background (non-blocking)
-      logger.info(
-        '[SplashViewModel] starting collection points fetch in background',
-      );
-      unawaited(
-        ref
-            .read(collectionPointsCacheProvider.notifier)
-            .fetchAndCacheCollectionPoints(),
-      );
 
       logger.info('[SplashViewModel] navigating to home');
       ref.read(routerProvider).go(SAppRoutePath.home);
