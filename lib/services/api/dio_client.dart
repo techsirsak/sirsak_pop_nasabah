@@ -63,7 +63,7 @@ class ApiClient {
   /// Execute a POST request with error handling
   Future<T> post<T>({
     required String path,
-    required T Function(Map<String, dynamic> json) fromJson,
+    T Function(Map<String, dynamic> json)? fromJson,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
@@ -76,7 +76,10 @@ class ApiClient {
         options: headers != null ? Options(headers: headers) : null,
       );
 
-      return fromJson(response.data!);
+      if (fromJson != null) {
+        return fromJson(response.data!);
+      }
+      return null as T;
     } on DioException catch (e) {
       throw _handleDioError(e);
     } catch (e, stackTrace) {
@@ -88,7 +91,7 @@ class ApiClient {
   /// Execute a GET request with error handling
   Future<T> get<T>({
     required String path,
-    required T Function(Map<String, dynamic> json) fromJson,
+    T Function(Map<String, dynamic> json)? fromJson,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
   }) async {
@@ -99,7 +102,10 @@ class ApiClient {
         options: headers != null ? Options(headers: headers) : null,
       );
 
-      return fromJson(response.data!);
+      if (fromJson != null) {
+        return fromJson(response.data!);
+      }
+      return null as T;
     } on DioException catch (e) {
       throw _handleDioError(e);
     } catch (e, stackTrace) {
@@ -111,7 +117,7 @@ class ApiClient {
   /// Execute a PUT request with error handling
   Future<T> put<T>({
     required String path,
-    required T Function(Map<String, dynamic> json) fromJson,
+    T Function(Map<String, dynamic> json)? fromJson,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -122,7 +128,10 @@ class ApiClient {
         queryParameters: queryParameters,
       );
 
-      return fromJson(response.data!);
+      if (fromJson != null) {
+        return fromJson(response.data!);
+      }
+      return null as T;
     } on DioException catch (e) {
       throw _handleDioError(e);
     } catch (e, stackTrace) {
@@ -134,7 +143,7 @@ class ApiClient {
   /// Execute a PATCH request with error handling
   Future<T> patch<T>({
     required String path,
-    required T Function(Map<String, dynamic> json) fromJson,
+    T Function(Map<String, dynamic> json)? fromJson,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -145,7 +154,10 @@ class ApiClient {
         queryParameters: queryParameters,
       );
 
-      return fromJson(response.data!);
+      if (fromJson != null) {
+        return fromJson(response.data!);
+      }
+      return null as T;
     } on DioException catch (e) {
       throw _handleDioError(e);
     } catch (e, stackTrace) {
@@ -157,7 +169,7 @@ class ApiClient {
   /// Execute a DELETE request with error handling
   Future<T> delete<T>({
     required String path,
-    required T Function(Map<String, dynamic> json) fromJson,
+    T Function(Map<String, dynamic> json)? fromJson,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
@@ -166,7 +178,10 @@ class ApiClient {
         queryParameters: queryParameters,
       );
 
-      return fromJson(response.data!);
+      if (fromJson != null) {
+        return fromJson(response.data!);
+      }
+      return null as T;
     } on DioException catch (e) {
       throw _handleDioError(e);
     } catch (e, stackTrace) {

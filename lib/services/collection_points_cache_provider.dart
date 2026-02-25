@@ -26,7 +26,7 @@ class CollectionPointsCacheNotifier extends _$CollectionPointsCacheNotifier {
       final localStorage = ref.read(localStorageServiceProvider);
       final cached = await localStorage.getCachedCollectionPoints();
 
-      if (cached != null) {
+      if (cached != null && cached.isNotEmpty) {
         state = state.copyWith(points: cached, isLoading: false);
         ref
             .read(loggerServiceProvider)
@@ -104,7 +104,7 @@ class CollectionPointsCacheNotifier extends _$CollectionPointsCacheNotifier {
     }
   }
 
-  /// Clear cache (called on logout)
+  /// Clear cache
   Future<void> clearCache() async {
     state = const CollectionPointsCacheState();
     await ref.read(localStorageServiceProvider).clearCollectionPointsCache();
