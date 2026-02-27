@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/bsu_banner.dart';
 
 class PersonalInfoSection extends StatelessWidget {
   const PersonalInfoSection({
@@ -50,6 +52,46 @@ class PersonalInfoSection extends StatelessWidget {
             ],
           ),
           const Gap(16),
+
+          // Show BSU banner if user has BSU, otherwise show registration button
+          if (state.bsuId != null && state.bsuName != null)
+            BsuBanner(
+              bsuName: state.bsuName!,
+              isRegistered: true,
+            )
+          else
+            GestureDetector(
+              onTap: viewModel.navigateToApplyBsu,
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: colorScheme.primary.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      PhosphorIcons.storefront(),
+                      color: colorScheme.onPrimaryContainer,
+                      size: 32,
+                    ),
+                    const Gap(12),
+                    Text(
+                      l10n.profileApplyBsu,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: colorScheme.onPrimaryContainer,
+                        fontVariations: AppFonts.semiBold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          const Gap(16),
+
           // Info fields
           _InfoField(
             label: l10n.profileNameLabel,

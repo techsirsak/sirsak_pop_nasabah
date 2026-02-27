@@ -10,6 +10,7 @@ import 'package:sirsak_pop_nasabah/features/auth/signup/signup_state.dart';
 import 'package:sirsak_pop_nasabah/features/auth/signup/signup_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/bsu_banner.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/password_field.dart';
 
@@ -135,12 +136,9 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
 
               // BSU Name Banner (when scanned via QR)
               if (state.bsuName != null) ...[
-                _buildBsuNameBanner(
-                  context: context,
+                BsuBanner(
                   bsuName: state.bsuName!,
-                  viewModel: viewModel,
-                  colorScheme: colorScheme,
-                  textTheme: textTheme,
+                  onClear: viewModel.clearQrData,
                 ),
                 const Gap(16),
               ],
@@ -288,68 +286,6 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
           ),
         ],
       ],
-    );
-  }
-
-  Widget _buildBsuNameBanner({
-    required BuildContext context,
-    required String bsuName,
-    required SignupViewModel viewModel,
-    required ColorScheme colorScheme,
-    required TextTheme textTheme,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.3),
-        ),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            PhosphorIcons.storefront(),
-            color: colorScheme.onPrimaryContainer,
-            size: 32,
-          ),
-          const Gap(12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.l10n.signupRegisteringAt,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onPrimaryContainer.withValues(
-                      alpha: 0.8,
-                    ),
-                  ),
-                ),
-                const Gap(2),
-                Text(
-                  bsuName,
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colorScheme.onPrimaryContainer,
-                    fontVariations: AppFonts.semiBold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Clear button
-          IconButton(
-            onPressed: viewModel.clearQrData,
-            icon: Icon(
-              PhosphorIcons.x(),
-              color: colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
-              size: 20,
-            ),
-            tooltip: context.l10n.cancel,
-          ),
-        ],
-      ),
     );
   }
 

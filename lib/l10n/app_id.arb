@@ -55,6 +55,8 @@
 			}
 		}
 	},
+	"applyBsuError": "Gagal mendaftar ke BSU",
+	"applyBsuSuccess": "Berhasil mendaftar ke BSU",
 	"appName": "Sirsak Pop Nasabah",
 	"authGuardLoginButton": "Masuk",
 	"authGuardLoginMessage": "Silakan masuk untuk mengakses fitur ini",
@@ -164,6 +166,7 @@
 	"passwordMinLength": "Kata sandi minimal 6 karakter",
 	"passwordRequired": "Kata sandi wajib diisi",
 	"profileAccountTitle": "Akun",
+	"profileApplyBsu": "Daftar BSU",
 	"profileBadgesTitle": "Lencana Kamu",
 	"profileCarbonAvoided": "Emisi Karbon\nTerhindari",
 	"profileChangePassword": "Ubah Kata Sandi",
@@ -194,6 +197,7 @@
 	"qrScanOpenSettings": "Buka Pengaturan",
 	"qrScanPermissionDeniedForever": "Izin kamera ditolak secara permanen. Silakan aktifkan di pengaturan.",
 	"qrScanTitle": "Pindai Kode QR",
+	"registeredAt": "Terdaftar di",
 	"setorQrScanErrorApi": "Gagal memulai sesi setor. Silakan coba lagi.",
 	"setorQrScanErrorInvalidQr": "Kode QR ini tidak valid untuk setor sampah",
 	"setorQrScanInstruction": "Pindai kode QR di Sircle",

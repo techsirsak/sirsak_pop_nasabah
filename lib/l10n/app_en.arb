@@ -55,6 +55,8 @@
 			}
 		}
 	},
+	"applyBsuError": "Failed to apply to BSU",
+	"applyBsuSuccess": "Successfully applied to BSU",
 	"appName": "Sirsak Pop Nasabah",
 	"authGuardLoginButton": "Log In",
 	"authGuardLoginMessage": "Please log in to access this feature",
@@ -164,6 +166,7 @@
 	"passwordMinLength": "Password must be at least 6 characters",
 	"passwordRequired": "Password is required",
 	"profileAccountTitle": "Akun",
+	"profileApplyBsu": "Apply BSU",
 	"profileBadgesTitle": "Your Badges",
 	"profileCarbonAvoided": "Emisi Karbon\nTerhindari",
 	"profileChangePassword": "Ubah Kata Sandi",
@@ -194,6 +197,7 @@
 	"qrScanOpenSettings": "Open Settings",
 	"qrScanPermissionDeniedForever": "Camera permission was permanently denied. Please enable it in settings.",
 	"qrScanTitle": "Scan QR Code",
+	"registeredAt": "Registered at ",
 	"setorQrScanErrorApi": "Failed to start deposit session. Please try again.",
 	"setorQrScanErrorInvalidQr": "This QR code is not valid for waste deposit",
 	"setorQrScanInstruction": "Scan QR code at Sircle",
