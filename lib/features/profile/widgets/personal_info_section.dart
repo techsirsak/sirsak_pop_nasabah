@@ -54,12 +54,13 @@ class PersonalInfoSection extends StatelessWidget {
           const Gap(16),
 
           // Show BSU banner if user has BSU, otherwise show registration button
-          if (state.bsuId != null && state.bsuName != null)
+          if (state.bsuName != null) ...[
             BsuBanner(
               bsuName: state.bsuName!,
               isRegistered: true,
-            )
-          else
+            ),
+            const Gap(16),
+          ] else if (state.bsuId == null) ...[
             GestureDetector(
               onTap: viewModel.navigateToApplyBsu,
               child: Container(
@@ -90,7 +91,8 @@ class PersonalInfoSection extends StatelessWidget {
                 ),
               ),
             ),
-          const Gap(16),
+            const Gap(16),
+          ],
 
           // Info fields
           _InfoField(
