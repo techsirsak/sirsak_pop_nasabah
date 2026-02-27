@@ -47,13 +47,13 @@ jobs:
           ./create_app.sh --platform android --type both --flavor prod
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: android-apk-prod
           path: build/app/outputs/flutter-apk/app-production-release.apk
 
       - name: Upload AAB Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: android-aab-prod
           path: build/app/outputs/bundle/productionRelease/app-production-release.aab
@@ -90,7 +90,7 @@ jobs:
           ./create_app.sh --platform ios --flavor prod
 
       - name: Upload iOS Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ios-ipa-prod
           path: build/app/outputs/ios/productionRelease/
