@@ -5,6 +5,7 @@ import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/features/profile/profile_state.dart';
 import 'package:sirsak_pop_nasabah/features/profile/widgets/delete_account_confirmation_dialog.dart';
+import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
@@ -32,6 +33,8 @@ class ProfileViewModel extends _$ProfileViewModel {
       memberSince: user?.createdAt.year.toString() ?? '',
       isLoading: currentUserState.isLoading,
       impacts: impact ?? const ImpactModel(),
+      bsuId: user?.bsuId,
+      bsuName: user?.bsuName,
     );
   }
 
@@ -133,6 +136,53 @@ class ProfileViewModel extends _$ProfileViewModel {
         isLoading: false,
         errorMessage: e.toString(),
       );
+    }
+  }
+
+  Future<void> navigateToApplyBsu() async {
+    final result = await ref
+        .read(routerProvider)
+        .push<ParsedQrData>(
+          SAppRoutePath.qrScan,
+        );
+
+    if (result?.type == QrType.registerBsu && result?.bsuData != null) {
+      await _applyBsu(result!.bsuData!.id);
+    }
+  }
+
+  Future<void> _applyBsu(String bsuId) async {
+    state = state.copyWith(isApplyingBsu: true);
+
+    try {
+      await ref.read(userServiceProvider).applyBSU(bsuId: bsuId);
+      ref
+          .read(toastServiceProvider)
+          .success(title: 'Successfully applied to BSU');
+      state = state.copyWith(isApplyingBsu: false);
+    } on ApiException catch (e) {
+      state = state.copyWith(isApplyingBsu: false);
+      ref
+          .read(toastServiceProvider)
+          .error(
+            title: e.when(
+              network: (message, _) => message,
+              server: (message, _) => 'Server error. Please try again.',
+              client: (message, _, _) => message,
+              unknown: (message, _) =>
+                  'Something went wrong. Please try again.',
+            ),
+          );
+    } catch (e, stackTrace) {
+      ref
+          .read(loggerServiceProvider)
+          .error(
+            '[ProfileViewModel] Apply BSU error',
+            e,
+            stackTrace,
+          );
+      state = state.copyWith(isApplyingBsu: false);
+      ref.read(toastServiceProvider).error(title: 'Failed to apply to BSU');
     }
   }
 }

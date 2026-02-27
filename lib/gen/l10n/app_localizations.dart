@@ -98,6 +98,18 @@ abstract class AppLocalizations {
     Locale('id'),
   ];
 
+  /// No description provided for @applyBsuError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to apply to BSU'**
+  String get applyBsuError;
+
+  /// No description provided for @applyBsuSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully applied to BSU'**
+  String get applyBsuSuccess;
+
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
@@ -668,6 +680,12 @@ abstract class AppLocalizations {
   /// **'Akun'**
   String get profileAccountTitle;
 
+  /// No description provided for @profileApplyBsu.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply BSU'**
+  String get profileApplyBsu;
+
   /// No description provided for @profileBadgesTitle.
   ///
   /// In en, this message translates to:
@@ -847,6 +865,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scan QR Code'**
   String get qrScanTitle;
+
+  /// No description provided for @registeredAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered at '**
+  String get registeredAt;
 
   /// No description provided for @setorQrScanErrorApi.
   ///

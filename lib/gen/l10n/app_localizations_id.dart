@@ -9,6 +9,12 @@ class AppLocalizationsId extends AppLocalizations {
   AppLocalizationsId([String locale = 'id']) : super(locale);
 
   @override
+  String get applyBsuError => 'Gagal mendaftar ke BSU';
+
+  @override
+  String get applyBsuSuccess => 'Berhasil mendaftar ke BSU';
+
+  @override
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
@@ -322,6 +328,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get profileAccountTitle => 'Akun';
 
   @override
+  String get profileApplyBsu => 'Daftar BSU';
+
+  @override
   String get profileBadgesTitle => 'Lencana Kamu';
 
   @override
@@ -415,6 +424,9 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get qrScanTitle => 'Pindai Kode QR';
+
+  @override
+  String get registeredAt => 'Terdaftar di';
 
   @override
   String get setorQrScanErrorApi =>

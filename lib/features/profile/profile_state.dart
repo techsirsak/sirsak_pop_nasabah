@@ -15,7 +15,10 @@ abstract class ProfileState with _$ProfileState {
     @Default(false) bool isLoading,
     @Default(false) bool isLoggingOut,
     @Default(false) bool isDeletingAccount,
+    @Default(false) bool isApplyingBsu,
     String? errorMessage,
+    String? bsuId,
+    String? bsuName,
   }) = _ProfileState;
 }
 

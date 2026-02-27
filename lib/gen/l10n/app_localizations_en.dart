@@ -9,6 +9,12 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get applyBsuError => 'Failed to apply to BSU';
+
+  @override
+  String get applyBsuSuccess => 'Successfully applied to BSU';
+
+  @override
   String get appName => 'Sirsak Pop Nasabah';
 
   @override
@@ -321,6 +327,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileAccountTitle => 'Akun';
 
   @override
+  String get profileApplyBsu => 'Apply BSU';
+
+  @override
   String get profileBadgesTitle => 'Your Badges';
 
   @override
@@ -415,6 +424,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qrScanTitle => 'Scan QR Code';
+
+  @override
+  String get registeredAt => 'Registered at ';
 
   @override
   String get setorQrScanErrorApi =>
