@@ -156,6 +156,7 @@ class ProfileViewModel extends _$ProfileViewModel {
 
     try {
       await ref.read(userServiceProvider).applyBSU(bsuId: bsuId);
+      await ref.read(currentUserProvider.notifier).fetchCurrentUser();
       ref
           .read(toastServiceProvider)
           .success(title: 'Successfully applied to BSU');
