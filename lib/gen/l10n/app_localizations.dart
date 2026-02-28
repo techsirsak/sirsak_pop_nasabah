@@ -455,7 +455,7 @@ abstract class AppLocalizations {
   /// No description provided for @guestProfileMessage.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to access your profile, track your recycling impact, and earn rewards'**
+  /// **'**Sign Up** or **Log In** to access your **profile**, get recycling impact data and rewards!'**
   String get guestProfileMessage;
 
   /// No description provided for @guestProfileTitle.

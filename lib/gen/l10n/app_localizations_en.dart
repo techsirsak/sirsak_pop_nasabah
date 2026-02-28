@@ -199,7 +199,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get guestProfileMessage =>
-      'Sign in to access your profile, track your recycling impact, and earn rewards';
+      '**Sign Up** or **Log In** to access your **profile**, get recycling impact data and rewards!';
 
   @override
   String get guestProfileTitle => 'Welcome to Sirsak';

@@ -199,7 +199,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get guestProfileMessage =>
-      'Masuk untuk mengakses profil Anda, melacak dampak daur ulang, dan mendapatkan hadiah';
+      '**Daftar Akun** atau **Masuk** untuk mengakses **profil** anda, dapatkan data dampak daur ulang dan hadiah!';
 
   @override
   String get guestProfileTitle => 'Selamat Datang di Sirsak';

@@ -128,7 +128,7 @@
 	"generalErrorTitle": "Something went wrong",
 	"getStarted": "Get Started",
 	"guestProfileLoginButton": "Log In",
-	"guestProfileMessage": "Sign in to access your profile, track your recycling impact, and earn rewards",
+	"guestProfileMessage": "**Sign Up** or **Log In** to access your **profile**, get recycling impact data and rewards!",
 	"guestProfileTitle": "Welcome to Sirsak",
 	"homeChallengeProgress": "{current}/{total} {itemType} collected",
 	"homeChallenges": "Challenges",

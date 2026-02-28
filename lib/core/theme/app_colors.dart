@@ -92,8 +92,8 @@ extension ColorSchemeGradients on ColorScheme {
   /// Creates a diagonal gradient from primaryContainer to a darker shade
   /// for visual depth and hierarchy
   LinearGradient get pointsCardGradient {
-    final primaryHSL = HSLColor.fromColor(primaryContainer);
-    final darkerPrimary = primaryHSL.withLightness(0.15).toColor();
+    final primaryHSL = HSLColor.fromColor(primary);
+    final darkerPrimary = primaryHSL.withLightness(.23).toColor();
 
     return LinearGradient(
       begin: Alignment.topLeft,

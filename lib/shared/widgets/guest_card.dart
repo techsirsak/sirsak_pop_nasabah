@@ -6,7 +6,9 @@ import 'package:gap/gap.dart';
 import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_colors.dart';
+import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/rich_text_helper.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 
 class GuestCard extends ConsumerWidget {
@@ -22,18 +24,26 @@ class GuestCard extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           gradient: colorScheme.pointsCardGradient,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
-            Text(
-              l10n.guestProfileMessage,
-              style: textTheme.bodyLarge?.copyWith(
-                color: Colors.white,
+            RichText(
+              textAlign: .center,
+              text: TextSpan(
+                children: parseRichText(
+                  l10n.guestProfileMessage,
+                  baseStyle:
+                      textTheme.bodyLarge?.copyWith(
+                        color: Colors.white,
+                      ) ??
+                      const TextStyle(color: Colors.white),
+                  boldFontVariations: AppFonts.extraBold,
+                ),
               ),
             ),
             const Gap(24),
