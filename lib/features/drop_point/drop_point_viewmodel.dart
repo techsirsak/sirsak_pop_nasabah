@@ -64,10 +64,8 @@ class DropPointViewModel extends _$DropPointViewModel {
       isLoading: false,
     );
 
-    // Re-apply filters if any were active
-    if (state.searchQuery.isNotEmpty || state.activeFilters.isNotEmpty) {
-      _applyFiltersAndSort();
-    }
+    // Always apply sorting (distance if location available, else alphabetical)
+    _applyFiltersAndSort();
   }
 
   /// Check and request location permission
@@ -219,6 +217,9 @@ class DropPointViewModel extends _$DropPointViewModel {
             final distB = b.calculateDistanceInKM(state.userLocation);
             return distA.compareTo(distB);
           });
+        } else {
+          // Fallback to alphabetical when location not available
+          filtered.sort((a, b) => a.name.compareTo(b.name));
         }
       case DropPointSortBy.rating:
         // Rating not available in API, sort by name instead

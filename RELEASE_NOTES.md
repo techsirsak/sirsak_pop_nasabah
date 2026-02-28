@@ -1,5 +1,17 @@
 # Release Notes - Sirsak Pop Nasabah
 
+## v1.0.2+14 - Bug Fixes
+
+**Release Date**: February 2026
+**Build Version**: 1.0.2+14
+
+---
+
+### Bug Fixes
+- Fixed drop point list not sorting by nearest distance on initial load
+
+---
+
 ## v1.0.1+13 - RVM QR Scan & Guest Mode
 
 **Release Date**: February 2026

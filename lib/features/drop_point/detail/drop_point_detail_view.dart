@@ -342,7 +342,9 @@ class _InfoCard extends ConsumerWidget {
                 const Gap(6),
                 Text(
                   context.l10n.dropPointNextWeighing(
-                    collectionPoint.nextScheduledWeighing!.toScheduleRelative,
+                    collectionPoint.nextScheduledWeighing!
+                        .toLocal()
+                        .toScheduleRelative(context.l10n),
                   ),
                   style: textTheme.bodyMedium,
                 ),

@@ -202,7 +202,7 @@ class _HistoryListItem extends StatelessWidget {
                   ),
                   const Gap(2),
                   Text(
-                    transaction.createdAt.toDayRelative,
+                    transaction.createdAt.toDayRelative(context.l10n),
                     style: textTheme.bodySmall?.copyWith(
                       color: colorScheme.onSurfaceVariant.withValues(
                         alpha: 0.7,

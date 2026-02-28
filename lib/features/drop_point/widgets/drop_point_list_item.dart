@@ -124,7 +124,9 @@ class DropPointListItem extends StatelessWidget {
                   const Gap(6),
                   Text(
                     context.l10n.dropPointNextWeighing(
-                      dropPoint.nextScheduledWeighing!.toScheduleRelative,
+                      dropPoint.nextScheduledWeighing!
+                          .toLocal()
+                          .toScheduleRelative(context.l10n),
                     ),
                     style: textTheme.bodyMedium,
                   ),

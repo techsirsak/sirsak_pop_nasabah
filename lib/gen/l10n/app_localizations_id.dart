@@ -59,6 +59,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get continueWithGoogle => 'Lanjutkan dengan Google';
 
   @override
+  String get dateToday => 'Hari ini';
+
+  @override
+  String get dateTomorrow => 'Besok';
+
+  @override
+  String get dateYesterday => 'Kemarin';
+
+  @override
   String get deleteAccountConfirmButton => 'Hapus Akun';
 
   @override

@@ -183,7 +183,7 @@ class _SummaryCard extends StatelessWidget {
                     ),
                     const Gap(4),
                     Text(
-                      transaction.createdAt.toDayRelative,
+                      transaction.createdAt.toDayRelative(context.l10n),
                       style: textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant.withValues(
                           alpha: 0.7,
