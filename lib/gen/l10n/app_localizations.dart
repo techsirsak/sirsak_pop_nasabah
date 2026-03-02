@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// No description provided for @applyBsuError.
   ///
   /// In en, this message translates to:
-  /// **'Failed to apply to BSU'**
+  /// **'Failed to apply to Collection Point'**
   String get applyBsuError;
 
   /// No description provided for @applyBsuSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Successfully applied to BSU'**
+  /// **'Successfully applied to Collection Point'**
   String get applyBsuSuccess;
 
   /// No description provided for @appName.

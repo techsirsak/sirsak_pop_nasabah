@@ -55,8 +55,8 @@
 			}
 		}
 	},
-	"applyBsuError": "Failed to apply to BSU",
-	"applyBsuSuccess": "Successfully applied to BSU",
+	"applyBsuError": "Failed to apply to Collection Point",
+	"applyBsuSuccess": "Successfully applied to Collection Point",
 	"appName": "Sirsak Pop Nasabah",
 	"authGuardLoginButton": "Log In",
 	"authGuardLoginMessage": "Please log in to access this feature",

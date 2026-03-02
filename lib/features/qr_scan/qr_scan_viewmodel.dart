@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -158,139 +157,10 @@ class QrScanViewModel extends _$QrScanViewModel {
     resetScan();
   }
 
-  /// Extract QR data from deeplink URL if applicable
-  ///
-  /// If the input is a deeplink URL like `com.sirsak.app://qr-scan?data=...`,
-  /// extracts and URL-decodes the `data` query parameter.
-  /// Otherwise, returns the input unchanged.
-  String _extractQrDataFromDeeplink(String qrData) {
-    // Check if this looks like a deeplink URL
-    if (!qrData.contains('://') || !qrData.contains('?')) {
-      return qrData;
-    }
-
-    try {
-      // Parse as URI to extract query parameters
-      final uri = Uri.parse(qrData);
-      final dataParam = uri.queryParameters['data'];
-
-      if (dataParam != null && dataParam.isNotEmpty) {
-        ref
-            .read(loggerServiceProvider)
-            .info(
-              '[QrScanViewModel] Extracted data from deeplink URL',
-            );
-        return dataParam; // Uri.parse automatically URL-decodes query params
-      }
-    } catch (e) {
-      // If parsing fails, return original data
-      ref
-          .read(loggerServiceProvider)
-          .warning(
-            '[QrScanViewModel] Failed to parse as deeplink URL: $e',
-          );
-    }
-
-    return qrData;
-  }
-
-  /// Parse QR data from JSON format (with decryption support)
-  ///
-  /// Handles both encrypted (ENC:v1:...) and legacy plain JSON payloads.
-  /// Also handles deeplink URLs with encoded data in query parameters.
-  ///
-  /// Expected JSON format after decryption:
-  /// ```json
-  /// {
-  ///   "type": "register-bsu" | "register-nasabah",
-  ///   "data": { ... }
-  /// }
-  /// ```
-  ///
-  /// Returns [ParsedQrData] if valid, null otherwise
+  /// Parse QR data using QrCryptoService
   ParsedQrData? parseQrData(String qrData) {
-    final logger = ref.read(loggerServiceProvider);
-
-    // Extract data from deeplink URL if applicable
-    final extractedData = _extractQrDataFromDeeplink(qrData);
-    logger.info('[QrScanViewModel] extractedData: $extractedData');
-
-    // First, attempt decryption
     final cryptoService = ref.read(qrCryptoServiceProvider);
-    final decryptResult = cryptoService.decrypt(extractedData);
-
-    final String jsonData;
-
-    switch (decryptResult) {
-      case QrDecryptSuccess(:final decryptedText):
-        jsonData = decryptedText;
-      case QrDecryptError(:final message):
-        logger.warning('[QrScanViewModel] QR decryption failed: $message');
-        return null;
-    }
-
-    // Continue with JSON parsing
-    try {
-      final json = jsonDecode(jsonData) as Map<String, dynamic>;
-      final typeParam = json['type'] as String?;
-      final data = json['data'] as Map<String, dynamic>?;
-
-      if (typeParam == null || data == null) {
-        logger.warning(
-          '[QrScanViewModel] Missing type or data in QR: $jsonData',
-        );
-        return null;
-      }
-
-      final qrType = QrType.fromString(typeParam);
-      switch (qrType) {
-        case QrType.registerBsu:
-          final bsuData = QrBsuData.fromJson(data);
-          logger.info(
-            '[QrScanViewModel] Parsed BSU QR - id: ${bsuData.id}, '
-            'name: ${bsuData.bsuName}',
-          );
-          return ParsedQrData(
-            type: QrType.registerBsu,
-            bsuData: bsuData,
-          );
-
-        case QrType.registerNasabah:
-          final nasabahData = QrNasabahData.fromJson(data);
-          logger.info(
-            '[QrScanViewModel] Parsed Nasabah QR - id: ${nasabahData.id}, '
-            'name: ${nasabahData.name}',
-          );
-          return ParsedQrData(
-            type: QrType.registerNasabah,
-            nasabahData: nasabahData,
-          );
-
-        case QrType.setorRvm:
-          final setorRvmData = QrSetorRvmData.fromJson(data);
-          logger.info(
-            '[QrScanViewModel] Parsed Setor RVM QR - id: ${setorRvmData.id}, '
-            'name: ${setorRvmData.rvmName}',
-          );
-          return ParsedQrData(
-            type: QrType.setorRvm,
-            setorRvmData: setorRvmData,
-          );
-
-        case QrType.unknown:
-          logger.warning('[QrScanViewModel] Unknown QR type: $typeParam');
-          return const ParsedQrData(type: QrType.unknown);
-      }
-    } catch (e, stackTrace) {
-      unawaited(
-        logger.error(
-          '[QrScanViewModel] Failed to parse QR JSON: $jsonData',
-          e,
-          stackTrace,
-        ),
-      );
-      return null;
-    }
+    return cryptoService.parseQrData(qrData);
   }
 
   Future<void> toggleTorch() async {

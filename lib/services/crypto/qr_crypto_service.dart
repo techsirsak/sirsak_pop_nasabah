@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -5,6 +6,7 @@ import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sirsak_pop_nasabah/core/config/env_config.dart';
+import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
 
 part 'qr_crypto_service.g.dart';
@@ -177,5 +179,163 @@ class QrCryptoService {
       diff |= a[i] ^ b[i];
     }
     return diff == 0;
+  }
+
+  // ============================================================
+  // QR Parsing Methods
+  // ============================================================
+
+  /// Extract QR data from deeplink URL if applicable.
+  ///
+  /// If the input is a deeplink URL like `com.sirsak.app://qr-scan?data=...`,
+  /// extracts and URL-decodes the `data` query parameter.
+  /// Otherwise, returns the input unchanged.
+  String extractDataFromDeeplink(String qrData) {
+    if (!qrData.contains('://') || !qrData.contains('?')) {
+      return qrData;
+    }
+
+    try {
+      final uri = Uri.parse(qrData);
+      final dataParam = uri.queryParameters['data'];
+
+      if (dataParam != null && dataParam.isNotEmpty) {
+        _logger.info('[QrCryptoService] Extracted data from deeplink URL');
+        return dataParam;
+      }
+    } catch (e) {
+      _logger.warning('[QrCryptoService] Failed to parse as deeplink URL: $e');
+    }
+
+    return qrData;
+  }
+
+  /// Parse encrypted QR data into typed [ParsedQrData].
+  ///
+  /// Handles deeplink URLs with encoded data in query parameters.
+  /// Decrypts the payload and parses the JSON structure.
+  ///
+  /// [allowedTypes] - Optional filter for accepted QR types.
+  /// If provided, returns null for types not in the set.
+  ///
+  /// Expected JSON format after decryption:
+  /// ```json
+  /// {
+  ///   "type": "register-bsu" | "register-nasabah" | "setor-rvm",
+  ///   "data": { ... }
+  /// }
+  /// ```
+  ///
+  /// Returns [ParsedQrData] if valid, null otherwise.
+  ParsedQrData? parseQrData(String qrData, {Set<QrType>? allowedTypes}) {
+    final extractedData = extractDataFromDeeplink(qrData);
+    _logger.info('[QrCryptoService] extractedData: $extractedData');
+
+    final decryptResult = decrypt(extractedData);
+
+    final String jsonData;
+
+    switch (decryptResult) {
+      case QrDecryptSuccess(:final decryptedText):
+        jsonData = decryptedText;
+      case QrDecryptError(:final message):
+        _logger.warning('[QrCryptoService] QR decryption failed: $message');
+        return null;
+    }
+
+    try {
+      final json = jsonDecode(jsonData) as Map<String, dynamic>;
+      final typeParam = json['type'] as String?;
+      final data = json['data'] as Map<String, dynamic>?;
+
+      if (typeParam == null || data == null) {
+        _logger.warning(
+          '[QrCryptoService] Missing type or data in QR: $jsonData',
+        );
+        return null;
+      }
+
+      final qrType = QrType.fromString(typeParam);
+
+      // Check if type is allowed
+      if (allowedTypes != null && !allowedTypes.contains(qrType)) {
+        _logger.warning(
+          '[QrCryptoService] QR type not allowed: $typeParam',
+        );
+        return null;
+      }
+
+      switch (qrType) {
+        case QrType.registerBsu:
+          final bsuData = QrBsuData.fromJson(data);
+          _logger.info(
+            '[QrCryptoService] Parsed BSU QR - '
+            'id: ${bsuData.id}, name: ${bsuData.bsuName}',
+          );
+          return ParsedQrData(type: QrType.registerBsu, bsuData: bsuData);
+
+        case QrType.registerNasabah:
+          final nasabahData = QrNasabahData.fromJson(data);
+          _logger.info(
+            '[QrCryptoService] Parsed Nasabah QR - '
+            'id: ${nasabahData.id}, name: ${nasabahData.name}',
+          );
+          return ParsedQrData(
+            type: QrType.registerNasabah,
+            nasabahData: nasabahData,
+          );
+
+        case QrType.setorRvm:
+          final setorRvmData = QrSetorRvmData.fromJson(data);
+          _logger.info(
+            '[QrCryptoService] Parsed Setor RVM QR - '
+            'id: ${setorRvmData.id}, name: ${setorRvmData.rvmName}',
+          );
+          return ParsedQrData(
+            type: QrType.setorRvm,
+            setorRvmData: setorRvmData,
+          );
+
+        case QrType.unknown:
+          _logger.warning('[QrCryptoService] Unknown QR type: $typeParam');
+          return null;
+      }
+    } catch (e, stackTrace) {
+      unawaited(
+        _logger.error(
+          '[QrCryptoService] Failed to parse QR JSON: $jsonData',
+          e,
+          stackTrace,
+        ),
+      );
+      return null;
+    }
+  }
+
+  /// Parse RVM JSON format: {"type": "setor-rvm", "data": "<encrypted>"}.
+  ///
+  /// This is for RVM QR codes that contain a JSON wrapper with encrypted data.
+  /// Returns the encrypted data string if valid, null otherwise.
+  String? parseRvmJson(String rawValue) {
+    try {
+      final json = jsonDecode(rawValue) as Map<String, dynamic>;
+      final type = json['type'] as String?;
+      final data = json['data'] as String?;
+
+      if (type == QrType.setorRvm.toString() &&
+          data != null &&
+          data.isNotEmpty) {
+        _logger.info('[QrCryptoService] Parsed RVM JSON QR');
+        return data;
+      }
+
+      _logger.warning(
+        '[QrCryptoService] Invalid RVM JSON - type: $type, '
+        'hasData: ${data != null}',
+      );
+    } catch (e) {
+      _logger.warning('[QrCryptoService] Failed to parse as RVM JSON: $e');
+    }
+    return null;
   }
 }

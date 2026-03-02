@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -143,9 +142,14 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
 
   /// Process QR data and route to appropriate handler
   Future<void> _processQrData(String rawValue) async {
+    final cryptoService = ref.read(qrCryptoServiceProvider);
+
     // Check if it's a deeplink URL (BSU QR)
-    if (rawValue.startsWith('http://$appBundleID')) {
-      final parsedData = _parseQrData(rawValue);
+    if (rawValue.startsWith(appBundleID)) {
+      final parsedData = cryptoService.parseQrData(
+        rawValue,
+        allowedTypes: {QrType.registerBsu, QrType.setorRvm},
+      );
       if (parsedData?.type == QrType.registerBsu &&
           parsedData?.bsuData != null) {
         return _applyBsu(parsedData!.bsuData!.id);
@@ -153,42 +157,14 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
       return _handleInvalidQr();
     }
 
-    // If not Deeplink
     // Try to parse as RVM JSON: {"type": "setor-rvm", "data": "..."}
-    final rvmData = _parseJson(rawValue);
+    final rvmData = cryptoService.parseRvmJson(rawValue);
     if (rvmData != null) {
       return _submitDeposit(rvmData);
     }
 
     // Neither format matched
     _handleInvalidQr();
-  }
-
-  /// Parse RVM JSON format: {"type": "setor-rvm", "data": "_encrypted_"}
-  /// Returns the encrypted data string if valid, null otherwise
-  String? _parseJson(String rawValue) {
-    final logger = ref.read(loggerServiceProvider);
-
-    try {
-      final json = jsonDecode(rawValue) as Map<String, dynamic>;
-      final type = json['type'] as String?;
-      final data = json['data'] as String?;
-
-      if (type == QrType.setorRvm.toString() &&
-          data != null &&
-          data.isNotEmpty) {
-        logger.info('[SetorQrScanViewModel] Parsed RVM JSON QR');
-        return data;
-      }
-
-      logger.warning(
-        '[SetorQrScanViewModel] Invalid RVM JSON - type: $type, '
-        'hasData: ${data != null}',
-      );
-    } catch (e) {
-      logger.warning('[SetorQrScanViewModel] Failed to parse as RVM JSON: $e');
-    }
-    return null;
   }
 
   void _handleInvalidQr() {
@@ -203,109 +179,12 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
   /// Called from View after error dialog is dismissed to resume scanning
   void dismissErrorAndRescan() {
     _isShowingError = false;
-    state = state.copyWith(errorMessage: null, isSuccess: false);
+    state = state.copyWith(
+      errorMessage: null,
+      isSuccess: false,
+      successType: null,
+    );
     _resetForNewScan();
-  }
-
-  /// Extract QR data from deeplink URL if applicable
-  String _extractQrDataFromDeeplink(String qrData) {
-    if (!qrData.contains('://') || !qrData.contains('?')) {
-      return qrData;
-    }
-
-    try {
-      final uri = Uri.parse(qrData);
-      final dataParam = uri.queryParameters['data'];
-
-      if (dataParam != null && dataParam.isNotEmpty) {
-        ref
-            .read(loggerServiceProvider)
-            .info('[SetorQrScanViewModel] Extracted data from deeplink URL');
-        return dataParam;
-      }
-    } catch (e) {
-      ref
-          .read(loggerServiceProvider)
-          .warning(
-            '[SetorQrScanViewModel] Failed to parse as deeplink URL: $e',
-          );
-    }
-
-    return qrData;
-  }
-
-  /// Parse QR data - accepts setor-rvm and register-bsu types
-  ParsedQrData? _parseQrData(String qrData) {
-    final logger = ref.read(loggerServiceProvider);
-
-    final extractedData = _extractQrDataFromDeeplink(qrData);
-    logger.info('[SetorQrScanViewModel] extractedData: $extractedData');
-
-    final cryptoService = ref.read(qrCryptoServiceProvider);
-    final decryptResult = cryptoService.decrypt(extractedData);
-
-    final String jsonData;
-
-    switch (decryptResult) {
-      case QrDecryptSuccess(:final decryptedText):
-        jsonData = decryptedText;
-      case QrDecryptError(:final message):
-        logger.warning('[SetorQrScanViewModel] QR decryption failed: $message');
-        return null;
-    }
-
-    try {
-      final json = jsonDecode(jsonData) as Map<String, dynamic>;
-      final typeParam = json['type'] as String?;
-      final data = json['data'] as Map<String, dynamic>?;
-
-      if (typeParam == null || data == null) {
-        logger.warning(
-          '[SetorQrScanViewModel] Missing type or data in QR: $jsonData',
-        );
-        return null;
-      }
-
-      final qrType = QrType.fromString(typeParam);
-
-      switch (qrType) {
-        case QrType.setorRvm:
-          final setorRvmData = QrSetorRvmData.fromJson(data);
-          logger.info(
-            '[SetorQrScanViewModel] Parsed Setor RVM QR - '
-            'id: ${setorRvmData.id}, name: ${setorRvmData.rvmName}',
-          );
-          return ParsedQrData(
-            type: QrType.setorRvm,
-            setorRvmData: setorRvmData,
-          );
-        case QrType.registerBsu:
-          final bsuData = QrBsuData.fromJson(data);
-          logger.info(
-            '[SetorQrScanViewModel] Parsed BSU QR - '
-            'id: ${bsuData.id}, name: ${bsuData.bsuName}',
-          );
-          return ParsedQrData(
-            type: QrType.registerBsu,
-            bsuData: bsuData,
-          );
-        case QrType.registerNasabah:
-        case QrType.unknown:
-          logger.warning(
-            '[SetorQrScanViewModel] Invalid QR type for setor: $typeParam',
-          );
-          return null;
-      }
-    } catch (e, stackTrace) {
-      unawaited(
-        logger.error(
-          '[SetorQrScanViewModel] Failed to parse QR JSON: $jsonData',
-          e,
-          stackTrace,
-        ),
-      );
-      return null;
-    }
   }
 
   /// Submit deposit session to API immediately after scan
@@ -317,7 +196,11 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
 
     try {
       await setorService.qrTransaction(encryptedData);
-      state = state.copyWith(isSubmitting: false, isSuccess: true);
+      state = state.copyWith(
+        isSubmitting: false,
+        isSuccess: true,
+        successType: SetorSuccessType.deposit,
+      );
     } catch (e, stackTrace) {
       logger.error(
         '[SetorQrScanViewModel] Failed to submit deposit',
@@ -339,7 +222,11 @@ class SetorQrScanViewModel extends _$SetorQrScanViewModel {
 
     try {
       await ref.read(userServiceProvider).applyBSU(bsuId: bsuId);
-      state = state.copyWith(isSubmitting: false, isSuccess: true);
+      state = state.copyWith(
+        isSubmitting: false,
+        isSuccess: true,
+        successType: SetorSuccessType.bsuApply,
+      );
     } catch (e, stackTrace) {
       logger.error(
         '[SetorQrScanViewModel] Failed to apply BSU',

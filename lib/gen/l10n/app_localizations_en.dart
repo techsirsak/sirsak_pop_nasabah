@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get applyBsuError => 'Failed to apply to BSU';
+  String get applyBsuError => 'Failed to apply to Collection Point';
 
   @override
-  String get applyBsuSuccess => 'Successfully applied to BSU';
+  String get applyBsuSuccess => 'Successfully applied to Collection Point';
 
   @override
   String get appName => 'Sirsak Pop Nasabah';

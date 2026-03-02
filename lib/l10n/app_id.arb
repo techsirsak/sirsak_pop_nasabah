@@ -55,8 +55,8 @@
 			}
 		}
 	},
-	"applyBsuError": "Gagal mendaftar ke BSU",
-	"applyBsuSuccess": "Berhasil mendaftar ke BSU",
+	"applyBsuError": "Gagal mendaftar ke Collection Point",
+	"applyBsuSuccess": "Berhasil mendaftar ke Collection Point",
 	"appName": "Sirsak Pop Nasabah",
 	"authGuardLoginButton": "Masuk",
 	"authGuardLoginMessage": "Silakan masuk untuk mengakses fitur ini",

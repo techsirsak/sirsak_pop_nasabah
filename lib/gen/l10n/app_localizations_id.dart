@@ -9,10 +9,10 @@ class AppLocalizationsId extends AppLocalizations {
   AppLocalizationsId([String locale = 'id']) : super(locale);
 
   @override
-  String get applyBsuError => 'Gagal mendaftar ke BSU';
+  String get applyBsuError => 'Gagal mendaftar ke Collection Point';
 
   @override
-  String get applyBsuSuccess => 'Berhasil mendaftar ke BSU';
+  String get applyBsuSuccess => 'Berhasil mendaftar ke Collection Point';
 
   @override
   String get appName => 'Sirsak Pop Nasabah';
