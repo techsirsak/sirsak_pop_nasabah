@@ -172,6 +172,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error => 'Error';
 
   @override
+  String get errorEmailExists =>
+      'This email is already registered. Please use a different email or log in.';
+
+  @override
   String get errorInvalidCredentials =>
       'Invalid email or password. Please try again.';
 
@@ -181,6 +185,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorNetworkConnection =>
       'Network error. Please check your connection.';
+
+  @override
+  String get errorRegistrationFailed =>
+      'Registration failed. Please try again.';
 
   @override
   String get errorServerError => 'Server error. Please try again later.';

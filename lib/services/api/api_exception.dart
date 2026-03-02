@@ -40,3 +40,13 @@ class InvalidCredentialsException implements Exception {
   @override
   String toString() => 'InvalidCredentialsException: $message';
 }
+
+/// Email already exists error - thrown during registration
+/// Catch explicitly in signup flow to show user-friendly message
+class EmailExistsException implements Exception {
+  const EmailExistsException(this.message);
+  final String message;
+
+  @override
+  String toString() => 'EmailExistsException: $message';
+}

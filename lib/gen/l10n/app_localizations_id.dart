@@ -172,6 +172,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get error => 'Kesalahan';
 
   @override
+  String get errorEmailExists =>
+      'Email ini sudah terdaftar. Silakan gunakan email lain atau masuk.';
+
+  @override
   String get errorInvalidCredentials =>
       'Email atau kata sandi salah. Silakan coba lagi.';
 
@@ -181,6 +185,9 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get errorNetworkConnection =>
       'Kesalahan jaringan. Silakan periksa koneksi Anda.';
+
+  @override
+  String get errorRegistrationFailed => 'Pendaftaran gagal. Silakan coba lagi.';
 
   @override
   String get errorServerError => 'Kesalahan server. Silakan coba lagi nanti.';

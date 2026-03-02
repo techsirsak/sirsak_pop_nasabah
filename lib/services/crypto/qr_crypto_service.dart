@@ -312,7 +312,7 @@ class QrCryptoService {
     }
   }
 
-  /// Parse RVM JSON format: {"type": "setor-rvm", "data": "<encrypted>"}.
+  /// Parse RVM JSON format: {"type": "setor-rvm", "data": "encrypted"}.
   ///
   /// This is for RVM QR codes that contain a JSON wrapper with encrypted data.
   /// Returns the encrypted data string if valid, null otherwise.

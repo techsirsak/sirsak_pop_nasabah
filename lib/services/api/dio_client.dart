@@ -253,19 +253,17 @@ class ApiClient {
           message = data['message'] as String? ?? message;
           errors = data['errors'] as Map<String, dynamic>?;
 
-          // Check for nested auth error with invalid_credentials code
+          // Check for auth errors in response
           final errorData = data['error'] as Map<String, dynamic>?;
           if (errorData != null) {
+            // Check nested details structure (some APIs)
             final details = errorData['details'] as Map<String, dynamic>?;
             if (details != null) {
-              final isAuthError = details['__isAuthError'] as bool? ?? false;
-              final code = details['code'] as String?;
-              if (isAuthError && code == 'invalid_credentials') {
-                throw const InvalidCredentialsException(
-                  'Invalid email or password',
-                );
-              }
+              _throwIfAuthError(details);
             }
+
+            // Check flat structure (auth errors like email_exists)
+            _throwIfAuthError(errorData);
           }
         }
 
@@ -299,17 +297,32 @@ class ApiClient {
         );
     }
   }
+
+  /// Check for auth error codes and throw specific exceptions
+  void _throwIfAuthError(Map<String, dynamic> data) {
+    final isAuthError = data['__isAuthError'] as bool? ?? false;
+    final code = data['code'] as String?;
+
+    if (!isAuthError) return;
+
+    switch (code) {
+      case 'invalid_credentials':
+        throw const InvalidCredentialsException('Invalid email or password');
+      case 'email_exists':
+        throw const EmailExistsException('Email already registered');
+    }
+  }
 }
 
 /// Retry interceptor for transient failures
 class RetryInterceptor extends Interceptor {
   RetryInterceptor({
     required this.dio,
-    this.maxRetries = 3,
+    this.maxRetries = 2,
     this.retryDelays = const [
       Duration(seconds: 1),
       Duration(seconds: 2),
-      Duration(seconds: 4),
+      Duration(seconds: 2),
     ],
   });
 
@@ -401,6 +414,18 @@ class LoggingInterceptor extends Interceptor {
     if (kDebugMode) {
       log('<------------ ${response.statusCode} Response Data:');
       log('${response.data}');
+    }
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    super.onError(err, handler);
+    if (kDebugMode) {
+      final request = err.requestOptions;
+      final response = err.response;
+      log('<------------ ERROR ${request.method} ${request.path}');
+      log('Status: ${response?.statusCode}');
+      log('Response: ${response?.data}');
     }
   }
 }

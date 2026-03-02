@@ -404,6 +404,12 @@ abstract class AppLocalizations {
   /// **'Error'**
   String get error;
 
+  /// No description provided for @errorEmailExists.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already registered. Please use a different email or log in.'**
+  String get errorEmailExists;
+
   /// No description provided for @errorInvalidCredentials.
   ///
   /// In en, this message translates to:
@@ -421,6 +427,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Network error. Please check your connection.'**
   String get errorNetworkConnection;
+
+  /// No description provided for @errorRegistrationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed. Please try again.'**
+  String get errorRegistrationFailed;
 
   /// No description provided for @errorServerError.
   ///
