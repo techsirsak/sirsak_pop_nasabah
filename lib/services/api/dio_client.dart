@@ -31,9 +31,6 @@ Dio dioClient(Ref ref) {
     ),
   );
 
-  // Add logging interceptor
-  dio.interceptors.add(LoggingInterceptor());
-
   // Add retry interceptor for transient failures
   dio.interceptors.add(RetryInterceptor(dio: dio));
 
@@ -41,6 +38,8 @@ Dio dioClient(Ref ref) {
   final localStorage = ref.read(localStorageServiceProvider);
   dio.interceptors.add(AuthInterceptor(localStorage, logger));
 
+  // Add logging interceptor
+  dio.interceptors.add(LoggingInterceptor());
   return dio;
 }
 
@@ -383,13 +382,13 @@ class LoggingInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     super.onRequest(options, handler);
     if (kDebugMode) {
-      debugPrint(
+      log(
         '<------------ REQUEST '
         '${options.method} ${options.baseUrl}${options.path}',
       );
       log('HEADERS: ${options.headers}');
-      debugPrint('QueryParam: ${options.queryParameters}');
-      debugPrint('Payload:  ${options.data}');
+      log('QueryParam: ${options.queryParameters}');
+      log('Payload:  ${options.data}');
     }
   }
 
@@ -400,7 +399,7 @@ class LoggingInterceptor extends Interceptor {
   ) {
     super.onResponse(response, handler);
     if (kDebugMode) {
-      debugPrint('<------------ ${response.statusCode} Response Data:');
+      log('<------------ ${response.statusCode} Response Data:');
       log('${response.data}');
     }
   }

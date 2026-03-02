@@ -40,12 +40,15 @@
                 <data android:scheme="com.sirsak.app" />
             </intent-filter>
 
-            <!-- Deep Link: App Links (https://sirsak.co) -->
+            <!-- Deep Link: App Links (https://sirsak.co/qr-scan) -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="sirsak.co" />
+                <data
+                    android:scheme="https"
+                    android:host="sirsak.co"
+                    android:pathPrefix="/qr-scan" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
