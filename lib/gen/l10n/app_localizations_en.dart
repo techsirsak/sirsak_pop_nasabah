@@ -203,6 +203,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get getStarted => 'Get Started';
 
   @override
+  String get guest => 'Guest';
+
+  @override
   String get guestProfileLoginButton => 'Log In';
 
   @override

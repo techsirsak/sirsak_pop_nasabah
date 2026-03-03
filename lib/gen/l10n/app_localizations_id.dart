@@ -202,6 +202,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get getStarted => 'Mulai';
 
   @override
+  String get guest => 'Guest';
+
+  @override
   String get guestProfileLoginButton => 'Masuk';
 
   @override

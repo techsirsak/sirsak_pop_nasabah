@@ -93,7 +93,7 @@ extension ColorSchemeGradients on ColorScheme {
   /// for visual depth and hierarchy
   LinearGradient get pointsCardGradient {
     final primaryHSL = HSLColor.fromColor(primary);
-    final darkerPrimary = primaryHSL.withLightness(.23).toColor();
+    final darkerPrimary = primaryHSL.withLightness(.2).toColor();
 
     return LinearGradient(
       begin: Alignment.topLeft,

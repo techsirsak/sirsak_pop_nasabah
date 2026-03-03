@@ -21,10 +21,15 @@ class HomeContent extends ConsumerWidget {
       child: Column(
         children: [
           const Gap(16),
-          if (isAuthenticated)
-            PointsCard(state: state, viewModel: viewModel)
-          else
-            const GuestCard(),
+          if (!isAuthenticated)
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: const GuestCard(),
+              ),
+            ),
+          PointsCard(state: state, viewModel: viewModel),
           const Gap(34),
           if (isAuthenticated) ...[
             ImpactSection(impacts: state.impacts),
