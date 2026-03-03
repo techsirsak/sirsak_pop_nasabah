@@ -21,10 +21,6 @@ class ProfileHeaderCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAuthenticated = ref.watch(isAuthenticatedProvider);
 
-    if (!isAuthenticated) {
-      return const GuestCard();
-    }
-
     final state = ref.watch(profileViewModelProvider);
 
     final colorScheme = Theme.of(context).colorScheme;
@@ -99,6 +95,8 @@ class ProfileHeaderCard extends ConsumerWidget {
               const Gap(20),
               ProfileBadgesSection(badges: state.badges),
             ],
+
+            if (!isAuthenticated) const GuestCard(),
           ],
         ),
       ),

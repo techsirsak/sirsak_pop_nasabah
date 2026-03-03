@@ -1172,6 +1172,30 @@ abstract class AppLocalizations {
   /// **'Join our community'**
   String get tutorialTitle4;
 
+  /// No description provided for @unitKg.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get unitKg;
+
+  /// No description provided for @unitKgCO2eq.
+  ///
+  /// In en, this message translates to:
+  /// **'kg CO₂eq'**
+  String get unitKgCO2eq;
+
+  /// No description provided for @unitTon.
+  ///
+  /// In en, this message translates to:
+  /// **'ton'**
+  String get unitTon;
+
+  /// No description provided for @unitTonCO2eq.
+  ///
+  /// In en, this message translates to:
+  /// **'ton CO₂eq'**
+  String get unitTonCO2eq;
+
   /// No description provided for @verifyEmailDescription.
   ///
   /// In en, this message translates to:

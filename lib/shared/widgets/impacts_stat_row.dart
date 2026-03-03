@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
+import 'package:sirsak_pop_nasabah/shared/helpers/string_extensions.dart';
 
 class ImpactsStatRow extends StatelessWidget {
   const ImpactsStatRow({
@@ -24,7 +25,7 @@ class ImpactsStatRow extends StatelessWidget {
         Expanded(
           child: _StatItem(
             icon: PhosphorIcons.trash(),
-            value: '${impact.collected.toInt()} tons',
+            value: impact.collected.formatWeight(l10n.unitKg, l10n.unitTon),
             label: l10n.profileWasteCollected,
             foregroundColor: foregroundColor,
           ),
@@ -32,7 +33,7 @@ class ImpactsStatRow extends StatelessWidget {
         Expanded(
           child: _StatItem(
             icon: PhosphorIcons.recycle(),
-            value: '${impact.recycled.toInt()} tons',
+            value: impact.recycled.formatWeight(l10n.unitKg, l10n.unitTon),
             label: l10n.profileWasteRecycled,
             foregroundColor: foregroundColor,
           ),
@@ -40,7 +41,10 @@ class ImpactsStatRow extends StatelessWidget {
         Expanded(
           child: _StatItem(
             icon: PhosphorIcons.globeHemisphereEast(),
-            value: '${impact.carbonFootprintReduced.toInt()} ton CO\u2082eq',
+            value: impact.carbonFootprintReduced.formatWeight(
+              l10n.unitKgCO2eq,
+              l10n.unitTonCO2eq,
+            ),
             label: l10n.profileCarbonAvoided,
             foregroundColor: foregroundColor,
           ),

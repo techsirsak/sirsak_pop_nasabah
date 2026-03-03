@@ -589,6 +589,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tutorialTitle4 => 'Join our community';
 
   @override
+  String get unitKg => 'kg';
+
+  @override
+  String get unitKgCO2eq => 'kg CO₂eq';
+
+  @override
+  String get unitTon => 'ton';
+
+  @override
+  String get unitTonCO2eq => 'ton CO₂eq';
+
+  @override
   String get verifyEmailDescription =>
       'We\'ve sent a verification link to your email address. Please check your inbox and click the link to verify your account.';
 

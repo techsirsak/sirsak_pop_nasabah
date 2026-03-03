@@ -589,6 +589,18 @@ class AppLocalizationsId extends AppLocalizations {
   String get tutorialTitle4 => 'Bergabunglah dengan komunitas kami';
 
   @override
+  String get unitKg => 'kg';
+
+  @override
+  String get unitKgCO2eq => 'kg CO₂eq';
+
+  @override
+  String get unitTon => 'ton';
+
+  @override
+  String get unitTonCO2eq => 'ton CO₂eq';
+
+  @override
   String get verifyEmailDescription =>
       'Kami telah mengirimkan tautan verifikasi ke alamat email Anda. Silakan periksa kotak masuk Anda dan klik tautan untuk memverifikasi akun Anda.';
 

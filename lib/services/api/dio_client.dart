@@ -220,10 +220,12 @@ class ApiClient {
     final requestPath = error.requestOptions.path;
     final method = error.requestOptions.method;
     final statusCode = error.response?.statusCode;
+    final responseData = error.response?.data;
 
     unawaited(
       _logger.error(
-        '[API] ${error.type.name}: $method $requestPath (status: $statusCode)',
+        '[API] ${error.type.name}: $method $requestPath '
+        '(status: $statusCode, response: $responseData)',
         error,
         error.stackTrace,
       ),
