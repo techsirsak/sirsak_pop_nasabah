@@ -29,7 +29,11 @@ class HomeContent extends ConsumerWidget {
                 child: const GuestCard(),
               ),
             ),
-          PointsCard(state: state, viewModel: viewModel),
+          PointsCard(
+            state: state,
+            viewModel: viewModel,
+            isGuestMode: !isAuthenticated,
+          ),
           const Gap(34),
           if (isAuthenticated) ...[
             ImpactSection(impacts: state.impacts),
