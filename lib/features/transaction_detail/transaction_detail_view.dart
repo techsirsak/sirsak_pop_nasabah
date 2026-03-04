@@ -56,7 +56,10 @@ class TransactionDetailView extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Summary card
-                _SummaryCard(transaction: transaction),
+                _SummaryCard(
+                  transaction: transaction,
+                  buyerLocation: state.buyerLocation,
+                ),
                 const Gap(24),
 
                 // Items section header
@@ -126,9 +129,13 @@ class TransactionDetailView extends ConsumerWidget {
 }
 
 class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({required this.transaction});
+  const _SummaryCard({
+    required this.transaction,
+    this.buyerLocation,
+  });
 
   final TransactionHistoryModel transaction;
+  final String? buyerLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -211,6 +218,28 @@ class _SummaryCard extends StatelessWidget {
                   style: textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                     fontVariations: AppFonts.regular,
+                  ),
+                ),
+              ],
+            ),
+          ],
+          if (buyerLocation != null) ...[
+            const Gap(8),
+            Row(
+              children: [
+                Icon(
+                  PhosphorIcons.mapPin(),
+                  size: 16,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                const Gap(8),
+                Expanded(
+                  child: Text(
+                    buyerLocation!,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                      fontVariations: AppFonts.regular,
+                    ),
                   ),
                 ),
               ],
