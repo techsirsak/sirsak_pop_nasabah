@@ -282,16 +282,14 @@ void main() {
       });
 
       test(
-        'should return ParsedQrData with unknown type for unrecognized type',
+        'should return null for unrecognized type',
         () {
           final notifier = container.read(qrScanViewModelProvider.notifier);
 
           final result = notifier.parseQrData(encrypt(unknownTypeQrJson));
 
-          expect(result, isNotNull);
-          expect(result!.type, QrType.unknown);
-          expect(result.bsuData, isNull);
-          expect(result.nasabahData, isNull);
+          expect(result, isNull);
+          verify(() => mockLoggerService.warning(any<String>())).called(1);
         },
       );
 
