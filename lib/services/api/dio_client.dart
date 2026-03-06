@@ -31,9 +31,6 @@ Dio dioClient(Ref ref) {
     ),
   );
 
-  // Add logging interceptor
-  dio.interceptors.add(LoggingInterceptor());
-
   // Add retry interceptor for transient failures
   dio.interceptors.add(RetryInterceptor(dio: dio));
 
@@ -41,6 +38,8 @@ Dio dioClient(Ref ref) {
   final localStorage = ref.read(localStorageServiceProvider);
   dio.interceptors.add(AuthInterceptor(localStorage, logger));
 
+  // Add logging interceptor
+  dio.interceptors.add(LoggingInterceptor());
   return dio;
 }
 
@@ -221,10 +220,12 @@ class ApiClient {
     final requestPath = error.requestOptions.path;
     final method = error.requestOptions.method;
     final statusCode = error.response?.statusCode;
+    final responseData = error.response?.data;
 
     unawaited(
       _logger.error(
-        '[API] ${error.type.name}: $method $requestPath (status: $statusCode)',
+        '[API] ${error.type.name}: $method $requestPath '
+        '(status: $statusCode, response: $responseData)',
         error,
         error.stackTrace,
       ),
@@ -254,19 +255,17 @@ class ApiClient {
           message = data['message'] as String? ?? message;
           errors = data['errors'] as Map<String, dynamic>?;
 
-          // Check for nested auth error with invalid_credentials code
+          // Check for auth errors in response
           final errorData = data['error'] as Map<String, dynamic>?;
           if (errorData != null) {
+            // Check nested details structure (some APIs)
             final details = errorData['details'] as Map<String, dynamic>?;
             if (details != null) {
-              final isAuthError = details['__isAuthError'] as bool? ?? false;
-              final code = details['code'] as String?;
-              if (isAuthError && code == 'invalid_credentials') {
-                throw const InvalidCredentialsException(
-                  'Invalid email or password',
-                );
-              }
+              _throwIfAuthError(details);
             }
+
+            // Check flat structure (auth errors like email_exists)
+            _throwIfAuthError(errorData);
           }
         }
 
@@ -300,17 +299,32 @@ class ApiClient {
         );
     }
   }
+
+  /// Check for auth error codes and throw specific exceptions
+  void _throwIfAuthError(Map<String, dynamic> data) {
+    final isAuthError = data['__isAuthError'] as bool? ?? false;
+    final code = data['code'] as String?;
+
+    if (!isAuthError) return;
+
+    switch (code) {
+      case 'invalid_credentials':
+        throw const InvalidCredentialsException('Invalid email or password');
+      case 'email_exists':
+        throw const EmailExistsException('Email already registered');
+    }
+  }
 }
 
 /// Retry interceptor for transient failures
 class RetryInterceptor extends Interceptor {
   RetryInterceptor({
     required this.dio,
-    this.maxRetries = 3,
+    this.maxRetries = 2,
     this.retryDelays = const [
       Duration(seconds: 1),
       Duration(seconds: 2),
-      Duration(seconds: 4),
+      Duration(seconds: 2),
     ],
   });
 
@@ -383,13 +397,13 @@ class LoggingInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     super.onRequest(options, handler);
     if (kDebugMode) {
-      debugPrint(
+      log(
         '<------------ REQUEST '
         '${options.method} ${options.baseUrl}${options.path}',
       );
       log('HEADERS: ${options.headers}');
-      debugPrint('QueryParam: ${options.queryParameters}');
-      debugPrint('Payload:  ${options.data}');
+      log('QueryParam: ${options.queryParameters}');
+      log('Payload:  ${options.data}');
     }
   }
 
@@ -400,8 +414,20 @@ class LoggingInterceptor extends Interceptor {
   ) {
     super.onResponse(response, handler);
     if (kDebugMode) {
-      debugPrint('<------------ ${response.statusCode} Response Data:');
+      log('<------------ ${response.statusCode} Response Data:');
       log('${response.data}');
+    }
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    super.onError(err, handler);
+    if (kDebugMode) {
+      final request = err.requestOptions;
+      final response = err.response;
+      log('<------------ ERROR ${request.method} ${request.path}');
+      log('Status: ${response?.statusCode}');
+      log('Response: ${response?.data}');
     }
   }
 }

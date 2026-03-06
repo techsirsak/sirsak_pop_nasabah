@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// No description provided for @applyBsuError.
   ///
   /// In en, this message translates to:
-  /// **'Failed to apply to BSU'**
+  /// **'Failed to apply to Collection Point'**
   String get applyBsuError;
 
   /// No description provided for @applyBsuSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Successfully applied to BSU'**
+  /// **'Successfully applied to Collection Point'**
   String get applyBsuSuccess;
 
   /// No description provided for @appName.
@@ -404,6 +404,12 @@ abstract class AppLocalizations {
   /// **'Error'**
   String get error;
 
+  /// No description provided for @errorEmailExists.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already registered. Please use a different email or log in.'**
+  String get errorEmailExists;
+
   /// No description provided for @errorInvalidCredentials.
   ///
   /// In en, this message translates to:
@@ -421,6 +427,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Network error. Please check your connection.'**
   String get errorNetworkConnection;
+
+  /// No description provided for @errorRegistrationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed. Please try again.'**
+  String get errorRegistrationFailed;
 
   /// No description provided for @errorServerError.
   ///
@@ -446,6 +458,12 @@ abstract class AppLocalizations {
   /// **'Get Started'**
   String get getStarted;
 
+  /// No description provided for @guest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get guest;
+
   /// No description provided for @guestProfileLoginButton.
   ///
   /// In en, this message translates to:
@@ -455,7 +473,7 @@ abstract class AppLocalizations {
   /// No description provided for @guestProfileMessage.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to access your profile, track your recycling impact, and earn rewards'**
+  /// **'**Sign Up** or **Log In** to access your **profile**, get recycling impact data and rewards!'**
   String get guestProfileMessage;
 
   /// No description provided for @guestProfileTitle.
@@ -1159,6 +1177,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Join our community'**
   String get tutorialTitle4;
+
+  /// No description provided for @unitKg.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get unitKg;
+
+  /// No description provided for @unitKgCO2eq.
+  ///
+  /// In en, this message translates to:
+  /// **'kg CO₂eq'**
+  String get unitKgCO2eq;
+
+  /// No description provided for @unitTon.
+  ///
+  /// In en, this message translates to:
+  /// **'ton'**
+  String get unitTon;
+
+  /// No description provided for @unitTonCO2eq.
+  ///
+  /// In en, this message translates to:
+  /// **'ton CO₂eq'**
+  String get unitTonCO2eq;
 
   /// No description provided for @verifyEmailDescription.
   ///

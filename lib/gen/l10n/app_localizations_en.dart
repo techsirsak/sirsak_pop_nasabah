@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get applyBsuError => 'Failed to apply to BSU';
+  String get applyBsuError => 'Failed to apply to Collection Point';
 
   @override
-  String get applyBsuSuccess => 'Successfully applied to BSU';
+  String get applyBsuSuccess => 'Successfully applied to Collection Point';
 
   @override
   String get appName => 'Sirsak Pop Nasabah';
@@ -172,6 +172,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error => 'Error';
 
   @override
+  String get errorEmailExists =>
+      'This email is already registered. Please use a different email or log in.';
+
+  @override
   String get errorInvalidCredentials =>
       'Invalid email or password. Please try again.';
 
@@ -181,6 +185,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorNetworkConnection =>
       'Network error. Please check your connection.';
+
+  @override
+  String get errorRegistrationFailed =>
+      'Registration failed. Please try again.';
 
   @override
   String get errorServerError => 'Server error. Please try again later.';
@@ -195,11 +203,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get getStarted => 'Get Started';
 
   @override
+  String get guest => 'Guest';
+
+  @override
   String get guestProfileLoginButton => 'Log In';
 
   @override
   String get guestProfileMessage =>
-      'Sign in to access your profile, track your recycling impact, and earn rewards';
+      '**Sign Up** or **Log In** to access your **profile**, get recycling impact data and rewards!';
 
   @override
   String get guestProfileTitle => 'Welcome to Sirsak';
@@ -579,6 +590,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutorialTitle4 => 'Join our community';
+
+  @override
+  String get unitKg => 'kg';
+
+  @override
+  String get unitKgCO2eq => 'kg CO₂eq';
+
+  @override
+  String get unitTon => 'ton';
+
+  @override
+  String get unitTonCO2eq => 'ton CO₂eq';
 
   @override
   String get verifyEmailDescription =>

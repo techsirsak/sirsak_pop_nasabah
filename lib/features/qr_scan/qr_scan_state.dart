@@ -35,6 +35,20 @@ enum QrType {
         return QrType.unknown;
     }
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case QrType.registerBsu:
+        return 'register-bsu';
+      case QrType.registerNasabah:
+        return 'register-nasabah';
+      case QrType.setorRvm:
+        return 'setor-rvm';
+      case QrType.unknown:
+        return 'unknown';
+    }
+  }
 }
 
 /// BSU data from QR code

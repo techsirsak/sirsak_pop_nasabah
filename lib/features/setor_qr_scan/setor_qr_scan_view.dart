@@ -3,16 +3,21 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_overlay.dart';
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
+import 'package:sirsak_pop_nasabah/features/setor_qr_scan/setor_qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/features/setor_qr_scan/setor_qr_scan_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/services/auth_state_provider.dart';
+import 'package:sirsak_pop_nasabah/shared/navigation/bottom_nav_provider.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/app_dialog.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/auth_guard_placeholder.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/bsu_success_dialog.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/login_required_bottom_sheet.dart';
 
 class SetorQrScanView extends ConsumerStatefulWidget {
@@ -81,19 +86,36 @@ class _SetorQrScanViewState extends ConsumerState<SetorQrScanView>
         );
       }
 
-      // Show success dialog
+      // Show success dialog based on success type
       if (next.isSuccess && !previous!.isSuccess) {
-        unawaited(
-          showDialog<void>(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => const _SetorSuccessDialog(),
-          ).then((_) {
-            ref
-                .read(setorQrScanViewModelProvider.notifier)
-                .dismissErrorAndRescan();
-          }),
-        );
+        if (next.successType == SetorSuccessType.bsuApply) {
+          // BSU apply success - show BSU dialog and navigate to profile
+          unawaited(
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => BsuSuccessDialog(
+                onClose: () {
+                  context.go(SAppRoutePath.home);
+                  ref.read(bottomNavProvider.notifier).setTab(4);
+                },
+              ),
+            ),
+          );
+        } else {
+          // Deposit success - show deposit dialog and reset scanner
+          unawaited(
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const _SetorSuccessDialog(),
+            ).then((_) {
+              ref
+                  .read(setorQrScanViewModelProvider.notifier)
+                  .dismissErrorAndRescan();
+            }),
+          );
+        }
       }
 
       // Start scanner when permission becomes granted

@@ -8,6 +8,7 @@ import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
 import 'package:sirsak_pop_nasabah/services/auth_service.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/services/toast_service.dart';
 import 'package:sirsak_pop_nasabah/services/url_launcher_service.dart';
 import 'package:sirsak_pop_nasabah/shared/helpers/validation_helper.dart';
 
@@ -188,6 +189,16 @@ class SignupViewModel extends _$SignupViewModel {
       );
 
       ref.read(routerProvider).go(SAppRoutePath.verifyEmail);
+    } on EmailExistsException catch (e) {
+      ref
+          .read(loggerServiceProvider)
+          .warning('[SignupViewModel] Email exists: $e');
+
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: 'errorEmailExists',
+      );
+      ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
     } on ApiException catch (e) {
       ref
           .read(loggerServiceProvider)
@@ -196,15 +207,16 @@ class SignupViewModel extends _$SignupViewModel {
       state = state.copyWith(
         isLoading: false,
         errorMessage: e.when(
-          network: (message, _) => message,
-          server: (message, _) => 'Server error. Please try again later.',
-          client: (message, statusCode, errors) {
+          network: (_, _) => 'errorNetworkConnection',
+          server: (_, _) => 'errorServerError',
+          client: (_, _, errors) {
             _handleServerValidationErrors(errors);
-            return message.isNotEmpty ? message : 'Registration failed.';
+            return 'errorRegistrationFailed';
           },
-          unknown: (message, _) => 'Registration failed. Please try again.',
+          unknown: (_, _) => 'errorRegistrationFailed',
         ),
       );
+      ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
     } catch (e, stackTrace) {
       ref
           .read(loggerServiceProvider)
@@ -212,8 +224,9 @@ class SignupViewModel extends _$SignupViewModel {
 
       state = state.copyWith(
         isLoading: false,
-        errorMessage: 'Registration failed. Please try again.',
+        errorMessage: 'errorRegistrationFailed',
       );
+      ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
     }
   }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sirsak_pop_nasabah/core/theme/app_colors.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_state.dart';
 import 'package:sirsak_pop_nasabah/features/home/home_viewmodel.dart';
@@ -14,11 +13,13 @@ class PointsCard extends StatelessWidget {
   const PointsCard({
     required this.state,
     required this.viewModel,
+    this.isGuestMode = false,
     super.key,
   });
 
   final HomeState state;
   final HomeViewModel viewModel;
+  final bool isGuestMode;
 
   @override
   Widget build(BuildContext context) {
@@ -26,95 +27,102 @@ class PointsCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final l10n = context.l10n;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 20,
-        ),
-        decoration: BoxDecoration(
-          gradient: colorScheme.pointsCardGradient,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisSize: .min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Welcome text and wallet icon
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    l10n.homeGreeting(state.userName.firstWord.capitalize),
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: Colors.white,
-                      fontVariations: AppFonts.regular,
+    return AbsorbPointer(
+      absorbing: isGuestMode,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 20,
+          ),
+          decoration: BoxDecoration(
+            color: isGuestMode
+                ? colorScheme.outline.withValues(alpha: .8)
+                : colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisSize: .min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Welcome text and wallet icon
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      l10n.homeGreeting(
+                        isGuestMode
+                            ? l10n.guest
+                            : state.userName.firstWord.capitalize,
+                      ),
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: Colors.white,
+                        fontVariations: AppFonts.regular,
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    PhosphorIcons.wallet(),
-                    color: Colors.white,
-                    size: 32,
+                  IconButton(
+                    icon: Icon(
+                      PhosphorIcons.wallet(),
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                    onPressed: () {},
                   ),
-                  onPressed: () {
-                    // TODO(devin): Navigate to wallet
-                  },
-                ),
-              ],
-            ),
-            const Gap(12),
-            // const _PointDisplay(),
-            // const Gap(20),
-            const _SaldoDisplay(),
-            const Gap(12),
-            // Action buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  flex: 5,
-                  child: SButton(
-                    text: l10n.homeHistory,
-                    onPressed: viewModel.navigateToWalletTab,
-                    variant: ButtonVariant.text,
-                    size: ButtonSize.small,
-                    icon: PhosphorIcons.clipboardText(),
-                    foregroundColor: Colors.white,
+                ],
+              ),
+              const Gap(12),
+              // const _PointDisplay(),
+              // const Gap(20),
+              const _SaldoDisplay(),
+              const Gap(12),
+              // Action buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    flex: 5,
+                    child: SButton(
+                      text: l10n.homeHistory,
+                      onPressed: viewModel.navigateToWalletTab,
+                      variant: ButtonVariant.text,
+                      size: ButtonSize.small,
+                      icon: PhosphorIcons.clipboardText(),
+                      foregroundColor: Colors.white,
+                    ),
                   ),
-                ),
-                // TODO(devin): implement withdraw
-                // Flexible(
-                //   flex: 4,
-                //   child: SButton(
-                //     text: l10n.homeWithdraw,
-                //     onPressed: viewModel.navigateToWithdraw,
-                //     variant: ButtonVariant.text,
-                //     size: ButtonSize.small,
-                //     icon: PhosphorIcons.handWithdraw(),
-                //     foregroundColor: Colors.white,
-                //   ),
-                // ),
-                // TODO(devin): implement rewards
-                // Flexible(
-                //   flex: 5,
-                //   child: SButton(
-                //     text: l10n.homeRewards,
-                //     onPressed: viewModel.navigateToRewards,
-                //     size: ButtonSize.small,
-                //     icon: PhosphorIcons.gift(),
-                //     foregroundColor: colorScheme.primary,
-                //     backgroundColor: colorScheme.surface,
-                //     borderRadius: 25,
-                //   ),
-                // ),
-              ],
-            ),
-          ],
+                  // TODO(devin): implement withdraw
+                  // Flexible(
+                  //   flex: 4,
+                  //   child: SButton(
+                  //     text: l10n.homeWithdraw,
+                  //     onPressed: viewModel.navigateToWithdraw,
+                  //     variant: ButtonVariant.text,
+                  //     size: ButtonSize.small,
+                  //     icon: PhosphorIcons.handWithdraw(),
+                  //     foregroundColor: Colors.white,
+                  //   ),
+                  // ),
+                  // TODO(devin): implement rewards
+                  // Flexible(
+                  //   flex: 5,
+                  //   child: SButton(
+                  //     text: l10n.homeRewards,
+                  //     onPressed: viewModel.navigateToRewards,
+                  //     size: ButtonSize.small,
+                  //     icon: PhosphorIcons.gift(),
+                  //     foregroundColor: colorScheme.primary,
+                  //     backgroundColor: colorScheme.surface,
+                  //     borderRadius: 25,
+                  //   ),
+                  // ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

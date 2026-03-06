@@ -9,10 +9,10 @@ class AppLocalizationsId extends AppLocalizations {
   AppLocalizationsId([String locale = 'id']) : super(locale);
 
   @override
-  String get applyBsuError => 'Gagal mendaftar ke BSU';
+  String get applyBsuError => 'Gagal mendaftar ke Collection Point';
 
   @override
-  String get applyBsuSuccess => 'Berhasil mendaftar ke BSU';
+  String get applyBsuSuccess => 'Berhasil mendaftar ke Collection Point';
 
   @override
   String get appName => 'Sirsak Pop Nasabah';
@@ -172,6 +172,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get error => 'Kesalahan';
 
   @override
+  String get errorEmailExists =>
+      'Email ini sudah terdaftar. Silakan gunakan email lain atau masuk.';
+
+  @override
   String get errorInvalidCredentials =>
       'Email atau kata sandi salah. Silakan coba lagi.';
 
@@ -181,6 +185,9 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get errorNetworkConnection =>
       'Kesalahan jaringan. Silakan periksa koneksi Anda.';
+
+  @override
+  String get errorRegistrationFailed => 'Pendaftaran gagal. Silakan coba lagi.';
 
   @override
   String get errorServerError => 'Kesalahan server. Silakan coba lagi nanti.';
@@ -195,11 +202,14 @@ class AppLocalizationsId extends AppLocalizations {
   String get getStarted => 'Mulai';
 
   @override
+  String get guest => 'Guest';
+
+  @override
   String get guestProfileLoginButton => 'Masuk';
 
   @override
   String get guestProfileMessage =>
-      'Masuk untuk mengakses profil Anda, melacak dampak daur ulang, dan mendapatkan hadiah';
+      '**Daftar Akun** atau **Masuk** untuk mengakses **profil** anda, dapatkan data dampak daur ulang dan hadiah!';
 
   @override
   String get guestProfileTitle => 'Selamat Datang di Sirsak';
@@ -580,6 +590,18 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tutorialTitle4 => 'Bergabunglah dengan komunitas kami';
+
+  @override
+  String get unitKg => 'kg';
+
+  @override
+  String get unitKgCO2eq => 'kg CO₂eq';
+
+  @override
+  String get unitTon => 'ton';
+
+  @override
+  String get unitTonCO2eq => 'ton CO₂eq';
 
   @override
   String get verifyEmailDescription =>

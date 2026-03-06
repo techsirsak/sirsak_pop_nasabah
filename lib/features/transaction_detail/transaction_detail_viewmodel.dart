@@ -51,9 +51,13 @@ class TransactionDetailViewModel extends _$TransactionDetailViewModel {
           ? detail.map((e) => e.toTrxItemModel).toList()
           : <TransactionItemModel>[];
 
+      // Get buyer location from first item
+      final buyerLocation = detail?.firstOrNull?.buyer?.namaInstitusi;
+
       state = state.copyWith(
         items: items,
         isLoading: false,
+        buyerLocation: buyerLocation,
       );
     } catch (e) {
       state = state.copyWith(

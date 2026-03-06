@@ -11,5 +11,6 @@ abstract class TransactionDetailState with _$TransactionDetailState {
     @Default([]) List<TransactionItemModel> items,
     @Default(false) bool isLoading,
     String? errorMessage,
+    String? buyerLocation,
   }) = _TransactionDetailState;
 }

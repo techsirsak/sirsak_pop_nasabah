@@ -1,3 +1,19 @@
+extension DoubleX on double {
+  /// Format weight value - shows kg for < 1000, ton for >= 1000
+  /// [kgUnit] is the unit string for kilograms (e.g., "kg" or "kg CO₂eq")
+  /// [tonUnit] is the unit string for tons (e.g., "ton" or "ton CO₂eq")
+  String formatWeight(String kgUnit, String tonUnit) {
+    if (this < 1000) {
+      return '${toInt()} $kgUnit';
+    }
+    final tons = this / 1000;
+    final formatted = tons == tons.truncate()
+        ? tons.toInt().toString()
+        : tons.toStringAsFixed(1);
+    return '$formatted $tonUnit';
+  }
+}
+
 extension StringX on String {
   /// Capitalize first letter in the provided text
   String get capitalize {

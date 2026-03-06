@@ -89,9 +89,11 @@ class ToastService {
     if (l10n == null) return key;
 
     return switch (key) {
+      'errorEmailExists' => l10n.errorEmailExists,
       'errorInvalidCredentials' => l10n.errorInvalidCredentials,
       'errorLoginFailed' => l10n.errorLoginFailed,
       'errorNetworkConnection' => l10n.errorNetworkConnection,
+      'errorRegistrationFailed' => l10n.errorRegistrationFailed,
       'errorServerError' => l10n.errorServerError,
       _ => key,
     };
