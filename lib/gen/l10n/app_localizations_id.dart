@@ -196,6 +196,29 @@ class AppLocalizationsId extends AppLocalizations {
   String get forgotPassword => 'Lupa Kata Sandi?';
 
   @override
+  String get forgotPasswordBackToLogin => 'Kembali ke Masuk';
+
+  @override
+  String get forgotPasswordDescription =>
+      'Masukkan alamat email Anda dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda.';
+
+  @override
+  String get forgotPasswordOpenEmail => 'Buka Aplikasi Email';
+
+  @override
+  String get forgotPasswordSendLink => 'Kirim Tautan Reset';
+
+  @override
+  String get forgotPasswordSuccessDescription =>
+      'Kami telah mengirimkan tautan reset kata sandi ke alamat email Anda. Silakan periksa kotak masuk Anda dan klik tautan untuk mengatur ulang kata sandi Anda.';
+
+  @override
+  String get forgotPasswordSuccessTitle => 'Periksa Email Anda';
+
+  @override
+  String get forgotPasswordTitle => 'Lupa Kata Sandi';
+
+  @override
   String get generalErrorTitle => 'Terjadi kesalahan';
 
   @override

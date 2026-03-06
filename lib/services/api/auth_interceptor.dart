@@ -14,6 +14,7 @@ class AuthInterceptor extends Interceptor {
     '/auth/login',
     '/auth/register',
     '/auth/refresh',
+    '/auth/password-reset-request',
   ];
 
   @override

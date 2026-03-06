@@ -446,6 +446,48 @@ abstract class AppLocalizations {
   /// **'Forgot Password?'**
   String get forgotPassword;
 
+  /// No description provided for @forgotPasswordBackToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Login'**
+  String get forgotPasswordBackToLogin;
+
+  /// No description provided for @forgotPasswordDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address and we\'ll send you a link to reset your password.'**
+  String get forgotPasswordDescription;
+
+  /// No description provided for @forgotPasswordOpenEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Email App'**
+  String get forgotPasswordOpenEmail;
+
+  /// No description provided for @forgotPasswordSendLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Reset Link'**
+  String get forgotPasswordSendLink;
+
+  /// No description provided for @forgotPasswordSuccessDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a password reset link to your email address. Please check your inbox and click the link to reset your password.'**
+  String get forgotPasswordSuccessDescription;
+
+  /// No description provided for @forgotPasswordSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Your Email'**
+  String get forgotPasswordSuccessTitle;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPasswordTitle;
+
   /// No description provided for @generalErrorTitle.
   ///
   /// In en, this message translates to:
