@@ -12,6 +12,7 @@ import 'package:sirsak_pop_nasabah/gen/assets.gen.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/bsu_banner.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/password_checklist.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/password_field.dart';
 
 class SignUpView extends ConsumerStatefulWidget {
@@ -193,6 +194,11 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                 onChanged: viewModel.setPassword,
                 errorText: _mapError(context, state.passwordError),
               ),
+              const Gap(12),
+
+              // Password Checklist
+              PasswordChecklist(password: state.password),
+
               const Gap(10),
 
               // Confirm Password Field
@@ -446,6 +452,7 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
       // Password errors (reuse from login)
       'passwordRequired' => context.l10n.passwordRequired,
       'passwordMinLength' => context.l10n.passwordMinLength,
+      'passwordCriteriaNotMet' => context.l10n.passwordCriteriaNotMet,
       // Confirm password errors
       'confirmPasswordRequired' => context.l10n.signupConfirmPasswordRequired,
       'passwordsDoNotMatch' => context.l10n.signupPasswordsDoNotMatch,

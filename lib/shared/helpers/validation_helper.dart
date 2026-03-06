@@ -29,10 +29,10 @@ class ValidationHelper {
   static Map<String, bool> getPasswordCriteria(String password) {
     return {
       'minLength': password.length >= 8,
-      'hasUppercase': password.contains(RegExp(r'[A-Z]')),
+      'hasUppercase': password.contains(RegExp('[A-Z]')),
       'hasAlphanumeric':
-          password.contains(RegExp(r'[a-zA-Z]')) &&
-          password.contains(RegExp(r'[0-9]')),
+          password.contains(RegExp('[a-zA-Z]')) &&
+          password.contains(RegExp('[0-9]')),
     };
   }
 
