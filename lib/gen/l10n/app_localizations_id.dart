@@ -358,13 +358,25 @@ class AppLocalizationsId extends AppLocalizations {
   String get or => 'atau';
 
   @override
+  String get passwordCriteriaNotMet => 'Kata sandi tidak memenuhi persyaratan';
+
+  @override
   String get passwordLabel => 'Kata Sandi';
+
+  @override
+  String get passwordMinEightChars => 'Minimal 8 karakter';
 
   @override
   String get passwordMinLength => 'Kata sandi minimal 6 karakter';
 
   @override
   String get passwordRequired => 'Kata sandi wajib diisi';
+
+  @override
+  String get passwordRequiresAlphanumeric => 'Mengandung huruf dan angka';
+
+  @override
+  String get passwordRequiresUppercase => 'Minimal 1 huruf kapital';
 
   @override
   String get profileAccountTitle => 'Akun';

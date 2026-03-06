@@ -23,4 +23,25 @@ class ValidationHelper {
     if (password.length < 6) return 'passwordMinLength';
     return null;
   }
+
+  /// Returns a map of password criteria and their validation status.
+  /// Used for displaying real-time password strength checklist.
+  static Map<String, bool> getPasswordCriteria(String password) {
+    return {
+      'minLength': password.length >= 8,
+      'hasUppercase': password.contains(RegExp(r'[A-Z]')),
+      'hasAlphanumeric':
+          password.contains(RegExp(r'[a-zA-Z]')) &&
+          password.contains(RegExp(r'[0-9]')),
+    };
+  }
+
+  /// Validates password meets all security criteria.
+  /// Returns error key or null if valid.
+  static String? validatePasswordSecurity(String password) {
+    if (password.isEmpty) return 'passwordRequired';
+    final criteria = getPasswordCriteria(password);
+    if (!criteria.values.every((v) => v)) return 'passwordCriteriaNotMet';
+    return null;
+  }
 }

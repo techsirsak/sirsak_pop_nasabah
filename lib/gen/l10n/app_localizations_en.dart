@@ -358,13 +358,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get or => 'or';
 
   @override
+  String get passwordCriteriaNotMet => 'Password does not meet requirements';
+
+  @override
   String get passwordLabel => 'Password';
+
+  @override
+  String get passwordMinEightChars => 'At least 8 characters';
 
   @override
   String get passwordMinLength => 'Password must be at least 6 characters';
 
   @override
   String get passwordRequired => 'Password is required';
+
+  @override
+  String get passwordRequiresAlphanumeric => 'Contains letters and numbers';
+
+  @override
+  String get passwordRequiresUppercase => 'At least 1 uppercase letter';
 
   @override
   String get profileAccountTitle => 'Akun';

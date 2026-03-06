@@ -5,6 +5,7 @@ import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/profile/change_password/change_password_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/password_checklist.dart';
 
 class ChangePasswordView extends ConsumerWidget {
   const ChangePasswordView({super.key});
@@ -50,6 +51,11 @@ class ChangePasswordView extends ConsumerWidget {
                 colorScheme: colorScheme,
                 errorText: _mapError(context, state.passwordError),
               ),
+
+              const Gap(12),
+
+              // Password Checklist
+              PasswordChecklist(password: state.password),
 
               const Gap(20),
 
@@ -168,6 +174,7 @@ class ChangePasswordView extends ConsumerWidget {
     return switch (errorKey) {
       'passwordRequired' => context.l10n.passwordRequired,
       'passwordMinLength' => context.l10n.passwordMinLength,
+      'passwordCriteriaNotMet' => context.l10n.passwordCriteriaNotMet,
       'confirmPasswordRequired' => context.l10n.signupConfirmPasswordRequired,
       'passwordsDoNotMatch' => context.l10n.signupPasswordsDoNotMatch,
       _ => errorKey,

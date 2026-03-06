@@ -734,11 +734,23 @@ abstract class AppLocalizations {
   /// **'or'**
   String get or;
 
+  /// No description provided for @passwordCriteriaNotMet.
+  ///
+  /// In en, this message translates to:
+  /// **'Password does not meet requirements'**
+  String get passwordCriteriaNotMet;
+
   /// No description provided for @passwordLabel.
   ///
   /// In en, this message translates to:
   /// **'Password'**
   String get passwordLabel;
+
+  /// No description provided for @passwordMinEightChars.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get passwordMinEightChars;
 
   /// No description provided for @passwordMinLength.
   ///
@@ -751,6 +763,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password is required'**
   String get passwordRequired;
+
+  /// No description provided for @passwordRequiresAlphanumeric.
+  ///
+  /// In en, this message translates to:
+  /// **'Contains letters and numbers'**
+  String get passwordRequiresAlphanumeric;
+
+  /// No description provided for @passwordRequiresUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 1 uppercase letter'**
+  String get passwordRequiresUppercase;
 
   /// No description provided for @profileAccountTitle.
   ///
