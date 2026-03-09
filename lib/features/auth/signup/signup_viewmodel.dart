@@ -106,7 +106,7 @@ class SignupViewModel extends _$SignupViewModel {
   }
 
   bool _validatePassword() {
-    final error = ValidationHelper.validatePassword(state.password);
+    final error = ValidationHelper.validatePasswordSecurity(state.password);
     if (error != null) {
       state = state.copyWith(passwordError: error);
       return false;

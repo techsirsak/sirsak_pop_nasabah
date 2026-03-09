@@ -196,6 +196,29 @@ class AppLocalizationsId extends AppLocalizations {
   String get forgotPassword => 'Lupa Kata Sandi?';
 
   @override
+  String get forgotPasswordBackToLogin => 'Kembali ke Masuk';
+
+  @override
+  String get forgotPasswordDescription =>
+      'Masukkan alamat email Anda dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda.';
+
+  @override
+  String get forgotPasswordOpenEmail => 'Buka Aplikasi Email';
+
+  @override
+  String get forgotPasswordSendLink => 'Kirim Tautan Reset';
+
+  @override
+  String get forgotPasswordSuccessDescription =>
+      'Kami telah mengirimkan tautan reset kata sandi ke alamat email Anda. Silakan periksa kotak masuk Anda dan klik tautan untuk mengatur ulang kata sandi Anda.';
+
+  @override
+  String get forgotPasswordSuccessTitle => 'Periksa Email Anda';
+
+  @override
+  String get forgotPasswordTitle => 'Lupa Kata Sandi';
+
+  @override
   String get generalErrorTitle => 'Terjadi kesalahan';
 
   @override
@@ -335,13 +358,25 @@ class AppLocalizationsId extends AppLocalizations {
   String get or => 'atau';
 
   @override
+  String get passwordCriteriaNotMet => 'Kata sandi tidak memenuhi persyaratan';
+
+  @override
   String get passwordLabel => 'Kata Sandi';
+
+  @override
+  String get passwordMinEightChars => 'Minimal 8 karakter';
 
   @override
   String get passwordMinLength => 'Kata sandi minimal 6 karakter';
 
   @override
   String get passwordRequired => 'Kata sandi wajib diisi';
+
+  @override
+  String get passwordRequiresAlphanumeric => 'Mengandung huruf dan angka';
+
+  @override
+  String get passwordRequiresUppercase => 'Minimal 1 huruf kapital';
 
   @override
   String get profileAccountTitle => 'Akun';

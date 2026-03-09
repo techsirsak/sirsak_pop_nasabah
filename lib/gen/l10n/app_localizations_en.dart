@@ -197,6 +197,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forgotPassword => 'Forgot Password?';
 
   @override
+  String get forgotPasswordBackToLogin => 'Back to Login';
+
+  @override
+  String get forgotPasswordDescription =>
+      'Enter your email address and we\'ll send you a link to reset your password.';
+
+  @override
+  String get forgotPasswordOpenEmail => 'Open Email App';
+
+  @override
+  String get forgotPasswordSendLink => 'Send Reset Link';
+
+  @override
+  String get forgotPasswordSuccessDescription =>
+      'We\'ve sent a password reset link to your email address. Please check your inbox and click the link to reset your password.';
+
+  @override
+  String get forgotPasswordSuccessTitle => 'Check Your Email';
+
+  @override
+  String get forgotPasswordTitle => 'Forgot Password';
+
+  @override
   String get generalErrorTitle => 'Something went wrong';
 
   @override
@@ -335,13 +358,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get or => 'or';
 
   @override
+  String get passwordCriteriaNotMet => 'Password does not meet requirements';
+
+  @override
   String get passwordLabel => 'Password';
+
+  @override
+  String get passwordMinEightChars => 'At least 8 characters';
 
   @override
   String get passwordMinLength => 'Password must be at least 6 characters';
 
   @override
   String get passwordRequired => 'Password is required';
+
+  @override
+  String get passwordRequiresAlphanumeric => 'Contains letters and numbers';
+
+  @override
+  String get passwordRequiresUppercase => 'At least 1 uppercase letter';
 
   @override
   String get profileAccountTitle => 'Akun';

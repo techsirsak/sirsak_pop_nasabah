@@ -446,6 +446,48 @@ abstract class AppLocalizations {
   /// **'Forgot Password?'**
   String get forgotPassword;
 
+  /// No description provided for @forgotPasswordBackToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Login'**
+  String get forgotPasswordBackToLogin;
+
+  /// No description provided for @forgotPasswordDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address and we\'ll send you a link to reset your password.'**
+  String get forgotPasswordDescription;
+
+  /// No description provided for @forgotPasswordOpenEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Email App'**
+  String get forgotPasswordOpenEmail;
+
+  /// No description provided for @forgotPasswordSendLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Reset Link'**
+  String get forgotPasswordSendLink;
+
+  /// No description provided for @forgotPasswordSuccessDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a password reset link to your email address. Please check your inbox and click the link to reset your password.'**
+  String get forgotPasswordSuccessDescription;
+
+  /// No description provided for @forgotPasswordSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Your Email'**
+  String get forgotPasswordSuccessTitle;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPasswordTitle;
+
   /// No description provided for @generalErrorTitle.
   ///
   /// In en, this message translates to:
@@ -692,11 +734,23 @@ abstract class AppLocalizations {
   /// **'or'**
   String get or;
 
+  /// No description provided for @passwordCriteriaNotMet.
+  ///
+  /// In en, this message translates to:
+  /// **'Password does not meet requirements'**
+  String get passwordCriteriaNotMet;
+
   /// No description provided for @passwordLabel.
   ///
   /// In en, this message translates to:
   /// **'Password'**
   String get passwordLabel;
+
+  /// No description provided for @passwordMinEightChars.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get passwordMinEightChars;
 
   /// No description provided for @passwordMinLength.
   ///
@@ -709,6 +763,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password is required'**
   String get passwordRequired;
+
+  /// No description provided for @passwordRequiresAlphanumeric.
+  ///
+  /// In en, this message translates to:
+  /// **'Contains letters and numbers'**
+  String get passwordRequiresAlphanumeric;
+
+  /// No description provided for @passwordRequiresUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 1 uppercase letter'**
+  String get passwordRequiresUppercase;
 
   /// No description provided for @profileAccountTitle.
   ///

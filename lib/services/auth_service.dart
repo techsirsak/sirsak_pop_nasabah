@@ -129,4 +129,19 @@ class AuthService {
 
     _logger.info('[AuthService] Password updated successfully for: $email');
   }
+
+  /// Request a password reset email
+  ///
+  /// Throws [ApiException] on failure
+  Future<void> requestPasswordReset({required String email}) async {
+    _logger.info('[AuthService] Requesting password reset for: $email');
+
+    await _apiClient.post(
+      path: '/auth/password-reset-request',
+      data: {'email': email},
+      fromJson: (json) {},
+    );
+
+    _logger.info('[AuthService] Password reset requested for: $email');
+  }
 }

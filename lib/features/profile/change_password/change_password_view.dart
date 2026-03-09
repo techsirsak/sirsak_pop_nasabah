@@ -5,6 +5,8 @@ import 'package:sirsak_pop_nasabah/core/theme/app_fonts.dart';
 import 'package:sirsak_pop_nasabah/features/profile/change_password/change_password_viewmodel.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/password_checklist.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/password_field.dart';
 
 class ChangePasswordView extends ConsumerWidget {
   const ChangePasswordView({super.key});
@@ -44,12 +46,15 @@ class ChangePasswordView extends ConsumerWidget {
               // New Password Field
               _buildFieldLabel(context, context.l10n.changePasswordNewPassword),
               const Gap(8),
-              _buildTextField(
+              SPasswordField(
                 onChanged: viewModel.setPassword,
-                obscureText: true,
-                colorScheme: colorScheme,
                 errorText: _mapError(context, state.passwordError),
               ),
+
+              const Gap(12),
+
+              // Password Checklist
+              PasswordChecklist(password: state.password),
 
               const Gap(20),
 
@@ -59,10 +64,8 @@ class ChangePasswordView extends ConsumerWidget {
                 context.l10n.changePasswordConfirmPassword,
               ),
               const Gap(8),
-              _buildTextField(
+              SPasswordField(
                 onChanged: viewModel.setConfirmPassword,
-                obscureText: true,
-                colorScheme: colorScheme,
                 errorText: _mapError(context, state.confirmPasswordError),
               ),
 
@@ -113,61 +116,13 @@ class ChangePasswordView extends ConsumerWidget {
     );
   }
 
-  Widget _buildTextField({
-    required ValueChanged<String> onChanged,
-    required ColorScheme colorScheme,
-    bool obscureText = false,
-    String? errorText,
-  }) {
-    return TextField(
-      onChanged: onChanged,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: const Color(0xFFE8EFF5),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: colorScheme.primary,
-            width: 2,
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: colorScheme.error,
-          ),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: colorScheme.error,
-            width: 2,
-          ),
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
-        errorText: errorText,
-      ),
-    );
-  }
-
   String? _mapError(BuildContext context, String? errorKey) {
     if (errorKey == null) return null;
 
     return switch (errorKey) {
       'passwordRequired' => context.l10n.passwordRequired,
       'passwordMinLength' => context.l10n.passwordMinLength,
+      'passwordCriteriaNotMet' => context.l10n.passwordCriteriaNotMet,
       'confirmPasswordRequired' => context.l10n.signupConfirmPasswordRequired,
       'passwordsDoNotMatch' => context.l10n.signupPasswordsDoNotMatch,
       _ => errorKey,
