@@ -57,12 +57,12 @@ abstract class UserModel with _$UserModel {
         latitude: parseField<double?>(
           'latitude',
           json['latitude'],
-          (v) => (v as num?)?.toDouble(),
+          (v) => v is String ? double.tryParse(v) : (v as num?)?.toDouble(),
         ),
         longitude: parseField<double?>(
           'longitude',
           json['longitude'],
-          (v) => (v as num?)?.toDouble(),
+          (v) => v is String ? double.tryParse(v) : (v as num?)?.toDouble(),
         ),
       );
     }
