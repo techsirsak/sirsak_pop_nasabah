@@ -200,7 +200,11 @@ class LoginViewModel extends _$LoginViewModel {
   }
 
   void navigateToForgotPassword() {
-    unawaited(ref.read(routerProvider).push(SAppRoutePath.forgotPassword));
+    final email = state.email.trim();
+    final path = email.isNotEmpty
+        ? '${SAppRoutePath.forgotPassword}?email=${Uri.encodeComponent(email)}'
+        : SAppRoutePath.forgotPassword;
+    unawaited(ref.read(routerProvider).push(path));
   }
 
   void navigateToSignUp() {

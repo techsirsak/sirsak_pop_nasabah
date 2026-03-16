@@ -7,11 +7,41 @@ import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/email_sent_success_view.dart';
 
-class ForgotPasswordView extends ConsumerWidget {
-  const ForgotPasswordView({super.key});
+class ForgotPasswordView extends ConsumerStatefulWidget {
+  const ForgotPasswordView({super.key, this.initialEmail});
+
+  final String? initialEmail;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ForgotPasswordView> createState() => _ForgotPasswordViewState();
+}
+
+class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
+  late final TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController(text: widget.initialEmail ?? '');
+
+    // Set initial email in viewmodel if provided
+    if (widget.initialEmail != null && widget.initialEmail!.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref
+            .read(forgotPasswordViewModelProvider.notifier)
+            .setEmail(widget.initialEmail!);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(forgotPasswordViewModelProvider);
 
     if (state.isSuccess) {
@@ -27,14 +57,18 @@ class ForgotPasswordView extends ConsumerWidget {
       );
     }
 
-    return _EmailInputScreen(ref: ref);
+    return _EmailInputScreen(ref: ref, emailController: _emailController);
   }
 }
 
 class _EmailInputScreen extends StatelessWidget {
-  const _EmailInputScreen({required this.ref});
+  const _EmailInputScreen({
+    required this.ref,
+    required this.emailController,
+  });
 
   final WidgetRef ref;
+  final TextEditingController emailController;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +125,7 @@ class _EmailInputScreen extends StatelessWidget {
                 ),
                 const Gap(8),
                 TextField(
+                  controller: emailController,
                   onChanged: viewModel.setEmail,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(

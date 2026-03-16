@@ -63,10 +63,13 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: SAppRoutePath.forgotPassword,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const ForgotPasswordView(),
-        ),
+        pageBuilder: (context, state) {
+          final email = state.uri.queryParameters['email'];
+          return MaterialPage(
+            key: state.pageKey,
+            child: ForgotPasswordView(initialEmail: email),
+          );
+        },
       ),
       GoRoute(
         path: SAppRoutePath.signUp,

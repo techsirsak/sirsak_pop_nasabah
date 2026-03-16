@@ -70,8 +70,7 @@ class ProfileViewModel extends _$ProfileViewModel {
       return;
     }
 
-    final dialogService = ref.read(dialogServiceProvider);
-    dialogService.showLoading();
+    final dialogService = ref.read(dialogServiceProvider)..showLoading();
 
     try {
       await ref.read(authServiceProvider).requestPasswordReset(email: email);
