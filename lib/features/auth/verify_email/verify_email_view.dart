@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sirsak_pop_nasabah/features/auth/verify_email/verify_email_viewmodel.dart';
+import 'package:sirsak_pop_nasabah/core/constants/route_path.dart';
+import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/l10n/extension.dart';
+import 'package:sirsak_pop_nasabah/services/url_launcher_service.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/email_sent_success_view.dart';
 
 class VerifyEmailView extends ConsumerWidget {
@@ -9,7 +13,6 @@ class VerifyEmailView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.read(verifyEmailViewModelProvider.notifier);
     final l10n = context.l10n;
 
     return EmailSentSuccessView(
@@ -17,8 +20,11 @@ class VerifyEmailView extends ConsumerWidget {
       description: l10n.verifyEmailDescription,
       primaryButtonText: l10n.verifyEmailOpenEmail,
       secondaryButtonText: l10n.verifyEmailGoToLogin,
-      onPrimaryPressed: viewModel.openEmailApp,
-      onSecondaryPressed: viewModel.navigateToLogin,
+      onPrimaryPressed: () {
+        unawaited(ref.read(urlLauncherServiceProvider).openEmailApp());
+      },
+      onSecondaryPressed: () =>
+          ref.read(routerProvider).go(SAppRoutePath.login),
     );
   }
 }
