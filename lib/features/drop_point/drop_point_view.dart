@@ -7,6 +7,7 @@ import 'package:sirsak_pop_nasabah/features/drop_point/drop_point_viewmodel.dart
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_list.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_map.dart';
 import 'package:sirsak_pop_nasabah/features/drop_point/widgets/drop_point_search_bar.dart';
+import 'package:sirsak_pop_nasabah/services/auth_state_provider.dart';
 
 class DropPointView extends ConsumerStatefulWidget {
   const DropPointView({super.key});
@@ -31,6 +32,7 @@ class _DropPointViewState extends ConsumerState<DropPointView> {
   Widget build(BuildContext context) {
     final state = ref.watch(dropPointViewModelProvider);
     final viewModel = ref.read(dropPointViewModelProvider.notifier);
+    final isAuthenticated = ref.watch(isAuthenticatedProvider);
     return Column(
       children: [
         Stack(
@@ -76,6 +78,7 @@ class _DropPointViewState extends ConsumerState<DropPointView> {
             userLocation: state.userLocation,
             scrollToIndex: state.scrollToIndex,
             onScrollComplete: viewModel.clearScrollIndex,
+            isAuthenticated: isAuthenticated,
           ),
         ),
       ],
