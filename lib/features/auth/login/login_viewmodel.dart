@@ -89,12 +89,43 @@ class LoginViewModel extends _$LoginViewModel {
           .fetchCurrentUser();
 
       if (!userFetched) {
+        // Clear tokens since we can't verify the user
+        await localStorageService.clearAllTokens();
+
         ref
             .read(loggerServiceProvider)
             .warning(
               '[LoginViewModel] Failed to fetch user data after login',
             );
-        // Continue anyway - user can still use the app
+
+        state = state.copyWith(
+          isLoading: false,
+          errorMessage: 'errorLoginFailed',
+        );
+        ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
+        return;
+      }
+
+      // Validate userType - only 'nasabah' users are allowed
+      final user = ref.read(currentUserProvider).user;
+      if (user?.userType != 'nasabah') {
+        // Clear tokens and user data for non-nasabah users
+        await localStorageService.clearAllTokens();
+        ref.read(currentUserProvider.notifier).clearUser();
+
+        ref
+            .read(loggerServiceProvider)
+            .warning(
+              '[LoginViewModel] Login rejected: '
+              'userType "${user?.userType}" is not nasabah',
+            );
+
+        state = state.copyWith(
+          isLoading: false,
+          errorMessage: 'errorInvalidCredentials',
+        );
+        ref.read(toastServiceProvider).error(title: state.errorMessage ?? '');
+        return;
       }
 
       // Fetch collection points in background (non-blocking)
@@ -169,7 +200,11 @@ class LoginViewModel extends _$LoginViewModel {
   }
 
   void navigateToForgotPassword() {
-    unawaited(ref.read(routerProvider).push(SAppRoutePath.forgotPassword));
+    final email = state.email.trim();
+    final path = email.isNotEmpty
+        ? '${SAppRoutePath.forgotPassword}?email=${Uri.encodeComponent(email)}'
+        : SAppRoutePath.forgotPassword;
+    unawaited(ref.read(routerProvider).push(path));
   }
 
   void navigateToSignUp() {

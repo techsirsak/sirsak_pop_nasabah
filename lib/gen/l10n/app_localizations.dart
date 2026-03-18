@@ -146,6 +146,12 @@ abstract class AppLocalizations {
   /// **'Version {version}'**
   String appVersion(String version);
 
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get back;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:

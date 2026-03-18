@@ -16,6 +16,7 @@ class DropPointList extends StatefulWidget {
     this.scrollToIndex,
     this.onScrollComplete,
     this.userLocation,
+    this.isAuthenticated = true,
     super.key,
   });
 
@@ -25,6 +26,7 @@ class DropPointList extends StatefulWidget {
   final int? scrollToIndex;
   final VoidCallback? onScrollComplete;
   final UserLocation? userLocation;
+  final bool isAuthenticated;
   @override
   State<DropPointList> createState() => _DropPointListState();
 }
@@ -77,10 +79,14 @@ class _DropPointListState extends State<DropPointList> {
       return _EmptyState();
     }
 
+    final itemCount = widget.isAuthenticated
+        ? widget.dropPoints.length
+        : widget.dropPoints.length.clamp(0, 10);
+
     return ListView.builder(
       controller: _scrollController,
       padding: const EdgeInsets.only(bottom: 16),
-      itemCount: widget.dropPoints.length,
+      itemCount: itemCount,
       itemBuilder: (context, index) {
         final dropPoint = widget.dropPoints[index];
         return DropPointListItem(

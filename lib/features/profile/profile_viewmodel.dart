@@ -8,6 +8,7 @@ import 'package:sirsak_pop_nasabah/features/profile/widgets/delete_account_confi
 import 'package:sirsak_pop_nasabah/features/qr_scan/qr_scan_state.dart';
 import 'package:sirsak_pop_nasabah/models/user/impact_model.dart';
 import 'package:sirsak_pop_nasabah/services/api/api_exception.dart';
+import 'package:sirsak_pop_nasabah/services/auth_service.dart';
 import 'package:sirsak_pop_nasabah/services/current_user_provider.dart';
 import 'package:sirsak_pop_nasabah/services/dialog_service.dart';
 import 'package:sirsak_pop_nasabah/services/local_storage.dart';
@@ -60,6 +61,55 @@ class ProfileViewModel extends _$ProfileViewModel {
 
   void navigateToChangePassword() {
     unawaited(ref.read(routerProvider).push(SAppRoutePath.changePassword));
+  }
+
+  Future<void> requestChangePassword() async {
+    final email = state.email;
+    if (email.isEmpty) {
+      ref.read(toastServiceProvider).error(title: 'Email not available');
+      return;
+    }
+
+    final dialogService = ref.read(dialogServiceProvider)..showLoading();
+
+    try {
+      await ref.read(authServiceProvider).requestPasswordReset(email: email);
+      dialogService.hideLoading();
+      state = state.copyWith(isPasswordResetSuccess: true);
+    } on ApiException catch (e) {
+      dialogService.hideLoading();
+      ref
+          .read(toastServiceProvider)
+          .error(
+            title: e.when(
+              network: (message, _) => message,
+              server: (message, _) => 'Server error. Please try again.',
+              client: (message, _, _) => message,
+              unknown: (message, _) =>
+                  'Something went wrong. Please try again.',
+            ),
+          );
+    } catch (e, stackTrace) {
+      ref
+          .read(loggerServiceProvider)
+          .error(
+            '[ProfileViewModel] Request password reset error',
+            e,
+            stackTrace,
+          );
+      dialogService.hideLoading();
+      ref
+          .read(toastServiceProvider)
+          .error(title: 'Failed to request password reset');
+    }
+  }
+
+  void openEmailApp() {
+    unawaited(ref.read(urlLauncherServiceProvider).openEmailApp());
+  }
+
+  void dismissPasswordResetSuccess() {
+    state = state.copyWith(isPasswordResetSuccess: false);
   }
 
   Future<void> navigateToDeleteAccount() async {

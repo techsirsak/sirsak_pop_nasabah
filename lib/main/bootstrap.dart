@@ -12,6 +12,7 @@ import 'package:sirsak_pop_nasabah/core/router/app_router.dart';
 import 'package:sirsak_pop_nasabah/core/theme/app_theme.dart';
 import 'package:sirsak_pop_nasabah/gen/l10n/app_localizations.dart';
 import 'package:sirsak_pop_nasabah/services/logger_service.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/password_field.dart';
 import 'package:toastification/toastification.dart';
 
 Future<void> bootstrap({
@@ -56,6 +57,9 @@ Future<void> bootstrap({
 
         options.replay.sessionSampleRate = 1.0;
         options.replay.onErrorSampleRate = 1.0;
+
+        // Mask sensitive widgets in session replay
+        options.privacy.mask<SPasswordField>();
       },
       appRunner: () => _runApp(logger),
     );

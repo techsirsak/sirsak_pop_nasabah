@@ -16,6 +16,8 @@ abstract class ProfileState with _$ProfileState {
     @Default(false) bool isLoggingOut,
     @Default(false) bool isDeletingAccount,
     @Default(false) bool isApplyingBsu,
+    @Default(false) bool isRequestingPasswordReset,
+    @Default(false) bool isPasswordResetSuccess,
     String? errorMessage,
     String? bsuId,
     String? bsuName,

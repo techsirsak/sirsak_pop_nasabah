@@ -11,6 +11,7 @@ import 'package:sirsak_pop_nasabah/l10n/extension.dart';
 import 'package:sirsak_pop_nasabah/services/auth_state_provider.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/app_version_test.dart';
 import 'package:sirsak_pop_nasabah/shared/widgets/buttons.dart';
+import 'package:sirsak_pop_nasabah/shared/widgets/email_sent_success_view.dart';
 
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
@@ -21,6 +22,17 @@ class ProfileView extends ConsumerWidget {
     final state = ref.watch(profileViewModelProvider);
     final viewModel = ref.read(profileViewModelProvider.notifier);
     final l10n = context.l10n;
+
+    if (state.isPasswordResetSuccess) {
+      return EmailSentSuccessView(
+        title: l10n.forgotPasswordSuccessTitle,
+        description: l10n.forgotPasswordSuccessDescription,
+        primaryButtonText: l10n.forgotPasswordOpenEmail,
+        secondaryButtonText: l10n.back,
+        onPrimaryPressed: viewModel.openEmailApp,
+        onSecondaryPressed: viewModel.dismissPasswordResetSuccess,
+      );
+    }
 
     return SingleChildScrollView(
       child: Column(

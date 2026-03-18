@@ -35,6 +35,9 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
+  String get back => 'Kembali';
+
+  @override
   String get cancel => 'Batal';
 
   @override

@@ -25,12 +25,12 @@ extension DateTimeX on DateTime {
     final scheduleDate = DateTime(year, month, day);
     final locale = l10n.localeName;
 
-    final timeFormat = DateFormat('h:mm a', locale).format(this);
+    // final timeFormat = DateFormat('h:mm a', locale).format(this);
 
     if (scheduleDate == today) {
-      return '${l10n.dateToday}, $timeFormat';
+      return l10n.dateToday;
     } else if (scheduleDate == today.add(const Duration(days: 1))) {
-      return '${l10n.dateTomorrow}, $timeFormat';
+      return l10n.dateTomorrow;
     } else {
       return DateFormat('d MMM yyyy', locale).format(this);
     }

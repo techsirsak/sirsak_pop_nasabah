@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -40,5 +42,39 @@ class DialogService {
       barrierColor: barrierColor,
       builder: (context) => child,
     );
+  }
+
+  /// Shows a loading dialog that blocks user interaction
+  void showLoading() {
+    final context = currentContext;
+    if (context == null) return;
+
+    unawaited(
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => PopScope(
+          canPop: false,
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const CircularProgressIndicator(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Hides the loading dialog
+  void hideLoading() {
+    final context = currentContext;
+    if (context == null) return;
+
+    Navigator.of(context).pop();
   }
 }

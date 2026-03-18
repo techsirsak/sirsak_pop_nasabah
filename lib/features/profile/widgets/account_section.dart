@@ -50,7 +50,7 @@ class AccountSection extends StatelessWidget {
               icon: PhosphorIcons.lock(),
               title: l10n.profileChangePassword,
               subtitle: l10n.profileChangePasswordDesc,
-              onTap: viewModel.navigateToChangePassword,
+              onTap: viewModel.requestChangePassword,
               colorScheme: colorScheme,
               textTheme: textTheme,
             ),

@@ -106,9 +106,8 @@ class ProfileHeaderCard extends ConsumerWidget {
             const Gap(24),
             ProfileBadgesSection(badges: state.badges),
           ],
-
+          const Gap(24),
           if (!isAuthenticated) ...[
-            const Gap(24),
             const GuestCard(),
           ],
         ],
